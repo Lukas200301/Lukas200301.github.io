@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+}
+
+h1 {
+    font-size: 3vw;
+    color: #ff6600;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.5vw;
+    margin-bottom: 15px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.dot {
+    opacity: 0;
+    animation: dot 1.5s infinite step-start;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes dot {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.repos-section {
+    margin-top: 40px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.repos-section h2 {
+    font-size: 1.2rem;
+    color: #ff6600;
+    margin-bottom: 20px;
+}
+
+.repo-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 0 20px;
+    max-width: 1000px;
+}
+
+.repo-item {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+}
+
+.repo-item:hover {
+    transform: translateY(-5px);
+}
+
+.repo-item a {
+    text-decoration: none;
+    color: #ff6600;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.repo-item p {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin-top: 10px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 50px;
+}
+
+@media (max-width: 900px) {
+    .repo-item {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .repo-item {
+        padding: 8px;
+        max-width: 150px;
+    }
+
+    .repo-item a {
+        font-size: 0.8rem;
+    }
+
+    .loading {
+        font-size: 4vw;
+    }
+
+    h1 {
+        font-size: 5vw;
+    }
+
+    p {
+        font-size: 2vw;
+    }
+
+    .repo-list {
+        flex-direction: column;
+    }
+}
