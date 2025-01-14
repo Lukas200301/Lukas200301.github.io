@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const repos = await response.json();
 
             repos.forEach(repo => {
-                if (repo.name === "Gifs-Images" || repo.name === "Lukas200301.github.io") {
+                if (repo.name === "Gifs-Images" || repo.name === "Lukas200301.github.io" || repo.name === "Lukas200301") {
                     return;
                 }
 
