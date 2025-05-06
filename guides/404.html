@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found - Lukas200301's GitHub Portfolio">
+    <title>Page Not Found - Lukas200301</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .not-found-container {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .not-found-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .not-found-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .not-found-container p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="nav-container">
+                <div class="theme-toggle">
+                    <span class="theme-label">Theme</span>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider">
+                            <span class="sun-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zM11 1h2v3h-2zM11 20h2v3h-2zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414zM4.929 20.485l-1.414-1.414 2.121-2.121 1.414 1.414zM18.364 7.05l-1.414-1.414 2.121-2.121 1.414 1.414zM23 11v2h-3v-2zM4 11v2H1v-2z"/>
+                                </svg>
+                            </span>
+                            <span class="moon-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M10 6c0-1.881.634-3.614 1.7-5C7.434 1.613 4 5.519 4 10c0 5.514 4.486 10 10 10 4.481 0 8.387-3.434 9-7.7-1.387 1.067-3.12 1.7-5 1.7-4.418 0-8-3.582-8-8z"/>
+                                </svg>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="not-found-container">
+            <div class="not-found-icon">🔍</div>
+            <h1>Page Not Found</h1>
+            <p>The page you're looking for doesn't exist or has been moved.</p>
+            <a href="../index.html" class="back-button">Back to Portfolio</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="current-year"></span> Lukas200301</p>
+            <p>Built with <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

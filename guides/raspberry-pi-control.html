@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive guide to the Raspberry Pi Control project">
+    <title>Raspberry Pi Control Guide - Lukas200301</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/guide.css">
+    <link rel="stylesheet" href="../css/feature-boxes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="nav-container">
+                <div class="back-link">
+                    <a href="../index.html">&larr; Back to Portfolio</a>
+                </div>
+                <div class="theme-toggle">
+                    <span class="theme-label">Theme</span>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle">                        <span class="slider">
+                            <span class="sun-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zM11 1h2v3h-2zM11 20h2v3h-2zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414zM4.929 20.485l-1.414-1.414 2.121-2.121 1.414 1.414zM18.364 7.05l-1.414-1.414 2.121-2.121 1.414 1.414zM23 11v2h-3v-2zM4 11v2H1v-2z"/>
+                                </svg>
+                            </span>
+                            <span class="moon-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M10 6c0-1.881.634-3.614 1.7-5C7.434 1.613 4 5.519 4 10c0 5.514 4.486 10 10 10 4.481 0 8.387-3.434 9-7.7-1.387 1.067-3.12 1.7-5 1.7-4.418 0-8-3.582-8-8z"/>
+                                </svg>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="guide-header">
+                <div class="repo-image">
+                    <img src="https://raw.githubusercontent.com/Lukas200301/RaspberryPi-Control/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Raspberry Pi Control Logo" onerror="this.src='../images/raspberry-pi-icon.png'">
+                </div>
+            </div>
+        </div>
+    </header>    <main class="guide-content">
+        <div class="container">            <nav class="guide-nav">                <h4>Guide Contents</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About This Project</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#usage">Usage Guide</a></li>
+                    <li><a href="#structure">Project Structure</a></li>
+                    <li><a href="#advanced">Advanced Configuration</a></li>
+                    <li><a href="#technical">Technical Details</a></li>
+                    <li><a href="#updates">Updates System</a></li>
+                    <li><a href="#dependencies">Technology Stack</a></li>
+                    <li><a href="#contributing">Contributing</a></li>
+                    <li><a href="#license">License</a></li>
+                </ul>
+            </nav>
+            
+            <div class="guide-main">
+            <h1>Raspberry Pi Control Guide</h1>
+            
+            <div class="guide-intro">
+                <div class="guide-meta">
+                    <span class="repo-language">
+                        <span class="language-dot language-dart"></span>
+                        Dart
+                    </span>
+                    <span class="repo-stars">
+                        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16">
+                            <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                        </svg>
+                        3
+                    </span>
+                    <a href="https://github.com/Lukas200301/RaspberryPi-Control" class="view-on-github" target="_blank" rel="noopener noreferrer">
+                        View on GitHub
+                    </a>
+                </div>                <p class="guide-description">
+                    A comprehensive application for controlling your Raspberry Pi from Android and Windows devices. This app allows you to monitor system information, execute commands, and manage your Raspberry Pi remotely.
+                </p>
+            </div>            <section id="features" class="guide-section">                <h2>📱 Features</h2>
+                <div class="features-grid">
+                    <div class="tab feature-item">
+                        <h3>Core Functionality</h3>
+                        <p>Complete control center for Raspberry Pi devices with comprehensive management tools:</p>
+                        <ul>
+                            <li>SSH connectivity to devices</li>
+                            <li>Advanced terminal interface for command execution</li>
+                            <li>Comprehensive system monitoring</li>
+                            <li>Multiple connection management</li>
+                            <li>Cross-device file transfer</li>
+                            <li>Service management</li>
+                            <li>Customizable theme support</li>
+                        </ul>
+                    </div>
+                    <div class="tab feature-item">
+                        <h3>System Monitoring</h3>
+                        <p>Real-time insights into your Raspberry Pi's performance with intuitive visualization tools:</p>
+                        <ul>
+                            <li>System log viewing</li>
+                            <li>Network diagnostics tools</li>
+                            <li>Process monitoring and management</li>
+                            <li>Network connection tracking</li>
+                            <li>Fully customizable metrics dashboard</li>
+                        </ul>
+                    </div>
+                    <div class="tab feature-item">
+                        <h3>Connection Features</h3>
+                        <p>Reliable connection management with enhanced stability and security features:</p>
+                        <ul>
+                            <li>Background connection maintenance</li>
+                            <li>Intelligent reconnection handling</li>
+                            <li>Advanced connection configurations</li>
+                            <li>Security timeout options</li>
+                            <li>Network optimization settings</li>
+                        </ul>
+                    </div>
+                    <div class="tab feature-item">
+                        <h3>Terminal Experience</h3>
+                        <p>Powerful command-line interface with productivity enhancements for efficient device control:</p>
+                        <ul>
+                            <li>Feature-rich terminal environment</li>
+                            <li>Command history management</li>
+                            <li>Text manipulation tools</li>
+                            <li>Support for complex shell operations</li>
+                            <li>Optimized output handling</li>
+                        </ul>
+                    </div>
+                    <div class="tab feature-item">
+                        <h3>File Management</h3>
+                        <p>Seamless file handling between your devices and Raspberry Pi with comprehensive tools:</p>
+                        <ul>
+                            <li>Intuitive remote file browsing</li>
+                            <li>Bidirectional file transfer system</li>
+                            <li>File visibility options</li>
+                            <li>Configurable file operations</li>
+                            <li>Custom handling preferences</li>
+                            <li>Robust error management</li>
+                        </ul>
+                    </div>
+                    <div class="tab feature-item">
+                        <h3>Cross-Platform Support</h3>
+                        <p>Available for multiple platforms with a consistent user experience:</p>
+                        <ul>
+                            <li>Designed for various device form factors</li>
+                            <li>Mobile support</li>
+                            <li>Desktop support</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>            <section id="about" class="guide-section">
+                <h2>🚀 About This Project</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <h3>Project Overview</h3>
+                        <p>This project provides a cross-platform solution for monitoring and controlling Raspberry Pi devices remotely. This guide offers information about the project's features, structure, and how to use the application effectively.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Project Architecture</h3>
+                        <p>The project is built using Flutter/Dart for cross-platform compatibility and consists of:</p>
+                        <ul>
+                            <li><strong>Mobile Applications:</strong> For portable devices</li>
+                            <li><strong>Desktop Client:</strong> For computer systems</li>
+                            <li><strong>Communication Layer:</strong> Handles secure connections and data transfer</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Development Environment</h3>
+                        <p>For developers interested in contributing:</p>
+                        <ol>
+                            <li>Clone the repository from the GitHub page</li>
+                            <li>Install the necessary development SDKs</li>
+                            <li>Install all project dependencies</li>
+                            <li>Use a modern IDE with appropriate plugins</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Testing Environment</h3>
+                        <p>For testing purposes:</p>
+                        <ul>
+                            <li>Mobile: Use appropriate development targets</li>
+                            <li>Desktop: Build for supported platforms</li>
+                            <li>Hardware: Requires a properly configured target device</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>            <section id="getting-started" class="guide-section">
+                <h2>🏁 Getting Started</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <h3>Prerequisites</h3>
+                        <ul>
+                            <li>A target Raspberry Pi device with SSH enabled</li>
+                            <li>Network connectivity between your device and the Raspberry Pi</li>
+                            <li>For developers: Required development SDKs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Installation</h3>
+                        <ol>
+                            <li>Download the application:
+                                <div class="code-block">
+                                    <pre><code># Android Installation
+git clone https://github.com/Lukas200301/RaspberryPi-Control.git
+cd RaspberryPi-Control
+
+# Or download directly from GitHub releases
+# https://github.com/Lukas200301/RaspberryPi-Control/releases</code></pre>
+                                </div>
+                            </li>
+                            <li>Install on your device:
+                                <div class="code-block">
+                                    <pre><code># For Android
+flutter build apk --release
+adb install build/app/outputs/flutter-apk/app-release.apk
+
+# For Windows
+flutter build windows --release
+# Navigate to build/windows/runner/Release</code></pre>
+                                </div>
+                            </li>
+                            <li>Launch the application:
+                                <div class="code-block">
+                                    <pre><code># For Android - Find the app in your app drawer
+# For Windows - Run the executable from the Release folder
+RaspberryPi-Control.exe</code></pre>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Important Notes</h3>
+                        <p><strong>⚠️ System Requirements:</strong> The target Raspberry Pi device must be configured with supported locales for all monitoring features to work correctly.</p>
+                        <p><strong>⚠️ Device Settings:</strong> To maintain connections in the background on mobile devices, you may need to adjust battery optimization settings.</p>
+                    </div>
+                </div>
+            </section>            <section id="usage" class="guide-section">
+                <h2>📊 Usage Guide</h2>
+                  <div class="usage-tabs">
+                    <div class="tab">
+                        <h3>Dashboard</h3>
+                        <p>The system dashboard provides comprehensive monitoring capabilities:</p>
+                        <ul>
+                            <li>Real-time performance metrics visualization</li>
+                            <li>Memory status tracking</li>
+                            <li>Hardware temperature monitoring</li>
+                            <li>Storage capacity analysis</li>
+                            <li>Network configuration information</li>
+                            <li>System availability statistics</li>
+                        </ul>
+                    </div>
+  
+                    
+                    <div class="tab">
+                        <h3>Terminal</h3>
+                        <p>Remote command execution features:</p>
+                        <ul>
+                            <li>Complete command-line interface access</li>
+                            <li>Command history management</li>
+                            <li>Elevated privilege execution support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tab">
+                        <h3>File Manager</h3>
+                        <p>Comprehensive file management interface:</p>
+                        <ul>
+                            <li>Intuitive file system navigation</li>
+                            <li>Upload functionality from client device</li>
+                            <li>Download capabilities to client device</li>
+                            <li>Complete file operation toolset</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab">
+                        <h3>Connection Management</h3>
+                        <p>Multi-device connection features:</p>
+                        <ul>
+                            <li>Multiple connection profile storage</li>
+                            <li>Connection resilience features</li>
+                            <li>Quick device switching capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>            <section id="structure" class="guide-section">
+                <h2>🔧 Project Structure</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <h3>Application Organization</h3>
+                        <p>The application is organized into several key components:</p>
+                        <ul>
+                            <li><strong>Core Logic</strong> - Central application functionality</li>
+                            <li><strong>Platform Integrations</strong> - Platform-specific implementations</li>
+                            <li><strong>Resource Management</strong> - Assets and external resources</li>
+                            <li><strong>Quality Assurance</strong> - Testing and validation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>Key Components</h3>
+                        <p>The application architecture consists of these main elements:</p>
+                        <ul>
+                            <li><strong>User Interface</strong> - Presentation and interaction layer</li>
+                            <li><strong>State Management</strong> - Application state handling</li>
+                            <li><strong>Connection Services</strong> - Remote communication capabilities</li>
+                            <li><strong>Data Structures</strong> - Information representation models</li>
+                            <li><strong>Support Utilities</strong> - Helper functions and tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+              <section id="technical" class="guide-section">
+                <h2>🛠️ Technical Details</h2>
+                  <div class="step-by-step">
+                    <div class="step">
+                        <h3>Secure Communication</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Uses industry-standard secure communication protocols</li>
+                            <li>Features connection persistence technology</li>
+                            <li>Implements robust error handling and recovery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <h3>System Monitoring</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Utilizes platform-appropriate system information retrieval</li>
+                            <li>Features optimized data processing algorithms</li>
+                            <li>Implements configurable monitoring frequency</li>
+                            <li>Delivers real-time metrics with minimal overhead</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Background Operation</h3>
+                        <p>The application maintains connections even when minimized. System notifications indicate active status. For optimal performance:</p>
+                        <ol>
+                            <li>Enable notification permissions</li>
+                            <li>Configure appropriate power management settings</li>
+                            <li>Grant required system permissions when prompted</li>
+                        </ol>
+                    </div>                    <div class="step">
+                        <h3>Configurable Settings</h3>
+                        
+                        <h4>Interface Customization</h4>
+                        <ul>
+                            <li><strong>Visual Theme Options</strong>: Select preferred visual styling for the application</li>
+                        </ul>
+                        
+                        <h4>Dashboard Configuration</h4>
+                        <ul>
+                            <li><strong>Information Display</strong>: Customize the presentation of monitoring information</li>
+                        </ul>
+                        
+                        <h4>Terminal Preferences</h4>
+                        <ul>
+                            <li><strong>Text Display Options</strong>: Adjust visual parameters for terminal readability</li>
+                            <li><strong>Command Management</strong>: Configure command history behavior</li>
+                        </ul>
+                        
+                        <h4>Connection Management</h4>
+                        <ul>
+                            <li><strong>Default Connection Parameters</strong>: Establish standard connection settings</li>
+                            <li><strong>Power Management</strong>: Control device power behavior during connections</li>
+                            <li><strong>Connection Recovery</strong>: Configure automatic reconnection behavior</li>
+                            <li><strong>Recovery Frequency</strong>: Set parameters for reconnection attempts</li>
+                            <li><strong>Retry Timing</strong>: Adjust timing between connection recovery attempts</li>
+                            <li><strong>Connection Duration</strong>: Set maximum allowed connection establishment time</li>
+                            <li><strong>Connection Persistence</strong>: Configure keep-alive functionality</li>
+                            <li><strong>Security Parameters</strong>: Set automatic disconnection for inactive sessions</li>
+                            <li><strong>Network Optimization</strong>: Configure data compression for limited networks</li>
+                        </ul>
+                        
+                        <h4>File Management Options</h4>
+                        <ul>
+                            <li><strong>File Visibility</strong>: Control which files are displayed in the browser</li>
+                            <li><strong>Operation Confirmations</strong>: Configure safety prompts for file operations</li>
+                            <li><strong>Storage Location</strong>: Designate default locations for transferred files</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+              <section id="updates" class="guide-section">
+                <h2>🔄 Updates System</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <p>The application features a comprehensive update management system:</p>
+                        <ul>
+                            <li>Scheduled version verification process</li>
+                            <li>User-initiated update checking functionality</li>
+                            <li>Integrated update delivery system</li>
+                            <li>Comprehensive version change documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dependencies" class="guide-section">
+                <h2>📦 Technology Stack</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <ul>
+                            <li><code>UI Framework</code>: Cross-platform development toolkit</li>
+                            <li><code>Communication Libraries</code>: Secure remote connection protocols</li>
+                            <li><code>Background Processing</code>: Connection persistence services</li>
+                            <li><code>Local Storage</code>: Configuration persistence management</li>
+                            <li><code>Data Processing</code>: Information transformation utilities</li>
+                            <li><code>File Operations</code>: Content selection and management</li>
+                            <li><code>Media Handling</code>: File viewing capabilities</li>
+                            <li><code>Data Visualization</code>: Graphical information display</li>
+                            <li><code>Platform Integration</code>: Device-specific functionality</li>
+                            <li><code>Security Services</code>: Permission and access control</li>
+                            <li><code>Localization</code>: Language and formatting support</li>
+                            <li><code>Application Information</code>: Version and metadata management</li>
+                            <li><code>External Navigation</code>: Web resource access</li>
+                            <li><code>Network Services</code>: Data transmission and retrieval</li>
+                            <li><code>Storage Access</code>: File system interaction capabilities</li>
+                            <li><code>Security Storage</code>: Encrypted credential management</li>
+                            <li><code>Device Information</code>: Hardware identification services</li>
+                            <li><code>Terminal Emulation</code>: Command-line interface implementation</li>
+                            <li><code>Window Services</code>: Desktop environment integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+              <section id="contributing" class="guide-section">
+                <h2>🤝 Contributing</h2>
+                
+                <div class="step-by-step">
+                    <div class="step">
+                        <p>Contributions to this project are welcome! Here's how you can participate:</p>
+                        <ul>
+                            <li>Report issues through the project's official issue tracking system</li>
+                            <li>Propose enhancements and new capabilities</li>
+                            <li>Contribute code improvements and bug fixes</li>
+                            <li>Enhance documentation and user guides</li>
+                            <li>Share the application with relevant communities</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <pre><code>
+# Standard contribution process
+1. Create your own copy of the source code
+2. Create a dedicated branch for your work
+3. Implement and commit your changes
+4. Upload your modifications to your repository
+5. Submit your changes for review and integration
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+              <section id="license" class="guide-section">
+                <h2>📝 License</h2>
+                <p>This application is released under the MIT License, which permits usage, modification, and distribution, including for commercial purposes, with appropriate attribution.</p>
+                
+                <div class="code-block license-block">
+                    <pre><code>
+MIT License
+
+Copyright (c) 2025 Lukas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+                    </code></pre>                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="footer-year"></span> Lukas200301</p>
+            <p><a href="../index.html">Back to Portfolio</a></p>
+            <p>Built with <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
+        </div>
+    </footer>    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
