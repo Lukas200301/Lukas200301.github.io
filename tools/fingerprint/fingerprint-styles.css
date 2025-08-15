@@ -1,0 +1,586 @@
+/* ===================================
+   FINGERPRINT ANALYZER STYLES
+   Enhanced layout with navigation dots and improved design
+   ================================== */
+
+/* Overview Score Section */
+.overview-score {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.score-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg at 50% 50%, #00f2c3 0deg, #0099ff 120deg, #ff6b6b 240deg, #00f2c3 360deg);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.score-circle::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--background-color);
+}
+
+.score-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    z-index: 2;
+}
+
+.score-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    z-index: 2;
+}
+
+.score-details h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.score-details p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Section Structure */
+.fingerprint-section {
+    padding: 2rem 0;
+    min-height: auto;
+    margin-bottom: 0;
+}
+
+.fingerprint-section:last-child {
+    padding-bottom: 4rem;
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.section-title i {
+    color: var(--accent-color);
+    font-size: 2rem;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Masonry Layout */
+.fingerprint-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    justify-items: center;
+}
+
+/* Dynamic grid layouts for different card counts */
+.fingerprint-masonry.count-4 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.fingerprint-masonry.count-5 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+@media (max-width: 1200px) {
+    .fingerprint-masonry,
+    .fingerprint-masonry.count-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .fingerprint-masonry.count-5 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: auto auto auto !important;
+    }
+    
+    .fingerprint-masonry.count-5 .fingerprint-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .fingerprint-masonry.count-5 .fingerprint-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+    .fingerprint-masonry.count-5 .fingerprint-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+    .fingerprint-masonry.count-5 .fingerprint-card:nth-child(4) { grid-column: 2; grid-row: 2; }
+    .fingerprint-masonry.count-5 .fingerprint-card:nth-child(5) { 
+        grid-column: 1 / 3; 
+        grid-row: 3; 
+        max-width: 50%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .fingerprint-masonry,
+    .fingerprint-masonry.count-4,
+    .fingerprint-masonry.count-5 {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+    }
+    
+    .fingerprint-masonry.count-5 .fingerprint-card {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+/* Fingerprint Cards */
+.fingerprint-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.fingerprint-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fingerprint-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 242, 195, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 242, 195, 0.15);
+}
+
+.fingerprint-card:hover::before {
+    opacity: 1;
+}
+
+
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.card-header i {
+    color: var(--accent-color);
+    font-size: 1.25rem;
+    width: 20px;
+    text-align: center;
+}
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.card-content {
+    padding-left: 2rem;
+}
+
+.fingerprint-value {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    word-break: break-word;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.fingerprint-value.analyzing {
+    color: var(--warning-color);
+    font-style: italic;
+}
+
+.fingerprint-value.analyzing::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+.fingerprint-value.boolean.true {
+    color: var(--success-color);
+}
+
+.fingerprint-value.boolean.false {
+    color: var(--error-color);
+}
+
+.fingerprint-value.ip-address {
+    font-family: var(--font-mono);
+    color: var(--secondary-color);
+}
+
+.fingerprint-value.location {
+    color: var(--accent-color);
+}
+
+.fingerprint-value.monospace {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--accent-color);
+    max-height: 120px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Status Indicator */
+.fingerprint-status {
+    margin-top: 2rem;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 25px;
+    color: var(--warning-color);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.complete {
+    background: rgba(0, 242, 195, 0.1);
+    border-color: rgba(0, 242, 195, 0.3);
+    color: var(--accent-color);
+}
+
+.status-indicator i {
+    font-size: 1rem;
+}
+
+.status-indicator.complete i {
+    animation: none;
+}
+
+/* Risk Assessment Grid */
+.risk-assessment-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.assessment-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.assessment-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.assessment-header i {
+    color: var(--warning-color);
+    font-size: 1.5rem;
+}
+
+.assessment-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.risk-indicators {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.risk-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.risk-indicator[data-risk="high"] {
+    border-color: rgba(255, 107, 107, 0.3);
+}
+
+.risk-indicator[data-risk="medium"] {
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.risk-indicator[data-risk="low"] {
+    border-color: rgba(0, 242, 195, 0.3);
+}
+
+.risk-indicator i {
+    font-size: 1.25rem;
+}
+
+.risk-indicator[data-risk="high"] i {
+    color: var(--error-color);
+}
+
+.risk-indicator[data-risk="medium"] i {
+    color: var(--warning-color);
+}
+
+.risk-indicator[data-risk="low"] i {
+    color: var(--accent-color);
+}
+
+.risk-indicator span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tip-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 242, 195, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 242, 195, 0.15);
+}
+
+.tip-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.tip-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.tip-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.tip-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Section Navigation Dots */
+.section-nav-dots {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nav-dot {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-dot:hover,
+.nav-dot.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(0, 242, 195, 0.5);
+}
+
+.dot-label {
+    position: absolute;
+    right: calc(100% + 1rem);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.nav-dot:hover .dot-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Animations */
+@keyframes dots {
+    0%, 20% { opacity: 0; }
+    50% { opacity: 1; }
+    80%, 100% { opacity: 0; }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .section-nav-dots {
+        right: 1rem;
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-nav-dots {
+        display: none;
+    }
+    
+    .fingerprint-section {
+        padding: 1.5rem 0;
+    }
+    
+    .section-container {
+        padding: 0 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .score-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .risk-indicators {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .fingerprint-card {
+        padding: 1rem;
+    }
+    
+    .overview-score {
+        padding: 1.5rem;
+    }
+    
+    .score-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .score-value {
+        font-size: 1.5rem;
+    }
+}

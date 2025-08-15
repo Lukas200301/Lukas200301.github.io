@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Raspberry Pi Control - A comprehensive application for controlling your Raspberry Pi from Android and Windows devices">
+    <meta name="keywords" content="raspberry pi, control, android, windows, ssh, monitoring, dart, flutter">
+    <meta name="author" content="Lukas200301">
+    <meta property="og:title" content="Raspberry Pi Control - Lukas200301">
+    <meta property="og:description" content="Comprehensive Raspberry Pi control application for Android and Windows">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <meta property="og:url" content="https://lukas200301.github.io/raspberry-pi-control">
+    <title>Raspberry Pi Control | Lukas200301</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="raspberry-pi-styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <div class="neural-network" id="neuralNetwork">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+
+    <!-- Main Content -->
+    <main class="main-content project-page-no-nav">
+        <!-- Project Hero Section -->
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../projects.html" class="breadcrumb-link">
+                                <i class="fas fa-folder-open"></i>
+                                Projects
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Raspberry Pi Control</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fab fa-raspberry-pi"></i>
+                            Raspberry Pi Control
+                        </h1>
+                        <p class="tool-description">
+                            A comprehensive application for controlling your Raspberry Pi from Android and Windows devices. 
+                            This app allows you to monitor system information, execute commands, and manage your Raspberry Pi remotely.
+                        </p>
+                        
+                        <div class="tool-meta">
+                            <div class="meta-item">
+                                <i class="devicon-dart-plain"></i>
+                                <span>Dart</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>3 Stars</span>
+                            </div>
+                            <a href="https://github.com/Lukas200301/RaspberryPi-Control" class="meta-item meta-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                <span>View on GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-mobile-alt"></i>
+                    Features
+                </h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>Core Functionality</h3>
+                        <p>Complete control center for Raspberry Pi devices with comprehensive management tools:</p>
+                        <ul>
+                            <li>SSH connectivity to devices</li>
+                            <li>Advanced terminal interface for command execution</li>
+                            <li>Comprehensive system monitoring</li>
+                            <li>Multiple connection management</li>
+                            <li>Cross-device file transfer</li>
+                            <li>Service management</li>
+                            <li>Customizable theme support</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>System Monitoring</h3>
+                        <p>Real-time insights into your Raspberry Pi's performance with intuitive visualization tools:</p>
+                        <ul>
+                            <li>System log viewing</li>
+                            <li>Network diagnostics tools</li>
+                            <li>Process monitoring and management</li>
+                            <li>Network connection tracking</li>
+                            <li>Fully customizable metrics dashboard</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3>Connection Features</h3>
+                        <p>Reliable connection management with enhanced stability and security features:</p>
+                        <ul>
+                            <li>Background connection maintenance</li>
+                            <li>Intelligent reconnection handling</li>
+                            <li>Advanced connection configurations</li>
+                            <li>Security timeout options</li>
+                            <li>Network optimization settings</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3>Terminal Experience</h3>
+                        <p>Powerful command-line interface with productivity enhancements for efficient device control:</p>
+                        <ul>
+                            <li>Feature-rich terminal environment</li>
+                            <li>Command history management</li>
+                            <li>Text manipulation tools</li>
+                            <li>Support for complex shell operations</li>
+                            <li>Optimized output handling</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <h3>File Management</h3>
+                        <p>Seamless file handling between your devices and Raspberry Pi with comprehensive tools:</p>
+                        <ul>
+                            <li>Intuitive remote file browsing</li>
+                            <li>Bidirectional file transfer system</li>
+                            <li>File visibility options</li>
+                            <li>Configurable file operations</li>
+                            <li>Custom handling preferences</li>
+                            <li>Robust error management</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Cross-Platform Support</h3>
+                        <p>Available for multiple platforms with a consistent user experience:</p>
+                        <ul>
+                            <li>Designed for various device form factors</li>
+                            <li>Mobile support</li>
+                            <li>Desktop support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Project Section -->
+        <section id="about" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    About This Project
+                </h2>
+                
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Project Overview</h3>
+                        <p>This project provides a cross-platform solution for monitoring and controlling Raspberry Pi devices remotely. This guide offers information about the project's features, structure, and how to use the application effectively.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Project Architecture</h3>
+                        <p>The project is built using Flutter/Dart for cross-platform compatibility and consists of:</p>
+                        <ul>
+                            <li><strong>Mobile Applications:</strong> For portable devices</li>
+                            <li><strong>Desktop Client:</strong> For computer systems</li>
+                            <li><strong>Communication Layer:</strong> Handles secure connections and data transfer</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Development Environment</h3>
+                        <p>For developers interested in contributing:</p>
+                        <ul>
+                            <li>Clone the repository from the GitHub page</li>
+                            <li>Install the necessary development SDKs</li>
+                            <li>Install all project dependencies</li>
+                            <li>Use a modern IDE with appropriate plugins</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Testing Environment</h3>
+                        <p>For testing purposes:</p>
+                        <ul>
+                            <li><strong>Mobile:</strong> Use appropriate development targets</li>
+                            <li><strong>Desktop:</strong> Build for supported platforms</li>
+                            <li><strong>Hardware:</strong> Requires a properly configured target device</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started Section -->
+        <section id="getting-started" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-flag-checkered"></i>
+                    Getting Started
+                </h2>
+                
+                <div class="getting-started">
+                    <div class="prerequisites">
+                        <div class="prerequisites-header">
+                            <h3>Prerequisites</h3>
+                        </div>
+                        <ul>
+                            <li>A target Raspberry Pi device with SSH enabled</li>
+                            <li>Network connectivity between your device and the Raspberry Pi</li>
+                            <li>For developers: Required development SDKs</li>
+                        </ul>
+                    </div>
+
+                    <div class="installation">
+                        <div class="installation-header">
+                            <h3>Installation</h3>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Clone Repository</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code># Android Installation
+git clone https://github.com/Lukas200301/RaspberryPi-Control.git
+cd RaspberryPi-Control
+
+# Or download directly from GitHub releases
+# https://github.com/Lukas200301/RaspberryPi-Control/releases</code></pre>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Build & Install</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code># For Android
+flutter build apk --release
+adb install build/app/outputs/flutter-apk/app-release.apk
+
+# For Windows
+flutter build windows --release
+# Navigate to build/windows/runner/Release</code></pre>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Launch Application</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code># For Android - Find the app in your app drawer
+# For Windows - Run the executable from the Release folder
+RaspberryPi-Control.exe</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="important-notes">
+                        <div class="important-notes-header">
+                            <h3>Important Notes</h3>
+                        </div>
+                        <div class="warning-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <strong>System Requirements:</strong> The target Raspberry Pi device must be configured with supported locales for all monitoring features to work correctly.
+                            </div>
+                        </div>
+                        <div class="warning-card">
+                            <i class="fas fa-battery-half"></i>
+                            <div>
+                                <strong>Device Settings:</strong> To maintain connections in the background on mobile devices, you may need to adjust battery optimization settings.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Guide Section -->
+        <section id="usage" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Usage Guide
+                </h2>
+                
+                <div class="usage-grid">
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Dashboard</h3>
+                        <p>The system dashboard provides comprehensive monitoring capabilities:</p>
+                        <ul>
+                            <li>Real-time performance metrics visualization</li>
+                            <li>Memory status tracking</li>
+                            <li>Hardware temperature monitoring</li>
+                            <li>Storage capacity analysis</li>
+                            <li>Network configuration information</li>
+                            <li>System availability statistics</li>
+                        </ul>
+                    </div>
+
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3>Terminal</h3>
+                        <p>Remote command execution features:</p>
+                        <ul>
+                            <li>Complete command-line interface access</li>
+                            <li>Command history management</li>
+                            <li>Elevated privilege execution support</li>
+                        </ul>
+                    </div>
+
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3>File Manager</h3>
+                        <p>Comprehensive file management interface:</p>
+                        <ul>
+                            <li>Intuitive file system navigation</li>
+                            <li>Upload functionality from client device</li>
+                            <li>Download capabilities to client device</li>
+                            <li>Complete file operation toolset</li>
+                        </ul>
+                    </div>
+
+                    <div class="usage-card">
+                        <div class="usage-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Connection Management</h3>
+                        <p>Multi-device connection features:</p>
+                        <ul>
+                            <li>Multiple connection profile storage</li>
+                            <li>Connection resilience features</li>
+                            <li>Quick device switching capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Details Section -->
+        <section id="tech-details" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Technical Details
+                </h2>
+                
+                <div class="tech-details">
+                    <div class="tech-card">
+                        <h3>Secure Communication</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Uses industry-standard secure communication protocols</li>
+                            <li>Features connection persistence technology</li>
+                            <li>Implements robust error handling and recovery</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>System Monitoring</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Utilizes platform-appropriate system information retrieval</li>
+                            <li>Features optimized data processing algorithms</li>
+                            <li>Implements configurable monitoring frequency</li>
+                            <li>Delivers real-time metrics with minimal overhead</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>Background Operation</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Enable notification permissions</li>
+                            <li>Configure appropriate power management settings</li>
+                            <li>Grant required system permissions when prompted</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card">
+                        <h3>Configurable Settings</h3>
+                        <p><strong>Implementation:</strong></p>
+                        <ul>
+                            <li>Customizable interface themes and dashboard layouts</li>
+                            <li>Advanced connection management and security parameters</li>
+                            <li>Flexible file management and operation preferences</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Stack Section -->
+        <section id="tech-stack" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-cubes"></i>
+                    Technology Stack
+                </h2>
+                
+                <div class="tech-stack">
+                    <div class="tech-category">
+                        <h3>Core Technologies</h3>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="devicon-flutter-plain"></i>
+                                <span>Flutter</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="devicon-dart-plain"></i>
+                                <span>Dart</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>SSH Protocol</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-database"></i>
+                                <span>Local Storage</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <h3>Platform Support</h3>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="fab fa-android"></i>
+                                <span>Android</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-windows"></i>
+                                <span>Windows</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Raspberry Pi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <h3>Key Features</h3>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="fas fa-terminal"></i>
+                                <span>Terminal Emulation</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Real-time Monitoring</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>File Transfer</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Background Services</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <h3>Development Tools</h3>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="devicon-vscode-plain"></i>
+                                <span>VS Code</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="devicon-git-plain"></i>
+                                <span>Git</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="devicon-github-plain"></i>
+                                <span>GitHub</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-bug"></i>
+                                <span>Debug Tools</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributing Section -->
+        <section id="contributing" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-hands-helping"></i>
+                    Contributing
+                </h2>
+                
+                <div class="contributing">
+                    <p>Contributions to this project are welcome! Join our community and help make this project even better.</p>
+                    
+                    <div class="contribution-ways">
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-bug"></i>
+                            </div>
+                            <h3>Report Issues</h3>
+                            <p>Found a bug or have a suggestion? Report it through our issue tracking system to help improve the project.</p>
+                            <ul>
+                                <li>Bug reports</li>
+                                <li>Feature requests</li>
+                                <li>Performance issues</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>Propose Enhancements</h3>
+                            <p>Have ideas for new features or improvements? We'd love to hear your suggestions for enhancing the application.</p>
+                            <ul>
+                                <li>New feature ideas</li>
+                                <li>UI/UX improvements</li>
+                                <li>Performance optimizations</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Contribute Code</h3>
+                            <p>Ready to get your hands dirty? Contribute code improvements, bug fixes, and new features to the project.</p>
+                            <ul>
+                                <li>Bug fixes</li>
+                                <li>Feature implementation</li>
+                                <li>Code optimization</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>Improve Documentation</h3>
+                            <p>Help others understand the project better by enhancing documentation, guides, and code comments.</p>
+                            <ul>
+                                <li>User guides</li>
+                                <li>Code documentation</li>
+                                <li>Tutorial creation</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <h3>Spread the Word</h3>
+                            <p>Share the project with relevant communities and help grow our user base and contributor network.</p>
+                            <ul>
+                                <li>Social media sharing</li>
+                                <li>Community discussions</li>
+                                <li>Blog posts</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-test-tube"></i>
+                            </div>
+                            <h3>Testing & QA</h3>
+                            <p>Help ensure quality by testing the application on different devices and platforms, reporting edge cases.</p>
+                            <ul>
+                                <li>Platform testing</li>
+                                <li>Edge case discovery</li>
+                                <li>User experience feedback</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="contribution-process">
+                        <h3>How to Contribute</h3>
+                        <div class="process-steps">
+                            <div class="process-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Fork the Repository</h4>
+                                    <p>Create your own copy of the source code repository</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Create a Branch</h4>
+                                    <p>Create a dedicated branch for your specific changes</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Make Changes</h4>
+                                    <p>Implement your improvements and commit your changes</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Test & Push</h4>
+                                    <p>Test your changes and push to your repository</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4>Submit PR</h4>
+                                    <p>Submit a pull request for review and integration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License Section -->
+        <section class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-balance-scale"></i>
+                    License
+                </h2>
+                
+                <div class="license">
+                    <p>This application is released under the MIT License, which permits usage, modification, and distribution, including for commercial purposes, with appropriate attribution.</p>
+                    
+                    <div class="license-text">
+                        <div class="license-header">
+                            <h3>MIT License</h3>
+                        </div>
+                        <div class="license-content">
+                            <p>Copyright (c) 2025 Lukas</p>
+                            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="project-cta">
+            <div class="section-container">
+                <div class="cta-content">
+                    <h2>Ready to Control Your Raspberry Pi?</h2>
+                    <p>Get started with the most comprehensive Raspberry Pi control application available.</p>
+                    <div class="cta-buttons">
+                        <a href="https://github.com/Lukas200301/RaspberryPi-Control" class="cta-button primary" target="_blank">
+                            <i class="fab fa-github"></i>
+                            View on GitHub
+                        </a>
+                        <a href="https://github.com/Lukas200301/RaspberryPi-Control/releases" class="cta-button secondary" target="_blank">
+                            <i class="fas fa-download"></i>
+                            Download Release
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Section Navigation Dots -->
+    <div class="section-nav-dots" id="sectionNavDots">
+        <div class="nav-dot active" data-section="overview" title="Overview">
+            <span class="dot-label">Overview</span>
+        </div>
+        <div class="nav-dot" data-section="features" title="Features">
+            <span class="dot-label">Features</span>
+        </div>
+        <div class="nav-dot" data-section="about" title="About">
+            <span class="dot-label">About</span>
+        </div>
+        <div class="nav-dot" data-section="getting-started" title="Getting Started">
+            <span class="dot-label">Getting Started</span>
+        </div>
+        <div class="nav-dot" data-section="usage" title="Usage">
+            <span class="dot-label">Usage</span>
+        </div>
+        <div class="nav-dot" data-section="tech-details" title="Technical">
+            <span class="dot-label">Technical</span>
+        </div>
+        <div class="nav-dot" data-section="tech-stack" title="Technology">
+            <span class="dot-label">Technology</span>
+        </div>
+        <div class="nav-dot" data-section="contributing" title="Contributing">
+            <span class="dot-label">Contributing</span>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../../js/floating-elements.js"></script>
+    <script src="../../js/script.js"></script>
+    <script>
+        // Initialize section navigation dots for project page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProjectSectionDots();
+        });
+
+        function initializeProjectSectionDots() {
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            // Add click handlers for navigation dots
+            navDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const targetSection = dot.getAttribute('data-section');
+                    const section = document.getElementById(targetSection);
+                    if (section) {
+                        scrollToSection(section);
+                    }
+                });
+            });
+
+            // Update active navigation dot based on scroll position
+            const updateActiveDot = () => {
+                const sections = document.querySelectorAll('section[id]');
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 150 && rect.bottom >= 150) {
+                        currentSection = section.id;
+                    }
+                });
+                
+                if (currentSection) {
+                    navDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.getAttribute('data-section') === currentSection) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            };
+
+            // Listen to scroll events
+            window.addEventListener('scroll', updateActiveDot);
+            updateActiveDot(); // Initial call
+        }
+
+        function scrollToSection(section) {
+            if (section) {
+                const offset = 80; // Account for any fixed headers
+                const elementPosition = section.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Copy code functionality
+        function copyCode(btn) {
+            const codeBlock = btn.closest('.code-block').querySelector('code');
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check';
+                btn.style.color = 'var(--success-accent)';
+                
+                setTimeout(() => {
+                    icon.className = 'fas fa-copy';
+                    btn.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

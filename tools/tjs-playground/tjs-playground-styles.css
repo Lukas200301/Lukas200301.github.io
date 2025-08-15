@@ -1,0 +1,486 @@
+/* ===================================
+   JAVASCRIPT/TYPESCRIPT PLAYGROUND STYLES
+   Modern code editor and console interface
+   ================================== */
+
+/* Status Message */
+.status-message {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.status-message::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.status-message.success {
+    background: rgba(0, 242, 195, 0.1);
+    border: 1px solid rgba(0, 242, 195, 0.3);
+    color: var(--accent-color);
+}
+
+.status-message.success::before {
+    content: "\f00c";
+}
+
+.status-message.error {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: var(--error-color);
+}
+
+.status-message.error::before {
+    content: "\f00d";
+}
+
+.status-message.warning {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: var(--warning-color);
+}
+
+.status-message.warning::before {
+    content: "\f071";
+}
+
+/* Features Overview */
+.playground-features {
+    margin-top: 2rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 242, 195, 0.4);
+    box-shadow: 0 5px 20px rgba(0, 242, 195, 0.1);
+}
+
+.feature-item i {
+    color: var(--accent-color);
+    font-size: 1.25rem;
+    width: 20px;
+    text-align: center;
+}
+
+.feature-item span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Playground Section */
+.playground-section {
+    padding: 3rem 0;
+    min-height: auto;
+}
+
+.playground-section .section-container {
+    max-width: 1600px; /* Wider than default 1200px */
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-title i {
+    color: var(--accent-color);
+}
+
+/* Editor Controls */
+.editor-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: var(--font-primary);
+}
+
+.control-btn.primary {
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+    color: white;
+}
+
+.control-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 242, 195, 0.3);
+}
+
+.control-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.control-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 242, 195, 0.3);
+}
+
+.control-btn.small {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+/* Playground Layout */
+.playground-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    min-height: 80vh;
+}
+
+/* Editor Panel */
+.editor-panel {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    height: 80vh;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.editor-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: rgba(0, 242, 195, 0.1);
+    color: var(--accent-color);
+}
+
+.tab i {
+    font-size: 0.8rem;
+}
+
+.editor-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.editor-mode {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+#codeEditor {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    background: transparent;
+    color: var(--text-primary);
+}
+
+/* CodeMirror Overrides */
+.CodeMirror {
+    height: 100% !important;
+    min-height: 500px !important;
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    border: none !important;
+}
+
+.CodeMirror-scroll {
+    padding: 1rem !important;
+    min-height: 500px !important;
+}
+
+.CodeMirror-gutters {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-right: none !important;
+}
+
+.CodeMirror-linenumber {
+    color: var(--text-secondary) !important;
+    padding: 0 8px !important;
+}
+
+.CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color) !important;
+    border-right: none !important;
+    width: 0 !important;
+    animation: blink 1s infinite !important;
+}
+
+.CodeMirror-focused .CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color) !important;
+    opacity: 1 !important;
+}
+
+.CodeMirror-selected {
+    background: rgba(0, 242, 195, 0.2) !important;
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+    background: rgba(0, 242, 195, 0.3) !important;
+}
+
+.CodeMirror-activeline-background {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Cursor blinking animation */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Console Panel */
+.console-panel {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 242, 195, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    height: 80vh;
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.console-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.console-title i {
+    color: var(--accent-color);
+}
+
+.console-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+.console-output {
+    flex: 1;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.console-welcome {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 0.5rem 0;
+}
+
+.console-welcome i {
+    color: var(--accent-color);
+}
+
+.console-line {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.console-line:last-child {
+    border-bottom: none;
+}
+
+.timestamp {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.content {
+    flex: 1;
+    word-break: break-word;
+}
+
+.console-line.log .content {
+    color: var(--text-primary);
+}
+
+.console-line.info .content {
+    color: var(--info-color);
+}
+
+.console-line.warn .content {
+    color: var(--warning-color);
+}
+
+.console-line.error .content {
+    color: var(--error-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .playground-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .section-nav-dots {
+        right: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-nav-dots {
+        display: none;
+    }
+    
+    .playground-section {
+        padding: 2rem 0;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .editor-controls {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .control-btn {
+        flex: 1;
+        justify-content: center;
+        min-width: 120px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .CodeMirror {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .editor-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .CodeMirror {
+        font-size: 11px !important;
+    }
+    
+    .editor-panel {
+        border-radius: 10px;
+    }
+}

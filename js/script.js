@@ -1,276 +1,898 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const dots = document.querySelectorAll(".dot");
-    
-    const yearElement = document.getElementById('current-year');
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
+/**
+ * JAVASCRIPT FUNCTIONALITY
+ * Lukas200301 
+ * Enhanced interactions, animations, and dynamic content
+ */
+
+class PortfolioApp {
+    constructor() {
+        this.isLoaded = false;
+        this.currentSection = 'home';
+        this.repos = [];
+        this.skills = [];
+        this.scrollProgress = 0;
+        this.mousePosition = { x: 0, y: 0 };
+        this.neuralNodes = [];
+        this.typewriterTexts = [
+            'Full Stack Developer',
+            'Creative Problem Solver',
+            'Innovation Enthusiast',
+            'Code Architect',
+            'Digital Creator'
+        ];
+        this.currentTypewriterIndex = 0;
+        
+        this.init();
     }
-    
-    if (window.location.pathname.includes('/guides/')) {
-        const guideNavLinks = document.querySelectorAll('.guide-nav a');
-        const sections = document.querySelectorAll('.guide-section');
+
+    async init() {
+        this.setupEventListeners();
+        this.initializeCursor();
+        this.initializeNeuralNetwork();
+        this.initializeScrollAnimations();
+        this.initializeNavigation();
+        this.initializeTypewriter();
+        this.showLoadingScreen();
         
-        document.querySelectorAll('.step, .tab').forEach((element, index) => {
-            element.style.setProperty('--index', index);
-            element.style.animationDelay = `${0.1 + (index * 0.05)}s`;
-            element.style.animationFillMode = 'forwards';
-            element.style.opacity = '0';
-            element.style.animation = 'fadeInUp 0.8s ease-out forwards';
+        // Load dynamic content
+        await this.loadGitHubData();
+        this.initializeStats();
+        this.initializeSkillsAnimation();
+        
+        // Hide loading screen after everything is ready
+        setTimeout(() => this.hideLoadingScreen(), 2000);
+    }
+
+    setupEventListeners() {
+        // Window events
+        window.addEventListener('load', () => this.handleWindowLoad());
+        window.addEventListener('scroll', () => this.handleScroll());
+        window.addEventListener('resize', () => this.handleResize());
+        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+
+        // Navigation
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => this.toggleNavigation());
+        }
+
+        // Navigation links
+        document.querySelectorAll('.nav-link, .cta-button[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => this.handleNavigation(e));
         });
-        
-        const highlightNav = () => {
-            let currentSectionId = '';
-            const headerOffset = document.querySelector('.site-header').offsetHeight + 20;
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            backToTop.addEventListener('click', () => this.scrollToTop());
+        }
+
+        // Project filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.filterProjects(e));
+        });
+
+        // Skill items hover effects
+        document.querySelectorAll('.skill-item').forEach(item => {
+            item.addEventListener('mouseenter', () => this.animateSkillItem(item, true));
+            item.addEventListener('mouseleave', () => this.animateSkillItem(item, false));
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+
+        // Section navigation dots
+        this.initializeSectionDots();
+    }
+
+    initializeCursor() {
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+
+        const cursorFollower = document.getElementById('cursorFollower');
+        const cursorDot = document.getElementById('cursorDot');
+
+        if (!cursorFollower || !cursorDot) return;
+
+        document.addEventListener('mousemove', (e) => {
+            const { clientX: x, clientY: y } = e;
             
-            const isNearBottom = scrollPosition + windowHeight >= documentHeight - 50;
+            cursorDot.style.left = `${x}px`;
+            cursorDot.style.top = `${y}px`;
+            cursorDot.style.transform = 'translate(-50%, -50%)';
+            cursorDot.style.opacity = '1';
             
-            if (isNearBottom) {
-                currentSectionId = sections[sections.length - 1].getAttribute('id');
-            } else {
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - headerOffset;
-                    const sectionHeight = section.offsetHeight;
+            setTimeout(() => {
+                cursorFollower.style.left = `${x}px`;
+                cursorFollower.style.top = `${y}px`;
+                cursorFollower.style.transform = 'translate(-50%, -50%)';
+                cursorFollower.style.opacity = '1';
+            }, 50);
+        });
+
+        // Enhance cursor for interactive elements
+        document.querySelectorAll('a, button, .skill-item, .contact-item').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorFollower.style.borderColor = 'var(--secondary-accent)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.borderColor = 'var(--primary-accent)';
+            });
+        });
+    }
+
+    initializeNeuralNetwork() {
+        const canvas = document.getElementById('neuralCanvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        let animationId;
+
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            this.generateNeuralNodes();
+        };
+
+        this.generateNeuralNodes = () => {
+            this.neuralNodes = [];
+            const nodeCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
+            
+            for (let i = 0; i < nodeCount; i++) {
+                this.neuralNodes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1
+                });
+            }
+        };
+
+        const animate = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw nodes
+            this.neuralNodes.forEach((node, index) => {
+                // Update position
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                // Bounce off edges
+                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                
+                // Draw node
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(99, 102, 241, ${0.3 + Math.sin(Date.now() * 0.001 + index) * 0.2})`;
+                ctx.fill();
+                
+                // Draw connections
+                this.neuralNodes.slice(index + 1).forEach(otherNode => {
+                    const distance = Math.hypot(node.x - otherNode.x, node.y - otherNode.y);
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(otherNode.x, otherNode.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            animationId = requestAnimationFrame(animate);
+        };
+
+        resizeCanvas();
+        animate();
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // Cleanup function
+        this.cleanupNeuralNetwork = () => {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            window.removeEventListener('resize', resizeCanvas);
+        };
+    }
+
+    initializeScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                     
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        currentSectionId = section.getAttribute('id');
+                    // Trigger specific animations based on section
+                    const sectionId = entry.target.id;
+                    if (sectionId === 'about') {
+                        this.animateStats();
+                    } else if (sectionId === 'skills') {
+                        this.animateSkills();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    }
+
+    initializeNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Update active nav link based on scroll position
+        const updateActiveNav = () => {
+            const sections = document.querySelectorAll('section');
+            const navDots = document.querySelectorAll('.nav-dot');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = section.id;
+                }
+            });
+            
+            if (currentSection && currentSection !== this.currentSection) {
+                this.currentSection = currentSection;
+                
+                // Update navigation links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Update navigation dots
+                navDots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (dot.getAttribute('data-section') === currentSection) {
+                        dot.classList.add('active');
                     }
                 });
             }
-            
-            guideNavLinks.forEach(link => {
-                link.classList.remove('active');
-                
-                if (link.getAttribute('href') === `#${currentSectionId}`) {
-                    link.classList.add('active');
+        };
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav(); // Initial call
+    }
+
+    initializeSectionDots() {
+        const navDots = document.querySelectorAll('.nav-dot');
+        
+        // Add click handlers for navigation dots
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetSection = dot.getAttribute('data-section');
+                const section = document.getElementById(targetSection);
+                if (section) {
+                    this.scrollToSection(section);
                 }
             });
+        });
+    }
+
+    initializeTypewriter() {
+        const typewriterElement = document.querySelector('.typewriter-text');
+        if (!typewriterElement) return;
+
+        let currentText = '';
+        let isDeleting = false;
+        let textIndex = 0;
+        let charIndex = 0;
+
+        const type = () => {
+            const fullText = this.typewriterTexts[textIndex];
+            
+            if (isDeleting) {
+                currentText = fullText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                currentText = fullText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            typewriterElement.textContent = currentText;
+            
+            let typeSpeed = 100;
+            
+            if (isDeleting) {
+                typeSpeed = 50;
+            }
+            
+            if (!isDeleting && charIndex === fullText.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % this.typewriterTexts.length;
+                typeSpeed = 500; // Pause before new text
+            }
+            
+            setTimeout(type, typeSpeed);
+        };
+
+        type();
+    }
+
+    showLoadingScreen() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.remove('hidden');
+        }
+    }
+
+    hideLoadingScreen() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                this.isLoaded = true;
+            }, 800);
+        }
+    }
+
+    async loadGitHubData() {
+        try {
+            const response = await fetch('https://api.github.com/users/Lukas200301/repos?sort=updated&per_page=6');
+            const repos = await response.json();
+            
+            // Add the Raspberry Pi project as a featured project
+            const raspberryPiProject = {
+                name: 'Raspberry Pi Control',
+                description: 'A comprehensive application for controlling your Raspberry Pi from Android and Windows devices',
+                language: 'Dart',
+                stargazers_count: 3,
+                forks_count: 0,
+                html_url: 'https://github.com/Lukas200301/RaspberryPi-Control',
+                isLocal: true,
+                localUrl: 'pages/raspberry-pi-control.html'
+            };
+            
+            // Combine featured project with GitHub repos
+            const filteredRepos = repos.filter(repo => !repo.fork).slice(0, 5);
+            this.repos = [raspberryPiProject, ...filteredRepos];
+            this.displayProjects();
+            
+            // Load commit data for this month
+            await this.loadCommitData();
+            
+        } catch (error) {
+            console.error('Error loading GitHub data:', error);
+            this.displayFallbackProjects();
+        }
+    }
+
+    async loadCommitData() {
+        try {
+            // Get the start of current month
+            const now = new Date();
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const startOfMonthISO = startOfMonth.toISOString();
+            
+            // Fetch commits from all repos for this month
+            let totalCommits = 0;
+            const commitPromises = this.repos.slice(0, 10).map(async (repo) => {
+                if (repo.isLocal) return 0; // Skip local projects
+                
+                try {
+                    const commitsResponse = await fetch(
+                        `https://api.github.com/repos/Lukas200301/${repo.name}/commits?since=${startOfMonthISO}&author=Lukas200301`
+                    );
+                    const commits = await commitsResponse.json();
+                    return Array.isArray(commits) ? commits.length : 0;
+                } catch (error) {
+                    console.warn(`Failed to fetch commits for ${repo.name}:`, error);
+                    return 0;
+                }
+            });
+
+            const commitCounts = await Promise.all(commitPromises);
+            totalCommits = commitCounts.reduce((sum, count) => sum + count, 0);
+            
+            const commitCountElement = document.getElementById('commit-count');
+            if (commitCountElement) {
+                commitCountElement.textContent = totalCommits;
+            }
+            
+        } catch (error) {
+            console.error('Error loading commit data:', error);
+            // Fallback to estimated number
+            const commitCountElement = document.getElementById('commit-count');
+            if (commitCountElement) {
+                commitCountElement.textContent = '20+';
+            }
+        }
+    }
+
+    displayProjects() {
+        const projectsGrid = document.getElementById('projectsGrid');
+        const projectsLoading = document.getElementById('projectsLoading');
+        
+        if (!projectsGrid || !projectsLoading) return;
+
+        projectsLoading.style.display = 'none';
+        
+        if (this.repos.length === 0) {
+            this.displayFallbackProjects();
+            return;
+        }
+
+        projectsGrid.innerHTML = this.repos.map(repo => this.createProjectCard(repo)).join('');
+        
+        // Animate project cards
+        setTimeout(() => {
+            document.querySelectorAll('.project-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }, 100);
+    }
+
+    createProjectCard(repo) {
+        const language = repo.language || 'Code';
+        const stars = repo.stargazers_count || repo.stars || 0;
+        const forks = repo.forks_count || repo.forks || 0;
+        const description = repo.description || 'No description available';
+        
+        const languageIcons = {
+            'JavaScript': 'fab fa-js-square',
+            'TypeScript': 'fab fa-js-square',
+            'Python': 'fab fa-python',
+            'Java': 'fab fa-java',
+            'HTML': 'fab fa-html5',
+            'CSS': 'fab fa-css3-alt',
+            'PHP': 'fab fa-php',
+            'C++': 'fas fa-code',
+            'C#': 'fas fa-code',
+            'Go': 'fas fa-code',
+            'Dart': 'devicon-dart-plain'
         };
         
-        guideNavLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    const headerHeight = document.querySelector('.site-header').offsetHeight;
-                    const scrollPosition = targetSection.offsetTop - headerHeight - 30;
-                    
-                    window.scrollTo({
-                        top: scrollPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    history.pushState(null, null, targetId);
-                    
-                    guideNavLinks.forEach(navLink => {
-                        navLink.classList.remove('active');
-                    });
-                    link.classList.add('active');
-                }
-            });
-        });
+        const icon = languageIcons[language] || 'fas fa-code';
         
-        window.addEventListener('scroll', highlightNav);
+        // Determine the correct URL and target for the project
+        const projectUrl = repo.isLocal ? repo.localUrl : repo.html_url;
+        const target = repo.isLocal ? '_self' : '_blank';
+        const linkText = repo.isLocal ? 'View Project' : 'View Code';
+        const linkIcon = repo.isLocal ? 'fas fa-eye' : 'fab fa-github';
         
-        highlightNav();
-    }
-    
-    const themeToggle = document.getElementById('theme-toggle');
-    
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeToggle.checked = true;
-    } else if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.checked = false;
-    } else if (prefersDark) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.checked = false;
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeToggle.checked = true;
-    }
-    
-    themeToggle.addEventListener('change', function() {
-        const scrollPosition = window.scrollY;
-        
-        document.documentElement.classList.add('theme-transition');
-        
-        setTimeout(() => {
-            if (this.checked) {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-            
-            window.scrollTo(0, scrollPosition);
-            
-            setTimeout(() => {
-                document.documentElement.classList.remove('theme-transition');
-            }, 300);
-        }, 10);
-    });
-
-    function adjustForScreenSize() {
-        const width = window.innerWidth;
-        let animationDuration = 1.5;
-        if (width < 600) {
-            animationDuration = 1;
-        } else if (width > 1000) {
-            animationDuration = 2;
-        }
-
-        dots.forEach(dot => {
-            dot.style.animationDuration = `${animationDuration}s`;
-        });
-    }
-
-    async function fetchRepos() {
-        const repoList = document.getElementById("repo-list");
-        const loadingIndicator = document.getElementById("loading-repos");
-        const githubApiUrl = "https://api.github.com/users/Lukas200301/repos?sort=updated&direction=desc";
-        
-        try {
-            loadingIndicator.style.display = "flex";
-            const response = await fetch(githubApiUrl);
-            
-            if (!response.ok) {
-                throw new Error(`GitHub API returned ${response.status}`);
-            }
-            
-            const repos = await response.json();
-            loadingIndicator.style.display = "none";
-            
-            repoList.innerHTML = "";
-            
-            if (repos.length === 0) {
-                repoList.innerHTML = "<p>No repositories found.</p>";
-                return;
-            }
-
-            const repoGuides = {
-                "RaspberryPi-Control": "raspberry-pi-control.html"
-            };
-
-            repos.forEach((repo, index) => {
-                if (repo.name === "Lukas200301") {
-                    return;
-                }
-
-                const repoItem = document.createElement("div");
-                repoItem.classList.add("repo-item");
-                repoItem.style.setProperty('--index', index);
-
-                repoItem.addEventListener('mouseenter', () => {
-                    const actionButtons = repoItem.querySelectorAll('.repo-btn');
-                    actionButtons.forEach((btn, i) => {
-                        btn.style.transition = `transform 0.3s ease ${i * 0.1}s`;
-                        btn.style.transform = 'translateY(-3px)';
-                    });
-                });
-                
-                repoItem.addEventListener('mouseleave', () => {
-                    const actionButtons = repoItem.querySelectorAll('.repo-btn');
-                    actionButtons.forEach(btn => {
-                        btn.style.transform = 'translateY(0)';
-                    });
-                });
-
-                const description = repo.description 
-                    ? repo.description.slice(0, 100) + (repo.description.length > 100 ? "..." : "") 
-                    : "No description available.";
-                
-                const updatedDate = new Date(repo.updated_at);
-                const formattedDate = updatedDate.toLocaleDateString("en-US", {
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric'
-                });
-                
-                const languageClass = repo.language ? `language-${repo.language.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}` : '';
-                
-                const hasGuide = repo.name in repoGuides;
-                
-                const guideFilename = hasGuide ? repoGuides[repo.name] : "404.html";
-                
-                repoItem.innerHTML = `
-                    <h3>
-                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
-                            ${repo.name}
-                        </a>
-                    </h3>
-                    <p class="repo-description">${description}</p>
-                    <div class="repo-meta">
-                        ${repo.language ? 
-                            `<span class="repo-language">
-                                <span class="language-dot ${languageClass}"></span>
-                                ${repo.language}
-                            </span>` : ''
-                        }
-                        <span class="repo-stars">
-                            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16">
-                                <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
-                            </svg>
-                            ${repo.stargazers_count}
+        return `
+            <div class="project-card" data-category="${this.getProjectCategory(repo)}" style="opacity: 0; transform: translateY(20px); transition: all 0.5s ease;">
+                <div class="project-header">
+                    <div class="project-icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="project-stats">
+                        <span class="stat">
+                            <i class="fas fa-star"></i>
+                            ${stars}
                         </span>
-                        <span class="repo-updated">Updated on ${formattedDate}</span>
+                        <span class="stat">
+                            <i class="fas fa-code-branch"></i>
+                            ${forks}
+                        </span>
                     </div>
-                    <div class="repo-actions">
-                        <a href="${repo.html_url}" class="repo-btn repo-btn-github" target="_blank" rel="noopener noreferrer">
-                            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="github-icon">
-                                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                            </svg>
-                            GitHub Repo
-                        </a>
-                        <a href="guides/${guideFilename}" class="repo-btn ${hasGuide ? 'repo-btn-guide' : 'repo-btn-disabled'}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="guide-icon">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                            ${hasGuide ? 'View Guide' : 'No Guide'}
-                        </a>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">${repo.name}</h3>
+                    <p class="project-description">${description}</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">${language}</span>
                     </div>
-                `;
+                </div>
+                <div class="project-actions">
+                    <a href="${projectUrl}" target="${target}" rel="noopener noreferrer" class="project-link">
+                        <i class="${linkIcon}"></i>
+                        ${linkText}
+                    </a>
+                    ${!repo.isLocal && repo.html_url ? `
+                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
+                            <i class="fab fa-github"></i>
+                            GitHub
+                        </a>
+                    ` : ''}
+                    ${repo.homepage ? `
+                        <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            Live Demo
+                        </a>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
 
-                repoList.appendChild(repoItem);
-                
-                setTimeout(() => {
-                    repoItem.style.opacity = "1";
-                }, 50 * index);
-            });
-        } catch (error) {
-            console.error("Error fetching repositories:", error);
-            loadingIndicator.style.display = "none";
-            repoList.innerHTML = `<p class="error-message">Failed to load repositories. ${error.message}</p>`;
+    displayFallbackProjects() {
+        const projectsGrid = document.getElementById('projectsGrid');
+        const projectsLoading = document.getElementById('projectsLoading');
+        
+        if (!projectsGrid || !projectsLoading) return;
+
+        projectsLoading.style.display = 'none';
+        
+        const fallbackProjects = [
+            {
+                name: 'Raspberry Pi Control',
+                description: 'A comprehensive application for controlling your Raspberry Pi from Android and Windows devices',
+                language: 'Dart',
+                stars: 3,
+                forks: 0,
+                html_url: 'https://github.com/Lukas200301/RaspberryPi-Control',
+                category: 'tools',
+                isLocal: true,
+                localUrl: 'pages/raspberry-pi-control.html'
+            },
+            {
+                name: 'Portfolio Website',
+                description: 'A modern, responsive portfolio website built with HTML, CSS, and JavaScript',
+                language: 'JavaScript',
+                stars: 0,
+                forks: 0,
+                html_url: 'https://github.com/Lukas200301',
+                category: 'web'
+            },
+            {
+                name: 'Coming Soon',
+                description: 'Exciting projects are in development. Stay tuned for amazing creations!',
+                language: 'Code',
+                stars: 0,
+                forks: 0,
+                html_url: 'https://github.com/Lukas200301',
+                category: 'tools'
+            }
+        ];
+
+        projectsGrid.innerHTML = fallbackProjects.map(project => this.createProjectCard(project)).join('');
+    }
+
+    getProjectCategory(repo) {
+        const name = repo.name.toLowerCase();
+        const language = (repo.language || '').toLowerCase();
+        const description = (repo.description || '').toLowerCase();
+        
+        if (language.includes('javascript') || language.includes('typescript') || 
+            language.includes('html') || language.includes('css') || 
+            name.includes('web') || description.includes('web')) {
+            return 'web';
+        } else if (language.includes('java') || language.includes('kotlin') || 
+                   language.includes('swift') || name.includes('app') || 
+                   description.includes('mobile')) {
+            return 'mobile';
+        } else {
+            return 'tools';
         }
     }
 
-    adjustForScreenSize();
-    fetchRepos();
-    window.addEventListener("resize", adjustForScreenSize);
-    
-    const anchorLinks = document.querySelectorAll('a[href^="#"]:not(.guide-nav a)');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if(this.getAttribute('href').length > 1) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+    initializeStats() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        // Set up stats with dynamic values
+        const stats = [
+            { element: statNumbers[0], target: this.repos.length, label: 'Projects' },
+            { element: statNumbers[1], target: this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0), label: 'GitHub Stars' },
+            { element: statNumbers[2], target: new Set(this.repos.map(repo => repo.language).filter(Boolean)).size || 5, label: 'Languages' },
+            { element: statNumbers[3], target: 2020, label: 'Started' }
+        ];
+
+        stats.forEach(stat => {
+            if (stat.element) {
+                stat.element.setAttribute('data-target', stat.target);
             }
         });
-    });
+    }
+
+    animateStats() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-target')) || 0;
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const updateStat = () => {
+                current += increment;
+                if (current < target) {
+                    stat.textContent = Math.floor(current);
+                    requestAnimationFrame(updateStat);
+                } else {
+                    stat.textContent = target;
+                }
+            };
+            
+            updateStat();
+        });
+    }
+
+    initializeSkillsAnimation() {
+        const skillItems = document.querySelectorAll('.skill-item');
+        
+        skillItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+        });
+    }
+
+    animateSkills() {
+        const skillItems = document.querySelectorAll('.skill-item');
+        
+        skillItems.forEach(item => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        });
+    }
+
+    animateSkillItem(item, isHovering) {
+        const icon = item.querySelector('i');
+        if (!icon) return;
+        
+        if (isHovering) {
+            icon.style.transform = 'scale(1.2) rotate(10deg)';
+            icon.style.color = 'var(--primary-accent)';
+        } else {
+            icon.style.transform = 'scale(1) rotate(0deg)';
+            icon.style.color = '';
+        }
+    }
+
+    handleWindowLoad() {
+        // Additional setup after window load
+        this.updateScrollProgress();
+    }
+
+    handleScroll() {
+        this.updateScrollProgress();
+        this.updateBackToTopButton();
+    }
+
+    handleResize() {
+        // Handle responsive adjustments
+        this.updateScrollProgress();
+    }
+
+    handleMouseMove(e) {
+        this.mousePosition = { x: e.clientX, y: e.clientY };
+        
+        // Add subtle parallax effect to floating elements
+        const floatingElements = document.querySelectorAll('.floating-code, .floating-brackets, .floating-semicolon, .floating-lambda');
+        floatingElements.forEach((element, index) => {
+            const speed = (index + 1) * 0.0005;
+            const x = (window.innerWidth - e.clientX * speed);
+            const y = (window.innerHeight - e.clientY * speed);
+            element.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    }
+
+    handleNavigation(e) {
+        e.preventDefault();
+        
+        const target = e.currentTarget.getAttribute('data-section');
+        if (!target) return;
+        
+        const targetSection = document.getElementById(target);
+        if (!targetSection) return;
+        
+        this.scrollToSection(targetSection);
+        
+        // Close mobile menu if open
+        const navMenu = document.getElementById('navMenu');
+        if (navMenu && navMenu.classList.contains('active')) {
+            this.toggleNavigation();
+        }
+    }
+
+    handleKeyboard(e) {
+        // Add keyboard shortcuts
+        if (e.ctrlKey || e.metaKey) {
+            switch (e.key) {
+                case '1':
+                    e.preventDefault();
+                    this.scrollToSection(document.getElementById('home'));
+                    break;
+                case '2':
+                    e.preventDefault();
+                    this.scrollToSection(document.getElementById('about'));
+                    break;
+                case '3':
+                    e.preventDefault();
+                    this.scrollToSection(document.getElementById('projects'));
+                    break;
+                case '4':
+                    e.preventDefault();
+                    this.scrollToSection(document.getElementById('skills'));
+                    break;
+                case '5':
+                    e.preventDefault();
+                    this.scrollToSection(document.getElementById('contact'));
+                    break;
+            }
+        }
+        
+        if (e.key === 'Escape') {
+            const navMenu = document.getElementById('navMenu');
+            if (navMenu && navMenu.classList.contains('active')) {
+                this.toggleNavigation();
+            }
+        }
+    }
+
+    toggleNavigation() {
+        const navMenu = document.getElementById('navMenu');
+        const navToggle = document.getElementById('navToggle');
+        
+        if (!navMenu || !navToggle) return;
+        
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+        
+        document.body.classList.toggle('no-scroll', navMenu.classList.contains('active'));
+    }
+
+    scrollToSection(section) {
+        if (!section) return;
+        
+        const offsetTop = section.offsetTop - 80;
+        
+        window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+        });
+    }
+
+    scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    updateScrollProgress() {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / scrollHeight) * 100;
+        this.scrollProgress = Math.min(Math.max(scrolled, 0), 100);
+        
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) {
+            progressBar.style.width = `${this.scrollProgress}%`;
+        }
+    }
+
+    updateBackToTopButton() {
+        const backToTop = document.getElementById('backToTop');
+        if (!backToTop) return;
+        
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    }
+
+    filterProjects(e) {
+        const filterBtn = e.currentTarget;
+        const filter = filterBtn.getAttribute('data-filter');
+        
+        // Update active filter button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        filterBtn.classList.add('active');
+        
+        // Filter project cards
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            
+            if (filter === 'all' || category === filter) {
+                card.style.display = 'block';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+
+    // Cleanup method
+    destroy() {
+        if (this.cleanupNeuralNetwork) {
+            this.cleanupNeuralNetwork();
+        }
+        
+        // Remove all event listeners
+        window.removeEventListener('load', this.handleWindowLoad);
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('mousemove', this.handleMouseMove);
+    }
+}
+
+// Additional utility functions
+class AnimationUtils {
+    static easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+    
+    static easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    }
+    
+    static lerp(start, end, t) {
+        return start + (end - start) * t;
+    }
+    
+    static clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    }
+}
+
+class PerformanceOptimizer {
+    constructor() {
+        this.rafId = null;
+        this.isRafActive = false;
+    }
+    
+    requestAnimationFrame(callback) {
+        if (!this.isRafActive) {
+            this.isRafActive = true;
+            this.rafId = requestAnimationFrame(() => {
+                callback();
+                this.isRafActive = false;
+            });
+        }
+    }
+    
+    cancelAnimationFrame() {
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.isRafActive = false;
+        }
+    }
+}
+
+// Initialize the application when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    window.portfolioApp = new PortfolioApp();
 });
+
+// Handle page visibility changes for performance
+document.addEventListener('visibilitychange', () => {
+    if (window.portfolioApp) {
+        if (document.hidden) {
+            // Pause animations when page is hidden
+            window.portfolioApp.isPageVisible = false;
+        } else {
+            // Resume animations when page is visible
+            window.portfolioApp.isPageVisible = true;
+        }
+    }
+});
+
+// Export for potential module usage
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { PortfolioApp, AnimationUtils, PerformanceOptimizer };
+}

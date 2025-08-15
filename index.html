@@ -1,144 +1,444 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio and GitHub Repository Showcase for Lukas200301 - View projects, repositories, and detailed guides with light and dark theme support">
-    <title>Lukas200301 - GitHub Portfolio</title>
+    <meta charset="UTF-8">                        
+    <meta name="description" content="Lukas200301 - Innovative Developer & Creator | Explore cutting-edge projects and revolutionary code">
+    <meta name="keywords" content="developer, portfolio, github, programming, web development, software engineer">
+    <meta name="author" content="Lukas200301">
+    <meta property="og:title" content="Lukas200301 - Developer Portfolio">
+    <meta property="og:description" content="Innovative Developer & Creator showcasing revolutionary projects">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <meta property="og:url" content="https://lukas200301.github.io">
+    <title>Lukas200301</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
-    <style>
-        .profile-info {
-            animation: fadeInDown 0.8s ease-out forwards;
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .profile-image {
-            transition: all 0.3s ease;
-            border: 2px solid var(--border-color);
-        }
-        
-        .profile-image:hover {
-            transform: scale(1.05);
-            border-color: var(--primary-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-        
-        .profile-link {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .profile-link:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-        
-        .profile-link:hover:after {
-            width: 100%;
-        }
-        
-        .repos-section h2,
-        .section-desc {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .repos-section h2:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.5s ease;
-        }
-        
-        .repos-section:hover h2:after {
-            width: 80px;
-        }
-    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
 </head>
-<body>    <header class="site-header">
-        <div class="container">
-            <div class="nav-container">
-                <div class="left-placeholder"></div>
-                
-                <div class="theme-toggle">
-                    <span class="theme-label">Theme</span>
-                    <label class="theme-switch">
-                        <input type="checkbox" id="theme-toggle">                        <span class="slider">
-                            <span class="sun-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zM11 1h2v3h-2zM11 20h2v3h-2zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414zM4.929 20.485l-1.414-1.414 2.121-2.121 1.414 1.414zM18.364 7.05l-1.414-1.414 2.121-2.121 1.414 1.414zM23 11v2h-3v-2zM4 11v2H1v-2z"/>
-                                </svg>
-                            </span>
-                            <span class="moon-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M10 6c0-1.881.634-3.614 1.7-5C7.434 1.613 4 5.519 4 10c0 5.514 4.486 10 10 10 4.481 0 8.387-3.434 9-7.7-1.387 1.067-3.12 1.7-5 1.7-4.418 0-8-3.582-8-8z"/>
-                                </svg>
-                            </span>
+<body>
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Neural Network Background -->
+    <div class="neural-network" id="neuralNetwork">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section active">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-intro">
+                        <span class="intro-text">Hello, I'm</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="title-line">
+                            <span class="title-word glitch-text" data-text="Lukas200301">Lukas200301</span>
                         </span>
-                    </label>
+                        <span class="title-line">
+                            <span class="title-word gradient-text">Developer</span>
+                        </span>
+                    </h1>
+                    <div class="hero-subtitle">
+                        <div class="typewriter">
+                            <span class="typewriter-text"></span>
+                            <span class="cursor">|</span>
+                        </div>
+                    </div>
+                    <div class="hero-description">
+                        <p>Crafting innovative solutions with cutting-edge technology. Passionate about creating extraordinary digital experiences that push the boundaries of what's possible.</p>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="cta-button primary" data-section="projects">
+                            <span class="button-text">View My Work</span>
+                            <div class="button-bg"></div>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="profile-info">
-                <div class="profile-image-container">
-                    <img id="profile-image" src="https://github.com/Lukas200301.png" alt="Profile Image" class="profile-image">
-                </div>
-                <div class="profile-text">
-                    <h1 id="profile-name">Lukas200301</h1>
-                    <p id="profile-bio">Welcome to my GitHub portfolio</p>
-                    <div class="profile-links">
-                        <a href="https://github.com/Lukas200301" target="_blank" rel="noopener noreferrer" class="profile-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                            GitHub
-                        </a>
+                
+                <div class="hero-visual">
+                    <div class="profile-container">
+                        <div class="profile-rings">
+                            <div class="ring ring-1"></div>
+                            <div class="ring ring-2"></div>
+                            <div class="ring ring-3"></div>
+                        </div>
+                        <div class="profile-image">
+                            <img src="https://github.com/Lukas200301.png" alt="Lukas200301" id="profileImage">
+                            <div class="profile-glow"></div>
+                        </div>
+                        <div class="profile-data">
+                            <div class="data-point" style="--delay: 0.5s">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </div>
+                            <div class="data-point" style="--delay: 0.7s">
+                                <i class="fas fa-code"></i>
+                                <span>Developer</span>
+                            </div>
+                            <div class="data-point" style="--delay: 0.9s">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Innovator</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header><section id="repos" class="repos-section">
-        <h2>My GitHub Repositories</h2>
-        <p class="section-desc">Explore my projects and contributions</p>
-        
-        <div id="loading-repos" class="loading repo-loading">
-            <span class="dot">.</span>
-            <span class="dot">.</span>
-            <span class="dot">.</span>
-        </div>
-        
-        <div id="repo-list" class="repo-list"></div>
-    </section>
-    
-    <footer>
-        <div class="footer-content">
-            <p>&copy; <span id="current-year"></span> Lukas200301</p>
-            <p>Built with <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></p>
-        </div>
-    </footer>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+            </div>
+        </section>
 
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">About Me</span>
+                    <h2 class="section-title">Passionate Developer</h2>
+                    <p class="section-subtitle">Building the future, one line of code at a time</p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <div class="about-description">
+                            <p>I'm a passionate developer who loves creating innovative solutions and exploring new technologies. My journey in programming has been driven by curiosity and a desire to build meaningful applications that make a difference.</p>
+                            <p>With expertise in multiple programming languages and frameworks, I enjoy tackling complex challenges and turning creative ideas into reality. Every project is an opportunity to learn, grow, and push the boundaries of what's possible.</p>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="0">0</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="0">0</div>
+                                <div class="stat-label">GitHub Stars</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="0">0</div>
+                                <div class="stat-label">Languages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="2020">2020</div>
+                                <div class="stat-label">Started</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-visual">
+                        <!-- Discord Status Card -->
+                        <div class="discord-window">
+                            <div class="window-header">
+                                <div class="window-controls">
+                                    <span class="control close"></span>
+                                    <span class="control minimize"></span>
+                                    <span class="control maximize"></span>
+                                </div>
+                                <div class="window-title">
+                                    <i class="fab fa-discord" style="color: #5865F2; margin-right: 8px;"></i>
+                                    discord_status.live
+                                </div>
+                            </div>
+                            <div class="window-content">
+                                <iframe 
+                                    src="https://lanyard.cnrad.dev/api/364118506460938250"
+                                    width="100%" 
+                                    height="200"
+                                    frameborder="0"
+                                    style="border-radius: 8px; background: transparent;">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">My Work</span>
+                    <h2 class="section-title">Featured Categories</h2>
+                    <p class="section-subtitle">Exploring innovation through code</p>
+                </div>
+                
+                <div class="category-menu">
+                    <div class="category-card" data-category="projects">
+                        <div class="category-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="category-content">
+                            <h3>Projects</h3>
+                            <p>Innovative applications and software solutions that solve real-world problems</p>
+                            <button class="category-preview-btn" onclick="window.location.href='projects/projects.html'">
+                                <span>View All Projects</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="category-card" data-category="tools">
+                        <div class="category-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="category-content">
+                            <h3>Tools</h3>
+                            <p>Utility applications and development tools that enhance productivity</p>
+                            <button class="category-preview-btn" onclick="window.location.href='tools/tools.html'">
+                                <span>View All Tools</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="category-card" data-category="games">
+                        <div class="category-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="category-content">
+                            <h3>Games</h3>
+                            <p>Interactive entertainment and gaming experiences built with modern technology</p>
+                            <button class="category-preview-btn" onclick="window.location.href='games/games.html'">
+                                <span>View All Games</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">Expertise</span>
+                    <h2 class="section-title">Skills & Technologies</h2>
+                    <p class="section-subtitle">Tools I use to create amazing experiences</p>
+                </div>
+                
+                <div class="skills-content">
+                    <div class="skills-categories">
+                        <div class="skill-category" data-category="frontend">
+                            <div class="category-header">
+                                <i class="fas fa-palette"></i>
+                                <h3>Frontend</h3>
+                            </div>
+                            <div class="skills-grid">
+                                <div class="skill-item" data-skill="html">
+                                    <i class="devicon-html5-plain"></i>
+                                    <span>HTML5</span>
+                                </div>
+                                <div class="skill-item" data-skill="css">
+                                    <i class="devicon-css3-plain"></i>
+                                    <span>CSS3</span>
+                                </div>
+                                <div class="skill-item" data-skill="javascript">
+                                    <i class="devicon-javascript-plain"></i>
+                                    <span>JavaScript</span>
+                                </div>
+                                <div class="skill-item" data-skill="typescript">
+                                    <i class="devicon-typescript-plain"></i>
+                                    <span>TypeScript</span>
+                                </div>
+                                <div class="skill-item" data-skill="nuxtjs">
+                                    <i class="devicon-nuxtjs-plain"></i>
+                                    <span>Nuxt.js</span>
+                                </div>
+                                <div class="skill-item" data-skill="vue">
+                                    <i class="devicon-vuejs-plain"></i>
+                                    <span>Vue.js</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category" data-category="backend">
+                            <div class="category-header">
+                                <i class="fas fa-server"></i>
+                                <h3>Backend</h3>
+                            </div>
+                            <div class="skills-grid">
+                                <div class="skill-item" data-skill="nodejs">
+                                    <i class="devicon-nodejs-plain"></i>
+                                    <span>Node.js</span>
+                                </div>
+                                <div class="skill-item" data-skill="python">
+                                    <i class="devicon-python-plain"></i>
+                                    <span>Python</span>
+                                </div>
+                                <div class="skill-item" data-skill="java">
+                                    <i class="devicon-java-plain"></i>
+                                    <span>Java</span>
+                                </div>
+                                <div class="skill-item" data-skill="csharp">
+                                    <i class="devicon-csharp-plain"></i>
+                                    <span>C#</span>
+                                </div>
+                                <div class="skill-item" data-skill="dart">
+                                    <i class="devicon-dart-plain"></i>
+                                    <span>Dart</span>
+                                </div>
+                                <div class="skill-item" data-skill="flutter">
+                                    <i class="devicon-flutter-plain"></i>
+                                    <span>Flutter</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category" data-category="tools">
+                            <div class="category-header">
+                                <i class="fas fa-tools"></i>
+                                <h3>Tools & Platforms</h3>
+                            </div>
+                            <div class="skills-grid">
+                                <div class="skill-item" data-skill="github">
+                                    <i class="devicon-github-plain"></i>
+                                    <span>GitHub</span>
+                                </div>
+                                <div class="skill-item" data-skill="vscode">
+                                    <i class="devicon-vscode-plain"></i>
+                                    <span>VS Code</span>
+                                </div>
+                                <div class="skill-item" data-skill="docker">
+                                    <i class="devicon-docker-plain"></i>
+                                    <span>Docker</span>
+                                </div>
+                                <div class="skill-item" data-skill="grafana">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Grafana</span>
+                                </div>
+                                <div class="skill-item" data-skill="mysql">
+                                    <i class="devicon-mysql-plain"></i>
+                                    <span>MySQL</span>
+                                </div>
+                                <div class="skill-item" data-skill="linux">
+                                    <i class="devicon-linux-plain"></i>
+                                    <span>Linux</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GitHub Activity Section -->
+        <section id="activity" class="activity-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">Development Activity</span>
+                    <h2 class="section-title">Latest Contributions</h2>
+                    <p class="section-subtitle">Real-time updates from my coding journey</p>
+                </div>
+                
+                <div class="activity-content">
+                    <div class="activity-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>GitHub</h3>
+                                <p>Active repositories</p>
+                                <a href="https://github.com/Lukas200301" target="_blank" rel="noopener noreferrer" class="stat-link">
+                                    View Profile
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-code-branch"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Commits</h3>
+                                <p>This month</p>
+                                <span class="stat-number" id="commit-count">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-visual">
+                        <div class="terminal-window">
+                            <div class="terminal-header">
+                                <div class="terminal-controls">
+                                    <span class="control close"></span>
+                                    <span class="control minimize"></span>
+                                    <span class="control maximize"></span>
+                                </div>
+                                <div class="terminal-title">git-activity.sh</div>
+                            </div>
+                            <div class="terminal-content">
+                                <div class="terminal-line">
+                                    <span class="prompt">$</span>
+                                    <span class="command">git log --oneline --since="1 week ago"</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="output">a3f7b2e Update portfolio design</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="output">d8c1f45 Add new project showcase</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="output">e9a2b73 Implement navigation dots</span>
+                                </div>
+                                <div class="terminal-line">
+                                    <span class="prompt">$</span>
+                                    <span class="cursor-blink">_</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Section Navigation Dots -->
+    <div class="section-nav-dots" id="sectionNavDots">
+        <div class="nav-dot active" data-section="home" title="Home">
+            <span class="dot-label">Home</span>
+        </div>
+        <div class="nav-dot" data-section="about" title="About">
+            <span class="dot-label">About</span>
+        </div>
+        <div class="nav-dot" data-section="projects" title="Projects">
+            <span class="dot-label">My Work</span>
+        </div>
+        <div class="nav-dot" data-section="skills" title="Skills">
+            <span class="dot-label">Skills</span>
+        </div>
+        <div class="nav-dot" data-section="activity" title="Activity">
+            <span class="dot-label">Activity</span>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/floating-elements.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
