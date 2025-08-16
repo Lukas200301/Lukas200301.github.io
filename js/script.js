@@ -565,12 +565,6 @@ class PortfolioApp {
                         <i class="${linkIcon}"></i>
                         ${linkText}
                     </a>
-                    ${!repo.isLocal && repo.html_url ? `
-                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-link">
-                            <i class="fab fa-github"></i>
-                            GitHub
-                        </a>
-                    ` : ''}
                 </div>
             </div>
         `;
