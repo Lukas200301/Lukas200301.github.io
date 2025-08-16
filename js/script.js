@@ -21,6 +21,11 @@ class PortfolioApp {
             'Digital Creator'
         ];
         this.currentTypewriterIndex = 0;
+        this.gitHubCache = {
+            data: null,
+            timestamp: null,
+            ttl: 5 * 60 * 1000 // 5 minutes cache
+        };
         
         this.init();
     }
@@ -347,9 +352,32 @@ class PortfolioApp {
     }
 
     async loadGitHubData() {
+        // Check if we have valid cached data
+        const now = Date.now();
+        if (this.gitHubCache.data && 
+            this.gitHubCache.timestamp && 
+            (now - this.gitHubCache.timestamp) < this.gitHubCache.ttl) {
+            console.log('Using cached GitHub data');
+            this.repos = this.gitHubCache.data;
+            this.displayProjects();
+            return;
+        }
+        
         try {
+            console.log('Fetching fresh GitHub data...');
             const response = await fetch('https://api.github.com/users/Lukas200301/repos?sort=updated&per_page=6');
+            
+            // Check if the response is ok before trying to parse JSON
+            if (!response.ok) {
+                throw new Error(`GitHub API responded with status: ${response.status} ${response.statusText}`);
+            }
+            
             const repos = await response.json();
+            
+            // Validate that we got a valid array response
+            if (!Array.isArray(repos)) {
+                throw new Error('Invalid response format from GitHub API');
+            }
             
             // Add the Raspberry Pi project as a featured project
             const raspberryPiProject = {
@@ -366,13 +394,47 @@ class PortfolioApp {
             // Combine featured project with GitHub repos
             const filteredRepos = repos.filter(repo => !repo.fork).slice(0, 5);
             this.repos = [raspberryPiProject, ...filteredRepos];
+            
+            // Cache the successful result
+            this.gitHubCache.data = this.repos;
+            this.gitHubCache.timestamp = now;
+            
+            console.log(`Successfully loaded ${this.repos.length} projects from GitHub API`);
             this.displayProjects();
             
-            // Load commit data for this month
-            await this.loadCommitData();
+            // Load commit data for this month (but don't let it fail the main load)
+            try {
+                await this.loadCommitData();
+            } catch (commitError) {
+                console.warn('Failed to load commit data, but projects loaded successfully:', commitError);
+                // Set fallback commit count
+                const commitCountElement = document.getElementById('commit-count');
+                if (commitCountElement) {
+                    commitCountElement.textContent = '20+';
+                }
+            }
             
         } catch (error) {
             console.error('Error loading GitHub data:', error);
+            
+            // Try to use stale cache data if available
+            if (this.gitHubCache.data && this.gitHubCache.data.length > 3) {
+                console.warn('Using stale cached data due to API error');
+                this.repos = this.gitHubCache.data;
+                this.displayProjects();
+                return;
+            }
+            
+            // Only fall back to hardcoded projects if we really can't get GitHub data
+            // Try to provide more specific error handling
+            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                console.warn('Network error detected, falling back to cached/fallback projects');
+            } else if (error.message.includes('403') || error.message.includes('rate limit')) {
+                console.warn('Rate limit hit, falling back to cached/fallback projects');
+            } else {
+                console.warn('Unknown error occurred, falling back to cached/fallback projects');
+            }
+            
             this.displayFallbackProjects();
         }
     }
@@ -447,6 +509,7 @@ class PortfolioApp {
 
     createProjectCard(repo) {
         const language = repo.language || 'Code';
+        // Handle both old and new property names for backwards compatibility
         const stars = repo.stargazers_count || repo.stars || 0;
         const forks = repo.forks_count || repo.forks || 0;
         const description = repo.description || 'No description available';
@@ -508,12 +571,6 @@ class PortfolioApp {
                             GitHub
                         </a>
                     ` : ''}
-                    ${repo.homepage ? `
-                        <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
-                            <i class="fas fa-external-link-alt"></i>
-                            Live Demo
-                        </a>
-                    ` : ''}
                 </div>
             </div>
         `;
@@ -527,13 +584,27 @@ class PortfolioApp {
 
         projectsLoading.style.display = 'none';
         
+        // Add a notice that we're showing fallback projects
+        const fallbackNotice = document.createElement('div');
+        fallbackNotice.className = 'fallback-notice';
+        fallbackNotice.innerHTML = `
+            <div class="notice-content">
+                <i class="fas fa-info-circle"></i>
+                <span>Unable to load latest projects from GitHub API. Showing cached projects.</span>
+                <button class="retry-btn" onclick="window.portfolioApp.retryLoadGitHubData()">
+                    <i class="fas fa-redo"></i>
+                    Retry
+                </button>
+            </div>
+        `;
+        
         const fallbackProjects = [
             {
                 name: 'Raspberry Pi Control',
                 description: 'A comprehensive application for controlling your Raspberry Pi from Android and Windows devices',
                 language: 'Dart',
-                stars: 3,
-                forks: 0,
+                stargazers_count: 3, // Use consistent property names
+                forks_count: 0,      // Use consistent property names
                 html_url: 'https://github.com/Lukas200301/RaspberryPi-Control',
                 category: 'tools',
                 isLocal: true,
@@ -543,8 +614,8 @@ class PortfolioApp {
                 name: 'Portfolio Website',
                 description: 'A modern, responsive portfolio website built with HTML, CSS, and JavaScript',
                 language: 'JavaScript',
-                stars: 0,
-                forks: 0,
+                stargazers_count: 0, // Use consistent property names
+                forks_count: 0,      // Use consistent property names
                 html_url: 'https://github.com/Lukas200301',
                 category: 'web'
             },
@@ -552,14 +623,75 @@ class PortfolioApp {
                 name: 'Coming Soon',
                 description: 'Exciting projects are in development. Stay tuned for amazing creations!',
                 language: 'Code',
-                stars: 0,
-                forks: 0,
+                stargazers_count: 0, // Use consistent property names
+                forks_count: 0,      // Use consistent property names
                 html_url: 'https://github.com/Lukas200301',
                 category: 'tools'
             }
         ];
 
-        projectsGrid.innerHTML = fallbackProjects.map(project => this.createProjectCard(project)).join('');
+        // Set the repos to fallback projects
+        this.repos = fallbackProjects;
+
+        // Clear the grid and add the notice first
+        projectsGrid.innerHTML = '';
+        projectsGrid.appendChild(fallbackNotice);
+        
+        // Add the fallback project cards
+        const projectCardsHTML = fallbackProjects.map(project => this.createProjectCard(project)).join('');
+        projectsGrid.innerHTML += projectCardsHTML;
+        
+        // Animate project cards
+        setTimeout(() => {
+            document.querySelectorAll('.project-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }, 100);
+    }
+
+    // Add retry method
+    async retryLoadGitHubData() {
+        const retryBtn = document.querySelector('.retry-btn');
+        if (retryBtn) {
+            retryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Retrying...';
+            retryBtn.disabled = true;
+        }
+        
+        // Remove the fallback notice
+        const fallbackNotice = document.querySelector('.fallback-notice');
+        if (fallbackNotice) {
+            fallbackNotice.remove();
+        }
+        
+        // Show loading again
+        const projectsLoading = document.getElementById('projectsLoading');
+        if (projectsLoading) {
+            projectsLoading.style.display = 'block';
+        }
+        
+        // Try to load GitHub data again
+        await this.loadGitHubData();
+    }
+    
+    // Method to check if we're showing fallback projects
+    isShowingFallbackProjects() {
+        return this.repos.length <= 3 && this.repos.some(repo => repo.name === 'Coming Soon');
+    }
+    
+    // Method to get GitHub API status for debugging
+    async checkGitHubAPIStatus() {
+        try {
+            const response = await fetch('https://api.github.com/rate_limit');
+            const data = await response.json();
+            console.log('GitHub API Rate Limit Status:', data);
+            return data;
+        } catch (error) {
+            console.error('Unable to check GitHub API status:', error);
+            return null;
+        }
     }
 
     getProjectCategory(repo) {
