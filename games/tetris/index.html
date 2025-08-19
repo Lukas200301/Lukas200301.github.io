@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tetris Game - Classic block puzzle game by Lukas200301">
+    <meta name="keywords" content="tetris, puzzle, blocks, game, browser game, classic">
+    <meta name="author" content="Lukas200301">
+    <meta property="og:title" content="Tetris Game - Lukas200301">
+    <meta property="og:description" content="Play the classic Tetris block puzzle game in your browser">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <meta property="og:url" content="https://lukas200301.github.io/games/tetris">
+    <title>Tetris | Lukas200301</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../games-styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
+    
+    <style>
+        /* Game-specific styles */
+        :root {
+            --tetromino-i: #00f0f0;
+            --tetromino-o: #f0f000;
+            --tetromino-t: #a000f0;
+            --tetromino-s: #00f000;
+            --tetromino-z: #f00000;
+            --tetromino-j: #0000f0;
+            --tetromino-l: #f0a000;
+            --game-cell-size: 30px;
+        }
+
+        .game-info {
+            text-align: center;
+        }
+
+        .game-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        .game-meta {
+            display: flex;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Game Container */
+        .game-container {
+            background: var(--surface-bg);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-2xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: var(--space-4xl);
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Game Controls Header (different from main game-header) */
+        .game-controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2xl);
+            width: 100%;
+            max-width: 800px;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+        }
+
+        .game-stats {
+            display: flex;
+            gap: var(--space-xl);
+            flex: 1;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .info-container {
+            background: var(--tertiary-bg);
+            padding: var(--space-lg);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            min-width: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--duration-normal) ease;
+        }
+
+        .info-container:hover {
+            border-color: var(--primary-accent);
+            transform: translateY(-2px);
+        }
+
+        .info-label {
+            color: var(--secondary-text);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--accent-text);
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        /* Game Controls */
+        .game-controls {
+            display: flex;
+            gap: var(--space-lg);
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ghost-control {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .ghost-label {
+            color: var(--accent-text);
+            font-size: var(--text-md);
+            font-weight: 500;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--tertiary-bg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--duration-normal) ease;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: var(--secondary-text);
+            transition: all var(--duration-normal) ease;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+            background-color: white;
+        }
+
+        /* Game Content Wrapper */
+        .game-content {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 var(--space-l);
+        }
+        .game-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-2xl);
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: fit-content;
+        }
+
+        .game-board {
+            background: var(--tertiary-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            position: relative;
+            display: grid;
+            gap: 1px;
+            grid-template-columns: repeat(10, var(--game-cell-size));
+            grid-template-rows: repeat(20, var(--game-cell-size));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .game-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            min-width: 200px;
+        }
+
+        .sidebar-section {
+            background: var(--surface-bg);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--duration-normal) ease;
+        }
+
+        .sidebar-section:hover {
+            border-color: var(--primary-accent);
+            transform: translateY(-2px);
+        }
+
+        .sidebar-title {
+            color: var(--accent-text);
+            font-size: var(--text-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            text-align: center;
+            font-family: var(--font-display);
+        }
+
+        .piece-preview {
+            display: grid;
+            grid-template-columns: repeat(4, var(--game-cell-size));
+            grid-template-rows: repeat(4, var(--game-cell-size));
+            gap: 1px;
+            justify-content: center;
+        }
+
+        /* Game Cells */
+        .cell {
+            width: var(--game-cell-size);
+            height: var(--game-cell-size);
+            background: var(--secondary-bg);
+            border-radius: var(--radius-sm);
+            transition: all 0.1s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cell.i { background: var(--tetromino-i); border-color: var(--tetromino-i); }
+        .cell.o { background: var(--tetromino-o); border-color: var(--tetromino-o); }
+        .cell.t { background: var(--tetromino-t); border-color: var(--tetromino-t); }
+        .cell.s { background: var(--tetromino-s); border-color: var(--tetromino-s); }
+        .cell.z { background: var(--tetromino-z); border-color: var(--tetromino-z); }
+        .cell.j { background: var(--tetromino-j); border-color: var(--tetromino-j); }
+        .cell.l { background: var(--tetromino-l); border-color: var(--tetromino-l); }
+
+        .cell.ghost { 
+            background: transparent !important;
+            border: 2px solid;
+            opacity: 0.4;
+        }
+        .cell.ghost.i { border-color: var(--tetromino-i); }
+        .cell.ghost.o { border-color: var(--tetromino-o); }
+        .cell.ghost.t { border-color: var(--tetromino-t); }
+        .cell.ghost.s { border-color: var(--tetromino-s); }
+        .cell.ghost.z { border-color: var(--tetromino-z); }
+        .cell.ghost.j { border-color: var(--tetromino-j); }
+        .cell.ghost.l { border-color: var(--tetromino-l); }
+
+        /* Game Over Screen */
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--radius-xl);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-over.show {
+            display: flex;
+        }
+
+        .game-over-content {
+            text-align: center;
+            padding: var(--space-2xl);
+            background: var(--surface-bg);
+            border-radius: var(--radius-2xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .game-over-title {
+            font-size: var(--text-4xl);
+            color: var(--accent-text);
+            margin-bottom: var(--space-lg);
+            font-family: var(--font-display);
+            font-weight: 800;
+        }
+
+        .game-over-score {
+            font-size: var(--text-xl);
+            color: var(--secondary-text);
+            margin-bottom: var(--space-xl);
+            font-family: var(--font-mono);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-container {
+                padding: var(--space-lg);
+                margin-top: var(--space-2xl);
+            }
+
+            .game-controls-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .game-stats {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .game-controls {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .game-layout {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .game-sidebar {
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+                min-width: unset;
+            }
+
+            :root {
+                --game-cell-size: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --game-cell-size: 20px;
+            }
+
+            .game-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-md);
+            }
+
+            .info-container {
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Neural Network Background -->
+    <div class="neural-network" id="neuralNetwork">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <!-- Elements will be generated by floating-elements.js -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="game-page-no-nav">
+        <!-- Header Section -->
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link">
+                                <i class="fas fa-gamepad"></i>
+                                Games
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Tetris</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-th-large"></i>
+                            Tetris
+                        </h1>
+                        <p class="game-description">
+                            The legendary falling blocks puzzle game. Arrange tetrominoes to complete lines and achieve high scores.
+                        </p>
+                        <div class="game-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-th-large"></i>
+                                <span>Puzzle Game</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-keyboard"></i>
+                                <span>WASD Controls</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>High Score: <span id="highScore">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Section -->
+        <section id="game" class="game-section">
+            <div class="section-container">
+                <div class="game-container">
+                    <div class="game-controls-header">
+                        <div class="game-stats">
+                            <div class="info-container">
+                                <div class="info-label">Score</div>
+                                <div class="info-value" id="score">0</div>
+                            </div>
+                            <div class="info-container">
+                                <div class="info-label">Level</div>
+                                <div class="info-value" id="level">1</div>
+                            </div>
+                        </div>
+                        <div class="game-controls">
+                            <div class="ghost-control">
+                                <span class="ghost-label">Ghost Piece</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="ghostToggle" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <button class="cta-button primary" id="newGame">
+                                <i class="fas fa-redo"></i>
+                                <span>Start Game</span>
+                            </button>
+                        </div>
+                    </div>
+
+                <div class="game-layout">
+                    <div class="game-board" id="gameBoard">
+                        <div class="game-over" id="gameOver">
+                            <div class="game-over-content">
+                                <div class="game-over-title">Game Over!</div>
+                                <div class="game-over-score">Final Score: <span id="finalScore">0</span></div>
+                                <button class="cta-button primary" id="tryAgain">
+                                    <i class="fas fa-play"></i>
+                                    <span>Try Again</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-sidebar">
+                        <div class="sidebar-section">
+                            <div class="sidebar-title">Next Piece</div>
+                            <div class="piece-preview" id="nextPiece"></div>
+                        </div>
+                        <div class="sidebar-section">
+                            <div class="sidebar-title">Hold Piece</div>
+                            <div class="piece-preview" id="holdPiece"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Section Navigation Dots -->
+    <div class="section-nav-dots" id="sectionNavDots">
+        <div class="nav-dot active" data-section="overview" title="Overview">
+            <span class="dot-label">Overview</span>
+        </div>
+        <div class="nav-dot" data-section="game" title="Game">
+            <span class="dot-label">Play</span>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../../js/floating-elements.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

@@ -26,6 +26,9 @@ class PortfolioApp {
             timestamp: null,
             ttl: 5 * 60 * 1000 // 5 minutes cache
         };
+        this.isRateLimited = false; // Track if we're hitting API limits
+        this.hasAnimatedStats = false; // Track if stats have been animated
+        this.hasAnimatedSkills = false; // Track if skills have been animated
         
         this.init();
     }
@@ -39,13 +42,58 @@ class PortfolioApp {
         this.initializeTypewriter();
         this.showLoadingScreen();
         
-        // Load dynamic content
-        await this.loadGitHubData();
-        this.initializeStats();
+        // Only load GitHub data on main page and projects page
+        if (this.shouldLoadGitHubData()) {
+            await this.loadGitHubData();
+            this.initializeStats();
+        }
+        
         this.initializeSkillsAnimation();
         
         // Hide loading screen after everything is ready
         setTimeout(() => this.hideLoadingScreen(), 2000);
+    }
+
+    shouldLoadGitHubData() {
+        // Check if we're on the main page or projects page
+        const currentPath = window.location.pathname;
+        
+        // Be very specific about which pages should load GitHub data
+        const isMainPage = currentPath === '/' || 
+                          currentPath === '/index.html' || 
+                          currentPath.endsWith('Lukas200301.github.io/') ||
+                          currentPath.endsWith('Lukas200301.github.io/index.html');
+        
+        const isProjectsPage = (currentPath.includes('/projects/') && !currentPath.includes('/tools/') && !currentPath.includes('/games/')) ||
+                              currentPath.endsWith('/projects/index.html') ||
+                              currentPath === '/projects/' ||
+                              currentPath === '/projects';
+        
+        // Exclude tools and games pages explicitly
+        const isToolsOrGamesPage = currentPath.includes('/tools/') || 
+                                  currentPath.includes('/games/') ||
+                                  currentPath.includes('/tool') ||
+                                  currentPath.includes('/game');
+        
+        // Only check for GitHub-specific elements if not on tools/games pages
+        const hasGitHubSpecificElements = !isToolsOrGamesPage && (
+            document.getElementById('projects') !== null ||
+            document.querySelector('.projects-showcase') !== null ||
+            document.querySelector('.github-stats') !== null
+        );
+        
+        const shouldLoad = (isMainPage || isProjectsPage || hasGitHubSpecificElements) && !isToolsOrGamesPage;
+        
+        console.log('GitHub data loading decision:', {
+            currentPath,
+            isMainPage,
+            isProjectsPage,
+            isToolsOrGamesPage,
+            hasGitHubSpecificElements,
+            shouldLoad
+        });
+        
+        return shouldLoad;
     }
 
     setupEventListeners() {
@@ -218,12 +266,14 @@ class PortfolioApp {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                     
-                    // Trigger specific animations based on section
+                    // Trigger specific animations based on section (only once)
                     const sectionId = entry.target.id;
-                    if (sectionId === 'about') {
+                    if (sectionId === 'about' && !this.hasAnimatedStats) {
                         this.animateStats();
-                    } else if (sectionId === 'skills') {
+                        this.hasAnimatedStats = true;
+                    } else if (sectionId === 'skills' && !this.hasAnimatedSkills) {
                         this.animateSkills();
+                        this.hasAnimatedSkills = true;
                     }
                 }
             });
@@ -402,82 +452,26 @@ class PortfolioApp {
             console.log(`Successfully loaded ${this.repos.length} projects from GitHub API`);
             this.displayProjects();
             
-            // Load commit data for this month (but don't let it fail the main load)
-            try {
-                await this.loadCommitData();
-            } catch (commitError) {
-                console.warn('Failed to load commit data, but projects loaded successfully:', commitError);
-                // Set fallback commit count
-                const commitCountElement = document.getElementById('commit-count');
-                if (commitCountElement) {
-                    commitCountElement.textContent = '20+';
-                }
-            }
-            
         } catch (error) {
             console.error('Error loading GitHub data:', error);
             
+            // Check if this is a rate limit error
+            if (error.message.includes('403') || error.message.includes('rate limit')) {
+                this.isRateLimited = true;
+                console.warn('GitHub API rate limit detected');
+            }
+            
             // Try to use stale cache data if available
-            if (this.gitHubCache.data && this.gitHubCache.data.length > 3) {
+            if (this.gitHubCache.data && this.gitHubCache.data.length > 0) {
                 console.warn('Using stale cached data due to API error');
                 this.repos = this.gitHubCache.data;
                 this.displayProjects();
                 return;
             }
             
-            // Only fall back to hardcoded projects if we really can't get GitHub data
-            // Try to provide more specific error handling
-            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                console.warn('Network error detected, falling back to cached/fallback projects');
-            } else if (error.message.includes('403') || error.message.includes('rate limit')) {
-                console.warn('Rate limit hit, falling back to cached/fallback projects');
-            } else {
-                console.warn('Unknown error occurred, falling back to cached/fallback projects');
-            }
-            
-            this.displayFallbackProjects();
-        }
-    }
-
-    async loadCommitData() {
-        try {
-            // Get the start of current month
-            const now = new Date();
-            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const startOfMonthISO = startOfMonth.toISOString();
-            
-            // Fetch commits from all repos for this month
-            let totalCommits = 0;
-            const commitPromises = this.repos.slice(0, 10).map(async (repo) => {
-                if (repo.isLocal) return 0; // Skip local projects
-                
-                try {
-                    const commitsResponse = await fetch(
-                        `https://api.github.com/repos/Lukas200301/${repo.name}/commits?since=${startOfMonthISO}&author=Lukas200301`
-                    );
-                    const commits = await commitsResponse.json();
-                    return Array.isArray(commits) ? commits.length : 0;
-                } catch (error) {
-                    console.warn(`Failed to fetch commits for ${repo.name}:`, error);
-                    return 0;
-                }
-            });
-
-            const commitCounts = await Promise.all(commitPromises);
-            totalCommits = commitCounts.reduce((sum, count) => sum + count, 0);
-            
-            const commitCountElement = document.getElementById('commit-count');
-            if (commitCountElement) {
-                commitCountElement.textContent = totalCommits;
-            }
-            
-        } catch (error) {
-            console.error('Error loading commit data:', error);
-            // Fallback to estimated number
-            const commitCountElement = document.getElementById('commit-count');
-            if (commitCountElement) {
-                commitCountElement.textContent = '20+';
-            }
+            // If no cached data available, show error message
+            console.error('No cached data available and GitHub API failed');
+            this.displayError('Unable to load projects. Please try again later.');
         }
     }
 
@@ -490,7 +484,7 @@ class PortfolioApp {
         projectsLoading.style.display = 'none';
         
         if (this.repos.length === 0) {
-            this.displayFallbackProjects();
+            this.displayError('No projects found. Please try again later.');
             return;
         }
 
@@ -570,7 +564,7 @@ class PortfolioApp {
         `;
     }
 
-    displayFallbackProjects() {
+    displayError(message) {
         const projectsGrid = document.getElementById('projectsGrid');
         const projectsLoading = document.getElementById('projectsLoading');
         
@@ -578,72 +572,18 @@ class PortfolioApp {
 
         projectsLoading.style.display = 'none';
         
-        // Add a notice that we're showing fallback projects
-        const fallbackNotice = document.createElement('div');
-        fallbackNotice.className = 'fallback-notice';
-        fallbackNotice.innerHTML = `
-            <div class="notice-content">
-                <i class="fas fa-info-circle"></i>
-                <span>Unable to load latest projects from GitHub API. Showing cached projects.</span>
-                <button class="retry-btn" onclick="window.portfolioApp.retryLoadGitHubData()">
-                    <i class="fas fa-redo"></i>
-                    Retry
-                </button>
+        projectsGrid.innerHTML = `
+            <div class="error-notice">
+                <div class="notice-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>${message}</span>
+                    <button class="retry-btn" onclick="window.portfolioApp.retryLoadGitHubData()">
+                        <i class="fas fa-redo"></i>
+                        Retry
+                    </button>
+                </div>
             </div>
         `;
-        
-        const fallbackProjects = [
-            {
-                name: 'Raspberry Pi Control',
-                description: 'A comprehensive application for controlling your Raspberry Pi from Android and Windows devices',
-                language: 'Dart',
-                stargazers_count: 3, // Use consistent property names
-                forks_count: 0,      // Use consistent property names
-                html_url: 'https://github.com/Lukas200301/RaspberryPi-Control',
-                category: 'tools',
-                isLocal: true,
-                localUrl: 'pages/raspberry-pi-control.html'
-            },
-            {
-                name: 'Portfolio Website',
-                description: 'A modern, responsive portfolio website built with HTML, CSS, and JavaScript',
-                language: 'JavaScript',
-                stargazers_count: 0, // Use consistent property names
-                forks_count: 0,      // Use consistent property names
-                html_url: 'https://github.com/Lukas200301',
-                category: 'web'
-            },
-            {
-                name: 'Coming Soon',
-                description: 'Exciting projects are in development. Stay tuned for amazing creations!',
-                language: 'Code',
-                stargazers_count: 0, // Use consistent property names
-                forks_count: 0,      // Use consistent property names
-                html_url: 'https://github.com/Lukas200301',
-                category: 'tools'
-            }
-        ];
-
-        // Set the repos to fallback projects
-        this.repos = fallbackProjects;
-
-        // Clear the grid and add the notice first
-        projectsGrid.innerHTML = '';
-        projectsGrid.appendChild(fallbackNotice);
-        
-        // Add the fallback project cards
-        const projectCardsHTML = fallbackProjects.map(project => this.createProjectCard(project)).join('');
-        projectsGrid.innerHTML += projectCardsHTML;
-        
-        // Animate project cards
-        setTimeout(() => {
-            document.querySelectorAll('.project-card').forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }, 100);
     }
 
     // Add retry method
@@ -654,10 +594,10 @@ class PortfolioApp {
             retryBtn.disabled = true;
         }
         
-        // Remove the fallback notice
-        const fallbackNotice = document.querySelector('.fallback-notice');
-        if (fallbackNotice) {
-            fallbackNotice.remove();
+        // Remove the error notice
+        const errorNotice = document.querySelector('.error-notice');
+        if (errorNotice) {
+            errorNotice.remove();
         }
         
         // Show loading again
@@ -669,12 +609,7 @@ class PortfolioApp {
         // Try to load GitHub data again
         await this.loadGitHubData();
     }
-    
-    // Method to check if we're showing fallback projects
-    isShowingFallbackProjects() {
-        return this.repos.length <= 3 && this.repos.some(repo => repo.name === 'Coming Soon');
-    }
-    
+
     // Method to get GitHub API status for debugging
     async checkGitHubAPIStatus() {
         try {
@@ -709,17 +644,50 @@ class PortfolioApp {
     initializeStats() {
         const statNumbers = document.querySelectorAll('.stat-number');
         
-        // Set up stats with dynamic values
+        // Return early if no stat numbers found (not on a page that needs stats)
+        if (!statNumbers.length) {
+            return;
+        }
+        
+        // Set up stats with dynamic values or rate limit message
         const stats = [
-            { element: statNumbers[0], target: this.repos.length, label: 'Projects' },
-            { element: statNumbers[1], target: this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0), label: 'GitHub Stars' },
-            { element: statNumbers[2], target: new Set(this.repos.map(repo => repo.language).filter(Boolean)).size || 5, label: 'Languages' },
-            { element: statNumbers[3], target: 2020, label: 'Started' }
+            { 
+                element: statNumbers[0], 
+                target: this.isRateLimited ? 'GitHub API Rate Limited' : this.repos.length, 
+                label: 'Projects',
+                isNumeric: !this.isRateLimited
+            },
+            { 
+                element: statNumbers[1], 
+                target: this.isRateLimited ? 'GitHub API Rate Limited' : this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0), 
+                label: 'GitHub Stars',
+                isNumeric: !this.isRateLimited
+            },
+            { 
+                element: statNumbers[2], 
+                target: this.isRateLimited ? 'GitHub API Rate Limited' : (new Set(this.repos.map(repo => repo.language).filter(Boolean)).size || 0), 
+                label: 'Languages',
+                isNumeric: !this.isRateLimited
+            },
+            { 
+                element: statNumbers[3], 
+                target: 2020, 
+                label: 'Started',
+                isNumeric: true
+            }
         ];
 
         stats.forEach(stat => {
             if (stat.element) {
-                stat.element.setAttribute('data-target', stat.target);
+                if (stat.isNumeric) {
+                    stat.element.setAttribute('data-target', stat.target);
+                    stat.element.setAttribute('data-is-numeric', 'true');
+                } else {
+                    stat.element.setAttribute('data-target', stat.target);
+                    stat.element.setAttribute('data-is-numeric', 'false');
+                    // Add a class to style rate limited text differently
+                    stat.element.classList.add('rate-limited');
+                }
             }
         });
     }
@@ -728,18 +696,28 @@ class PortfolioApp {
         const statNumbers = document.querySelectorAll('.stat-number');
         
         statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target')) || 0;
+            const target = stat.getAttribute('data-target');
+            const isNumeric = stat.getAttribute('data-is-numeric') === 'true';
+            
+            if (!isNumeric) {
+                // For non-numeric values (like "8+" when rate limited), just set directly
+                stat.textContent = target;
+                return;
+            }
+            
+            // For numeric values, animate as before
+            const numericTarget = parseInt(target) || 0;
             const duration = 2000;
-            const increment = target / (duration / 16);
+            const increment = numericTarget / (duration / 16);
             let current = 0;
             
             const updateStat = () => {
                 current += increment;
-                if (current < target) {
+                if (current < numericTarget) {
                     stat.textContent = Math.floor(current);
                     requestAnimationFrame(updateStat);
                 } else {
-                    stat.textContent = target;
+                    stat.textContent = numericTarget;
                 }
             };
             
@@ -750,6 +728,11 @@ class PortfolioApp {
     initializeSkillsAnimation() {
         const skillItems = document.querySelectorAll('.skill-item');
         
+        // Return early if no skill items found (not on a page that needs skills animation)
+        if (!skillItems.length) {
+            return;
+        }
+        
         skillItems.forEach((item, index) => {
             item.style.opacity = '0';
             item.style.transform = 'translateY(20px)';
@@ -759,6 +742,11 @@ class PortfolioApp {
 
     animateSkills() {
         const skillItems = document.querySelectorAll('.skill-item');
+        
+        // Return early if no skill items found
+        if (!skillItems.length) {
+            return;
+        }
         
         skillItems.forEach(item => {
             item.style.opacity = '1';

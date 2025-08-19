@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NetW1re - Advanced Network Monitoring and Control Tool for network administrators and power users">
+    <meta name="keywords" content="network monitoring, traffic control, packet analysis, avalonia ui, cross-platform, network management">
+    <meta name="author" content="Lukas200301">
+    <meta property="og:title" content="NetW1re - Advanced Network Monitoring and Control Tool | Lukas200301">
+    <meta property="og:description" content="Modern network management tool for monitoring, analyzing, and controlling device traffic on your local network">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <meta property="og:url" content="https://lukas200301.github.io/projects/netw1re">
+    <title>NetW1re | Lukas200301</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../project-styles.css">
+    <link rel="stylesheet" href="netw1re-styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <div class="neural-network" id="neuralNetwork">
+        <canvas id="neuralCanvas"></canvas>
+    </div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Main Content -->
+    <main class="main-content project-page-no-nav">
+        <!-- Project Hero Section -->
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link">
+                                <i class="fas fa-folder-open"></i>
+                                Projects
+                            </a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">NetW1re</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-network-wired"></i>
+                            NetW1re
+                        </h1>
+                        <p class="tool-description">
+                            Advanced Network Monitoring and Control Tool. A modern network management tool that allows you to monitor, analyze, and control the traffic of devices on your local network. Built with Avalonia UI and following the MVVM pattern, NetW1re provides a sleek, cross-platform experience for network administrators and power users.
+                        </p>
+                        
+                        <div class="tool-meta">
+                            <div class="meta-item">
+                                <i class="devicon-csharp-plain"></i>
+                                <span>C#</span>
+                            </div>
+                            <a href="https://github.com/Lukas200301/NetW1re" class="meta-item meta-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                <span>View on GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-network-wired"></i>
+                    Features
+                </h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Real-time Device Discovery</h3>
+                        <p>Automatically detect and monitor all devices on your network with intelligent scanning:</p>
+                        <ul>
+                            <li>Intelligent network scanning algorithms</li>
+                            <li>Automatic device identification</li>
+                            <li>Real-time status monitoring</li>
+                            <li>Device name resolution</li>
+                            <li>MAC address tracking</li>
+                            <li>Network topology mapping</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Traffic Control</h3>
+                        <p>Block, redirect, or limit bandwidth for specific devices with granular control:</p>
+                        <ul>
+                            <li>Internet access blocking/unblocking</li>
+                            <li>Traffic redirection capabilities</li>
+                            <li>Bandwidth limitation controls</li>
+                            <li>Custom rule creation</li>
+                            <li>Time-based restrictions</li>
+                            <li>Group-based management</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Packet Analysis & Monitoring</h3>
+                        <p>Monitor and analyze network traffic in real-time with comprehensive tools:</p>
+                        <ul>
+                            <li>Real-time packet capture</li>
+                            <li>Traffic flow analysis</li>
+                            <li>Protocol inspection</li>
+                            <li>Network interface monitoring</li>
+                            <li>Data usage tracking</li>
+                            <li>Performance metrics</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Rule Builder & Automation</h3>
+                        <p>Create custom rules for automated device management:</p>
+                        <ul>
+                            <li>MAC address-based rules</li>
+                            <li>IP address filtering</li>
+                            <li>Hostname-based policies</li>
+                            <li>Time-of-day scheduling</li>
+                            <li>Automated actions (block/redirect/limit)</li>
+                            <li>Rule priority management</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>Modern Cross-platform UI</h3>
+                        <p>Enjoy a sleek interface built with modern technologies:</p>
+                        <ul>
+                            <li>Avalonia UI framework</li>
+                            <li>ReactiveUI MVVM pattern</li>
+                            <li>Customizable themes</li>
+                            <li>Responsive design</li>
+                            <li>Real-time notifications</li>
+                            <li>Intuitive navigation</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Cross-platform Support</h3>
+                        <p>Works seamlessly across multiple operating systems:</p>
+                        <ul>
+                            <li>Windows support with Npcap</li>
+                            <li>Linux compatibility</li>
+                            <li>.NET 9.0 runtime</li>
+                            <li>Native performance</li>
+                            <li>Consistent user experience</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Guide Section -->
+        <section id="usage" class="project-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Usage</h2>
+                </div>
+
+                <div class="usage-grid">
+                    <div class="usage-card">
+                        <!-- Device Management -->
+                        <div class="device-management-section">
+                            <div class="usage-header">
+                                <h3 class="usage-title">
+                                    <i class="fas fa-network-wired"></i>
+                                    Device Management
+                                </h3>
+                                <p>Discover and control devices on your network with intuitive management tools</p>
+                            </div>
+                            <div class="management-grid">
+                                <div class="management-card">
+                                    <div class="management-content">
+                                        <h4>Network Scan</h4>
+                                        <p>Click "Scan" to discover devices on your network</p>
+                                        <span class="management-badge scan">Discovery</span>
+                                    </div>
+                                </div>
+                                <div class="management-card">
+                                    <div class="management-content">
+                                        <h4>Device Control</h4>
+                                        <p>Right-click devices for block, redirect, limit options</p>
+                                        <span class="management-badge actions">Actions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="usage-card">
+                        <!-- Traffic Monitoring -->
+                        <div class="traffic-monitoring-section">
+                            <div class="usage-header">
+                                <h3 class="usage-title">
+                                    <i class="fas fa-eye"></i>
+                                    Traffic Monitoring
+                                </h3>
+                                <p>Monitor and analyze network traffic in real-time with comprehensive packet analysis</p>
+                            </div>
+                            <div class="monitoring-grid">
+                                <div class="monitoring-card">
+                                    <div class="monitoring-content">
+                                        <h4>Packet Sniffer</h4>
+                                        <p>Open "Sniffer" tab and select network interface</p>
+                                        <span class="monitoring-badge sniffer">Capture</span>
+                                    </div>
+                                </div>
+                                <div class="monitoring-card">
+                                    <div class="monitoring-content">
+                                        <h4>Traffic Analysis</h4>
+                                        <p>Start capturing packets and filter traffic as needed</p>
+                                        <span class="monitoring-badge analysis">Real-time</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="usage-card">
+                        <!-- Rule Builder -->
+                        <div class="rule-builder-section">
+                            <div class="usage-header">
+                                <h3 class="usage-title">
+                                    <i class="fas fa-cogs"></i>
+                                    Rule Builder
+                                </h3>
+                                <p>Create custom automated rules for advanced device management and control</p>
+                            </div>
+                            <div class="rules-grid">
+                                <div class="rule-card">
+                                    <div class="rule-content">
+                                        <h4>Create Rules</h4>
+                                        <p>Build rules based on MAC, IP, hostname, or time</p>
+                                        <span class="rule-badge create">Custom</span>
+                                    </div>
+                                </div>
+                                <div class="rule-card">
+                                    <div class="rule-content">
+                                        <h4>Manage Actions</h4>
+                                        <p>Set actions to block, redirect, or limit bandwidth</p>
+                                        <span class="rule-badge manage">Automated</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="usage-card">
+                        <!-- Status Indicators -->
+                        <div class="status-indicators-section">
+                            <div class="status-header">
+                                <h3 class="status-title">
+                                    <i class="fas fa-signal"></i>
+                                    Status Indicators
+                                </h3>
+                                <p>Visual indicators help you quickly understand device status and applied controls</p>
+                            </div>
+                            <div class="indicators-grid">
+                                <div class="indicator-card">
+                                    <div class="indicator-visual">
+                                        <div class="indicator-dot blocked"></div>
+                                        <div class="indicator-waves">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="indicator-content">
+                                        <h4>Blocked Access</h4>
+                                        <p>Device is blocked from accessing the internet</p>
+                                        <span class="indicator-badge blocked">Restricted</span>
+                                    </div>
+                                </div>
+                                <div class="indicator-card">
+                                    <div class="indicator-visual">
+                                        <div class="indicator-dot redirected"></div>
+                                        <div class="indicator-waves">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="indicator-content">
+                                        <h4>Traffic Redirected</h4>
+                                        <p>Device traffic is being redirected through custom rules</p>
+                                        <span class="indicator-badge redirected">Modified</span>
+                                    </div>
+                                </div>
+                                <div class="indicator-card">
+                                    <div class="indicator-visual">
+                                        <div class="indicator-dot limited"></div>
+                                        <div class="indicator-waves">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="indicator-content">
+                                        <h4>Bandwidth Limited</h4>
+                                        <p>Device has active bandwidth limitations applied</p>
+                                        <span class="indicator-badge limited">Throttled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section id="installation" class="project-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Installation</h2>
+                </div>
+
+                <div class="installation-content">
+                    <div class="requirements-section">
+                        <h3 class="requirements-title">
+                            <i class="fas fa-list-check"></i>
+                            Requirements
+                        </h3>
+                        <div class="requirements-grid">
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fab fa-windows"></i>
+                                </div>
+                                <div class="requirement-content">
+                                    <h4>Npcap Driver</h4>
+                                    <p>Required for Windows</p>
+                                    <a href="https://nmap.org/download.html" target="_blank" class="requirement-link">
+                                        Download from nmap.org
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fab fa-microsoft"></i>
+                                </div>
+                                <div class="requirement-content">
+                                    <h4>.NET 9.0 Runtime</h4>
+                                    <p>Cross-platform requirement</p>
+                                    <a href="https://dotnet.microsoft.com/download/dotnet/9.0" target="_blank" class="requirement-link">
+                                        Download from Microsoft
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="requirement-content">
+                                    <h4>Administrator Access</h4>
+                                    <p>Required for network manipulation</p>
+                                    <span class="requirement-note">Run as Administrator/Root</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <h3 class="download-title">
+                            <i class="fas fa-download"></i>
+                            Download Options
+                        </h3>
+                        <div class="download-options">
+                            <div class="download-option">
+                                <div class="download-header">
+                                    <h4>Pre-built Binaries</h4>
+                                    <span class="download-badge">Recommended</span>
+                                </div>
+                                <p>Download the latest stable release from GitHub Releases. Pre-compiled executables are available for Windows and Linux platforms.</p>
+                                
+                                <div class="download-features">
+                                    <div class="download-feature">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Ready to run - no compilation needed</span>
+                                    </div>
+                                    <div class="download-feature">
+                                        <i class="fas fa-download"></i>
+                                        <span>Windows & Linux binaries included</span>
+                                    </div>
+                                    <div class="download-feature">
+                                        <i class="fas fa-rocket"></i>
+                                        <span>Optimized for performance</span>
+                                    </div>
+                                </div>
+
+                                <div class="download-info">
+                                    <div class="info-item">
+                                        <strong>Latest Version:</strong> 1.0.0.0
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>File Size:</strong> ~13,6MB
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Supported OS:</strong> Windows 10+
+                                    </div>
+                                </div>
+                                
+                                <a href="https://github.com/Lukas200301/NetW1re/releases" target="_blank" class="download-button">
+                                    <i class="fab fa-github"></i>
+                                    GitHub Releases
+                                </a>
+                            </div>
+
+                            <div class="download-option">
+                                <div class="download-header">
+                                    <h4>Build from Source</h4>
+                                    <span class="download-badge">Advanced</span>
+                                </div>
+                                <p>Clone and build the project yourself</p>
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-language">bash</span>
+                                        <button class="copy-code" data-code="git clone https://github.com/lukas200301/NetW1re.git
+cd NetW1re
+dotnet build">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <pre><code># Clone the repository
+git clone https://github.com/lukas200301/NetW1re.git
+cd NetW1re
+
+# Build the project
+dotnet build
+
+# Run the application
+# Windows
+cd NetW1reAvalonia.Windows/bin/Debug/net9.0
+./NetW1reAvalonia.Windows.exe
+
+# Linux
+cd NetW1reAvalonia.Linux/bin/Debug/net9.0
+./NetW1reAvalonia.Linux</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Stack Section -->
+        <section id="tech-stack" class="project-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-cogs"></i>
+                        Technology Stack
+                    </h2>
+                    <p>Built with modern, reliable technologies for optimal performance and cross-platform compatibility</p>
+                </div>
+                
+                <div class="tech-stack-grid">
+                    <div class="tech-category">
+                        <div class="tech-category-header">
+                            <div class="tech-category-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="tech-category-title">Core Framework</h3>
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="devicon-dot-net-plain"></i>
+                                <span>.NET 9.0</span>
+                                <span class="version">Latest</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="devicon-csharp-plain"></i>
+                                <span>C#</span>
+                                <span class="version">12.0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <div class="tech-category-header">
+                            <div class="tech-category-icon">
+                                <i class="fas fa-desktop"></i>
+                            </div>
+                            <h3 class="tech-category-title">User Interface</h3>
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="fas fa-window-maximize"></i>
+                                <span>Avalonia UI</span>
+                                <span class="version">11.0</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>ReactiveUI</span>
+                                <span class="version">MVVM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <div class="tech-category-header">
+                            <div class="tech-category-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h3 class="tech-category-title">Networking</h3>
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="fas fa-satellite-dish"></i>
+                                <span>SharpPcap</span>
+                                <span class="version">Driver</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Npcap</span>
+                                <span class="version">Windows</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-sitemap"></i>
+                                <span>ARP Protocol</span>
+                                <span class="version">IPv4/IPv6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-category">
+                        <div class="tech-category-header">
+                            <div class="tech-category-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3 class="tech-category-title">Development</h3>
+                        </div>
+                        <div class="tech-items">
+                            <div class="tech-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git & GitHub</span>
+                                <span class="version">VCS</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-cube"></i>
+                                <span>NuGet Packages</span>
+                                <span class="version">Dependencies</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section id="troubleshooting" class="project-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-tools"></i>
+                        Troubleshooting
+                    </h2>
+                    <p>Common issues and their solutions to help you get the most out of NetW1re</p>
+                </div>
+
+                <div class="troubleshooting-grid">
+                    <div class="troubleshooting-item">
+                        <div class="troubleshooting-header">
+                            <div class="troubleshooting-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <h3 class="troubleshooting-title">Device Not Appearing</h3>
+                        </div>
+                        <div class="troubleshooting-content">
+                            <div class="problem">
+                                <h5>Problem</h5>
+                                <p>Devices on your network are not showing up in the NetW1re interface</p>
+                            </div>
+                            <div class="solution">
+                                <h5>Solutions</h5>
+                                <ul>
+                                    <li>Ensure the device is connected to the same network subnet</li>
+                                    <li>Wait a few minutes for automatic discovery to complete</li>
+                                    <li>Use the 'Refresh' button to force a new network scan</li>
+                                    <li>Check if the device is in sleep or power-saving mode</li>
+                                    <li>Verify firewall settings aren't blocking discovery</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="troubleshooting-item">
+                        <div class="troubleshooting-header">
+                            <div class="troubleshooting-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3 class="troubleshooting-title">Actions Not Working</h3>
+                        </div>
+                        <div class="troubleshooting-content">
+                            <div class="problem">
+                                <h5>Problem</h5>
+                                <p>Block, redirect, or bandwidth limit actions are not being applied to target devices</p>
+                            </div>
+                            <div class="solution">
+                                <h5>Solutions</h5>
+                                <ul>
+                                    <li>Verify NetW1re is running with administrator privileges</li>
+                                    <li>Check network adapter compatibility with packet injection</li>
+                                    <li>Ensure target device is still online and responsive</li>
+                                    <li>Restart NetW1re if issues persist</li>
+                                    <li>Disable conflicting network management software</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="troubleshooting-item">
+                        <div class="troubleshooting-header">
+                            <div class="troubleshooting-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h3 class="troubleshooting-title">Performance Issues</h3>
+                        </div>
+                        <div class="troubleshooting-content">
+                            <div class="problem">
+                                <h5>Problem</h5>
+                                <p>NetW1re is consuming high CPU or memory resources</p>
+                            </div>
+                            <div class="solution">
+                                <h5>Solutions</h5>
+                                <ul>
+                                    <li>Reduce network scan frequency in settings</li>
+                                    <li>Close packet monitoring when not actively needed</li>
+                                    <li>Limit the number of active traffic control rules</li>
+                                    <li>Check available system memory and close other applications</li>
+                                    <li>Update to the latest version for performance improvements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contributing Section -->
+        <section id="contributing" class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-hands-helping"></i>
+                    Contributing
+                </h2>
+                
+                <div class="contributing">
+                    <p>Contributions to this project are welcome! Join our community and help make this project even better.</p>
+                    
+                    <div class="contribution-ways">
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-bug"></i>
+                            </div>
+                            <h3>Report Issues</h3>
+                            <p>Found a bug or have a suggestion? Report it through our issue tracking system to help improve the project.</p>
+                            <ul>
+                                <li>Bug reports</li>
+                                <li>Feature requests</li>
+                                <li>Performance issues</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>Propose Enhancements</h3>
+                            <p>Have ideas for new features or improvements? We'd love to hear your suggestions for enhancing the application.</p>
+                            <ul>
+                                <li>New feature ideas</li>
+                                <li>UI/UX improvements</li>
+                                <li>Performance optimizations</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Contribute Code</h3>
+                            <p>Ready to get your hands dirty? Contribute code improvements, bug fixes, and new features to the project.</p>
+                            <ul>
+                                <li>Bug fixes</li>
+                                <li>Feature implementation</li>
+                                <li>Code optimization</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>Improve Documentation</h3>
+                            <p>Help others understand the project better by enhancing documentation, guides, and code comments.</p>
+                            <ul>
+                                <li>User guides</li>
+                                <li>Code documentation</li>
+                                <li>Tutorial creation</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <h3>Spread the Word</h3>
+                            <p>Share the project with relevant communities and help grow our user base and contributor network.</p>
+                            <ul>
+                                <li>Social media sharing</li>
+                                <li>Community discussions</li>
+                                <li>Blog posts</li>
+                            </ul>
+                        </div>
+
+                        <div class="contribution-card">
+                            <div class="contribution-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h3>Testing & QA</h3>
+                            <p>Help ensure quality by testing the application on different devices and platforms, reporting edge cases.</p>
+                            <ul>
+                                <li>Platform testing</li>
+                                <li>Edge case discovery</li>
+                                <li>User experience feedback</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="contribution-process">
+                        <h3>How to Contribute</h3>
+                        <div class="process-steps">
+                            <div class="process-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Fork the Repository</h4>
+                                    <p>Create your own copy of the source code repository</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Create a Branch</h4>
+                                    <p>Create a dedicated branch for your specific changes</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Make Changes</h4>
+                                    <p>Implement your improvements and commit your changes</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Test & Push</h4>
+                                    <p>Test your changes and push to your repository</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4>Submit PR</h4>
+                                    <p>Submit a pull request for review and integration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- License Section -->
+        <section class="project-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <i class="fas fa-balance-scale"></i>
+                    License
+                </h2>
+                
+                <div class="license">
+                    <p>This application is released under the MIT License, which permits usage, modification, and distribution, including for commercial purposes, with appropriate attribution.</p>
+                    
+                    <div class="license-text">
+                        <div class="license-header">
+                            <h3>MIT License</h3>
+                        </div>
+                        <div class="license-content">
+                            <p>Copyright (c) 2025 Lukas</p>
+                            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="project-cta">
+            <div class="section-container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to Monitor Your Network?</h2>
+                    <p class="cta-description">
+                        Download NetW1re and take control of your network traffic today.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="https://github.com/Lukas200301/NetW1re/releases" target="_blank" class="cta-button primary">
+                            <span class="button-bg"></span>
+                            <i class="fas fa-download"></i>
+                            Download Now
+                        </a>
+                        <a href="https://github.com/Lukas200301/NetW1re" target="_blank" class="cta-button secondary">
+                            <span class="button-bg"></span>
+                            <i class="fab fa-github"></i>
+                            View Source
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Section Navigation Dots -->
+    <div class="section-nav-dots" id="sectionNavDots">
+        <div class="nav-dot active" data-section="overview" title="Overview">
+            <span class="dot-label">Overview</span>
+        </div>
+        <div class="nav-dot" data-section="features" title="Features">
+            <span class="dot-label">Features</span>
+        </div>
+        <div class="nav-dot" data-section="usage" title="Usage">
+            <span class="dot-label">Usage</span>
+        </div>
+        <div class="nav-dot" data-section="installation" title="Installation">
+            <span class="dot-label">Install</span>
+        </div>
+        <div class="nav-dot" data-section="tech-stack" title="Technology">
+            <span class="dot-label">Tech Stack</span>
+        </div>
+        <div class="nav-dot" data-section="troubleshooting" title="Troubleshooting">
+            <span class="dot-label">Troubleshooting</span>
+        </div>
+        <div class="nav-dot" data-section="contributing" title="Contributing">
+            <span class="dot-label">Contribute</span>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../../js/floating-elements.js"></script>
+    <script src="../../js/script.js"></script>
+    <script>
+        // Copy code functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-code');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    navigator.clipboard.writeText(code).then(() => {
+                        const icon = this.querySelector('i');
+                        icon.className = 'fas fa-check';
+                        setTimeout(() => {
+                            icon.className = 'fas fa-copy';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

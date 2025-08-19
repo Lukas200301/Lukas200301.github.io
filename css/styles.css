@@ -528,6 +528,7 @@ body {
 
 .main-content {
   padding-top: 0;
+  overflow-y: hidden;
 }
 
 /* ===================================
@@ -774,7 +775,7 @@ body {
   position: relative;
   width: 200px;
   height: 200px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   overflow: hidden;
   z-index: var(--z-raised);
 }
@@ -783,8 +784,16 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 50% !important;
   transition: transform var(--duration-slow) ease;
+}
+
+/* Ensure profile image is always round */
+#profileImage {
+  border-radius: 50% !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profile-image:hover img {
@@ -1670,24 +1679,24 @@ section.active {
    CONTACT SECTION
    ================================== */
 
-.activity-section {
+.contact-section {
   background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
 }
 
-.activity-content {
+.contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-4xl);
   align-items: center;
 }
 
-.activity-stats {
+.contact-info {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
 }
 
-.stat-card {
+.contact-card {
   display: flex;
   gap: var(--space-lg);
   padding: var(--space-xl);
@@ -1697,12 +1706,12 @@ section.active {
   transition: all var(--duration-normal) ease;
 }
 
-.stat-card:hover {
+.contact-card:hover {
   transform: translateX(10px);
   box-shadow: var(--shadow-glow);
 }
 
-.stat-icon {
+.contact-icon {
   width: 60px;
   height: 60px;
   background: var(--gradient-primary);
@@ -1715,27 +1724,46 @@ section.active {
   flex-shrink: 0;
 }
 
-.stat-info h3 {
+.contact-details h3 {
   font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--accent-text);
-  margin-bottom: var(--space-xs);
-}
-
-.stat-info p {
-  color: var(--secondary-text);
-  margin-bottom: var(--space-sm);
-}
-
-.stat-link {
-  color: var(--primary-accent);
-  text-decoration: none;
   font-weight: 600;
-  transition: color var(--duration-normal) ease;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
 }
 
-.stat-link:hover {
-  color: var(--secondary-accent);
+.contact-details p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  font-size: var(--text-sm);
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--duration-fast) ease;
+}
+
+.contact-link:hover {
+  color: var(--primary-light);
+  transform: translateX(5px);
+}
+
+.contact-link i {
+  font-size: var(--text-sm);
+}
+
+.contact-info-text {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-family: var(--font-mono);
+}
+
+.contact-visual {
+  position: relative;
 }
 
 .stat-number {
@@ -2104,6 +2132,7 @@ section.active {
   .profile-image {
     width: 150px;
     height: 150px;
+    border-radius: 50% !important;
   }
 }
 
@@ -2323,6 +2352,33 @@ section.active {
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+/* Force round profile images - highest specificity */
+.profile-image,
+.profile-image img,
+#profileImage {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* Ensure round profile images at all screen sizes */
+@media (max-width: 1200px) {
+  .profile-image,
+  .profile-image img,
+  #profileImage {
+    border-radius: 50% !important;
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-image,
+  .profile-image img,
+  #profileImage {
+    border-radius: 50% !important;
+    overflow: hidden !important;
+  }
 }
 
 
