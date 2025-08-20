@@ -83,16 +83,6 @@ class PortfolioApp {
         );
         
         const shouldLoad = (isMainPage || isProjectsPage || hasGitHubSpecificElements) && !isToolsOrGamesPage;
-        
-        console.log('GitHub data loading decision:', {
-            currentPath,
-            isMainPage,
-            isProjectsPage,
-            isToolsOrGamesPage,
-            hasGitHubSpecificElements,
-            shouldLoad
-        });
-        
         return shouldLoad;
     }
 
@@ -407,14 +397,12 @@ class PortfolioApp {
         if (this.gitHubCache.data && 
             this.gitHubCache.timestamp && 
             (now - this.gitHubCache.timestamp) < this.gitHubCache.ttl) {
-            console.log('Using cached GitHub data');
             this.repos = this.gitHubCache.data;
             this.displayProjects();
             return;
         }
         
         try {
-            console.log('Fetching fresh GitHub data...');
             const response = await fetch('https://api.github.com/users/Lukas200301/repos?sort=updated&per_page=6');
             
             // Check if the response is ok before trying to parse JSON
@@ -449,28 +437,23 @@ class PortfolioApp {
             this.gitHubCache.data = this.repos;
             this.gitHubCache.timestamp = now;
             
-            console.log(`Successfully loaded ${this.repos.length} projects from GitHub API`);
             this.displayProjects();
             
         } catch (error) {
-            console.error('Error loading GitHub data:', error);
             
             // Check if this is a rate limit error
             if (error.message.includes('403') || error.message.includes('rate limit')) {
                 this.isRateLimited = true;
-                console.warn('GitHub API rate limit detected');
             }
             
             // Try to use stale cache data if available
             if (this.gitHubCache.data && this.gitHubCache.data.length > 0) {
-                console.warn('Using stale cached data due to API error');
                 this.repos = this.gitHubCache.data;
                 this.displayProjects();
                 return;
             }
             
             // If no cached data available, show error message
-            console.error('No cached data available and GitHub API failed');
             this.displayError('Unable to load projects. Please try again later.');
         }
     }
@@ -615,10 +598,8 @@ class PortfolioApp {
         try {
             const response = await fetch('https://api.github.com/rate_limit');
             const data = await response.json();
-            console.log('GitHub API Rate Limit Status:', data);
             return data;
         } catch (error) {
-            console.error('Unable to check GitHub API status:', error);
             return null;
         }
     }

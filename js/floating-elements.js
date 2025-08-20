@@ -57,7 +57,6 @@ class FloatingElementsManager {
             container.appendChild(div);
         });
 
-        console.log('Floating elements initialized:', this.elements.length);
     }
 }
 

@@ -39,7 +39,6 @@ class GlobleGame {
             this.initializeGlobe();
             this.startNewRound();
         } catch (error) {
-            console.error('Failed to initialize Globle game:', error);
             this.showError('Failed to load game. Please refresh the page.');
         }
     }
@@ -87,7 +86,6 @@ class GlobleGame {
             
             // Combine both datasets
             const data = [...independentData, ...nonIndependentData];
-            console.log(`Loaded ${independentData.length} independent and ${nonIndependentData.length} non-independent countries`);
             
             this.countriesData = data
                 .filter(country => country.latlng && country.latlng.length === 2)
@@ -108,10 +106,8 @@ class GlobleGame {
                 }))
                 .sort((a, b) => a.name.localeCompare(b.name));
             
-            console.log(`Loaded ${this.countriesData.length} countries`);
             this.setupCountrySearch();
         } catch (error) {
-            console.error('Error loading countries data:', error);
             throw error;
         }
     }
@@ -159,9 +155,7 @@ class GlobleGame {
                 }
             });
 
-            console.log('Globe initialized successfully');
         } catch (error) {
-            console.error('Error initializing globe:', error);
             throw error;
         }
     }
@@ -399,7 +393,6 @@ class GlobleGame {
             this.globe.pointColor(d => this.getCountryColor(d));
         }
 
-        console.log(`Started round ${this.currentRound} with mystery country`);
     }
 
     submitGuess() {

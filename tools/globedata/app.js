@@ -33,7 +33,6 @@ class InteractiveGlobe {
             this.setupControls();
             
         } catch (error) {
-            console.error('Error initializing globe:', error);
             this.showError(error.message || 'Failed to load globe data. Please refresh the page.');
         }
     }
@@ -41,11 +40,8 @@ class InteractiveGlobe {
     async waitForLibraries() {
         return new Promise((resolve, reject) => {
             const checkLibraries = () => {
-                console.log('Checking for Globe library...', typeof Globe);
-                console.log('Window object keys:', Object.keys(window).filter(k => k.includes('Globe') || k.includes('THREE')));
                 
                 if (typeof Globe !== 'undefined') {
-                    console.log('Globe.gl library loaded successfully');
                     resolve();
                     return;
                 }
@@ -56,7 +52,6 @@ class InteractiveGlobe {
                     return;
                 }
 
-                console.log(`Waiting for libraries... Attempt ${this.libraryLoadAttempts}/${this.maxLoadAttempts}`);
                 setTimeout(checkLibraries, 1000);
             };
 
@@ -67,7 +62,6 @@ class InteractiveGlobe {
 
     async loadCountriesData() {
         try {
-            console.log('Loading countries data...');
             
             // Load both independent and non-independent countries
             const [independentResponse, nonIndependentResponse] = await Promise.all([
@@ -90,7 +84,6 @@ class InteractiveGlobe {
             
             // Combine both datasets
             const allCountries = [...independentData, ...nonIndependentData];
-            console.log(`Loaded ${independentData.length} independent and ${nonIndependentData.length} non-independent countries`);
             
             // Process and filter countries with valid coordinates
             this.countriesData = allCountries
@@ -113,9 +106,7 @@ class InteractiveGlobe {
                     independent: country.independent || false
                 }));
             
-            console.log(`Total processed countries: ${this.countriesData.length}`);
         } catch (error) {
-            console.error('Error loading countries data:', error);
             throw new Error('Failed to load country data. Please check your internet connection.');
         }
     }
@@ -127,9 +118,6 @@ class InteractiveGlobe {
         }
 
         try {
-            console.log('Creating Globe instance...');
-            console.log('Globe element dimensions:', globeElement.clientWidth, 'x', globeElement.clientHeight);
-            console.log('Countries data count:', this.countriesData.length);
             
             // Create globe instance with simpler configuration first
             this.globe = Globe()
@@ -139,7 +127,6 @@ class InteractiveGlobe {
                 .width(globeElement.clientWidth)
                 .height(globeElement.clientHeight);
 
-            console.log('Basic globe created, adding points...');
 
             // Add points data
             this.globe
@@ -190,9 +177,7 @@ class InteractiveGlobe {
             
             window.addEventListener('resize', this.handleResize);
 
-            console.log('Globe initialized successfully with', this.countriesData.length, 'countries');
         } catch (error) {
-            console.error('Error initializing globe:', error);
             throw new Error('Failed to initialize 3D globe. Your browser might not support WebGL.');
         }
     }
@@ -200,7 +185,6 @@ class InteractiveGlobe {
     handleCountryClick(country) {
         if (!country) return;
         
-        console.log('Country clicked:', country.name);
         this.showCountryOverlay(country);
         
         // Focus on the country
@@ -396,7 +380,6 @@ class InteractiveGlobe {
     }
 
     showError(message) {
-        console.error(message);
         
         // Show error in globe container
         const globeContainer = document.getElementById('globeViz');
@@ -471,26 +454,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const tryInitialize = () => {
         initAttempts++;
-        console.log(`Globe initialization attempt ${initAttempts}/${maxAttempts}`);
-        console.log('Available window properties:', Object.keys(window).filter(k => k.toLowerCase().includes('globe')));
-        
         if (typeof Globe !== 'undefined') {
-            console.log('Globe.gl library detected, initializing...');
             
             // Test basic globe creation first
             const testElement = document.getElementById('globeViz');
             if (testElement) {
-                console.log('Test element found, dimensions:', testElement.clientWidth, 'x', testElement.clientHeight);
                 
                 try {
                     // Quick test
                     const testGlobe = Globe()(testElement);
-                    console.log('Basic Globe creation successful');
                     
                     // If test works, initialize full app
                     window.interactiveGlobe = new InteractiveGlobe();
                 } catch (testError) {
-                    console.error('Basic Globe creation failed:', testError);
                     
                     // Show error
                     testElement.innerHTML = `
@@ -508,10 +484,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } else if (initAttempts < maxAttempts) {
-            console.log('Globe.gl library not ready, retrying...');
             setTimeout(tryInitialize, 1000);
         } else {
-            console.error('Globe.gl library failed to load after multiple attempts');
             // Show error message
             const globeContainer = document.getElementById('globeViz');
             if (globeContainer) {

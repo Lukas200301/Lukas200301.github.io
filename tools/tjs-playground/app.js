@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             codeEditor.refresh();
         }, 50);
         
-        showStatus(`Switched to ${lang === 'typescript' ? 'TypeScript' : 'JavaScript'} mode`, 'success');
+        showStatus(` Switched to ${lang === 'typescript' ? 'TypeScript' : 'JavaScript'} mode`, 'success');
     }
 
     const jsExampleCode = `// JavaScript Example: Basic Programming Concepts

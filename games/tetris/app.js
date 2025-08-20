@@ -716,13 +716,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const buttonElement = document.getElementById('newGame');
         if (buttonElement) {
             buttonElement.innerHTML = '<i class="fas fa-play"></i><span>Start Game</span>';
-            console.log('Button text changed to Start Game'); // Debug log
             
             // Remove any existing event listeners and add start game listener
             buttonElement.removeEventListener('click', initBoard);
             buttonElement.addEventListener('click', startGame);
         } else {
-            console.error('Button element not found'); // Debug log
         }
     }
 
@@ -734,7 +732,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const buttonElement = document.getElementById('newGame');
         if (buttonElement) {
             buttonElement.innerHTML = '<i class="fas fa-redo"></i><span>New Game</span>';
-            console.log('Button text changed to New Game'); // Debug log
             
             // Remove focus from button to prevent spacebar from triggering it
             buttonElement.blur();
