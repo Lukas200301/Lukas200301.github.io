@@ -137,31 +137,60 @@ class PortfolioApp {
 
         if (!cursorFollower || !cursorDot) return;
 
+        let isFirstMove = true;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Use transform-based positioning for better performance
+        const updateCursorPosition = (x, y, element, isInstant = false) => {
+            if (isInstant) {
+                element.style.transition = 'none';
+                element.style.transform = `translate(${x - element.offsetWidth / 2}px, ${y - element.offsetHeight / 2}px)`;
+                // Force reflow and restore transition
+                element.offsetHeight;
+                element.style.transition = 'opacity 0.1s ease'; // Only transition opacity for dot
+            } else {
+                // Let CSS handle the smooth transition timing for follower
+                element.style.transform = `translate(${x - element.offsetWidth / 2}px, ${y - element.offsetHeight / 2}px)`;
+            }
+        };
+
         document.addEventListener('mousemove', (e) => {
-            const { clientX: x, clientY: y } = e;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
             
-            cursorDot.style.left = `${x}px`;
-            cursorDot.style.top = `${y}px`;
-            cursorDot.style.transform = 'translate(-50%, -50%)';
+            // Always update cursor dot immediately
             cursorDot.style.opacity = '1';
+            updateCursorPosition(mouseX, mouseY, cursorDot, true);
             
-            setTimeout(() => {
-                cursorFollower.style.left = `${x}px`;
-                cursorFollower.style.top = `${y}px`;
-                cursorFollower.style.transform = 'translate(-50%, -50%)';
+            if (isFirstMove) {
+                // Position follower instantly on first move, then restore CSS transition
                 cursorFollower.style.opacity = '1';
-            }, 50);
+                cursorFollower.style.transition = 'none';
+                updateCursorPosition(mouseX, mouseY, cursorFollower, true);
+                
+                // Restore the CSS transition for trailing effect
+                requestAnimationFrame(() => {
+                    cursorFollower.style.transition = 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.15s ease';
+                });
+                
+                isFirstMove = false;
+            } else {
+                // Smooth trailing animation for subsequent moves
+                cursorFollower.style.opacity = '1';
+                updateCursorPosition(mouseX, mouseY, cursorFollower, false);
+            }
         });
 
         // Enhance cursor for interactive elements
         document.querySelectorAll('a, button, .skill-item, .contact-item').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorFollower.style.transform += ' scale(1.5)';
                 cursorFollower.style.borderColor = 'var(--secondary-accent)';
             });
             
             el.addEventListener('mouseleave', () => {
-                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.transform = cursorFollower.style.transform.replace(' scale(1.5)', '');
                 cursorFollower.style.borderColor = 'var(--primary-accent)';
             });
         });
@@ -417,22 +446,11 @@ class PortfolioApp {
                 throw new Error('Invalid response format from GitHub API');
             }
             
-            // Add the Raspberry Pi project as a featured project
-            const raspberryPiProject = {
-                name: 'Raspberry Pi Control',
-                description: 'A comprehensive application for controlling your Raspberry Pi from Android and Windows devices',
-                language: 'Dart',
-                stargazers_count: 3,
-                forks_count: 0,
-                html_url: 'https://github.com/Lukas200301/RaspberryPi-Control',
-                isLocal: true,
-                localUrl: 'pages/raspberry-pi-control.html'
-            };
+            // Filter out forks and archived repos
+            this.repos = repos.filter(repo => !repo.fork && !repo.archived);
             
-            // Combine featured project with GitHub repos
-            const filteredRepos = repos.filter(repo => !repo.fork).slice(0, 5);
-            this.repos = [raspberryPiProject, ...filteredRepos];
-            
+            // Sort by stargazers_count descending
+            this.repos.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));              
             // Cache the successful result
             this.gitHubCache.data = this.repos;
             this.gitHubCache.timestamp = now;

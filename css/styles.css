@@ -233,6 +233,8 @@ body {
 
 .cursor-follower {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 40px;
   height: 40px;
   border: 2px solid var(--primary-accent);
@@ -240,13 +242,15 @@ body {
   pointer-events: none;
   z-index: var(--z-tooltip);
   opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: all 0.1s ease;
+  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.15s ease;
   mix-blend-mode: difference;
+  will-change: transform;
 }
 
 .cursor-dot {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 6px;
   height: 6px;
   background: var(--primary-accent);
@@ -254,8 +258,8 @@ body {
   pointer-events: none;
   z-index: var(--z-tooltip);
   opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: all 0.05s ease;
+  transition: opacity 0.1s ease;
+  will-change: transform;
 }
 
 @media (pointer: coarse) {
