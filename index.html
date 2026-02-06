@@ -130,8 +130,8 @@
                                 <div class="stat-label">GitHub Stars</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-number" data-target="0">0</div>
-                                <div class="stat-label">Languages</div>
+                                <div class="stat-number" id="visitorCount" data-target="0">0</div>
+                                <div class="stat-label">Total Visitors</div>
                             </div>
                             <div class="stat-item">
                                 <div class="stat-number" data-target="2020">2020</div>
@@ -459,5 +459,29 @@
     <!-- Scripts -->
     <script src="js/floating-elements.js"></script>
     <script src="js/script.js"></script>
+    
+    <!-- Visitor Counter -->
+    <script>
+        // Your own Vercel counter API
+        const counterApiUrl = 'https://lukas200301-counter.vercel.app/api/counter';
+        
+        fetch(counterApiUrl)
+            .then(res => res.json())
+            .then(data => {
+                const countElement = document.getElementById('visitorCount');
+                if (countElement && data.count) {
+                    countElement.textContent = data.count;
+                    countElement.setAttribute('data-target', data.count);
+                }
+            })
+            .catch(err => {
+                console.log('Counter error:', err);
+                // Fallback: show a placeholder
+                const countElement = document.getElementById('visitorCount');
+                if (countElement) {
+                    countElement.textContent = '---';
+                }
+            });
+    </script>
 </body>
 </html>
