@@ -426,13 +426,14 @@ class PortfolioApp {
         if (this.gitHubCache.data && 
             this.gitHubCache.timestamp && 
             (now - this.gitHubCache.timestamp) < this.gitHubCache.ttl) {
+            console.log('Using cached GitHub data:', this.gitHubCache.data.length, 'repos');
             this.repos = this.gitHubCache.data;
             this.displayProjects();
             return;
         }
         
         try {
-            const response = await fetch('https://api.github.com/users/Lukas200301/repos?sort=updated&per_page=6');
+            const response = await fetch('https://api.github.com/users/Lukas200301/repos?sort=updated&per_page=100');
             
             // Check if the response is ok before trying to parse JSON
             if (!response.ok) {
@@ -450,7 +451,11 @@ class PortfolioApp {
             this.repos = repos.filter(repo => !repo.fork && !repo.archived);
             
             // Sort by stargazers_count descending
-            this.repos.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));              
+            this.repos.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
+            
+            console.log('Loaded', this.repos.length, 'repositories from GitHub');
+            console.log('Total stars:', this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0));
+            
             // Cache the successful result
             this.gitHubCache.data = this.repos;
             this.gitHubCache.timestamp = now;
@@ -458,14 +463,17 @@ class PortfolioApp {
             this.displayProjects();
             
         } catch (error) {
+            console.error('Error loading GitHub data:', error);
             
             // Check if this is a rate limit error
             if (error.message.includes('403') || error.message.includes('rate limit')) {
+                console.warn('GitHub API rate limit hit');
                 this.isRateLimited = true;
             }
             
             // Try to use stale cache data if available
             if (this.gitHubCache.data && this.gitHubCache.data.length > 0) {
+                console.log('Using stale cached data');
                 this.repos = this.gitHubCache.data;
                 this.displayProjects();
                 return;
@@ -648,26 +656,37 @@ class PortfolioApp {
             return;
         }
         
-        // Set up stats with dynamic values or rate limit message
+        // Ensure repos is an array
+        if (!Array.isArray(this.repos)) {
+            this.repos = [];
+        }
+        
+        // Calculate projects and stars counts
+        const projectsCount = this.repos.length;
+        const totalStars = this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+        
+        console.log('Initializing stats - Projects:', projectsCount, 'Stars:', totalStars);
+        
+        // If we have no repos loaded and not explicitly rate limited, assume data load failed
+        const hasData = projectsCount > 0;
+        const showFallback = this.isRateLimited || !hasData;
+        
+        // Set up stats with dynamic values or fallback message
+        // Note: statNumbers[2] (Total Visitors) is handled separately by the visitor counter script
         const stats = [
             { 
                 element: statNumbers[0], 
-                target: this.isRateLimited ? 'GitHub API Rate Limited' : this.repos.length, 
+                target: showFallback ? 10 : projectsCount, 
                 label: 'Projects',
-                isNumeric: !this.isRateLimited
+                isNumeric: true
             },
             { 
                 element: statNumbers[1], 
-                target: this.isRateLimited ? 'GitHub API Rate Limited' : this.repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0), 
+                target: showFallback ? 8 : totalStars, 
                 label: 'GitHub Stars',
-                isNumeric: !this.isRateLimited
+                isNumeric: true
             },
-            { 
-                element: statNumbers[2], 
-                target: this.isRateLimited ? 'GitHub API Rate Limited' : (new Set(this.repos.map(repo => repo.language).filter(Boolean)).size || 0), 
-                label: 'Languages',
-                isNumeric: !this.isRateLimited
-            },
+            // statNumbers[2] is Total Visitors - handled by visitor counter API
             { 
                 element: statNumbers[3], 
                 target: 2020, 
@@ -678,15 +697,8 @@ class PortfolioApp {
 
         stats.forEach(stat => {
             if (stat.element) {
-                if (stat.isNumeric) {
-                    stat.element.setAttribute('data-target', stat.target);
-                    stat.element.setAttribute('data-is-numeric', 'true');
-                } else {
-                    stat.element.setAttribute('data-target', stat.target);
-                    stat.element.setAttribute('data-is-numeric', 'false');
-                    // Add a class to style rate limited text differently
-                    stat.element.classList.add('rate-limited');
-                }
+                stat.element.setAttribute('data-target', stat.target);
+                stat.element.setAttribute('data-is-numeric', 'true');
             }
         });
     }
