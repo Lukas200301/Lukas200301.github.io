@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Raspberry Pi Control - A comprehensive application for controlling your Raspberry Pi from Android and Windows devices">
-    <meta name="keywords" content="raspberry pi, control, android, windows, ssh, monitoring, dart, flutter">
+    <meta name="description" content="High-performance real-time monitoring and control application for Raspberry Pi with beautiful glassmorphic UI, gRPC backend, Docker management, and system updates">
+    <meta name="keywords" content="raspberry pi, control, android, windows, ssh, monitoring, grpc, go, dart, flutter, docker, real-time, glassmorphic ui">
     <meta name="author" content="Lukas200301">
-    <meta property="og:title" content="Raspberry Pi Control - Lukas200301">
-    <meta property="og:description" content="Comprehensive Raspberry Pi control application for Android and Windows">
+    <meta property="og:title" content="Raspberry Pi Control - Real-Time Monitoring & Management">
+    <meta property="og:description" content="High-performance Raspberry Pi control with real-time stats, Docker management, system updates, and glassmorphic UI">
     <meta property="og:image" content="https://github.com/Lukas200301.png">
     <meta property="og:url" content="https://lukas200301.github.io/raspberry-pi-control">
-    <title>Raspberry Pi Control | Lukas200301</title>
+    <title>Raspberry Pi Control - Real-Time Monitoring & Management | Lukas200301</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,14 +62,21 @@
                             Raspberry Pi Control
                         </h1>
                         <p class="tool-description">
-                            A comprehensive application for controlling your Raspberry Pi from Android and Windows devices. 
-                            This app allows you to monitor system information, execute commands, and manage your Raspberry Pi remotely.
+                            High-performance real-time monitoring and control application with beautiful glassmorphic UI. Features 500ms live updates, Docker management, system updates, and secure gRPC communication.
                         </p>
                         
                         <div class="tool-meta">
                             <div class="meta-item">
-                                <i class="devicon-dart-plain"></i>
-                                <span>Dart</span>
+                                <i class="fas fa-code-branch"></i>
+                                <span>Version 3.3.1</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Android • Windows</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-bolt"></i>
+                                <span>gRPC + Go</span>
                             </div>
                             <a href="https://github.com/Lukas200301/RaspberryPi-Control" class="meta-item meta-link" target="_blank">
                                 <i class="fab fa-github"></i>
@@ -92,48 +99,62 @@
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-desktop"></i>
+                            <i class="fas fa-tachometer-alt"></i>
                         </div>
-                        <h3>Core Functionality</h3>
-                        <p>Complete control center for Raspberry Pi devices with comprehensive management tools:</p>
+                        <h3>Real-Time Dashboard</h3>
+                        <p>Lightning-fast system monitoring with ultra-responsive updates:</p>
                         <ul>
-                            <li>SSH connectivity to devices</li>
-                            <li>Advanced terminal interface for command execution</li>
-                            <li>Comprehensive system monitoring</li>
-                            <li>Multiple connection management</li>
-                            <li>Cross-device file transfer</li>
-                            <li>Service management</li>
-                            <li>Customizable theme support</li>
+                            <li>500ms live updates for CPU, RAM, Temperature, and Uptime</li>
+                            <li>Smooth vector graphs showing 60-second history</li>
+                            <li>Detailed memory breakdown (Used/Free/Cached/Swap)</li>
+                            <li>Color-coded temperature gauges for CPU & GPU</li>
+                            <li>Top processes view with resource usage</li>
+                            <li>Network interface details and disk usage</li>
                         </ul>
                     </div>
 
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fab fa-docker"></i>
                         </div>
-                        <h3>System Monitoring</h3>
-                        <p>Real-time insights into your Raspberry Pi's performance with intuitive visualization tools:</p>
+                        <h3>Docker Manager</h3>
+                        <p>Complete Docker container management at your fingertips:</p>
                         <ul>
-                            <li>System log viewing</li>
-                            <li>Network diagnostics tools</li>
-                            <li>Process monitoring and management</li>
-                            <li>Network connection tracking</li>
-                            <li>Fully customizable metrics dashboard</li>
+                            <li>View all containers with real-time status updates</li>
+                            <li>Start, Stop, Restart containers with one tap</li>
+                            <li>Live container log streaming with auto-scroll</li>
+                            <li>Container details: images, ports, creation dates</li>
+                            <li>Quick access to container management</li>
                         </ul>
                     </div>
 
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-wifi"></i>
+                            <i class="fas fa-cogs"></i>
                         </div>
-                        <h3>Connection Features</h3>
-                        <p>Reliable connection management with enhanced stability and security features:</p>
+                        <h3>Service Manager</h3>
+                        <p>Full control over systemd services with intuitive management:</p>
                         <ul>
-                            <li>Background connection maintenance</li>
-                            <li>Intelligent reconnection handling</li>
-                            <li>Advanced connection configurations</li>
-                            <li>Security timeout options</li>
-                            <li>Network optimization settings</li>
+                            <li>List all services (Active/Inactive/Failed)</li>
+                            <li>Start, Stop, Restart services instantly</li>
+                            <li>Enable or Disable services at boot</li>
+                            <li>Search and filter by service name</li>
+                            <li>Real-time service status monitoring</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3>System Update Center</h3>
+                        <p>Keep your Raspberry Pi up-to-date with ease:</p>
+                        <ul>
+                            <li>System information overview (OS, kernel, architecture)</li>
+                            <li>Check for available package updates</li>
+                            <li>Per-package or bulk system upgrade</li>
+                            <li>Real-time streaming upgrade progress logs</li>
+                            <li>Safe and controlled update process</li>
                         </ul>
                     </div>
 
@@ -141,43 +162,75 @@
                         <div class="feature-icon">
                             <i class="fas fa-terminal"></i>
                         </div>
-                        <h3>Terminal Experience</h3>
-                        <p>Powerful command-line interface with productivity enhancements for efficient device control:</p>
+                        <h3>Advanced Terminal</h3>
+                        <p>Professional-grade SSH terminal with enhanced productivity:</p>
                         <ul>
-                            <li>Feature-rich terminal environment</li>
-                            <li>Command history management</li>
-                            <li>Text manipulation tools</li>
-                            <li>Support for complex shell operations</li>
-                            <li>Optimized output handling</li>
+                            <li>Full xterm-256color compatible shell</li>
+                            <li>Custom accessory keyboard (Esc, Tab, Ctrl, Alt, Arrows)</li>
+                            <li>Command history support for quick access</li>
+                            <li>Copy/paste functionality</li>
+                            <li>Multi-session support</li>
                         </ul>
                     </div>
 
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-folder"></i>
+                            <i class="fas fa-folder-open"></i>
                         </div>
-                        <h3>File Management</h3>
-                        <p>Seamless file handling between your devices and Raspberry Pi with comprehensive tools:</p>
+                        <h3>SFTP File Explorer</h3>
+                        <p>Seamless file management with powerful features:</p>
                         <ul>
-                            <li>Intuitive remote file browsing</li>
-                            <li>Bidirectional file transfer system</li>
-                            <li>File visibility options</li>
-                            <li>Configurable file operations</li>
-                            <li>Custom handling preferences</li>
-                            <li>Robust error management</li>
+                            <li>Browse remote directories intuitively</li>
+                            <li>Upload/Download with progress tracking</li>
+                            <li>File previews with syntax highlighting</li>
+                            <li>Rename, delete, create folders</li>
+                            <li>Change file permissions</li>
+                            <li>Multi-file operations</li>
                         </ul>
                     </div>
 
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-laptop-code"></i>
+                            <i class="fas fa-box"></i>
                         </div>
-                        <h3>Cross-Platform Support</h3>
-                        <p>Available for multiple platforms with a consistent user experience:</p>
+                        <h3>Package Manager</h3>
+                        <p>Comprehensive package management interface:</p>
                         <ul>
-                            <li>Designed for various device form factors</li>
-                            <li>Mobile support</li>
-                            <li>Desktop support</li>
+                            <li>Search for packages in repositories</li>
+                            <li>Install and remove packages easily</li>
+                            <li>View detailed package information</li>
+                            <li>Dependency management</li>
+                            <li>Streaming operation logs</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <h3>System Logs</h3>
+                        <p>Real-time log monitoring with powerful filtering:</p>
+                        <ul>
+                            <li>Live log streaming via journalctl</li>
+                            <li>Filter by log level (Error/Warning/Info)</li>
+                            <li>Service-specific log filtering</li>
+                            <li>Search and highlight capabilities</li>
+                            <li>Export logs for analysis</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Connection Manager</h3>
+                        <p>Reliable multi-device connection management:</p>
+                        <ul>
+                            <li>Save multiple Pi connections securely</li>
+                            <li>Favorite connections for quick access</li>
+                            <li>Auto-reconnect with configurable retry logic</li>
+                            <li>Connection history and statistics</li>
+                            <li>One-tap device switching</li>
                         </ul>
                     </div>
                 </div>
@@ -195,37 +248,40 @@
                 <div class="about-grid">
                     <div class="about-card">
                         <h3>Project Overview</h3>
-                        <p>This project provides a cross-platform solution for monitoring and controlling Raspberry Pi devices remotely. This guide offers information about the project's features, structure, and how to use the application effectively.</p>
+                        <p>A high-performance, real-time monitoring and control application for Raspberry Pi featuring a beautiful cyberpunk-inspired glassmorphic UI. Built with modern technologies, it offers blazing-fast updates, comprehensive system management, and secure communication.</p>
                     </div>
 
                     <div class="about-card">
-                        <h3>Project Architecture</h3>
-                        <p>The project is built using Flutter/Dart for cross-platform compatibility and consists of:</p>
+                        <h3>High-Performance Architecture</h3>
+                        <p>Revolutionary gRPC-based architecture for maximum speed:</p>
                         <ul>
-                            <li><strong>Mobile Applications:</strong> For portable devices</li>
-                            <li><strong>Desktop Client:</strong> For computer systems</li>
-                            <li><strong>Communication Layer:</strong> Handles secure connections and data transfer</li>
+                            <li><strong>Flutter 3.10+:</strong> Beautiful cross-platform UI</li>
+                            <li><strong>Go 1.25+ Backend:</strong> Zero-dependency agent</li>
+                            <li><strong>gRPC + Protobuf:</strong> High-speed binary streaming</li>
+                            <li><strong>SSH Tunnel:</strong> All traffic encrypted</li>
+                            <li><strong>Auto-Deploy:</strong> Agent installs in ~5 seconds</li>
                         </ul>
                     </div>
 
                     <div class="about-card">
-                        <h3>Development Environment</h3>
-                        <p>For developers interested in contributing:</p>
+                        <h3>Supported Devices</h3>
+                        <p>Works with all Raspberry Pi models:</p>
                         <ul>
-                            <li>Clone the repository from the GitHub page</li>
-                            <li>Install the necessary development SDKs</li>
-                            <li>Install all project dependencies</li>
-                            <li>Use a modern IDE with appropriate plugins</li>
+                            <li><strong>Pi Zero/Zero W:</strong> ARMv6 support</li>
+                            <li><strong>Pi 2/3:</strong> ARMv7 architecture</li>
+                            <li><strong>Pi 3/4/5 64-bit:</strong> ARM64 optimized</li>
+                            <li><strong>Smart Detection:</strong> Automatic architecture selection</li>
                         </ul>
                     </div>
 
                     <div class="about-card">
-                        <h3>Testing Environment</h3>
-                        <p>For testing purposes:</p>
+                        <h3>Beautiful Design</h3>
+                        <p>Cyberpunk/Sci-Fi Glassmorphism Theme features:</p>
                         <ul>
-                            <li><strong>Mobile:</strong> Use appropriate development targets</li>
-                            <li><strong>Desktop:</strong> Build for supported platforms</li>
-                            <li><strong>Hardware:</strong> Requires a properly configured target device</li>
+                            <li><strong>AMOLED Black:</strong> #000000 for battery efficiency</li>
+                            <li><strong>Frosted Glass:</strong> Cards with blur effects</li>
+                            <li><strong>Vibrant Accents:</strong> Electric Indigo & Teal</li>
+                            <li><strong>Smooth Animations:</strong> Fluid transitions</li>
                         </ul>
                     </div>
                 </div>
@@ -246,10 +302,32 @@
                             <h3>Prerequisites</h3>
                         </div>
                         <ul>
-                            <li>A target Raspberry Pi device with SSH enabled</li>
-                            <li>Network connectivity between your device and the Raspberry Pi</li>
-                            <li>For developers: Required development SDKs</li>
+                            <li><strong>Flutter SDK 3.10+</strong> - Run <code>flutter doctor</code> to verify</li>
+                            <li><strong>Go 1.25+</strong> (for building agent) - Run <code>go version</code> to check</li>
+                            <li><strong>Protocol Buffers Compiler (protoc)</strong> - Required for code generation</li>
+                            <li>A Raspberry Pi with SSH enabled (port 22)</li>
+                            <li>Network connectivity to your Raspberry Pi</li>
                         </ul>
+                        
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Install Protocol Buffers Compiler</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code># Windows (using Chocolatey)
+choco install protobuf
+
+# macOS (using Homebrew)
+brew install protobuf
+
+# Linux (Ubuntu/Debian)
+sudo apt-get install protobuf-compiler
+
+# Verify installation
+protoc --version</code></pre>
+                        </div>
                     </div>
 
                     <div class="installation">
@@ -258,132 +336,70 @@
                         </div>
                         <div class="code-block">
                             <div class="code-header">
-                                <span>Clone Repository</span>
+                                <span>1. Clone Repository</span>
                                 <button class="copy-btn" onclick="copyCode(this)">
                                     <i class="fas fa-copy"></i>
                                 </button>
                             </div>
-                            <pre><code># Android Installation
-git clone https://github.com/Lukas200301/RaspberryPi-Control.git
-cd RaspberryPi-Control
-
-# Or download directly from GitHub releases
-# https://github.com/Lukas200301/RaspberryPi-Control/releases</code></pre>
+                            <pre><code>git clone https://github.com/Lukas200301/RaspberryPi-Control.git
+cd RaspberryPi-Control</code></pre>
                         </div>
 
                         <div class="code-block">
                             <div class="code-header">
-                                <span>Build & Install</span>
+                                <span>2. Build Everything (Protobuf + Agent Binaries)</span>
                                 <button class="copy-btn" onclick="copyCode(this)">
                                     <i class="fas fa-copy"></i>
                                 </button>
                             </div>
-                            <pre><code># For Android
+                            <pre><code># Windows PowerShell
+.\build_all.ps1
+
+# This generates:
+# - Dart protobuf code in lib/generated/
+# - Go protobuf code in agent/proto/
+# - Cross-compiled agent binaries for ARM6, ARM7, ARM64</code></pre>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>3. Install Dependencies & Run</span>
+                                <button class="copy-btn" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code># Install Flutter dependencies
+flutter pub get
+
+# Run the app
+flutter run
+
+# Or build for production:
+# Android
 flutter build apk --release
-adb install build/app/outputs/flutter-apk/app-release.apk
 
-# For Windows
-flutter build windows --release
-# Navigate to build/windows/runner/Release</code></pre>
-                        </div>
-
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span>Launch Application</span>
-                                <button class="copy-btn" onclick="copyCode(this)">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                            <pre><code># For Android - Find the app in your app drawer
-# For Windows - Run the executable from the Release folder
-RaspberryPi-Control.exe</code></pre>
+# Windows
+flutter build windows --release</code></pre>
                         </div>
                     </div>
 
                     <div class="important-notes">
                         <div class="important-notes-header">
-                            <h3>Important Notes</h3>
+                            <h3>First Connection</h3>
                         </div>
                         <div class="warning-card">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <i class="fas fa-info-circle"></i>
                             <div>
-                                <strong>System Requirements:</strong> The target Raspberry Pi device must be configured with supported locales for all monitoring features to work correctly.
+                                <strong>Auto-Installation:</strong> When you first connect to a Pi, the app automatically deploys the Go agent (~5 seconds). Subsequent connections are instant!
                             </div>
                         </div>
                         <div class="warning-card">
-                            <i class="fas fa-battery-half"></i>
+                            <i class="fas fa-shield-alt"></i>
                             <div>
-                                <strong>Device Settings:</strong> To maintain connections in the background on mobile devices, you may need to adjust battery optimization settings.
+                                <strong>Security:</strong> All communication flows through an SSH tunnel. No firewall configuration needed. Passwords are encrypted in your device keychain.
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Usage Guide Section -->
-        <section id="usage" class="project-section">
-            <div class="section-container">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-bar"></i>
-                    Usage Guide
-                </h2>
-                
-                <div class="usage-grid">
-                    <div class="usage-card">
-                        <div class="usage-icon">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        <h3>Dashboard</h3>
-                        <p>The system dashboard provides comprehensive monitoring capabilities:</p>
-                        <ul>
-                            <li>Real-time performance metrics visualization</li>
-                            <li>Memory status tracking</li>
-                            <li>Hardware temperature monitoring</li>
-                            <li>Storage capacity analysis</li>
-                            <li>Network configuration information</li>
-                            <li>System availability statistics</li>
-                        </ul>
-                    </div>
-
-                    <div class="usage-card">
-                        <div class="usage-icon">
-                            <i class="fas fa-terminal"></i>
-                        </div>
-                        <h3>Terminal</h3>
-                        <p>Remote command execution features:</p>
-                        <ul>
-                            <li>Complete command-line interface access</li>
-                            <li>Command history management</li>
-                            <li>Elevated privilege execution support</li>
-                        </ul>
-                    </div>
-
-                    <div class="usage-card">
-                        <div class="usage-icon">
-                            <i class="fas fa-folder-open"></i>
-                        </div>
-                        <h3>File Manager</h3>
-                        <p>Comprehensive file management interface:</p>
-                        <ul>
-                            <li>Intuitive file system navigation</li>
-                            <li>Upload functionality from client device</li>
-                            <li>Download capabilities to client device</li>
-                            <li>Complete file operation toolset</li>
-                        </ul>
-                    </div>
-
-                    <div class="usage-card">
-                        <div class="usage-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <h3>Connection Management</h3>
-                        <p>Multi-device connection features:</p>
-                        <ul>
-                            <li>Multiple connection profile storage</li>
-                            <li>Connection resilience features</li>
-                            <li>Quick device switching capabilities</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -399,43 +415,50 @@ RaspberryPi-Control.exe</code></pre>
                 
                 <div class="tech-details">
                     <div class="tech-card">
-                        <h3>Secure Communication</h3>
-                        <p><strong>Implementation:</strong></p>
+                        <h3>gRPC Architecture</h3>
+                        <p><strong>High-Performance Communication:</strong></p>
                         <ul>
-                            <li>Uses industry-standard secure communication protocols</li>
-                            <li>Features connection persistence technology</li>
-                            <li>Implements robust error handling and recovery</li>
+                            <li>gRPC with Protocol Buffers for binary streaming</li>
+                            <li>500ms update intervals for real-time monitoring</li>
+                            <li>Bidirectional streaming for live logs</li>
+                            <li>Compact binary format reduces bandwidth</li>
+                            <li>Type-safe API contracts via protobuf</li>
                         </ul>
                     </div>
 
                     <div class="tech-card">
-                        <h3>System Monitoring</h3>
-                        <p><strong>Implementation:</strong></p>
+                        <h3>Go Backend Agent</h3>
+                        <p><strong>Zero-Dependency Performance:</strong></p>
                         <ul>
-                            <li>Utilizes platform-appropriate system information retrieval</li>
-                            <li>Features optimized data processing algorithms</li>
-                            <li>Implements configurable monitoring frequency</li>
-                            <li>Delivers real-time metrics with minimal overhead</li>
+                            <li>Single binary deployment (~10MB)</li>
+                            <li>No external dependencies required</li>
+                            <li>Cross-compiled for ARMv6, ARMv7, and ARM64</li>
+                            <li>Auto-deployed via SSH in ~5 seconds</li>
+                            <li>Minimal resource footprint on Pi</li>
                         </ul>
                     </div>
 
                     <div class="tech-card">
-                        <h3>Background Operation</h3>
-                        <p><strong>Implementation:</strong></p>
+                        <h3>Security & Privacy</h3>
+                        <p><strong>Enterprise-Grade Protection:</strong></p>
                         <ul>
-                            <li>Enable notification permissions</li>
-                            <li>Configure appropriate power management settings</li>
-                            <li>Grant required system permissions when prompted</li>
+                            <li>All traffic encrypted via SSH tunnel</li>
+                            <li>No open ports required on Pi</li>
+                            <li>Passwords stored in device keychain</li>
+                            <li>Agent only listens on localhost</li>
+                            <li>No data collection or telemetry</li>
                         </ul>
                     </div>
 
                     <div class="tech-card">
-                        <h3>Configurable Settings</h3>
-                        <p><strong>Implementation:</strong></p>
+                        <h3>Smart Features</h3>
+                        <p><strong>Intelligent Operation:</strong></p>
                         <ul>
-                            <li>Customizable interface themes and dashboard layouts</li>
-                            <li>Advanced connection management and security parameters</li>
-                            <li>Flexible file management and operation preferences</li>
+                            <li>Automatic Pi architecture detection</li>
+                            <li>Version checking with auto-update</li>
+                            <li>Connection resilience with retry logic</li>
+                            <li>Background service support (mobile)</li>
+                            <li>Graceful error handling and recovery</li>
                         </ul>
                     </div>
                 </div>
@@ -449,90 +472,257 @@ RaspberryPi-Control.exe</code></pre>
                     <i class="fas fa-cubes"></i>
                     Technology Stack
                 </h2>
+                <p class="section-description">Built with cutting-edge technologies for maximum performance and reliability</p>
                 
-                <div class="tech-stack">
-                    <div class="tech-category">
-                        <h3>Core Technologies</h3>
-                        <div class="tech-items">
-                            <div class="tech-item">
-                                <i class="devicon-flutter-plain"></i>
-                                <span>Flutter</span>
+                <div class="tech-stack-modern">
+                    <!-- Frontend Card -->
+                    <div class="tech-stack-card" data-category="frontend">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-desktop"></i>
                             </div>
-                            <div class="tech-item">
+                            <div>
+                                <h3>Frontend</h3>
+                                <p>Cross-platform UI framework</p>
+                            </div>
+                        </div>
+                        <div class="tech-stack-content">
+                            <div class="tech-badge primary">
+                                <i class="devicon-flutter-plain"></i>
+                                <span>Flutter 3.10+</span>
+                            </div>
+                            <div class="tech-badge primary">
                                 <i class="devicon-dart-plain"></i>
                                 <span>Dart</span>
                             </div>
-                            <div class="tech-item">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>SSH Protocol</span>
+                            <div class="tech-badge">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>Glassmorphism UI</span>
                             </div>
-                            <div class="tech-item">
-                                <i class="fas fa-database"></i>
-                                <span>Local Storage</span>
+                            <div class="tech-badge">
+                                <i class="fas fa-chart-area"></i>
+                                <span>FL Chart</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-sync"></i>
+                                <span>Riverpod</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-palette"></i>
+                                <span>Google Fonts</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tech-category">
-                        <h3>Platform Support</h3>
-                        <div class="tech-items">
-                            <div class="tech-item">
+                    <!-- Backend Card -->
+                    <div class="tech-stack-card" data-category="backend">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div>
+                                <h3>Backend</h3>
+                                <p>High-performance agent</p>
+                            </div>
+                        </div>
+                        <div class="tech-stack-content">
+                            <div class="tech-badge primary">
+                                <i class="devicon-go-original-wordmark"></i>
+                                <span>Go 1.25+</span>
+                            </div>
+                            <div class="tech-badge primary">
+                                <i class="fas fa-bolt"></i>
+                                <span>gRPC</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-file-code"></i>
+                                <span>Protocol Buffers</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-microchip"></i>
+                                <span>gopsutil</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fab fa-docker"></i>
+                                <span>Docker SDK</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-cog"></i>
+                                <span>Systemd</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connectivity Card -->
+                    <div class="tech-stack-card" data-category="connectivity">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <div>
+                                <h3>Connectivity</h3>
+                                <p>Secure communication protocols</p>
+                            </div>
+                        </div>
+                        <div class="tech-stack-content">
+                            <div class="tech-badge primary">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>SSH/SFTP</span>
+                            </div>
+                            <div class="tech-badge primary">
+                                <i class="fas fa-terminal"></i>
+                                <span>xterm.js</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-lock"></i>
+                                <span>dartssh2</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-key"></i>
+                                <span>Secure Storage</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>Binary Streaming</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-compress"></i>
+                                <span>Data Compression</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Support Card -->
+                    <div class="tech-stack-card" data-category="platform">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <h3>Platform Support</h3>
+                                <p>Multi-platform compatibility</p>
+                            </div>
+                        </div>
+                        <div class="tech-stack-content">
+                            <div class="tech-badge primary large">
                                 <i class="fab fa-android"></i>
                                 <span>Android</span>
                             </div>
-                            <div class="tech-item">
+                            <div class="tech-badge primary large">
                                 <i class="fab fa-windows"></i>
                                 <span>Windows</span>
                             </div>
-                            <div class="tech-item">
+                            <div class="tech-badge large">
                                 <i class="fab fa-raspberry-pi"></i>
-                                <span>Raspberry Pi</span>
+                                <span>Pi Zero (ARMv6)</span>
+                            </div>
+                            <div class="tech-badge large">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Pi 2/3 (ARMv7)</span>
+                            </div>
+                            <div class="tech-badge large">
+                                <i class="fab fa-raspberry-pi"></i>
+                                <span>Pi 3/4/5 (ARM64)</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tech-category">
-                        <h3>Key Features</h3>
-                        <div class="tech-items">
-                            <div class="tech-item">
-                                <i class="fas fa-terminal"></i>
-                                <span>Terminal Emulation</span>
+                    <!-- Development Tools Card -->
+                    <div class="tech-stack-card" data-category="tools">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-tools"></i>
                             </div>
-                            <div class="tech-item">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Real-time Monitoring</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-exchange-alt"></i>
-                                <span>File Transfer</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-cogs"></i>
-                                <span>Background Services</span>
+                            <div>
+                                <h3>Development</h3>
+                                <p>Modern toolchain</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="tech-category">
-                        <h3>Development Tools</h3>
-                        <div class="tech-items">
-                            <div class="tech-item">
+                        <div class="tech-stack-content">
+                            <div class="tech-badge">
                                 <i class="devicon-vscode-plain"></i>
                                 <span>VS Code</span>
                             </div>
-                            <div class="tech-item">
+                            <div class="tech-badge">
                                 <i class="devicon-git-plain"></i>
                                 <span>Git</span>
                             </div>
-                            <div class="tech-item">
+                            <div class="tech-badge">
                                 <i class="devicon-github-plain"></i>
                                 <span>GitHub</span>
                             </div>
-                            <div class="tech-item">
-                                <i class="fas fa-bug"></i>
-                                <span>Debug Tools</span>
+                            <div class="tech-badge">
+                                <i class="fas fa-terminal"></i>
+                                <span>Protocol Buffers</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-hammer"></i>
+                                <span>PowerShell</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-cube"></i>
+                                <span>Flutter Build</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Storage & State Card -->
+                    <div class="tech-stack-card" data-category="storage">
+                        <div class="tech-stack-header">
+                            <div class="tech-stack-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <h3>Storage & State</h3>
+                                <p>Data management</p>
+                            </div>
+                        </div>
+                        <div class="tech-stack-content">
+                            <div class="tech-badge">
+                                <i class="fas fa-box"></i>
+                                <span>GetStorage</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-folder"></i>
+                                <span>Path Provider</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-key"></i>
+                                <span>Keychain</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-download"></i>
+                                <span>Downloader</span>
+                            </div>
+                            <div class="tech-badge">
+                                <i class="fas fa-file-alt"></i>
+                                <span>File Picker</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Stats -->
+                <div class="tech-stats">
+                    <div class="tech-stat-item">
+                        <div class="stat-value">500ms</div>
+                        <div class="stat-label">Update Interval</div>
+                    </div>
+                    <div class="tech-stat-item">
+                        <div class="stat-value">~10MB</div>
+                        <div class="stat-label">Agent Binary Size</div>
+                    </div>
+                    <div class="tech-stat-item">
+                        <div class="stat-value">~5s</div>
+                        <div class="stat-label">Auto-Deploy Time</div>
+                    </div>
+                    <div class="tech-stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">ARM Architectures</div>
                     </div>
                 </div>
             </div>
@@ -736,9 +926,6 @@ RaspberryPi-Control.exe</code></pre>
         </div>
         <div class="nav-dot" data-section="getting-started" title="Getting Started">
             <span class="dot-label">Getting Started</span>
-        </div>
-        <div class="nav-dot" data-section="usage" title="Usage">
-            <span class="dot-label">Usage</span>
         </div>
         <div class="nav-dot" data-section="tech-details" title="Technical">
             <span class="dot-label">Technical</span>
