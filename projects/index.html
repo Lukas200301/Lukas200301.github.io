@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Lukas200301</title>
+    <meta name="description" content="Every public GitHub repository by Lukas200301, with live stars and update dates.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Projects | Lukas200301">
+    <meta property="og:description" content="Every public GitHub repository by Lukas200301, with live stars and update dates.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
+</head>
+<body>
+    <main id="main" class="wrap">
+        <header class="list-hero">
+            <nav class="crumbs" aria-label="Breadcrumb">
+                <a class="breadcrumb-link" href="../"><i class="fas fa-house"></i> Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Projects</span>
+            </nav>
+            <h1 class="page-title"><i class="fas fa-code"></i>Projects</h1>
+            <p class="page-lede">Every public repository on my GitHub, live from the API. The two with a showcase page have screenshots, setup guides and docs.</p>
+            <div class="page-meta"><a class="meta-item" href="https://github.com/Lukas200301?tab=repositories" target="_blank" rel="noopener"><i class="fab fa-github"></i><span id="repoCount">…</span> repositories</a><span class="meta-item"><i class="fas fa-star"></i><span id="totalStars">…</span> stars</span><span class="meta-item"><i class="fas fa-code-branch"></i><span id="totalForks">…</span> forks</span></div>
+        </header>
+        <div class="list-bar">
+            <div class="list-bar__inner">
+                <label class="list-search">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="search" data-list-search placeholder="Search repositories" aria-label="Search repositories" autocomplete="off">
+                    <kbd>/</kbd>
+                </label>
+                <div class="filters" id="filters" role="group" aria-label="Filter"></div>
+                <select class="sort-select" id="sort" aria-label="Sort"></select>
+            </div>
+        </div>
+        <p class="list-count" id="count" aria-live="polite"></p>
+        <div class="notice" id="notice" hidden>
+            <i class="fas fa-clock"></i>
+            <span>GitHub is rate-limiting requests right now, so this list may be out of date.</span>
+            <button type="button" id="retry">Try again</button>
+        </div>
+        <section class="card-grid" id="grid" aria-label="Repositories"></section>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/list.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+    <script>
+    (function () {
+        const esc = List.esc;
+        const SHOWCASES = {
+            'RaspberryPi-Control': { url: 'raspberrypicontrol/', title: 'Raspberry Pi Control' },
+            'NetW1re': { url: 'netw1re/', title: 'NetW1re' }
+        };
+        const FALLBACK = [
+            { name: 'RaspberryPi-Control', html_url: 'https://github.com/Lukas200301/RaspberryPi-Control', description: 'Monitor and control your Raspberry Pi from Android and Windows: live system stats, Docker management, system updates over secure gRPC.', stargazers_count: 0, forks_count: 0, language: 'Dart', topics: ['raspberry-pi', 'flutter', 'grpc'], pushed_at: null },
+            { name: 'NetW1re', html_url: 'https://github.com/Lukas200301/NetW1re', description: 'Network monitoring and control tool: see devices on your LAN, analyze and limit their traffic.', stargazers_count: 0, forks_count: 0, language: 'C#', topics: ['network-monitoring', 'avalonia-ui'], pushed_at: null }
+        ];
+        const ICON = { JavaScript: 'devicon-javascript-plain', TypeScript: 'devicon-typescript-plain', Python: 'devicon-python-plain', Java: 'devicon-java-plain', 'C#': 'devicon-csharp-plain', 'C++': 'devicon-cplusplus-plain', Go: 'devicon-go-plain', Dart: 'devicon-dart-plain', HTML: 'devicon-html5-plain', CSS: 'devicon-css3-plain', Vue: 'devicon-vuejs-plain', Shell: 'devicon-bash-plain', PowerShell: 'devicon-powershell-plain', Kotlin: 'devicon-kotlin-plain', Rust: 'devicon-rust-plain', PHP: 'devicon-php-plain' };
+        const COLOR = { JavaScript: '#f1e05a', TypeScript: '#3178c6', Python: '#3572A5', Java: '#b07219', 'C#': '#178600', 'C++': '#f34b7d', Go: '#00ADD8', Dart: '#00B4AB', HTML: '#e34c26', CSS: '#663399', Vue: '#41b883', Shell: '#89e051', Kotlin: '#A97BFF' };
+        const ago = (iso) => {
+            if (!iso) return '';
+            const s = (Date.now() - new Date(iso)) / 1000;
+            for (const [sec, l] of [[31536000, 'y'], [2592000, 'mo'], [604800, 'w'], [86400, 'd'], [3600, 'h']]) if (s >= sec) return Math.floor(s / sec) + l + ' ago';
+            return 'just now';
+        };
+
+        const list = List.init({
+            items: [],
+            noun: ['repository', 'repositories'],
+            filterKeys: r => [r.language || 'Other'],
+            searchText: r => [r.name, r.description, r.language, (r.topics || []).join(' ')].join(' '),
+            sorters: {
+                'Recently updated': (a, b) => new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0),
+                'Most stars': (a, b) => (b.stargazers_count - a.stargazers_count) || a.name.localeCompare(b.name),
+                'Name': (a, b) => a.name.localeCompare(b.name)
+            },
+            render: (r) => {
+                const sc = SHOWCASES[r.name];
+                const tags = (r.topics || []).slice(0, 3).map(t => `<span class="chip">${esc(t)}</span>`).join('');
+                return `<article class="card spot" data-tilt>
+                    <div class="card__top">
+                        <span class="card__icon" style="color:${COLOR[r.language] || 'var(--signal)'}"><i class="${ICON[r.language] || 'fas fa-code'}"></i></span>
+                        ${sc ? '<span class="badge badge--feat"><i class="fas fa-star"></i> Showcase</span>' : (r.archived ? '<span class="badge">Archived</span>' : '')}
+                    </div>
+                    <div>
+                        <h2 class="card__title"><a class="card__link" href="${sc ? sc.url : esc(r.html_url)}"${sc ? '' : ' target="_blank" rel="noopener"'}>${esc(r.name)}</a></h2>
+                        <p class="card__desc">${esc(r.description || 'No description yet.')}</p>
+                    </div>
+                    <div class="card__tags">${r.language ? `<span class="chip"><i class="lang-dot" style="background:${COLOR[r.language] || '#8ea2ff'};width:8px;height:8px;border-radius:50%;display:inline-block"></i>${esc(r.language)}</span>` : ''}${tags}</div>
+                    <div class="card__foot">
+                        <span class="card__stats">
+                            <span title="Stars"><i class="fas fa-star"></i>${r.stargazers_count || 0}</span>
+                            <span title="Forks"><i class="fas fa-code-branch"></i>${r.forks_count || 0}</span>
+                            ${r.pushed_at ? `<span title="Last push"><i class="far fa-clock"></i>${ago(r.pushed_at)}</span>` : ''}
+                        </span>
+                        <span class="card__actions">
+                            ${sc ? `<a class="is-main" href="${sc.url}"><i class="fas fa-eye"></i> Showcase</a>` : ''}
+                            <a href="${esc(r.html_url)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} on GitHub"><i class="fab fa-github"></i> Code</a>
+                        </span>
+                    </div>
+                </article>`;
+            }
+        });
+
+        function stats(repos) {
+            const set = (id, v) => { const el = document.getElementById(id); if (!el) return; if (window.Site && Site.countUp) Site.countUp(el, v, 1100); else el.textContent = v; };
+            set('repoCount', repos.length);
+            set('totalStars', repos.reduce((a, r) => a + (r.stargazers_count || 0), 0));
+            set('totalForks', repos.reduce((a, r) => a + (r.forks_count || 0), 0));
+        }
+
+        async function load() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '<div class="skeleton card-skeleton"></div>'.repeat(6);
+            let repos = null, stale = false;
+            try {
+                const c = JSON.parse(localStorage.getItem('gh-repos-v2') || 'null');
+                if (c && Date.now() - c.t < 10 * 60e3) repos = c.data;
+            } catch (e) {}
+            if (!repos) {
+                try {
+                    const res = await fetch('https://api.github.com/users/Lukas200301/repos?per_page=100&sort=pushed');
+                    if (!res.ok) throw new Error(res.status);
+                    repos = (await res.json()).filter(r => !r.fork).map(r => ({ name: r.name, description: r.description, html_url: r.html_url, language: r.language, stargazers_count: r.stargazers_count, forks_count: r.forks_count, pushed_at: r.pushed_at, topics: r.topics || [], archived: r.archived }));
+                    try { localStorage.setItem('gh-repos-v2', JSON.stringify({ t: Date.now(), data: repos })); } catch (e) {}
+                } catch (e) {
+                    stale = true;
+                    try { const c = JSON.parse(localStorage.getItem('gh-repos-v2') || 'null'); repos = c && c.data; } catch (e2) {}
+                    repos = repos && repos.length ? repos : FALLBACK;
+                }
+            }
+            document.getElementById('notice').hidden = !stale;
+            stats(repos);
+            list.setItems(repos);
+        }
+        document.getElementById('retry').addEventListener('click', load);
+        load();
+    })();
+    </script>
+</body>
+</html>

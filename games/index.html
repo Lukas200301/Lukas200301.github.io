@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games | Lukas200301</title>
+    <meta name="description" content="Browser games by Lukas200301: Tetris, 2048 and Globle.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Games | Lukas200301">
+    <meta property="og:description" content="Browser games by Lukas200301: Tetris, 2048 and Globle.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
+</head>
+<body>
+    <main id="main" class="wrap">
+        <header class="list-hero">
+            <nav class="crumbs" aria-label="Breadcrumb">
+                <a class="breadcrumb-link" href="../"><i class="fas fa-house"></i> Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Games</span>
+            </nav>
+            <h1 class="page-title"><i class="fas fa-gamepad"></i>Games</h1>
+            <p class="page-lede">Quick games that run right in the browser. Your high scores stay on your device.</p>
+            <div class="page-meta"><span class="meta-item"><i class="fas fa-play"></i><span id="gameCount">3</span> playable</span></div>
+        </header>
+        <div class="list-bar">
+            <div class="list-bar__inner">
+                <label class="list-search">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="search" data-list-search placeholder="Search games" aria-label="Search games" autocomplete="off">
+                    <kbd>/</kbd>
+                </label>
+                <div class="filters" id="filters" role="group" aria-label="Filter"></div>
+                
+            </div>
+        </div>
+        <p class="list-count" id="count" aria-live="polite"></p>
+        <section class="card-grid" id="grid" aria-label="Games"></section>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/list.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+    <script>
+    (function () {
+        const esc = List.esc;
+        const GAMES = [
+            { title: 'Tetris', desc: 'The classic falling-blocks puzzle. Clear lines, speed up, chase a high score.', icon: 'fas fa-shapes', url: './tetris/', cat: 'Puzzle', status: 'live', keys: 'Arrows · Space' },
+            { title: '2048', desc: 'Slide tiles, merge equal numbers and reach 2048. Includes an AI helper when you get stuck.', icon: 'fas fa-table-cells-large', url: './2048/', cat: 'Puzzle', status: 'live', keys: 'Arrows or swipe' },
+            { title: 'Globle', desc: 'Guess the mystery country. Each guess lights up on a 3D globe, hotter colors mean closer.', icon: 'fas fa-earth-americas', url: './globle/', cat: 'Geography', status: 'live', keys: 'Type a country' },
+            { title: 'Strategic Tic Tac Toe', desc: 'Tic Tac Toe against an AI with several difficulty levels.', icon: 'fas fa-hashtag', url: null, cat: 'Strategy', status: 'soon', keys: '' }
+        ];
+        document.getElementById('gameCount').textContent = GAMES.filter(g => g.status === 'live').length;
+        List.init({
+            items: GAMES,
+            noun: ['game', 'games'],
+            filterKeys: g => [g.cat],
+            searchText: g => [g.title, g.desc, g.cat].join(' '),
+            sorters: null,
+            render: (g) => g.url ? `<a class="card spot" data-tilt href="${g.url}">
+                <div class="card__top"><span class="card__icon" style="color:var(--amber)"><i class="${g.icon}"></i></span><span class="badge badge--live">Playable</span></div>
+                <div><h2 class="card__title">${esc(g.title)}</h2><p class="card__desc">${esc(g.desc)}</p></div>
+                <div class="card__foot"><span><i class="fas fa-keyboard"></i> ${esc(g.keys)}</span><span class="card__go">Play <i class="fas fa-play"></i></span></div>
+            </a>` : `<div class="card is-disabled" aria-disabled="true">
+                <div class="card__top"><span class="card__icon"><i class="${g.icon}"></i></span><span class="badge badge--soon">In progress</span></div>
+                <div><h2 class="card__title">${esc(g.title)}</h2><p class="card__desc">${esc(g.desc)}</p></div>
+                <div class="card__foot"><span>Not playable yet</span></div>
+            </div>`
+        });
+    })();
+    </script>
+</body>
+</html>

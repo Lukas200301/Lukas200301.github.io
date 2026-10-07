@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools | Lukas200301</title>
+    <meta name="description" content="Free browser tools by Lukas200301: password generator, regex tester, QR codes, color palettes, JS/TS playground and more.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Tools | Lukas200301">
+    <meta property="og:description" content="Free browser tools by Lukas200301: password generator, regex tester, QR codes, color palettes, JS/TS playground and more.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
+</head>
+<body>
+    <main id="main" class="wrap">
+        <header class="list-hero">
+            <nav class="crumbs" aria-label="Breadcrumb">
+                <a class="breadcrumb-link" href="../"><i class="fas fa-house"></i> Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Tools</span>
+            </nav>
+            <h1 class="page-title"><i class="fas fa-screwdriver-wrench"></i>Tools</h1>
+            <p class="page-lede">Small utilities I built because I needed them. No sign-up, no tracking, and everything runs locally in your browser.</p>
+            <div class="page-meta"><span class="meta-item"><i class="fas fa-wrench"></i><span id="toolCount">8</span> tools</span><span class="meta-item"><i class="fas fa-shield-halved"></i>Client-side only</span></div>
+        </header>
+        <div class="list-bar">
+            <div class="list-bar__inner">
+                <label class="list-search">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="search" data-list-search placeholder="Search tools" aria-label="Search tools" autocomplete="off">
+                    <kbd>/</kbd>
+                </label>
+                <div class="filters" id="filters" role="group" aria-label="Filter"></div>
+                <select class="sort-select" id="sort" aria-label="Sort"></select>
+            </div>
+        </div>
+        <p class="list-count" id="count" aria-live="polite"></p>
+        <section class="card-grid" id="grid" aria-label="Tools"></section>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/list.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+    <script>
+    (function () {
+        const esc = List.esc;
+        const TOOLS = [
+            { title: 'JavaScript & TypeScript Playground', desc: 'Write and run JavaScript or TypeScript in the browser and see the console output instantly.', icon: 'fab fa-js', url: './tjs-playground/', cat: 'Developer', tags: ['javascript', 'typescript', 'editor'] },
+            { title: 'Regex Tester', desc: 'Test regular expressions against your text with live highlighting and match details.', icon: 'fas fa-asterisk', url: './regex-tester/', cat: 'Developer', tags: ['regex', 'pattern', 'testing'] },
+            { title: 'Secure Password Generator', desc: 'Generate strong passwords with the Web Crypto API and see how long they would take to crack.', icon: 'fas fa-key', url: './pwgenerator/', cat: 'Security', tags: ['password', 'entropy', 'crypto'] },
+            { title: 'Browser Fingerprint Analyzer', desc: 'See what websites can learn about you: canvas, WebGL, audio and hardware fingerprints.', icon: 'fas fa-fingerprint', url: './fingerprint/', cat: 'Security', tags: ['privacy', 'browser', 'webgl'] },
+            { title: 'Color Palette Generator', desc: 'Generate harmonious color palettes and export them as CSS, JSON or images.', icon: 'fas fa-palette', url: './color-generator/', cat: 'Design', tags: ['colors', 'palette', 'css'] },
+            { title: 'QR Code Generator', desc: 'Create QR codes for links, text and Wi-Fi logins, then download them as images.', icon: 'fas fa-qrcode', url: './qr-code/', cat: 'Utility', tags: ['qr', 'wifi', 'url'] },
+            { title: 'Globedata', desc: 'Spin a 3D globe and click any country to see its population, capital, languages and more.', icon: 'fas fa-earth-europe', url: './globedata/', cat: 'Data', tags: ['globe', '3d', 'countries'] },
+            { title: 'YouTube Tag Generator', desc: 'Get tag and keyword ideas for a video title to improve search visibility.', icon: 'fab fa-youtube', url: './youtube-tag-generator/', cat: 'Content', tags: ['youtube', 'seo', 'tags'] }
+        ];
+        document.getElementById('toolCount').textContent = TOOLS.length;
+        List.init({
+            items: TOOLS,
+            noun: ['tool', 'tools'],
+            filterKeys: t => [t.cat],
+            searchText: t => [t.title, t.desc, t.cat, t.tags.join(' ')].join(' '),
+            sorters: { 'Name': (a, b) => a.title.localeCompare(b.title), 'Category': (a, b) => a.cat.localeCompare(b.cat) || a.title.localeCompare(b.title) },
+            render: (t) => `<a class="card spot" data-tilt href="${t.url}">
+                <div class="card__top"><span class="card__icon"><i class="${t.icon}"></i></span><span class="badge">${esc(t.cat)}</span></div>
+                <div><h2 class="card__title">${esc(t.title)}</h2><p class="card__desc">${esc(t.desc)}</p></div>
+                <div class="card__tags">${t.tags.map(x => `<span class="chip">${esc(x)}</span>`).join('')}</div>
+                <div class="card__foot"><span><i class="fas fa-lock"></i> Runs in your browser</span><span class="card__go">Open <i class="fas fa-arrow-right"></i></span></div>
+            </a>`
+        });
+    })();
+    </script>
+</body>
+</html>

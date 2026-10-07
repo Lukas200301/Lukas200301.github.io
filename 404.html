@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found | Lukas200301</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#070b16">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- GitHub Pages serves this file at any missing URL, so anchor relative paths to the site root there.
+         Opened from disk it sits next to css/ and js/, so relative paths already work. -->
+    <script>if (location.protocol !== 'file:') document.write('<base href="index.html">');</script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .nf { min-height: calc(100svh - var(--header-h)); display: flex; flex-direction: column; justify-content: center; padding-block: 40px 80px; }
+        .nf .hero__name { font-size: clamp(5rem, 26vw, 15rem); }
+        .nf .hero__stage { height: clamp(110px, 24vw, 230px); }
+        .nf h1 { font-family: var(--font-head); font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem); letter-spacing: -0.04em; margin-bottom: 10px; }
+        .nf p { color: var(--fg-2); max-width: 52ch; }
+        .nf code { font-family: var(--font-code); color: var(--amber); word-break: break-all; }
+    </style>
+    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
+</head>
+<body data-no-footer>
+    <main class="wrap nf">
+        <div class="hero__stage"><span class="hero__name" aria-hidden="true">404</span></div>
+        <h1>This page doesn't exist</h1>
+        <p>Nothing lives at <code id="path"></code>. It may have moved when the site was rebuilt. Search for it, or start from one of these:</p>
+        <div class="hero__actions">
+            <button class="btn btn--primary" type="button" data-open-palette><i class="fas fa-magnifying-glass"></i> Search the site</button>
+            <a class="btn" href="index.html"><i class="fas fa-house"></i> Home</a>
+            <a class="btn btn--ghost" href="tools/index.html">Tools</a>
+            <a class="btn btn--ghost" href="games/index.html">Games</a>
+        </div>
+    </main>
+    <script>document.getElementById('path').textContent = location.pathname;</script>
+    <script src="js/script.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

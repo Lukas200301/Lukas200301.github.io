@@ -1,487 +1,302 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">                        
-    <meta name="description" content="Lukas200301 - Innovative Developer & Creator | Explore cutting-edge projects and other cool stuff">
-    <meta name="keywords" content="developer, portfolio, github, programming, web development, software engineer">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lukas200301</title>
+    <meta name="description" content="Lukas200301 — developer. Raspberry Pi Control, NetW1re, and a collection of browser tools and games.">
     <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
     <meta property="og:title" content="Lukas200301">
-    <meta property="og:description" content="Innovative Developer & Creator showcasing projects and other cool stuff">
+    <meta property="og:description" content="Projects, browser tools and games by Lukas200301.">
     <meta property="og:image" content="https://github.com/Lukas200301.png">
     <meta property="og:url" content="https://lukas200301.github.io">
-    <title>Lukas200301</title>
-    
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-    
+
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
+    <link rel="stylesheet" href="css/home.css">
+    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
 </head>
 <body>
-    <!-- Cursor Follower -->
-    <div class="cursor-follower" id="cursorFollower"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero wrap" id="home">
+            <div class="hero__stage">
+                <h1 class="hero__name">Lukas200301</h1>
+            </div>
 
-    <!-- Neural Network Background -->
-    <div class="neural-network" id="neuralNetwork">
-        <canvas id="neuralCanvas"></canvas>
-    </div>
-
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="hero-section active">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <div class="hero-intro">
-                        <span class="intro-text">Hello, I'm</span>
+            <div class="hero__row">
+                <div>
+                    <p class="hero__role"><span data-roles>full-stack developer</span><span class="caret" aria-hidden="true"></span></p>
+                    <p class="hero__bio">I build the tools I want to use myself: an app that monitors and controls a Raspberry Pi, a network monitor for the home LAN, and a growing pile of browser tools and games that all live on this site.</p>
+                    <div class="hero__actions">
+                        <a class="btn btn--primary" href="#work"><i class="fas fa-arrow-down"></i> See my work</a>
+                        <button class="btn" type="button" data-focus-term><i class="fas fa-terminal"></i> Open the terminal</button>
                     </div>
-                    <h1 class="hero-title">
-                        <span class="title-line">
-                            <span class="title-word glitch-text" data-text="Lukas200301">Lukas200301</span>
-                        </span>
-                        <span class="title-line">
-                            <span class="title-word gradient-text">Developer</span>
-                        </span>
-                    </h1>
-                    <div class="hero-subtitle">
-                        <div class="typewriter">
-                            <span class="typewriter-text"></span>
-                            <span class="cursor">|</span>
+                    <p class="hero__hint"><i class="fas fa-hand-pointer"></i> Move over my name, click it, or press <kbd>Ctrl</kbd><kbd>K</kbd> to jump anywhere.</p>
+                </div>
+
+                <aside class="presence" id="presence" aria-label="Discord status">
+                    <div class="presence__top">
+                        <div class="presence__avatar">
+                            <img src="https://github.com/Lukas200301.png?size=96" alt="" width="48" height="48">
+                            <span class="presence__dot" data-s="offline"></span>
+                        </div>
+                        <div class="presence__who">
+                            <span class="presence__name">Lukas</span>
+                            <span class="presence__status">Checking Discord…</span>
                         </div>
                     </div>
-                    <div class="hero-description">
-                        <p>Crafting innovative solutions with cutting-edge technology. Passionate about creating extraordinary digital experiences that push the boundaries of what's possible.</p>
+                    <div class="presence__activity">
+                        <span class="pa-icon"><i class="fab fa-discord"></i></span>
+                        <div><b>Loading activity</b><span>Live from Discord</span></div>
                     </div>
-                    <div class="hero-actions">
-                        <button class="cta-button primary" data-section="projects">
-                            <span class="button-text">View My Work</span>
-                            <div class="button-bg"></div>
+                </aside>
+            </div>
+            <a class="scroll-cue" href="#work" aria-label="Scroll to work"></a>
+        </section>
+
+        <!-- Work -->
+        <section class="block wrap" id="work">
+            <div class="block__head" data-reveal>
+                <div>
+                    <h2 class="block__title">Work</h2>
+                    <p class="block__lede">Two apps I keep shipping updates for, plus everything you can use right here in the browser.</p>
+                </div>
+            </div>
+
+            <div class="bento">
+                <article class="tile tile--projects spot" data-reveal>
+                    <div class="tile__head">
+                        <h3 class="tile__title"><i class="fas fa-code" style="color:var(--signal)"></i> Projects</h3>
+                        <a class="text-link" href="projects/">All repositories <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="feature-list">
+                        <a class="feature-row" href="projects/raspberrypicontrol/">
+                            <span class="feature-row__icon is-pi"><i class="fab fa-raspberry-pi"></i></span>
+                            <div>
+                                <h3>Raspberry Pi Control</h3>
+                                <p>Live monitoring, Docker management and system updates for your Pi, from Android or Windows.</p>
+                                <div class="feature-row__stack"><span class="chip">Flutter</span><span class="chip">Go</span><span class="chip">gRPC</span></div>
+                            </div>
                             <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a class="feature-row" href="projects/netw1re/">
+                            <span class="feature-row__icon is-net"><i class="fas fa-network-wired"></i></span>
+                            <div>
+                                <h3>NetW1re</h3>
+                                <p>See every device on your local network, watch its traffic and throttle or block it.</p>
+                                <div class="feature-row__stack"><span class="chip">C#</span><span class="chip">Avalonia</span><span class="chip">ReactiveUI</span></div>
+                            </div>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="tile__foot">
+                        <p class="tile__text">Everything else, from experiments to small utilities, is listed with live stars and update dates on the projects page.</p>
+                    </div>
+                </article>
+
+                <article class="tile spot" data-reveal style="--i:1">
+                    <div class="tile__head">
+                        <h3 class="tile__title"><i class="fas fa-screwdriver-wrench" style="color:var(--signal)"></i> Tools</h3>
+                        <span class="tile__count">8 tools</span>
+                    </div>
+                    <p class="tile__text">Free, no sign-up, and everything runs in your browser.</p>
+                    <div class="link-cloud" style="margin-top:18px">
+                        <a href="tools/pwgenerator/"><i class="fas fa-key"></i>Passwords</a>
+                        <a href="tools/regex-tester/"><i class="fas fa-asterisk"></i>Regex</a>
+                        <a href="tools/qr-code/"><i class="fas fa-qrcode"></i>QR codes</a>
+                        <a href="tools/color-generator/"><i class="fas fa-palette"></i>Palettes</a>
+                        <a href="tools/tjs-playground/"><i class="fab fa-js"></i>JS/TS playground</a>
+                        <a href="tools/fingerprint/"><i class="fas fa-fingerprint"></i>Fingerprint</a>
+                        <a href="tools/globedata/"><i class="fas fa-earth-europe"></i>Globedata</a>
+                        <a href="tools/youtube-tag-generator/"><i class="fab fa-youtube"></i>YouTube tags</a>
+                    </div>
+                    <div class="tile__foot"><a class="text-link" href="tools/">Browse tools <i class="fas fa-arrow-right"></i></a></div>
+                </article>
+
+                <article class="tile spot" data-reveal style="--i:2">
+                    <div class="tile__head">
+                        <h3 class="tile__title"><i class="fas fa-gamepad" style="color:var(--amber)"></i> Games</h3>
+                        <span class="tile__count">3 games</span>
+                    </div>
+                    <p class="tile__text">For when you should be doing something else.</p>
+                    <div class="link-cloud" style="margin-top:18px">
+                        <a href="games/tetris/"><i class="fas fa-shapes"></i>Tetris</a>
+                        <a href="games/2048/"><i class="fas fa-table-cells-large"></i>2048</a>
+                        <a href="games/globle/"><i class="fas fa-earth-americas"></i>Globle</a>
+                    </div>
+                    <div class="tile__foot"><a class="text-link" href="games/">Browse games <i class="fas fa-arrow-right"></i></a></div>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- Live monitor: real measurements of the visitor's own browser -->
+        <section class="block wrap" id="monitor">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Your browser, monitored</h2>
+                    <p class="block__lede">A live readout of the device you're reading this on, refreshed every 500&nbsp;ms. Nothing is sent anywhere; every number is measured right here in your browser.</p>
+                </div>
+            </div>
+
+            <div class="mon" id="mon">
+                <div class="mon__bar">
+                    <span class="mon__live"><i></i> Live</span>
+                    <span class="mon__host" id="monHost">this-browser</span>
+                    <span class="mon__up">Uptime <b id="monUptime">0:00</b></span>
+                </div>
+                <div class="mon__gauges">
+                    <div class="gauge" data-reveal="scale" style="--i:0">
+                        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge__track" cx="60" cy="60" r="50"/><circle class="gauge__val" id="gFps" cx="60" cy="60" r="50"/></svg>
+                        <div class="gauge__txt"><b id="vFps">0</b><span>fps</span></div>
+                        <p class="gauge__label">Frame rate</p>
+                    </div>
+                    <div class="gauge" data-reveal="scale" style="--i:1">
+                        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge__track" cx="60" cy="60" r="50"/><circle class="gauge__val gauge__val--amber" id="gLag" cx="60" cy="60" r="50"/></svg>
+                        <div class="gauge__txt"><b id="vLag">0</b><span>ms</span></div>
+                        <p class="gauge__label">Main-thread delay</p>
+                    </div>
+                    <div class="gauge" data-reveal="scale" style="--i:2">
+                        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="gauge__track" cx="60" cy="60" r="50"/><circle class="gauge__val gauge__val--cyan" id="gScroll" cx="60" cy="60" r="50"/></svg>
+                        <div class="gauge__txt"><b id="vScroll">0</b><span>%</span></div>
+                        <p class="gauge__label">Page scrolled</p>
+                    </div>
+                </div>
+                <div class="mon__chart" data-reveal style="--i:3">
+                    <div class="mon__chart-head"><span>Frame rate, last 60 s</span><span id="monFpsRange">–</span></div>
+                    <canvas id="monChart" aria-label="Frame rate history chart" role="img"></canvas>
+                </div>
+                <dl class="mon__stats" id="monStats" data-reveal style="--i:4"></dl>
+            </div>
+        </section>
+
+        <!-- GitHub -->
+        <section class="block wrap" id="github">
+            <div class="block__head" data-reveal>
+                <div>
+                    <h2 class="block__title">On GitHub</h2>
+                    <p class="block__lede">Pulled live from the GitHub API each time you visit.</p>
+                </div>
+                <a class="text-link" href="https://github.com/Lukas200301" target="_blank" rel="noopener">@Lukas200301 <i class="fas fa-arrow-up-right-from-square"></i></a>
+            </div>
+
+            <div class="gh-grid">
+                <div class="gh-stats" id="ghStats" data-reveal>
+                    <div class="gh-stat"><b data-stat="repos">0</b><span>Public repositories</span></div>
+                    <div class="gh-stat"><b data-stat="stars">0</b><span>Stars earned</span></div>
+                    <div class="gh-stat"><b data-stat="followers">0</b><span>Followers</span></div>
+                    <div class="gh-stat"><b data-stat="visitors">0</b><span>Site visits</span></div>
+                </div>
+
+                <div class="gh-panel gh-panel--chart" data-reveal>
+                    <h3>Contributions <span></span></h3>
+                    <div class="gh-chart" id="contrib"><div class="skeleton" style="height:110px"></div></div>
+                </div>
+
+                <div class="gh-panel" data-reveal style="grid-column:1 / -1">
+                    <h3>Recently pushed</h3>
+                    <div class="repo-list" id="repoList">
+                        <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack -->
+        <section class="block wrap" id="stack">
+            <div class="block__head" data-reveal>
+                <div>
+                    <h2 class="block__title">What I build with</h2>
+                    <p class="block__lede">The languages and tools behind the projects on this site.</p>
+                </div>
+            </div>
+            <div class="stack" data-reveal>
+                <div class="stack__col">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li style="--c:#e34f26"><i class="devicon-html5-plain"></i>HTML</li>
+                        <li style="--c:#2965f1"><i class="devicon-css3-plain"></i>CSS</li>
+                        <li style="--c:#f7df1e"><i class="devicon-javascript-plain"></i>JavaScript</li>
+                        <li style="--c:#3178c6"><i class="devicon-typescript-plain"></i>TypeScript</li>
+                        <li style="--c:#41b883"><i class="devicon-vuejs-plain"></i>Vue.js</li>
+                        <li style="--c:#00dc82"><i class="devicon-nuxtjs-plain"></i>Nuxt</li>
+                    </ul>
+                </div>
+                <div class="stack__col">
+                    <h3>Apps &amp; backend</h3>
+                    <ul>
+                        <li style="--c:#5fa04e"><i class="devicon-nodejs-plain"></i>Node.js</li>
+                        <li style="--c:#ffd43b"><i class="devicon-python-plain"></i>Python</li>
+                        <li style="--c:#00add8"><i class="devicon-go-plain"></i>Go</li>
+                        <li style="--c:#9b4f96"><i class="devicon-csharp-plain"></i>C#</li>
+                        <li style="--c:#f89820"><i class="devicon-java-plain"></i>Java</li>
+                        <li style="--c:#02569b"><i class="devicon-flutter-plain"></i>Flutter &amp; Dart</li>
+                    </ul>
+                </div>
+                <div class="stack__col">
+                    <h3>Infrastructure</h3>
+                    <ul>
+                        <li style="--c:#fcc624"><i class="devicon-linux-plain"></i>Linux</li>
+                        <li style="--c:#c51a4a"><i class="devicon-raspberrypi-line"></i>Raspberry Pi</li>
+                        <li style="--c:#2496ed"><i class="devicon-docker-plain"></i>Docker</li>
+                        <li style="--c:#f46800"><i class="devicon-grafana-plain"></i>Grafana</li>
+                        <li style="--c:#4479a1"><i class="devicon-mysql-plain"></i>MySQL</li>
+                        <li style="--c:#ffffff"><i class="devicon-github-original"></i>GitHub</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect -->
+        <section class="block wrap" id="connect">
+            <div class="connect">
+                <div data-reveal>
+                    <h2 class="block__title">Say hi</h2>
+                    <p class="block__lede">Questions about a project, an idea for a tool, or a bug you found: any of these reach me.</p>
+                    <div class="contact-list">
+                        <a class="contact-row" href="https://github.com/Lukas200301" target="_blank" rel="noopener">
+                            <i class="fab fa-github"></i>
+                            <div><b>GitHub</b><span>@Lukas200301 — issues and pull requests welcome</span></div>
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button class="contact-row" type="button" data-copy="iamlukas." data-copy-msg="Discord username copied">
+                            <i class="fab fa-discord"></i>
+                            <div><b>Discord</b><span>iamlukas. — click to copy</span></div>
+                            <i class="far fa-copy"></i>
                         </button>
+                        <a class="contact-row" href="https://instagram.com/Lukas200103" target="_blank" rel="noopener">
+                            <i class="fab fa-instagram"></i>
+                            <div><b>Instagram</b><span>@Lukas200103</span></div>
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <div class="hero-visual">
-                    <div class="profile-container">
-                        <div class="profile-rings">
-                            <div class="ring ring-1"></div>
-                            <div class="ring ring-2"></div>
-                            <div class="ring ring-3"></div>
-                        </div>
-                        <div class="profile-image">
-                            <img src="https://github.com/Lukas200301.png" alt="Lukas200301" id="profileImage">
-                            <div class="profile-glow"></div>
-                        </div>
-                        <div class="profile-data">
-                            <div class="data-point" style="--delay: 0.5s">
-                                <i class="fab fa-github"></i>
-                                <span>GitHub</span>
-                            </div>
-                            <div class="data-point" style="--delay: 0.7s">
-                                <i class="fas fa-code"></i>
-                                <span>Developer</span>
-                            </div>
-                            <div class="data-point" style="--delay: 0.9s">
-                                <i class="fas fa-lightbulb"></i>
-                                <span>Innovator</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="scroll-indicator">
-                <div class="scroll-mouse">
-                    <div class="scroll-wheel"></div>
-                </div>
-            </div>
-        </section>
 
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-tag">About Me</span>
-                    <h2 class="section-title">Passionate Developer</h2>
-                    <p class="section-subtitle">Building the future, one line of code at a time</p>
-                </div>
-                
-                <div class="about-content">
-                    <div class="about-text">
-                        <div class="about-description">
-                            <p>I'm a passionate developer who loves creating innovative solutions and exploring new technologies. My journey in programming has been driven by curiosity and a desire to build meaningful applications that make a difference.</p>
-                            <p>With expertise in multiple programming languages and frameworks, I enjoy tackling complex challenges and turning creative ideas into reality. Every project is an opportunity to learn, grow, and push the boundaries of what's possible.</p>
-                        </div>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-number" data-target="0">0</div>
-                                <div class="stat-label">Projects</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number" data-target="0">0</div>
-                                <div class="stat-label">GitHub Stars</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number" id="visitorCount" data-target="0">0</div>
-                                <div class="stat-label">Total Visitors</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number" data-target="2020">2020</div>
-                                <div class="stat-label">Started</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="about-visual">
-                        <!-- Discord Status Card -->
-                        <div class="discord-window">
-                            <div class="window-header">
-                                <div class="window-controls">
-                                    <span class="control close"></span>
-                                    <span class="control minimize"></span>
-                                    <span class="control maximize"></span>
-                                </div>
-                                <div class="window-title">
-                                    <i class="fab fa-discord" style="color: #5865F2; margin-right: 8px;"></i>
-                                    discord_status.live
-                                </div>
-                            </div>
-                            <div class="window-content">
-                                <iframe 
-                                    src="https://lanyard.cnrad.dev/api/364118506460938250"
-                                    width="100%" 
-                                    height="200"
-                                    frameborder="0"
-                                    style="border-radius: 8px; background: transparent;">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-tag">My Work</span>
-                    <h2 class="section-title">Featured Categories</h2>
-                    <p class="section-subtitle">Exploring innovation through code</p>
-                </div>
-                
-                <div class="category-menu">
-                    <div class="category-card" data-category="projects">
-                        <div class="category-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="category-content">
-                            <h3>Projects</h3>
-                            <p>Innovative applications and software solutions that solve real-world problems</p>
-                            <button class="category-preview-btn" onclick="window.location.href='projects/index.html'">
-                                <span>View All Projects</span>
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="category-card" data-category="tools">
-                        <div class="category-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <div class="category-content">
-                            <h3>Tools</h3>
-                            <p>Utility applications and development tools that enhance productivity</p>
-                            <button class="category-preview-btn" onclick="window.location.href='tools/index.html'">
-                                <span>View All Tools</span>
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="category-card" data-category="games">
-                        <div class="category-icon">
-                            <i class="fas fa-gamepad"></i>
-                        </div>
-                        <div class="category-content">
-                            <h3>Games</h3>
-                            <p>Interactive entertainment and gaming experiences built with modern technology</p>
-                            <button class="category-preview-btn" onclick="window.location.href='games/index.html'">
-                                <span>View All Games</span>
-                                <i class="fas fa-external-link-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="skills-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-tag">Expertise</span>
-                    <h2 class="section-title">Skills & Technologies</h2>
-                    <p class="section-subtitle">Tools I use to create amazing experiences</p>
-                </div>
-                
-                <div class="skills-content">
-                    <div class="skills-categories">
-                        <div class="skill-category" data-category="frontend">
-                            <div class="category-header">
-                                <i class="fas fa-palette"></i>
-                                <h3>Frontend</h3>
-                            </div>
-                            <div class="skills-grid">
-                                <div class="skill-item" data-skill="html">
-                                    <i class="devicon-html5-plain"></i>
-                                    <span>HTML5</span>
-                                </div>
-                                <div class="skill-item" data-skill="css">
-                                    <i class="devicon-css3-plain"></i>
-                                    <span>CSS3</span>
-                                </div>
-                                <div class="skill-item" data-skill="javascript">
-                                    <i class="devicon-javascript-plain"></i>
-                                    <span>JavaScript</span>
-                                </div>
-                                <div class="skill-item" data-skill="typescript">
-                                    <i class="devicon-typescript-plain"></i>
-                                    <span>TypeScript</span>
-                                </div>
-                                <div class="skill-item" data-skill="nuxtjs">
-                                    <i class="devicon-nuxtjs-plain"></i>
-                                    <span>Nuxt.js</span>
-                                </div>
-                                <div class="skill-item" data-skill="vue">
-                                    <i class="devicon-vuejs-plain"></i>
-                                    <span>Vue.js</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-category" data-category="backend">
-                            <div class="category-header">
-                                <i class="fas fa-server"></i>
-                                <h3>Backend</h3>
-                            </div>
-                            <div class="skills-grid">
-                                <div class="skill-item" data-skill="nodejs">
-                                    <i class="devicon-nodejs-plain"></i>
-                                    <span>Node.js</span>
-                                </div>
-                                <div class="skill-item" data-skill="python">
-                                    <i class="devicon-python-plain"></i>
-                                    <span>Python</span>
-                                </div>
-                                <div class="skill-item" data-skill="java">
-                                    <i class="devicon-java-plain"></i>
-                                    <span>Java</span>
-                                </div>
-                                <div class="skill-item" data-skill="csharp">
-                                    <i class="devicon-csharp-plain"></i>
-                                    <span>C#</span>
-                                </div>
-                                <div class="skill-item" data-skill="dart">
-                                    <i class="devicon-dart-plain"></i>
-                                    <span>Dart</span>
-                                </div>
-                                <div class="skill-item" data-skill="flutter">
-                                    <i class="devicon-flutter-plain"></i>
-                                    <span>Flutter</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-category" data-category="tools">
-                            <div class="category-header">
-                                <i class="fas fa-tools"></i>
-                                <h3>Tools & Platforms</h3>
-                            </div>
-                            <div class="skills-grid">
-                                <div class="skill-item" data-skill="github">
-                                    <i class="devicon-github-plain"></i>
-                                    <span>GitHub</span>
-                                </div>
-                                <div class="skill-item" data-skill="vscode">
-                                    <i class="devicon-vscode-plain"></i>
-                                    <span>VS Code</span>
-                                </div>
-                                <div class="skill-item" data-skill="docker">
-                                    <i class="devicon-docker-plain"></i>
-                                    <span>Docker</span>
-                                </div>
-                                <div class="skill-item" data-skill="grafana">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <span>Grafana</span>
-                                </div>
-                                <div class="skill-item" data-skill="mysql">
-                                    <i class="devicon-mysql-plain"></i>
-                                    <span>MySQL</span>
-                                </div>
-                                <div class="skill-item" data-skill="linux">
-                                    <i class="devicon-linux-plain"></i>
-                                    <span>Linux</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact & Connect Section -->
-        <section id="contact" class="contact-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-tag">Get In Touch</span>
-                    <h2 class="section-title">Let's Connect</h2>
-                    <p class="section-subtitle">Ready to collaborate or just want to say hello?</p>
-                </div>
-                
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>GitHub</h3>
-                                <p>Check out my repositories and contributions</p>
-                                <a href="https://github.com/Lukas200301" target="_blank" rel="noopener noreferrer" class="contact-link">
-                                    <span>@Lukas200301</span>
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fab fa-discord"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Discord</h3>
-                                <p>Connect with me on Discord</p>
-                                <span class="contact-info-text">iamlukas.</span>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fab fa-instagram"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Instagram</h3>
-                                <p>Follow my journey and updates</p>
-                                <a href="https://instagram.com/Lukas200103" target="_blank" rel="noopener noreferrer" class="contact-link">
-                                    <span>@Lukas200103</span>
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-visual">
-                        <div class="terminal-window">
-                            <div class="terminal-header">
-                                <div class="terminal-controls">
-                                    <span class="control close"></span>
-                                    <span class="control minimize"></span>
-                                    <span class="control maximize"></span>
-                                </div>
-                                <div class="terminal-title">connect.sh</div>
-                            </div>
-                            <div class="terminal-content">
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">echo "Let's build something amazing together!"</span>
-                                </div>
-                                <div class="terminal-line">
-                                    <span class="output">Let's build something amazing together!</span>
-                                </div>
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">git clone collaboration.git</span>
-                                </div>
-                                <div class="terminal-line">
-                                    <span class="output">Cloning into 'collaboration'...</span>
-                                </div>
-                                <div class="terminal-line">
-                                    <span class="output">Ready for new opportunities!</span>
-                                </div>
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="cursor-blink">_</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="term" data-reveal style="--i:1">
+                    <div class="term__bar"><i></i><i></i><i></i><span>guest@lukas200301: ~</span></div>
+                    <div class="term__body" id="termBody">
+                        <div id="termOut"></div>
+                        <label class="term__input">
+                            <span class="term__line"><span class="p">guest@lukas200301</span>:<span class="d">~</span>$</span>
+                            <input id="termInput" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
+                        </label>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- Section Navigation Dots -->
-    <div class="section-nav-dots" id="sectionNavDots">
-        <div class="nav-dot active" data-section="home" title="Home">
-            <span class="dot-label">Home</span>
-        </div>
-        <div class="nav-dot" data-section="about" title="About">
-            <span class="dot-label">About</span>
-        </div>
-        <div class="nav-dot" data-section="projects" title="Projects">
-            <span class="dot-label">My Work</span>
-        </div>
-        <div class="nav-dot" data-section="skills" title="Skills">
-            <span class="dot-label">Skills</span>
-        </div>
-        <div class="nav-dot" data-section="contact" title="Contact">
-            <span class="dot-label">Contact</span>
-        </div>
-    </div>
-
-    <!-- Back to Top -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Scripts -->
-    <script src="js/floating-elements.js"></script>
     <script src="js/script.js"></script>
-    
-    <!-- Visitor Counter -->
-    <script>
-        // Your own Vercel counter API
-        const counterApiUrl = 'https://lukas200301-counter.vercel.app/api/counter';
-        
-        fetch(counterApiUrl)
-            .then(res => res.json())
-            .then(data => {
-                const countElement = document.getElementById('visitorCount');
-                if (countElement && data.count) {
-                    countElement.textContent = data.count;
-                    countElement.setAttribute('data-target', data.count);
-                }
-            })
-            .catch(err => {
-                console.log('Counter error:', err);
-                // Fallback: show a placeholder
-                const countElement = document.getElementById('visitorCount');
-                if (countElement) {
-                    countElement.textContent = '---';
-                }
-            });
-    </script>
+    <script src="js/home.js"></script>
 </body>
 </html>

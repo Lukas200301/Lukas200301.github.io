@@ -1,115 +1,75 @@
-# Personal Portfolio - Lukas200301.github.io
+# Lukas200301.github.io
 
-This repository contains my personal portfolio website - a modern, interactive showcase of my development work and technical skills. The site automatically reflects my latest projects, contributions, and activities without requiring manual updates.
+Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript on GitHub Pages, so there's no build step. Push to `main` and it's live.
 
-## Overview
+**Live:** https://lukas200301.github.io
 
-A comprehensive portfolio website built with vanilla web technologies, featuring:
+## What's on it
 
-### 🎨 **Design & Experience**
-- **Modern Interface:** Futuristic design with interactive animations and visual effects
-- **Responsive Layout:** Adaptive design that works seamlessly across all devices
-- **Interactive Elements:** Dynamic animations, custom cursors, and engaging user interactions
-- **Performance Optimized:** Fast loading with smooth 60fps animations
+- **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), live GitHub stats, contribution calendar, recently pushed repos, and an interactive terminal (`help`, `projects`, `open tetris`, …).
+- **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
+- **Tools**: 8 client-side utilities (password generator, regex tester, QR codes, color palettes, JS/TS playground, fingerprint analyzer, Globedata, YouTube tags).
+- **Games**: Tetris, 2048, Globle.
 
-### � **Dynamic Content**
-- **Auto-Updating:** Content automatically reflects latest GitHub activity and contributions
-- **Real-time Integration:** Live data from external APIs (GitHub, Discord, etc.)
-- **Self-Maintaining:** New projects and repositories appear automatically
-- **Always Current:** Statistics and activity feeds update without manual intervention
+### Site-wide features
 
-## Architecture
+| Feature | How |
+| --- | --- |
+| Jump anywhere | `Ctrl` / `⌘` + `K` opens the command palette (pages, tools, games, repos, actions) |
+| Shortcuts | `?` shows them all · `G` then `H`/`P`/`T`/`G` navigates · `/` focuses search on list pages |
+| Page transitions | Boot-screen overlay: drifting grid, name letters rising, corner brackets, radar ring, loading bar and a typed `cd ~/page`; the panel then lifts off the next page with a glowing edge (works in every browser, also from disk) |
+| Easter egg | ↑ ↑ ↓ ↓ ← → ← → B A |
+| 404 page | `404.html`, served by GitHub Pages for any missing URL |
+| Live background | Signal grid on every page: twinkling dots, scan wave, auto pings, data packets, cursor lens, click a blank spot for a sonar ping |
+| Motion | Word-by-word headings, staggered scroll reveals, hero parallax, cursor ring, magnetic buttons, click ripples, letter-roll hover on links and buttons, light-wave titles |
+| Live monitor | Home page panel measuring the visitor's own browser every 500 ms (frame rate, main-thread delay, scroll, device info) |
+| Reduced motion | All animation is disabled when the OS asks for it |
 
-### 📁 **Project Structure**
+## Structure
+
 ```
-/                     # Main portfolio page
-├── css/             # Stylesheets and design system
-├── js/              # Interactive functionality and animations
-├── projects/        # Project showcases and documentation
-├── tools/           # Utility applications and dev tools
-└── games/           # Interactive games and entertainment
+/
+├── index.html            Home
+├── 404.html              Not-found page (works from disk and on GitHub Pages)
+├── css/
+│   ├── styles.css        Design tokens + site shell (header, palette, footer, toasts)
+│   ├── pages.css         Shared components for project / tool / game pages and list pages
+│   └── home.css          Home-only layout
+├── js/
+│   ├── script.js         Site shell: header, command palette, shortcuts, reveal, toasts
+│   ├── list.js           Search / filter / sort for the three list pages
+│   ├── home.js           Particle name, GitHub + Discord data, terminal
+│   └── countries-data.js Country data used by Globle and Globedata
+├── projects/             List page + showcase pages (own CSS each)
+├── tools/                List page + one folder per tool
+└── games/                List page + one folder per game
 ```
 
-### 🛠️ **Technology Stack**
-- **Frontend:** Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **Animations:** Canvas API, CSS animations, RequestAnimationFrame
-- **APIs:** GitHub REST API, Discord (Lanyard), external integrations
-- **Design:** Modern CSS (Grid, Flexbox, Custom Properties)
-- **Performance:** Optimized rendering, lazy loading, efficient memory usage
+Every page loads `css/styles.css` → `css/pages.css` → its own stylesheet, and `js/script.js` at the end of `<body>`. The script injects the header, footer, palette and back-to-top button, so pages don't need to contain them.
 
-### 🔧 **Key Features**
-- **Modular Design:** Organized sections that can be expanded independently
-- **API-Driven:** Content updates automatically from external sources
-- **Zero Dependencies:** Pure vanilla JavaScript for maximum performance
-- **Scalable Structure:** Easy to add new sections, projects, or features
-- **Cross-Browser:** Compatible with all modern browsers
+## Adding things
 
-## Technical Details
+**A new tool or game**
+1. Create `tools/<name>/index.html` (copy an existing tool as a starting point; keep the `tool-hero` header block).
+2. Add it to the `TOOLS` (or `GAMES`) array in `tools/index.html` / `games/index.html`.
+3. Add it to `REGISTRY` in `js/script.js` so it shows up in the command palette and terminal.
 
-### ⚡ **Performance**
-- **Lighthouse Score:** 90+ across all categories
-- **Loading Speed:** Optimized for fast initial page load
-- **Runtime Performance:** Smooth animations at 60fps
-- **Memory Efficient:** Optimized JavaScript execution
+**A new project showcase**
+1. Create `projects/<name>/index.html` (copy one of the existing showcases).
+2. Add the repo name to `SHOWCASES` in `projects/index.html` and to `REGISTRY` in `js/script.js`.
 
-### 🌐 **Browser Support**
-- **Modern Browsers:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Progressive Enhancement:** Graceful degradation for older browsers
-- **Mobile Optimized:** Full functionality on mobile devices
+## Design tokens
 
-### 🔒 **Security**
-- **Static Site:** No server-side vulnerabilities
-- **HTTPS Only:** Secure connections via GitHub Pages
-- **CSP Ready:** Content Security Policy compatible
-- **API Security:** Secure external API integrations
+Colors, type and spacing live at the top of `css/styles.css`. The palette is ink-navy (`--ink-0` … `--ink-3`) with a periwinkle signal color (`--signal`) and an amber accent for anything live (`--amber`). Headings use Martian Mono, body text uses Instrument Sans, and code uses JetBrains Mono. Older variable names (`--primary-accent`, `--surface-bg`, …) are mapped onto the new tokens, so per-tool stylesheets keep working.
 
-## Deployment
+## External services
 
-### 🚀 **Automatic Deployment**
-- **Platform:** GitHub Pages
-- **Trigger:** Automatic on push to `main` branch
-- **URL:** [https://lukas200301.github.io](https://lukas200301.github.io)
-- **CDN:** Global distribution via GitHub's infrastructure
-
-### ⚙️ **Configuration**
-No build process required - the site deploys directly from source files:
-- Static HTML/CSS/JS files
-- Automatic HTTPS via GitHub Pages
-- Custom domain support available
-- Instant updates on repository changes
-
-## Extending the Portfolio
-
-### 📦 **Adding New Sections**
-1. Create new directory with descriptive name
-2. Add main HTML file with matching name
-3. Include corresponding CSS file for styling
-4. Update navigation if needed (automatic in most cases)
-
-### 🔧 **Integrating New APIs**
-1. Add API calls to existing JavaScript modules
-2. Follow established patterns for data fetching
-3. Implement error handling and fallbacks
-4. Ensure rate limiting compliance
-
-### 🎨 **Customizing Design**
-- Modify CSS custom properties for theme changes
-- Add new animations following existing patterns
-- Extend the component system for new UI elements
-- Maintain responsive design principles
+- Country data for Globle and Globedata is bundled in `js/countries-data.js` (restcountries.com v3.1 was retired in 2026). Flags load from flagcdn.com, the globe from unpkg (version-pinned).
+- GitHub REST API (unauthenticated, 60 requests/hour per visitor; responses are cached in `localStorage` for 10 minutes)
+- [github-contributions-api](https://github.com/grubersjoe/github-contributions-api) for the contribution calendar
+- [Lanyard](https://github.com/Phineas/lanyard) for Discord presence
+- Visitor counter on Vercel
 
 ## License
 
-**MIT License** - Free to use, modify, and distribute
-
-### ✅ **Permissions**
-- Commercial use
-- Modification
-- Distribution
-- Private use
-
-
-## Links
-
-- **Live Site:** [lukas200301.github.io](https://lukas200301.github.io)
-- **Repository:** [github.com/Lukas200301/Lukas200301.github.io](https://github.com/Lukas200301/Lukas200301.github.io)
+MIT
