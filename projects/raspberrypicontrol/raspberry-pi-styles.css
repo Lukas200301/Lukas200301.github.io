@@ -27,6 +27,14 @@
     rgba(99, 102, 241, 0.03) 60deg, 
     transparent 120deg);
   animation: rotate 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep hero content above the decorative rotating layer */
+.tool-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes rotate {
