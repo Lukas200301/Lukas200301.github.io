@@ -1146,6 +1146,11 @@ main p a:not(.btn):not(.cta-button):hover, .site-footer nav a:hover, .text-link:
 .cli__hint kbd { font-family: var(--font-code); font-size: 0.7rem; padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg-2); }
 html.cli-open { overflow: hidden; }
 html.cli-open .np { opacity: 0; pointer-events: none; }
+/* the same shell embedded in a page (home page, "connect" section) */
+.cli-embed { --font-code: 'JetBrains Mono Inline', 'JetBrains Mono', 'JBM Fallback', ui-monospace, monospace; min-width: 0; }
+.cli-embed .cli__win { width: 100%; height: 460px; transform: none; transition: none; }
+.cli-embed .cli__body { font-size: 13px; }
+.cli-embed .cli__ln.banner { font-size: 11px; }
 .foot-cli { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(142, 162, 255, 0.35); text-underline-offset: 3px; }
 .foot-cli:hover { color: var(--fg); }
 @media (max-width: 640px) {
@@ -1155,4 +1160,6 @@ html.cli-open .np { opacity: 0; pointer-events: none; }
   .cli__in { font-size: 16px; }
   .cli__hint { display: none; }
   .cli__ln.banner { font-size: 8px; }
+  .cli-embed .cli__win { height: 400px; border-radius: 16px; border: 1px solid rgba(var(--signal-rgb), 0.3); }
+  .cli-embed .cli__ln.banner { font-size: 7px; }
 }

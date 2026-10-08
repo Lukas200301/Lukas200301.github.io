@@ -6,7 +6,7 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 
 ## What's on it
 
-- **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), live GitHub stats, contribution calendar, recently pushed repos, and an interactive terminal (`help`, `projects`, `open tetris`, …).
+- **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), live GitHub stats, contribution calendar, recently pushed repos, and the site's `lsh` shell embedded at the bottom (same session as the full-screen command line).
 - **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
 - **Tools**: 19 client-side utilities:
   - Developer: JS/TS playground, regex tester, JSON & YAML formatter, Base64 / URL / JWT decoder, cron expression helper, text diff checker

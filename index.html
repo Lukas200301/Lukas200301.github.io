@@ -40,7 +40,7 @@
                     <p class="hero__bio">I build the tools I want to use myself: an app that monitors and controls a Raspberry Pi, a network monitor for the home LAN, and a growing pile of browser tools and games that all live on this site.</p>
                     <div class="hero__actions">
                         <a class="btn btn--primary" href="#work"><i class="fas fa-arrow-down"></i> See my work</a>
-                        <button class="btn" type="button" data-focus-term><i class="fas fa-terminal"></i> Open the terminal</button>
+                        <button class="btn" type="button" data-open-cli><i class="fas fa-terminal"></i> Open the terminal</button>
                     </div>
                     <p class="hero__hint"><i class="fas fa-hand-pointer"></i> Move over my name, click it, or press <kbd>Ctrl</kbd><kbd>K</kbd> to jump anywhere.</p>
                 </div>
@@ -300,14 +300,14 @@
                     </div>
                 </div>
 
-                <div class="term" data-reveal style="--i:1">
-                    <div class="term__bar"><i></i><i></i><i></i><span>guest@lukas200301: ~</span></div>
-                    <div class="term__body" id="termBody">
-                        <div id="termOut"></div>
-                        <label class="term__input">
-                            <span class="term__line"><span class="p">guest@lukas200301</span>:<span class="d">~</span>$</span>
-                            <input id="termInput" type="text" autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
-                        </label>
+                <div class="cli-embed" data-cli-embed data-reveal style="--i:1">
+                    <div class="cli__win">
+                        <div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">guest@lukas200301: ~ — lsh</span><button class="cli__close" type="button" data-open-cli aria-label="Open the full-screen terminal" title="Full screen (key left of 1)"><i class="fas fa-expand"></i></button></div>
+                        <div class="cli__body">
+                            <div class="cli__out" aria-live="polite"></div>
+                            <form class="cli__line" autocomplete="off"><label class="cli__ps"></label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Terminal command"><span class="cli__ghost" aria-hidden="true"></span></form>
+                        </div>
+                        <div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>^</kbd> / <kbd>`</kbd> full screen</span></div>
                     </div>
                 </div>
             </div>

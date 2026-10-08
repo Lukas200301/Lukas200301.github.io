@@ -62,7 +62,9 @@
   const save = () => { try { st.lines = st.lines.slice(-300); st.hist = st.hist.slice(-100); sessionStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
 
   // ---------- DOM ----------
-  // if we arrived from a cd, the inline <head> script already drew the terminal (with scrollback) before the first paint
+  // One session, up to two windows: the full-screen overlay (every page) and, where a page has a [data-cli-embed]
+  // block (the home page), the same shell embedded in the page. Both show the same scrollback and history.
+  // if we arrived from a cd, the inline <head> script already drew the overlay (with scrollback) before the first paint
   const pre = document.querySelector('.cli[data-pre]');
   const root = pre || document.createElement('div');
   if (!pre) {
@@ -79,18 +81,28 @@
       <div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div>
     </div>`;
   }
-  const out = root.querySelector('.cli__out'), input = root.querySelector('.cli__in'), body = root.querySelector('.cli__body'), ghost = root.querySelector('.cli__ghost');
+  const viewOf = (el, embedded) => ({ root: el, embedded, out: el.querySelector('.cli__out'), input: el.querySelector('.cli__in'), body: el.querySelector('.cli__body'), ghost: el.querySelector('.cli__ghost'), psEl: el.querySelector('.cli__ps'), titleEl: el.querySelector('.cli__title'), hIdx: -1, draft: '' });
+  const ov = viewOf(root, false);
+  const emEl = document.querySelector('[data-cli-embed]');
+  const em = emEl ? viewOf(emEl, true) : null;
+  const views = em ? [ov, em] : [ov];
+  let V = ov;   // the window the current command was typed in
+  const { input, body } = ov;
   const psFor = (p) => `<span class="u">guest@${HOST}</span>:<span class="p">${esc(disp(p))}</span>$`;
   const titleFor = (p) => `guest@${HOST}: ${disp(p)} — lsh`;
   const ps = () => psFor(here);
-  root.querySelector('.cli__ps').innerHTML = ps();
-  root.querySelector('.cli__title').textContent = titleFor(here);
+  views.forEach(v => { v.psEl.innerHTML = ps(); if (v.titleEl) v.titleEl.textContent = titleFor(here); });
+  // the prompt's width, so the completion ghost lines up behind the typed text
+  const measure = (v) => v.root.style.setProperty('--ps-w', v.psEl.offsetWidth + 'px');
 
   function print(html, cls = '') {
-    const d = document.createElement('div'); d.className = 'cli__ln new ' + cls; d.innerHTML = html; out.appendChild(d);
-    d.addEventListener('animationend', () => d.classList.remove('new'), { once: true });
+    views.forEach(v => {
+      const d = document.createElement('div'); d.className = 'cli__ln ' + cls; d.innerHTML = html;
+      if (v === ov ? shown : true) { d.classList.add('new'); d.addEventListener('animationend', () => d.classList.remove('new'), { once: true }); }
+      v.out.appendChild(d);
+      v.body.scrollTop = v.body.scrollHeight;
+    });
     st.lines.push([cls, html]); save();
-    body.scrollTop = body.scrollHeight;
   }
   const link = (p, label) => `<a href="${esc(Site.url(nodes[p].href))}" data-cd="${esc(p)}">${esc(label || p.split('/').pop() || '~')}</a>`;
 
@@ -103,11 +115,13 @@
 |_|\__,_|_|\_\__,_|___/_____|\___/ \___/____/ \___/|_|`;
   // keep the window on screen while the page transition plays behind it
   function leaveWith(p, fn) {
+    // the embedded window just navigates; the session is waiting in the full-screen one on the next page
+    if (V.embedded) { V.input.blur(); setTimeout(fn, 220); return; }
     st.open = true; st.ps = p == null ? '' : psFor(p); st.title = p == null ? '' : titleFor(p); save();
     try { sessionStorage.setItem('cli-nav', '1'); } catch (e) {}
     root.classList.remove('instant');
     root.classList.add('cli--nav');
-    if (p != null) { root.querySelector('.cli__ps').innerHTML = psFor(p); root.querySelector('.cli__title').textContent = titleFor(p); root.style.setProperty('--ps-w', root.querySelector('.cli__ps').offsetWidth + 'px'); }
+    if (p != null) { ov.psEl.innerHTML = psFor(p); ov.titleEl.textContent = titleFor(p); measure(ov); }
     input.blur();
     setTimeout(fn, 220);
   }
@@ -166,7 +180,7 @@
     ['pwd', 'where am I'], ['back / forward', 'browser history'], ['cat &lt;name&gt;', 'cat README.md, cat stats, cat tools/cron'],
     ['now', 'what Lukas is listening to or coding right now'], ['np on|off', 'show or hide the now-playing pill'],
     ['stats', 'GitHub numbers in the terminal'], ['neofetch', 'system info, terminal style'],
-    ['whoami / socials', 'about me and where to find me'], ['github / discord', 'open GitHub / copy my Discord name'],
+    ['whoami / socials', 'about me and where to find me'], ['stack', 'what I build with'], ['github / discord', 'open GitHub / copy my Discord name'],
     ['history / clear', 'command history / clear the screen'], ['exit', 'close the terminal (or press Esc)']
   ];
   const CMDS = {
@@ -212,12 +226,15 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
     github: () => { window.open(Site.LINKS.github, '_blank', 'noopener'); return '<span class="m">opening GitHub in a new tab…</span>'; },
     discord: () => { Site.copy(Site.LINKS.discord, 'Discord username copied'); return `copied <b>${esc(Site.LINKS.discord)}</b> to the clipboard`; },
     neofetch: () => neofetch(),
+    stack: () => `<span class="d">frontend</span>  HTML, CSS, JavaScript, TypeScript, Vue, Nuxt
+<span class="d">backend</span>   Node.js, Python, Java, C#, Go, Dart/Flutter
+<span class="d">ops</span>       Linux, Docker, Grafana, MySQL, GitHub`,
     date: () => esc(new Date().toString()),
     echo: (a) => esc(a.join(' ')),
     history: () => st.hist.map((h, i) => `${String(i + 1).padStart(4)}  ${esc(h)}`).join('\n') || '<span class="m">no history yet</span>',
-    clear: () => { out.innerHTML = ''; st.lines = []; save(); return null; },
+    clear: () => { views.forEach(v => { v.out.innerHTML = ''; }); st.lines = []; save(); return null; },
     cls: () => CMDS.clear(),
-    exit: () => { close(); return null; }, quit: () => CMDS.exit(), q: () => CMDS.exit(), ':q': () => CMDS.exit(),
+    exit: () => { if (V.embedded) { V.input.blur(); return '<span class="m">this one lives on the page. The full-screen one closes with exit or Esc.</span>'; } close(); return null; }, quit: () => CMDS.exit(), q: () => CMDS.exit(), ':q': () => CMDS.exit(),
     sudo: () => 'lukas is not in the sudoers file. This incident will be reported. 🙂',
     rm: () => 'rm: nice try. This site is read-only.',
     vim: () => 'vim opened. Just kidding: you would never get out. Type <span class="a">exit</span>.',
@@ -263,56 +280,64 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
         .map(c => head + dirPart + (c === '..' ? '../' : c.split('/').pop() + (nodes[c].children.length ? '/' : ' ')));
     }
     if (cmd === 'np') return ['on', 'off'].filter(x => x.startsWith(arg)).map(x => head + x);
-    if (cmd === 'cat') return [];
     return [];
   }
   function common(list) { if (!list.length) return ''; let p = list[0]; list.forEach(s => { while (!s.startsWith(p)) p = p.slice(0, -1); }); return p; }
-  let tabLast = 0;
-  function complete() {
-    const v = input.value, c = candidates(v);
+  function complete(v) {
+    const val = v.input.value, c = candidates(val);
     if (!c.length) return;
-    if (c.length === 1) { input.value = c[0]; updGhost(); return; }
+    if (c.length === 1) { v.input.value = c[0]; updGhost(v); return; }
     const pre = common(c);
-    if (pre.length > v.length) { input.value = pre; updGhost(); return; }
-    print(`${ps()} ${esc(v)}\n` + c.map(x => esc(x.trim().split(/\s+/).pop())).join('  '), 'cmd');
-    tabLast = Date.now();
+    if (pre.length > val.length) { v.input.value = pre; updGhost(v); return; }
+    print(`${ps()} ${esc(val)}\n` + c.map(x => esc(x.trim().split(/\s+/).pop())).join('  '), 'cmd');
   }
-  function updGhost() {
-    const v = input.value;
-    const c = v ? candidates(v) : [];
-    ghost.textContent = c.length === 1 && c[0].startsWith(v) ? c[0].slice(v.length) : '';
-    ghost.style.left = `calc(var(--ps-w, 0px) + 0.6ch + ${v.length}ch)`;
+  function updGhost(v) {
+    const val = v.input.value;
+    const c = val ? candidates(val) : [];
+    v.ghost.textContent = c.length === 1 && c[0].startsWith(val) ? c[0].slice(val.length) : '';
+    v.ghost.style.left = `calc(var(--ps-w, 0px) + 0.6ch + ${val.length}ch)`;
   }
 
-  // ---------- input ----------
-  let hIdx = -1, draft = '';
-  root.querySelector('.cli__line').addEventListener('submit', e => { e.preventDefault(); const v = input.value; input.value = ''; hIdx = -1; updGhost(); run(v); });
-  input.addEventListener('input', updGhost);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Tab') { e.preventDefault(); complete(); return; }
-    if (e.key === 'ArrowRight' && ghost.textContent && input.selectionStart === input.value.length) { e.preventDefault(); input.value += ghost.textContent; updGhost(); return; }
-    if (e.key === 'ArrowUp') { e.preventDefault(); if (!st.hist.length) return; if (hIdx < 0) { draft = input.value; hIdx = st.hist.length; } hIdx = Math.max(0, hIdx - 1); input.value = st.hist[hIdx]; updGhost(); requestAnimationFrame(() => input.setSelectionRange(input.value.length, input.value.length)); return; }
-    if (e.key === 'ArrowDown') { e.preventDefault(); if (hIdx < 0) return; hIdx++; if (hIdx >= st.hist.length) { hIdx = -1; input.value = draft; } else input.value = st.hist[hIdx]; updGhost(); return; }
-    if (e.ctrlKey && e.key.toLowerCase() === 'l') { e.preventDefault(); CMDS.clear(); return; }
-    if (e.ctrlKey && e.key.toLowerCase() === 'c' && !window.getSelection().toString()) { e.preventDefault(); print(`${ps()} ${esc(input.value)}^C`, 'cmd'); input.value = ''; updGhost(); return; }
-    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); }
-  });
-  out.addEventListener('click', e => {
-    const a = e.target.closest('a[data-cd]'); if (!a) return;
-    e.preventDefault(); e.stopPropagation(); run('cd ' + disp(a.dataset.cd));
-  });
-  // close on a click on the dimmed backdrop, but not when a text selection started inside the window and ended out there
+  // ---------- input (both windows) ----------
+  function bindView(v) {
+    const inp = v.input;
+    v.root.querySelector('.cli__line').addEventListener('submit', e => { e.preventDefault(); V = v; const val = inp.value; inp.value = ''; v.hIdx = -1; updGhost(v); run(val); });
+    inp.addEventListener('focus', () => { V = v; measure(v); });
+    inp.addEventListener('input', () => updGhost(v));
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Tab') { e.preventDefault(); complete(v); return; }
+      if (e.key === 'ArrowRight' && v.ghost.textContent && inp.selectionStart === inp.value.length) { e.preventDefault(); inp.value += v.ghost.textContent; updGhost(v); return; }
+      if (e.key === 'ArrowUp') { e.preventDefault(); if (!st.hist.length) return; if (v.hIdx < 0) { v.draft = inp.value; v.hIdx = st.hist.length; } v.hIdx = Math.max(0, v.hIdx - 1); inp.value = st.hist[v.hIdx]; updGhost(v); requestAnimationFrame(() => inp.setSelectionRange(inp.value.length, inp.value.length)); return; }
+      if (e.key === 'ArrowDown') { e.preventDefault(); if (v.hIdx < 0) return; v.hIdx++; if (v.hIdx >= st.hist.length) { v.hIdx = -1; inp.value = v.draft; } else inp.value = st.hist[v.hIdx]; updGhost(v); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === 'l') { e.preventDefault(); CMDS.clear(); return; }
+      if (e.ctrlKey && e.key.toLowerCase() === 'c' && !window.getSelection().toString()) { e.preventDefault(); print(`${ps()} ${esc(inp.value)}^C`, 'cmd'); inp.value = ''; updGhost(v); return; }
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (v.embedded) inp.blur(); else close(); }
+    });
+    v.out.addEventListener('click', e => {
+      const a = e.target.closest('a[data-cd]'); if (!a) return;
+      e.preventDefault(); e.stopPropagation(); V = v; run('cd ' + disp(a.dataset.cd));
+    });
+    v.body.addEventListener('mouseup', e => { if (!window.getSelection().toString() && !e.target.closest('a, button')) inp.focus({ preventScroll: true }); });
+  }
+  views.forEach(bindView);
+  // overlay only: close on a click on the dimmed backdrop, but not when a text selection started inside the window and ended out there
   let downOnBackdrop = false;
   root.addEventListener('pointerdown', e => { downOnBackdrop = e.target === root; });
   root.addEventListener('click', e => { if (e.target === root && downOnBackdrop) close(); downOnBackdrop = false; });
-  // while open, the terminal owns the keyboard: keys don't reach the page behind it (game controls, G-shortcuts, ?)
+  // while open, the overlay owns the keyboard: keys don't reach the page behind it (game controls, G-shortcuts, ?)
   root.addEventListener('keydown', e => { if (!((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) e.stopPropagation(); });
   root.querySelector('.cli__close').addEventListener('click', close);
-  body.addEventListener('mouseup', () => { if (!window.getSelection().toString()) input.focus(); });
 
-  // ---------- open / close ----------
+  // ---------- open / close (the overlay) ----------
   let lastFocus = null, shown = false;
+  function boot() {
+    if (st.booted) return;
+    st.booted = true;
+    print(`<span class="a banner">${esc(BANNER)}</span>`, 'banner');
+    print(`Welcome to <b>lsh</b>, the shell of this site. The whole site is a folder you can <span class="a">cd</span> around in.\nType <span class="a">help</span> to see the commands, or try <span class="a">ls</span>, <span class="a">tree</span>, <span class="a">open snake</span>, <span class="a">now</span>.`);
+  }
   function open(instant) {
+    V = ov;
     if (shown) { input.focus(); return; }
     shown = true;
     lastFocus = document.activeElement;
@@ -323,13 +348,8 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
     document.documentElement.classList.add('cli-open');
     if (instant) root.classList.add('in', 'instant'); else requestAnimationFrame(() => root.classList.add('in'));
     st.open = true; save();
-    if (!st.booted) {
-      st.booted = true;
-      print(`<span class="a banner">${esc(BANNER)}</span>`, 'banner');
-      print(`Welcome to <b>lsh</b>, the shell of this site. The whole site is a folder you can <span class="a">cd</span> around in.\nType <span class="a">help</span> to see the commands, or try <span class="a">ls</span>, <span class="a">tree</span>, <span class="a">open snake</span>, <span class="a">now</span>.`);
-    }
-    // measure the prompt so the completion ghost lines up
-    requestAnimationFrame(() => { root.style.setProperty('--ps-w', root.querySelector('.cli__ps').offsetWidth + 'px'); input.focus({ preventScroll: true }); body.scrollTop = body.scrollHeight; });
+    boot();
+    requestAnimationFrame(() => { measure(ov); input.focus({ preventScroll: true }); body.scrollTop = body.scrollHeight; });
   }
   function close() {
     shown = false;
@@ -339,7 +359,7 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
     setTimeout(() => { if (!root.classList.contains('in')) root.hidden = true; }, 260);
     if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
   }
-  window.CLI = { open: () => open(false), close, toggle: () => (shown ? close() : open(false)), run: (c) => { open(true); run(c); } };
+  window.CLI = { open: () => open(false), close, toggle: () => (shown ? close() : open(false)), run: (c) => { open(true); V = ov; run(c); } };
 
   // the key left of "1": ` on US/UK layouts, ^ on German ones (both report code "Backquote")
   document.addEventListener('keydown', e => {
@@ -360,17 +380,39 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
   }, true);
 
   function drawLines() {
-    out.innerHTML = '';
-    st.lines.forEach(([cls, html]) => { const d = document.createElement('div'); d.className = 'cli__ln ' + cls; d.innerHTML = html; out.appendChild(d); });
+    views.forEach(v => {
+      v.out.innerHTML = '';
+      st.lines.forEach(([cls, html]) => { const d = document.createElement('div'); d.className = 'cli__ln ' + cls; d.innerHTML = html; v.out.appendChild(d); });
+      v.body.scrollTop = v.body.scrollHeight;
+    });
+  }
+
+  // embedded window: greet, and the first time it scrolls into view in a fresh session, type "help" by itself
+  function mountEmbed() {
+    boot();
+    measure(em);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => measure(em));
+    if (Site.reduceMotion || st.hist.length || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(x => x.isIntersecting)) return;
+      io.disconnect();
+      if (st.hist.length || em.input.value) return;
+      const word = 'help'; let i = 0;
+      const t = setInterval(() => {
+        if (document.activeElement === em.input || shown) { clearInterval(t); if (em.input.value === word.slice(0, i)) em.input.value = ''; updGhost(em); return; }
+        em.input.value = word.slice(0, ++i); updGhost(em);
+        if (i === word.length) { clearInterval(t); setTimeout(() => { if (em.input.value !== word) return; em.input.value = ''; updGhost(em); V = em; run(word); }, 380); }
+      }, 110);
+    }, { threshold: 0.6 });
+    io.observe(em.root);
   }
 
   function mount() {
-    if (!pre) {
-      document.body.appendChild(root);
-      drawLines();   // restore scrollback from the previous page
-    }
-    root.querySelector('.cli__ps').innerHTML = ps();
+    if (!pre) document.body.appendChild(root);
+    drawLines();   // restore scrollback from the previous page
+    views.forEach(v => { v.psEl.innerHTML = ps(); });
     try { sessionStorage.removeItem('cli-nav'); } catch (e) {}
+    if (em) mountEmbed();
     if (st.open) open(true);
     // once the page transition behind the window has finished, bring the dimmed backdrop back
     if (root.classList.contains('cli--nav')) {
@@ -389,7 +431,7 @@ A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'T
       let s; try { s = JSON.parse(sessionStorage.getItem(KEY) || '{}'); } catch (er) { return; }
       st.lines = s.lines || []; st.hist = s.hist || []; st.booted = !!s.booted;
       drawLines();
-      root.querySelector('.cli__ps').innerHTML = ps(); root.querySelector('.cli__title').textContent = titleFor(here);
+      views.forEach(v => { v.psEl.innerHTML = ps(); if (v.titleEl) v.titleEl.textContent = titleFor(here); });
       if (s.open) { open(true); requestAnimationFrame(() => { body.scrollTop = body.scrollHeight; }); } else if (shown) close();
     });
     document.querySelectorAll('[data-open-cli]').forEach(b => b.addEventListener('click', () => window.CLI.toggle()));
