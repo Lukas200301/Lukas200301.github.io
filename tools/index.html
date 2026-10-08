@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/pages.css">
-    <script>/* page transition: if we arrived via a site link, start covered (removed by js/script.js) */
-    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');r.dataset.ptDest=d==='1'?'cd ~':d}}}catch(e){}</script>
+    <link rel="stylesheet" href="../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../css/pages.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
 </head>
 <body>
     <main id="main" class="wrap">
@@ -50,8 +51,8 @@
         <section class="card-grid" id="grid" aria-label="Tools"></section>
     </main>
 
-    <script src="../js/script.js"></script>
-    <script src="../js/list.js"></script>
+    <script src="../js/script.js?v=20261008j"></script>
+    <script src="../js/list.js?v=20261008j"></script>
     <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
     <script>
     (function () {
@@ -64,7 +65,18 @@
             { title: 'Color Palette Generator', desc: 'Generate harmonious color palettes and export them as CSS, JSON or images.', icon: 'fas fa-palette', url: './color-generator/', cat: 'Design', tags: ['colors', 'palette', 'css'] },
             { title: 'QR Code Generator', desc: 'Create QR codes for links, text and Wi-Fi logins, then download them as images.', icon: 'fas fa-qrcode', url: './qr-code/', cat: 'Utility', tags: ['qr', 'wifi', 'url'] },
             { title: 'Globedata', desc: 'Spin a 3D globe and click any country to see its population, capital, languages and more.', icon: 'fas fa-earth-europe', url: './globedata/', cat: 'Data', tags: ['globe', '3d', 'countries'] },
-            { title: 'YouTube Tag Generator', desc: 'Get tag and keyword ideas for a video title to improve search visibility.', icon: 'fab fa-youtube', url: './youtube-tag-generator/', cat: 'Content', tags: ['youtube', 'seo', 'tags'] }
+            { title: 'YouTube Tag Generator', desc: 'Get tag and keyword ideas for a video title to improve search visibility.', icon: 'fab fa-youtube', url: './youtube-tag-generator/', cat: 'Content', tags: ['youtube', 'seo', 'tags'] },
+            { title: 'Subnet Calculator', desc: 'Work out network, broadcast, host range and mask for any IPv4 CIDR, and split it into smaller subnets.', icon: 'fas fa-network-wired', url: './subnet-calculator/', cat: 'Network', tags: ['ipv4', 'cidr', 'subnet'] },
+            { title: 'JSON & YAML Formatter', desc: 'Validate, pretty-print, minify and convert between JSON and YAML with exact error positions.', icon: 'fas fa-code', url: './json-yaml/', cat: 'Developer', tags: ['json', 'yaml', 'format'] },
+            { title: 'Base64, URL & JWT Decoder', desc: 'Encode and decode Base64, URL, HTML entities, hex and binary, and inspect JWT tokens.', icon: 'fas fa-right-left', url: './encoder/', cat: 'Developer', tags: ['base64', 'jwt', 'url'] },
+            { title: 'Cron Expression Helper', desc: 'Turn cron expressions into plain English and see the next times they will run.', icon: 'fas fa-clock-rotate-left', url: './cron/', cat: 'Developer', tags: ['cron', 'schedule', 'linux'] },
+            { title: 'Hash & Checksum Generator', desc: 'MD5, SHA-1, SHA-256, SHA-512 and CRC32 for text or files, and verify download checksums.', icon: 'fas fa-hashtag', url: './hash/', cat: 'Security', tags: ['sha256', 'md5', 'checksum'] },
+            { title: 'Timestamp Converter', desc: 'Convert Unix timestamps to dates and back across time zones, with a world clock.', icon: 'fas fa-clock', url: './timestamp/', cat: 'Utility', tags: ['unix', 'time zone', 'date'] },
+            { title: 'Markdown Live Preview', desc: 'Write Markdown and see it rendered as you type, then copy or download the HTML.', icon: 'fab fa-markdown', url: './markdown/', cat: 'Content', tags: ['markdown', 'preview', 'html'] },
+            { title: 'Text Diff Checker', desc: 'Compare two texts side by side or inline, with line and word-level highlights.', icon: 'fas fa-code-compare', url: './diff/', cat: 'Developer', tags: ['diff', 'compare', 'text'] },
+            { title: 'DNS Lookup', desc: 'Query A, MX, TXT, NS, PTR and more over DNS-over-HTTPS, check SPF and DMARC, and compare Cloudflare with Google.', icon: 'fas fa-globe', url: './dns-lookup/', cat: 'Network', tags: ['dns', 'mx', 'dmarc'] },
+            { title: 'MAC Address Lookup', desc: 'Find the vendor of a MAC address, spot randomized and multicast addresses, and bulk-check arp output.', icon: 'fas fa-ethernet', url: './mac-lookup/', cat: 'Network', tags: ['mac', 'oui', 'vendor'] },
+            { title: 'Unit Converter', desc: 'GB vs GiB, Mbit/s vs MB/s and real download times, plus time, temperature, length and mass.', icon: 'fas fa-scale-balanced', url: './unit-converter/', cat: 'Utility', tags: ['bytes', 'bandwidth', 'units'] }
         ];
         document.getElementById('toolCount').textContent = TOOLS.length;
         List.init({

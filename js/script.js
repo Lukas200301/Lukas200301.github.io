@@ -40,6 +40,7 @@
     { group: 'Pages', title: 'Projects', sub: 'All GitHub repositories', icon: 'fas fa-code', href: 'projects/', keys: 'repos repositories work' },
     { group: 'Pages', title: 'Tools', sub: 'Small web utilities', icon: 'fas fa-screwdriver-wrench', href: 'tools/', keys: 'utilities apps' },
     { group: 'Pages', title: 'Games', sub: 'Browser games', icon: 'fas fa-gamepad', href: 'games/', keys: 'play fun' },
+    { group: 'Pages', title: 'Stats', sub: 'GitHub activity, streaks and languages', icon: 'fas fa-chart-column', href: 'stats/', keys: 'statistics github contributions commits streak languages charts' },
 
     { group: 'Projects', title: 'Raspberry Pi Control', sub: 'Monitor and control a Pi from Android & Windows', icon: 'fab fa-raspberry-pi', href: 'projects/raspberrypicontrol/', keys: 'rpi grpc go flutter docker' },
     { group: 'Projects', title: 'NetW1re', sub: 'Network monitoring and traffic control', icon: 'fas fa-network-wired', href: 'projects/netw1re/', keys: 'network c# avalonia packets' },
@@ -52,10 +53,27 @@
     { group: 'Tools', title: 'QR Code Generator', sub: 'QR codes for links, text and Wi-Fi', icon: 'fas fa-qrcode', href: 'tools/qr-code/', keys: 'qr wifi url' },
     { group: 'Tools', title: 'YouTube Tag Generator', sub: 'Tags and keywords for videos', icon: 'fab fa-youtube', href: 'tools/youtube-tag-generator/', keys: 'seo youtube tags' },
     { group: 'Tools', title: 'Regex Tester', sub: 'Test regular expressions live', icon: 'fas fa-asterisk', href: 'tools/regex-tester/', keys: 'regex pattern match' },
+    { group: 'Tools', title: 'Subnet Calculator', sub: 'IPv4 CIDR, masks and host ranges', icon: 'fas fa-network-wired', href: 'tools/subnet-calculator/', keys: 'ip ipv4 cidr netmask network' },
+    { group: 'Tools', title: 'JSON & YAML Formatter', sub: 'Validate, format and convert', icon: 'fas fa-code', href: 'tools/json-yaml/', keys: 'json yaml prettify minify validate' },
+    { group: 'Tools', title: 'Base64, URL & JWT Decoder', sub: 'Encode and decode, inspect tokens', icon: 'fas fa-right-left', href: 'tools/encoder/', keys: 'base64 url encode decode jwt token hex' },
+    { group: 'Tools', title: 'Cron Expression Helper', sub: 'Cron in plain English + next runs', icon: 'fas fa-clock-rotate-left', href: 'tools/cron/', keys: 'cron crontab schedule' },
+    { group: 'Tools', title: 'Hash & Checksum', sub: 'MD5, SHA-256, CRC32 for text and files', icon: 'fas fa-hashtag', href: 'tools/hash/', keys: 'hash sha md5 checksum crc verify' },
+    { group: 'Tools', title: 'Timestamp Converter', sub: 'Unix time, dates and time zones', icon: 'fas fa-clock', href: 'tools/timestamp/', keys: 'unix epoch time zone date clock' },
+    { group: 'Tools', title: 'Markdown Preview', sub: 'Live Markdown editor and HTML export', icon: 'fab fa-markdown', href: 'tools/markdown/', keys: 'markdown md editor preview' },
+    { group: 'Tools', title: 'Text Diff Checker', sub: 'Compare two texts', icon: 'fas fa-code-compare', href: 'tools/diff/', keys: 'diff compare text changes' },
+    { group: 'Tools', title: 'DNS Lookup', sub: 'Records, reverse lookups, SPF & DMARC', icon: 'fas fa-globe', href: 'tools/dns-lookup/', keys: 'dns dig nslookup mx txt ptr spf dmarc resolver domain' },
+    { group: 'Tools', title: 'MAC Address Lookup', sub: 'Vendor, type and notations of a MAC', icon: 'fas fa-ethernet', href: 'tools/mac-lookup/', keys: 'mac oui vendor manufacturer ethernet arp nic' },
+    { group: 'Tools', title: 'Unit Converter', sub: 'GB vs GiB, Mbit/s vs MB/s, transfer times', icon: 'fas fa-scale-balanced', href: 'tools/unit-converter/', keys: 'units convert bytes gib mbit bandwidth download time temperature length' },
 
     { group: 'Games', title: '2048', sub: 'Slide and merge to 2048', icon: 'fas fa-table-cells-large', href: 'games/2048/', keys: 'puzzle numbers' },
     { group: 'Games', title: 'Globle', sub: 'Guess the country on a globe', icon: 'fas fa-earth-americas', href: 'games/globle/', keys: 'geography guess' },
     { group: 'Games', title: 'Tetris', sub: 'Falling blocks, clear lines', icon: 'fas fa-shapes', href: 'games/tetris/', keys: 'blocks tetromino' },
+    { group: 'Games', title: 'Snake', sub: 'Eat, grow, don\'t bite yourself', icon: 'fas fa-wave-square', href: 'games/snake/', keys: 'snake arcade classic' },
+    { group: 'Games', title: 'Minesweeper', sub: 'Clear the field, avoid the mines', icon: 'fas fa-bomb', href: 'games/minesweeper/', keys: 'mines puzzle flags' },
+    { group: 'Games', title: 'Flag Quiz', sub: 'Guess the country from its flag', icon: 'fas fa-flag', href: 'games/flag-quiz/', keys: 'flags countries geography quiz' },
+    { group: 'Games', title: 'Code Typing Test', sub: 'WPM with real code snippets', icon: 'fas fa-keyboard', href: 'games/typing-test/', keys: 'typing wpm speed keyboard' },
+    { group: 'Games', title: 'Tech Memory', sub: 'Match pairs of tech logos', icon: 'fas fa-clone', href: 'games/memory/', keys: 'memory pairs cards' },
+    { group: 'Games', title: 'Tic Tac Toe', sub: 'vs CPU or a friend', icon: 'fas fa-hashtag', href: 'games/tic-tac-toe/', keys: 'tictactoe noughts crosses xo minimax' },
 
     { group: 'Actions', title: 'Open GitHub profile', sub: 'github.com/Lukas200301', icon: 'fab fa-github', action: () => window.open(LINKS.github, '_blank', 'noopener') },
     { group: 'Actions', title: 'Copy Discord username', sub: LINKS.discord, icon: 'fab fa-discord', action: () => copy(LINKS.discord, 'Discord username copied') },
@@ -66,6 +84,7 @@
     } },
     { group: 'Actions', title: 'Back to top', sub: 'Scroll to the start of this page', icon: 'fas fa-arrow-up', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
     { group: 'Actions', title: 'Keyboard shortcuts', sub: 'Show all shortcuts', icon: 'fas fa-keyboard', action: () => openShortcuts() },
+    { group: 'Actions', title: 'Open command line', sub: 'Browse the site from a terminal', icon: 'fas fa-terminal', keys: 'terminal shell cli console bash', action: () => window.CLI && window.CLI.open() },
     { group: 'Actions', title: 'Party mode', sub: 'You know you want to', icon: 'fas fa-champagne-glasses', action: () => party() }
   ];
 
@@ -122,7 +141,8 @@
     const nav = [
       ['Projects', 'projects/', 'projects'],
       ['Tools', 'tools/', 'tools'],
-      ['Games', 'games/', 'games']
+      ['Games', 'games/', 'games'],
+      ['Stats', 'stats/', 'stats']
     ];
     const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
     const header = h(`
@@ -141,6 +161,7 @@
             <button class="search-trigger" type="button" data-open-palette aria-label="Search the site">
               <i class="fas fa-magnifying-glass"></i><span>Jump to…</span><kbd>${isMac ? '⌘' : 'Ctrl'} K</kbd>
             </button>
+            <button class="icon-btn cli-btn" type="button" data-open-cli aria-label="Open the command line" title="Command line (key left of 1)"><i class="fas fa-terminal"></i></button>
             <a class="icon-btn" href="${LINKS.github}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <button class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
           </div>
@@ -193,7 +214,7 @@
     const f = h(`
       <footer class="site-footer">
         <div class="signal-wave" aria-hidden="true">
-          <svg viewBox="0 0 2400 60" preserveAspectRatio="none"><defs><linearGradient id="sw-g" gradientUnits="userSpaceOnUse" x1="0" x2="1200" spreadMethod="reflect"><stop offset="0" stop-color="#8ea2ff" stop-opacity="0"/><stop offset=".3" stop-color="#8ea2ff"/><stop offset=".7" stop-color="#ffb86b"/><stop offset="1" stop-color="#ffb86b" stop-opacity="0"/></linearGradient></defs>
+          <svg viewBox="0 0 2400 60" preserveAspectRatio="none"><defs><linearGradient id="sw-g" gradientUnits="userSpaceOnUse" x1="0" x2="1200" spreadMethod="reflect"><stop offset="0" stop-color="#8ea2ff"/><stop offset=".5" stop-color="#b39bff"/><stop offset="1" stop-color="#ffb86b"/></linearGradient></defs>
           <path class="sw-a" d="${wavePath(1200, 60, 9, 14)}"/><path class="sw-b" d="${wavePath(1200, 60, 6, 9)}"/></svg>
         </div>
         <div class="wrap site-footer__inner">
@@ -202,9 +223,10 @@
             <a href="${url('projects/')}">Projects</a>
             <a href="${url('tools/')}">Tools</a>
             <a href="${url('games/')}">Games</a>
+            <a href="${url('stats/')}">Stats</a>
             <a href="${LINKS.github}" target="_blank" rel="noopener">GitHub</a>
           </nav>
-          <span class="foot-hint">Press <kbd>?</kbd> for shortcuts</span>
+          <span class="foot-hint">Press <kbd>?</kbd> for shortcuts · <button type="button" class="foot-cli" data-open-cli><i class="fas fa-terminal"></i> command line</button></span>
         </div>
       </footer>`);
     const main = $('main');
@@ -466,6 +488,8 @@
         <li><span>Go to projects</span><span><kbd>G</kbd><kbd>P</kbd></span></li>
         <li><span>Go to tools</span><span><kbd>G</kbd><kbd>T</kbd></span></li>
         <li><span>Go to games</span><span><kbd>G</kbd><kbd>G</kbd></span></li>
+        <li><span>Go to stats</span><span><kbd>G</kbd><kbd>S</kbd></span></li>
+        <li><span>Command line</span><span><kbd>${'`'}</kbd> / <kbd>^</kbd> <small style="opacity:.6">(key left of 1)</small></span></li>
         <li><span>Search this list (on list pages)</span><span><kbd>/</kbd></span></li>
         <li><span>Back to top</span><span><kbd>Shift</kbd><kbd>↑</kbd></span></li>
         <li><span>Show this sheet</span><span><kbd>?</kbd></span></li>
@@ -507,7 +531,7 @@
       if (isGamePlay) return; // games own the keyboard
       const key = e.key.toLowerCase();
       if (gAt && Date.now() - gAt < 900) {
-        const map = { h: '', p: 'projects/', t: 'tools/', g: 'games/' };
+        const map = { h: '', p: 'projects/', t: 'tools/', g: 'games/', s: 'stats/' };
         gAt = 0;
         if (key in map) { e.preventDefault(); go(url(map[key])); }
         return;
@@ -518,8 +542,8 @@
   }
 
   // ---------- Party mode (confetti) ----------
-  function party() {
-    if (reduceMotion) { toast('Party mode on (quietly)', 'fas fa-champagne-glasses'); return; }
+  function party(msg) {   // msg: custom toast text, or false for none
+    if (reduceMotion) { if (msg !== false) toast(msg || 'Party mode on (quietly)', 'fas fa-champagne-glasses'); return; }
     const c = document.createElement('canvas');
     c.className = 'egg-canvas';
     document.body.appendChild(c);
@@ -548,7 +572,7 @@
       });
       if (t - t0 < 3500) requestAnimationFrame(frame); else c.remove();
     })(t0);
-    toast('Party mode unlocked', 'fas fa-champagne-glasses');
+    if (msg !== false) toast(msg || 'Party mode unlocked', 'fas fa-champagne-glasses');
   }
 
   // ---------- Live background: signal grid ----------
@@ -769,7 +793,7 @@
     window.Site.ping = (x, y) => pings.push({ x, y, r: 0, life: 1, v: 420 });
   }
 
-  // ---------- Motion: scroll reveals, split headings, parallax, cursor ring, magnetic, ripple, decode ----------
+  // ---------- Motion: scroll reveals, split headings, parallax, cursor ring, ripple, decode ----------
   function setupMotion() {
     const tag = (sel, variant = '', stagger = false) => $$(sel).forEach((el, i) => {
       if (el.hasAttribute('data-reveal') || el.closest('[data-reveal]') && !stagger) return;
@@ -870,21 +894,6 @@
       ring.style.transform = `translate3d(${(cur.x - d / 2).toFixed(2)}px, ${(cur.y - d / 2).toFixed(2)}px, 0)`;
       requestAnimationFrame(follow);
     })(0);
-
-    // 5. magnetic buttons
-    const MAG = '.btn, .icon-btn, .cta-button, .search-trigger, .to-top, .back-to-top, .retry-btn, .filter, .brand';
-    document.addEventListener('pointermove', e => {
-      const el = e.target.closest && e.target.closest(MAG);
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const mx = (e.clientX - r.left - r.width / 2) * 0.28, my = (e.clientY - r.top - r.height / 2) * 0.35;
-      el.style.setProperty('--mx-m', mx.toFixed(1) + 'px'); el.style.setProperty('--my-m', my.toFixed(1) + 'px');
-      el.classList.add('is-mag');
-    }, { passive: true });
-    document.addEventListener('pointerout', e => {
-      const el = e.target.closest && e.target.closest(MAG);
-      if (el && !el.contains(e.relatedTarget)) { el.style.setProperty('--mx-m', '0px'); el.style.setProperty('--my-m', '0px'); el.classList.remove('is-mag'); }
-    });
 
     // 6. click ripple
     const RIP = '.btn, .cta-button, .filter, .contact-row, .feature-row, .card, .tile, .action-btn, .game-btn, .globe-btn, .control-btn, .generate-btn, .download-btn, .guess-btn, .retry-btn, .palette__item, .search-trigger, .link-cloud a, .icon-btn';
@@ -1012,18 +1021,17 @@
   function setupPageTransitions() {
     const root = document.documentElement;
     if (root.classList.contains('pt-enter')) {
-      let dest = 'cd ~';
-      try { dest = root.dataset.ptDest || dest; } catch (e) {}
-      const ov = buildOverlay('enter', dest);
+      // the inline <head> script already put the finished overlay on screen before the first paint
+      let ov = $('.pt-ov--enter');
+      if (!ov) ov = buildOverlay('enter', root.dataset.ptDest || 'cd ~');
       requestAnimationFrame(() => {
-        ov.classList.add('on'); root.classList.add('pt-hud');     // real HUD fades in over the first-paint cover
-        setTimeout(() => ov.classList.add('out'), 120);            // bar completes, letters lift away, frame opens
-        setTimeout(() => { root.classList.add('pt-go'); ov.classList.add('slide'); }, 330);   // panel slides off
-        setTimeout(() => { ov.remove(); root.classList.remove('pt-enter', 'pt-go', 'pt-hud'); }, 330 + 720);
+        setTimeout(() => ov.classList.add('out'), 90);                                         // bar completes, letters lift away
+        setTimeout(() => { root.classList.add('pt-go'); ov.classList.add('slide'); }, 300);   // panel slides off
+        setTimeout(() => { ov.remove(); root.classList.remove('pt-enter', 'pt-go'); }, 300 + 720);
       });
     }
     // coming back via the back button restores the old page from cache: drop the cover
-    addEventListener('pageshow', e => { if (e.persisted) { root.classList.remove('pt-leave', 'pt-enter', 'pt-go', 'pt-hud'); $$('.pt-ov').forEach(o => o.remove()); } });
+    addEventListener('pageshow', e => { if (e.persisted) { root.classList.remove('pt-leave', 'pt-enter', 'pt-go'); $$('.pt-ov').forEach(o => o.remove()); } });
     document.addEventListener('click', e => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = e.target.closest && e.target.closest('a[href]');
@@ -1039,7 +1047,7 @@
   }
 
   // ---------- Public API ----------
-  window.Site = { toast, copy, openPalette, party, url, LINKS, REGISTRY, reduceMotion, countUp, navigate: (h) => navigate(fixDir(new URL(h, location.href).href)), observeReveal: () => {} };
+  window.Site = { toast, copy, openPalette, party, url, LINKS, REGISTRY, reduceMotion, countUp, rel, section, isGamePlay, navigate: (h) => navigate(fixDir(new URL(h, location.href).href)), observeReveal: () => {} };
 
   // ---------- Boot ----------
   function boot() {
@@ -1056,7 +1064,16 @@
     setupPrefetch();
     setupLocalLinks();
     setupKeys();
+    loadExtras();
     $$('[data-copy]').forEach(b => b.addEventListener('click', () => copy(b.dataset.copy, b.dataset.copyMsg || 'Copied')));
+  }
+  // extra site-wide modules: now-playing pill and the command line
+  function loadExtras() {
+    const v = scriptEl && scriptEl.src.includes('?') ? scriptEl.src.slice(scriptEl.src.indexOf('?')) : '';
+    ['js/live.js', 'js/cli.js'].forEach(f => {
+      if (document.body.hasAttribute('data-no-shell')) return;
+      const s = document.createElement('script'); s.src = new URL(f, ROOT).href + v; s.async = false; document.body.appendChild(s);
+    });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

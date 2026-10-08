@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Live Preview | Lukas200301</title>
+    <meta name="description" content="Write Markdown on the left and see the rendered result live on the right, then export HTML.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Markdown Live Preview | Lukas200301">
+    <meta property="og:description" content="Write Markdown on the left and see the rendered result live on the right, then export HTML.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Markdown Preview</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fab fa-markdown"></i>
+                            Markdown Live Preview
+                        </h1>
+                        <p class="tool-description">Write Markdown and see it rendered as you type, with GitHub-style tables, task lists and code blocks. Copy or download the HTML when you&#x27;re done.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-eye"></i><span>Live preview</span></div>
+                            <div class="meta-item"><i class="fab fa-github"></i><span>GitHub-flavoured</span></div>
+                            <div class="meta-item"><i class="fas fa-download"></i><span>Export HTML</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel md-bar">
+                        <div class="seg" id="view" role="group" aria-label="Layout">
+                            <button type="button" data-v="split" aria-pressed="true"><i class="fas fa-table-columns"></i>&nbsp; Split</button>
+                            <button type="button" data-v="edit" aria-pressed="false"><i class="fas fa-pen"></i>&nbsp; Editor</button>
+                            <button type="button" data-v="preview" aria-pressed="false"><i class="fas fa-eye"></i>&nbsp; Preview</button>
+                        </div>
+                        <div class="md-tools" id="fmt" aria-label="Formatting">
+                            <button type="button" class="copy" data-f="bold" title="Bold (Ctrl+B)"><i class="fas fa-bold"></i></button>
+                            <button type="button" class="copy" data-f="italic" title="Italic (Ctrl+I)"><i class="fas fa-italic"></i></button>
+                            <button type="button" class="copy" data-f="h" title="Heading"><i class="fas fa-heading"></i></button>
+                            <button type="button" class="copy" data-f="link" title="Link (Ctrl+K)"><i class="fas fa-link"></i></button>
+                            <button type="button" class="copy" data-f="code" title="Code"><i class="fas fa-code"></i></button>
+                            <button type="button" class="copy" data-f="ul" title="List"><i class="fas fa-list-ul"></i></button>
+                            <button type="button" class="copy" data-f="task" title="Task"><i class="fas fa-square-check"></i></button>
+                            <button type="button" class="copy" data-f="quote" title="Quote"><i class="fas fa-quote-right"></i></button>
+                            <button type="button" class="copy" data-f="table" title="Table"><i class="fas fa-table"></i></button>
+                        </div>
+                        <div class="panel__actions">
+                            <button class="btn btn--sm btn--ghost" id="copyMd"><i class="far fa-copy"></i>Markdown</button>
+                            <button class="btn btn--sm btn--ghost" id="copyHtml"><i class="fas fa-code"></i>HTML</button>
+                            <button class="btn btn--sm" id="dlHtml"><i class="fas fa-download"></i>Download .html</button>
+                        </div>
+                    </div>
+
+                    <div class="md-grid" id="grid" data-v="split">
+                        <div class="panel md-pane">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fab fa-markdown"></i>Markdown</h2><span class="hint" id="mdStats"></span></div>
+                            <textarea class="textarea mono md-src" id="src" spellcheck="false" aria-label="Markdown source"></textarea>
+                        </div>
+                        <div class="panel md-pane">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-eye"></i>Preview</h2><span class="hint" id="toc"></span></div>
+                            <article class="md-out" id="out"></article>
+                        </div>
+                    </div>
+                    <p class="hint">Your text is saved in this browser as you type. HTML output is sanitised with DOMPurify.</p>
+                </div>
+                <style>
+                    .md-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 14px; }
+                    .md-tools { display: flex; gap: 2px; flex-wrap: wrap; }
+                    .md-tools .copy { width: 34px; height: 34px; }
+                    .md-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+                    .md-grid[data-v="edit"], .md-grid[data-v="preview"] { grid-template-columns: minmax(0, 1fr); }
+                    .md-grid[data-v="edit"] .md-pane:last-child, .md-grid[data-v="preview"] .md-pane:first-child { display: none; }
+                    @media (max-width: 900px) { .md-grid { grid-template-columns: minmax(0, 1fr); } }
+                    .md-pane { display: flex; flex-direction: column; }
+                    .md-src { min-height: 560px; height: 62vh; resize: vertical; line-height: 1.6; tab-size: 2; }
+                    .md-out { height: 62vh; min-height: 560px; overflow: auto; padding: 4px 6px 4px 2px; line-height: 1.7; color: var(--fg-2); overflow-wrap: anywhere; }
+                    .md-out > :first-child { margin-top: 0; }
+                    .md-out h1, .md-out h2, .md-out h3, .md-out h4 { color: var(--fg); font-family: var(--font-head); letter-spacing: -.03em; line-height: 1.25; margin: 1.4em 0 .5em; }
+                    .md-out h1 { font-size: 1.8rem; padding-bottom: .3em; border-bottom: 1px solid var(--line-soft); }
+                    .md-out h2 { font-size: 1.35rem; padding-bottom: .25em; border-bottom: 1px solid var(--line-soft); }
+                    .md-out h3 { font-size: 1.1rem; }
+                    .md-out p, .md-out ul, .md-out ol, .md-out blockquote, .md-out pre, .md-out table { margin: 0 0 1em; }
+                    .md-out ul, .md-out ol { padding-left: 1.5em; }
+                    .md-out li { margin: .2em 0; }
+                    .md-out li:has(> input[type=checkbox]) { list-style: none; margin-left: -1.3em; }
+                    .md-out input[type=checkbox] { accent-color: var(--signal); margin-right: .4em; }
+                    .md-out a { color: var(--signal); text-decoration: underline; text-underline-offset: 3px; }
+                    .md-out strong { color: var(--fg); }
+                    .md-out code { font-family: var(--font-code); font-size: .88em; background: rgba(142,162,255,.1); border: 1px solid var(--line-soft); padding: .1em .4em; border-radius: 6px; color: #c9d3ff; }
+                    .md-out pre { background: rgba(4,7,15,.7); border: 1px solid var(--line-soft); border-radius: 12px; padding: 14px 16px; overflow: auto; }
+                    .md-out pre code { background: none; border: 0; padding: 0; color: var(--fg); }
+                    .md-out blockquote { border-left: 3px solid var(--amber); padding: .3em 0 .3em 1em; color: var(--fg-3); background: rgba(255,184,107,.05); border-radius: 0 8px 8px 0; }
+                    .md-out table { border-collapse: collapse; display: block; overflow: auto; }
+                    .md-out th, .md-out td { border: 1px solid var(--line); padding: 6px 12px; }
+                    .md-out th { background: rgba(142,162,255,.08); color: var(--fg); }
+                    .md-out hr { border: 0; height: 1px; background: var(--line); margin: 1.6em 0; }
+                    .md-out img { max-width: 100%; border-radius: 10px; }
+                    .md-out .flash { animation: md-flash 1s var(--ease-out); }
+                    @keyframes md-flash { from { background: rgba(142,162,255,.18); } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

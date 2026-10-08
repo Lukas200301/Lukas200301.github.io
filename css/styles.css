@@ -5,6 +5,18 @@
    ========================================================= */
 
 
+/* Fallback for JetBrains Mono with the same metrics (0.6em per character, same ascent/descent).
+   Until the web font has loaded (first frames of a new page), monospace text uses this and nothing moves when it swaps.
+   Courier New ships with Windows and macOS, Liberation Mono / Cousine are its metric clones on Linux and Android. */
+@font-face {
+  font-family: 'JBM Fallback';
+  src: local('Courier New'), local('CourierNewPSMT'), local('Liberation Mono'), local('LiberationMono'), local('Cousine'), local('Cousine-Regular');
+  size-adjust: 100%;
+  ascent-override: 102%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Core palette */
   --ink-0: #070b16;      /* page */
@@ -29,7 +41,7 @@
   /* Type */
   --font-head: 'Martian Mono', ui-monospace, monospace;
   --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-code: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+  --font-code: 'JetBrains Mono', 'JBM Fallback', ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -720,14 +732,12 @@ kbd {
 .cursor-ring.hot span { border-color: rgba(var(--amber-rgb), 0.75); background: rgba(var(--amber-rgb), 0.07); border-width: 1px; }
 .cursor-ring.down span { background: rgba(var(--signal-rgb), 0.18); }
 
-/* ---------- Magnetic buttons ---------- */
+/* ---------- Button transitions ---------- */
 .btn, .icon-btn, .cta-button, .search-trigger, .to-top, .back-to-top, .retry-btn, .filter, .brand {
-  translate: var(--mx-m, 0px) var(--my-m, 0px);
-  transition-property: transform, translate, background-color, border-color, color, box-shadow, opacity, visibility;
+  transition-property: transform, background-color, border-color, color, box-shadow, opacity, visibility;
   transition-duration: 0.35s;
   transition-timing-function: var(--ease-out);
 }
-.is-mag { transition-duration: 0.12s, 0.12s, 0.2s, 0.2s, 0.2s, 0.25s, 0.3s, 0.3s; }
 
 /* ---------- Click ripple ---------- */
 .has-ripple { overflow: hidden; isolation: isolate; }
@@ -821,48 +831,19 @@ kbd {
 @keyframes nudge-up { 40% { transform: translateY(-5px); } }
 
 /* ---------- Page transition ----------
-   Leaving: a DOM overlay (.pt-ov) slides up: drifting grid, name letters rising, corner frame, radar ring,
-   loading bar and a typed "cd ~/page" line.
-   Arriving: html::after covers the new page from its first paint (set by an inline <head> script), the same HUD
-   fades in on top, finishes loading, lifts away, and panel + glowing edge slide off together. */
-:root { --pt-panel:
-  radial-gradient(60% 50% at 50% 50%, rgba(142, 162, 255, 0.14), transparent 70%),
-  radial-gradient(rgba(163, 174, 208, 0.16) 1px, transparent 1px) 0 0 / 28px 28px,
-  #070b16; }
-html::after, html::before { pointer-events: none; }
-
-/* first-paint cover on the arriving page */
-html.pt-enter::after {
-  content: 'Lukas200301';
-  position: fixed; inset: 0; z-index: 10000;
-  display: grid; place-items: center;
-  font: 700 clamp(1.5rem, 1rem + 2.2vw, 2.6rem) / 1 'Martian Mono', ui-monospace, monospace;
-  letter-spacing: -0.04em;
-  color: #a9b6ff;
-  background: var(--pt-panel);
-  pointer-events: all;
-  transition: color 0.15s;
-  animation: pt-slide-out-fallback 0.6s cubic-bezier(0.7, 0, 0.2, 1) 1.6s both;   /* fallback if JS never runs */
-}
-html.pt-enter.pt-hud::after { color: transparent; }
-html.pt-enter::before {
-  content: ''; position: fixed; left: 0; right: 0; height: 2px; z-index: 10001;
-  top: calc(100vh - 2px); opacity: 0;
-  background: linear-gradient(90deg, transparent, var(--signal) 20%, var(--amber) 80%, transparent);
-  box-shadow: 0 0 18px 2px rgba(var(--signal-rgb), 0.7), 0 0 40px 6px rgba(var(--amber-rgb), 0.25);
-}
-html.pt-enter.pt-go::after { animation: pt-slide-out 0.62s cubic-bezier(0.7, 0, 0.2, 1) both; }
-html.pt-enter.pt-go::before { animation: pt-slide-out-line 0.62s cubic-bezier(0.7, 0, 0.2, 1) both, pt-edge-fade 0.62s linear both; }
+   One overlay (.pt-ov) is used on both sides of a page change:
+   - leaving: built by js/script.js, slides up, the HUD assembles (letters, brackets, ring, bar, typed "cd ~/page")
+   - arriving: written into the new page by its inline <head> script in the *finished* state, so the very first
+     frame matches the last frame of the old page (no blink); then it completes and slides away. */
 @keyframes pt-slide-in { from { transform: translate3d(0, 100%, 0); } to { transform: translate3d(0, 0, 0); } }
 @keyframes pt-slide-in-line { from { transform: translate3d(0, 100vh, 0); } to { transform: translate3d(0, 0, 0); } }
 @keyframes pt-slide-out { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -100%, 0); } }
 @keyframes pt-slide-out-line { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -100vh, 0); } }
-@keyframes pt-slide-out-fallback { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -100%, 0); } }
 @keyframes pt-edge-fade { 0%, 88% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes pt-gone { to { visibility: hidden; } }
 html.pt-enter.pt-go body > main, html.pt-enter.pt-go body > .site-header { animation: pt-content 0.8s var(--ease-out) both; }
 @keyframes pt-content { from { opacity: 0; transform: translateY(24px) scale(0.985); } }
 
-/* the overlay */
 .pt-ov { position: fixed; inset: 0; z-index: 10002; pointer-events: all; }
 .pt-ov__panel { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(60% 50% at 50% 50%, rgba(142, 162, 255, 0.14), transparent 70%), #070b16; }
 .pt-ov__grid {
@@ -880,7 +861,7 @@ html.pt-enter.pt-go body > main, html.pt-enter.pt-go body > .site-header { anima
 .pt-ov__frame { position: relative; padding: 34px 54px 26px; text-align: center; }
 
 /* corner brackets */
-.pt-ov .c { position: absolute; width: 18px; height: 18px; border: 0 solid rgba(var(--signal-rgb), 0.85); transition: transform 0.5s var(--ease-out), opacity 0.4s; opacity: 0; }
+.pt-ov .c { position: absolute; width: 18px; height: 18px; border: 0 solid rgba(var(--signal-rgb), 0.85); transition: transform 0.4s var(--ease-out), opacity 0.3s; opacity: 0; }
 .pt-ov .c1 { left: 0; top: 0; border-top-width: 2px; border-left-width: 2px; transform: translate(34px, 24px); }
 .pt-ov .c2 { right: 0; top: 0; border-top-width: 2px; border-right-width: 2px; transform: translate(-34px, 24px); }
 .pt-ov .c3 { left: 0; bottom: 0; border-bottom-width: 2px; border-left-width: 2px; transform: translate(34px, -24px); }
@@ -888,6 +869,7 @@ html.pt-enter.pt-go body > main, html.pt-enter.pt-go body > .site-header { anima
 
 /* radar rings */
 .pt-ov__ring { position: absolute; left: 50%; top: 42%; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; border: 1px solid rgba(var(--signal-rgb), 0.6); opacity: 0; transform: scale(0.2); pointer-events: none; }
+@keyframes pt-ring { 0% { opacity: 0.9; transform: scale(0.2); } 100% { opacity: 0; transform: scale(2.4); } }
 
 /* name letters */
 .pt-ov__name { font: 700 clamp(1.5rem, 1rem + 2.2vw, 2.6rem) / 1 'Martian Mono', ui-monospace, monospace; letter-spacing: -0.04em; white-space: nowrap; }
@@ -895,46 +877,50 @@ html.pt-enter.pt-go body > main, html.pt-enter.pt-go body > .site-header { anima
   display: inline-block;
   color: color-mix(in oklab, #a9b6ff calc(100% - var(--k) * 9%), #ffb86b);
   opacity: 0; transform: translateY(70%); filter: blur(6px);
-  transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-spring), filter 0.35s;
-  transition-delay: calc(60ms + var(--k) * 18ms);
+  transition: opacity 0.3s var(--ease-out), transform 0.38s var(--ease-out), filter 0.3s;
+  transition-delay: calc(40ms + var(--k) * 14ms);
 }
 
 /* loading bar + typed destination */
 .pt-ov__bar { width: min(220px, 60vw); height: 2px; margin: 18px auto 0; border-radius: 2px; background: rgba(var(--signal-rgb), 0.15); overflow: hidden; }
-.pt-ov__bar b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--signal), var(--amber)); box-shadow: 0 0 12px rgba(var(--amber-rgb), 0.8); transition: width 0.45s var(--ease-out) 0.15s; }
+.pt-ov__bar b { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--signal), var(--amber)); box-shadow: 0 0 12px rgba(var(--amber-rgb), 0.8); transition: width 0.4s var(--ease-out) 0.12s; }
 .pt-ov__dest { margin-top: 12px; font: 500 0.82rem/1.2 'JetBrains Mono', ui-monospace, monospace; color: var(--fg-3); display: flex; justify-content: center; align-items: center; gap: 3px; }
-.pt-ov__dest span { display: inline-block; overflow: hidden; white-space: nowrap; width: 0; transition: width 0.35s steps(var(--n, 12)) 0.2s; }
-.pt-ov__caret { width: 7px; height: 13px; background: var(--amber); animation: blink 0.8s steps(1) infinite; }
+.pt-ov__dest span { display: inline-block; overflow: hidden; white-space: nowrap; width: 0; transition: width 0.3s steps(var(--n, 12)) 0.15s; }
+.pt-ov__caret { width: 7px; height: 13px; background: var(--amber); }
 
-/* leaving: everything slides up together, then the HUD assembles */
+/* ---- leaving: slides up, then the HUD assembles (everything settles by ~560 ms; the page switches at 640 ms) */
 .pt-ov--leave .pt-ov__panel, .pt-ov--leave .pt-ov__hud { transform: translate3d(0, 100%, 0); }
 .pt-ov--leave .pt-ov__edge { transform: translate3d(0, 100vh, 0); }
 .pt-ov--leave.go .pt-ov__panel, .pt-ov--leave.go .pt-ov__hud { animation: pt-slide-in 0.42s cubic-bezier(0.7, 0, 0.3, 1) both; }
 .pt-ov--leave.go .pt-ov__edge { animation: pt-slide-in-line 0.42s cubic-bezier(0.7, 0, 0.3, 1) both, pt-edge-fade 0.42s linear both; }
-.pt-ov.go .pl { opacity: 1; transform: none; filter: none; }
-.pt-ov.go .c { opacity: 1; transform: none; transition-delay: 0.22s; }
-.pt-ov.go .pt-ov__bar b { width: 78%; }
-.pt-ov.go .pt-ov__dest span { width: calc(var(--n) * 1ch); }
-.pt-ov.go .pt-ov__ring { animation: pt-ring 1.1s var(--ease-out) 0.25s both; }
-.pt-ov.go .pt-ov__ring.r2 { animation-delay: 0.5s; }
-@keyframes pt-ring { 0% { opacity: 0.9; transform: scale(0.2); } 100% { opacity: 0; transform: scale(2.4); } }
+.pt-ov--leave.go .pl { opacity: 1; transform: none; filter: none; }
+.pt-ov--leave.go .c { opacity: 1; transform: none; transition-delay: 0.15s; }
+.pt-ov--leave.go .pt-ov__bar b { width: 78%; }
+.pt-ov--leave.go .pt-ov__dest span { width: calc(var(--n) * 1ch); }
+.pt-ov--leave.go .pt-ov__ring { animation: pt-ring 0.55s var(--ease-out) 0.05s both; }
+.pt-ov--leave.go .pt-ov__ring.r2 { animation-delay: 0.08s; }
 
-/* arriving: HUD starts in its finished state (matching the cover), then finishes and leaves */
-.pt-ov--enter .pt-ov__panel, .pt-ov--enter .pt-ov__edge { display: none; }
-.pt-ov--enter { pointer-events: none; opacity: 0; transition: opacity 0.12s; }
-.pt-ov--enter .pl, .pt-ov--enter .c { opacity: 1; transform: none; filter: none; transition-delay: 0s; }
-.pt-ov--enter .pt-ov__bar b { width: 78%; transition-delay: 0s; }
+/* ---- arriving: starts exactly as the leaving overlay ended (letters, brackets, 78% bar, full "cd" line, panel up) */
+.pt-ov--enter .pl, .pt-ov--enter .c { opacity: 1; transform: none; filter: none; transition: none; }
+.pt-ov--enter .pt-ov__bar b { width: 78%; transition: none; }
 .pt-ov--enter .pt-ov__dest span { width: calc(var(--n) * 1ch); transition: none; }
-.pt-ov--enter.on { opacity: 1; }
+.pt-ov--enter .pt-ov__edge { top: calc(100vh - 2px); opacity: 0; }
+/* then: bar completes, letters lift away, brackets open, a ring pulses */
 .pt-ov--enter.out .pt-ov__bar b { width: 100%; transition: width 0.2s var(--ease-out); }
 .pt-ov--enter.out .pl { opacity: 0; transform: translateY(-80%); filter: blur(5px); transition: opacity 0.3s, transform 0.4s var(--ease-out), filter 0.3s; transition-delay: calc(var(--k) * 16ms); }
+.pt-ov--enter.out .c { transition: transform 0.4s var(--ease-out), opacity 0.3s; }
 .pt-ov--enter.out .c1 { transform: translate(-26px, -18px); opacity: 0; }
 .pt-ov--enter.out .c2 { transform: translate(26px, -18px); opacity: 0; }
 .pt-ov--enter.out .c3 { transform: translate(-26px, 18px); opacity: 0; }
 .pt-ov--enter.out .c4 { transform: translate(26px, 18px); opacity: 0; }
 .pt-ov--enter.out .pt-ov__dest, .pt-ov--enter.out .pt-ov__bar { opacity: 0; transition: opacity 0.3s 0.15s; }
 .pt-ov--enter.out .pt-ov__ring { animation: pt-ring 0.8s var(--ease-out) both; }
-.pt-ov--enter.slide .pt-ov__hud { animation: pt-slide-out 0.62s cubic-bezier(0.7, 0, 0.2, 1) both; }
+/* then: panel + HUD slide off together with the glowing edge on the panel's bottom */
+.pt-ov--enter.slide { pointer-events: none; }
+.pt-ov--enter.slide .pt-ov__panel, .pt-ov--enter.slide .pt-ov__hud { animation: pt-slide-out 0.62s cubic-bezier(0.7, 0, 0.2, 1) both; }
+.pt-ov--enter.slide .pt-ov__edge { animation: pt-slide-out-line 0.62s cubic-bezier(0.7, 0, 0.2, 1) both, pt-edge-fade 0.62s linear both; opacity: 1; }
+/* safety net: if JavaScript never runs, the cover still goes away on its own */
+.pt-ov--enter:not(.slide) { animation: pt-gone 0s 3s forwards; }
 
 /* Cards: a light runs around the border while hovered */
 @property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
@@ -1021,8 +1007,8 @@ main p a:not(.btn):not(.cta-button):hover, .site-footer nav a:hover, .text-link:
 .brand:hover img { transform: rotate(360deg) scale(1.08); box-shadow: 0 0 0 3px rgba(var(--signal-rgb), 0.25), 0 0 22px rgba(var(--signal-rgb), 0.5); }
 
 /* Footer: a live signal waveform slides along above the footer */
-.signal-wave { height: 60px; margin-top: -30px; margin-bottom: 18px; overflow: hidden; opacity: 0.8; -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
-.signal-wave svg { width: 200%; height: 60px; display: block; animation: wave-slide 14s linear infinite; }
+.signal-wave { height: 60px; margin-top: -30px; margin-bottom: 18px; overflow: hidden; opacity: 0.8; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.signal-wave svg { width: 200%; max-width: none; height: 60px; display: block; animation: wave-slide 14s linear infinite; }
 .signal-wave path { fill: none; stroke: url(#sw-g); stroke-width: 1.6; stroke-linecap: round; }
 .signal-wave .sw-b { stroke-width: 1; opacity: 0.45; animation: wave-bob 5s ease-in-out infinite alternate; transform-origin: center; }
 @keyframes wave-slide { to { transform: translateX(-50%); } }
@@ -1039,4 +1025,134 @@ main p a:not(.btn):not(.cta-button):hover, .site-footer nav a:hover, .text-link:
 @media (prefers-reduced-motion: reduce) {
   .js .code-block .cl, .js [data-reveal] li, .js [data-reveal] .tech-item { clip-path: none; opacity: 1; transform: none; }
   .signal-wave svg, .signal-wave .sw-b, .spot:hover::before { animation: none; }
+}
+
+/* Icon glyphs must not inherit a heading's negative letter-spacing: it shrinks the glyph box
+   but not the drawn icon, which pushes icons off-centre inside their rounded boxes. */
+.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands, [class^="devicon-"], [class*=" devicon-"] { letter-spacing: 0; }
+.tool-title i, .game-title i, .project-hero .project-title i, .page-title i { text-align: center; line-height: 1; }
+
+/* =========================================================
+   Now playing (js/live.js): pill bottom-left, details card above it
+   ========================================================= */
+.np { position: fixed; left: 18px; bottom: 18px; z-index: 190; display: flex; align-items: center; gap: 4px; opacity: 0; transform: translateY(16px); transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-out); pointer-events: none; }
+.np.in { opacity: 1; transform: none; pointer-events: auto; }
+.np[hidden] { display: none; }
+.np__pill {
+  position: relative; display: flex; align-items: center; gap: 10px; max-width: min(330px, calc(100vw - 110px));
+  padding: 6px 14px 6px 6px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); font: inherit; text-align: left; cursor: pointer;
+  background: rgba(12, 18, 34, 0.86); -webkit-backdrop-filter: blur(12px) saturate(1.3); backdrop-filter: blur(12px) saturate(1.3);
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.8); overflow: hidden;
+  transition: border-color 0.25s, transform 0.3s var(--ease-spring);
+}
+.np__pill:hover { border-color: rgba(var(--signal-rgb), 0.55); transform: translateY(-2px); }
+.np__pill[aria-expanded="true"] { border-color: rgba(var(--signal-rgb), 0.55); }
+/* song progress as a thin line along the bottom of the pill */
+.np__pill.np--spotify::after { content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: calc(var(--p, 0) * 100%); background: #1ed760; opacity: 0.8; transition: width 1s linear; }
+.np__pill.swap .np__txt, .np__pill.swap .np__art { animation: np-swap 0.5s var(--ease-out); }
+@keyframes np-swap { from { opacity: 0; transform: translateY(6px); } }
+.np__art { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex: none; }
+.np--spotify .np__art { animation: np-spin 9s linear infinite; box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.35); }
+@keyframes np-spin { to { transform: rotate(360deg); } }
+.np__ic { display: grid; place-items: center; background: var(--ink-3); color: var(--signal); font-size: 0.9rem; }
+.np--spotify .np__ic { color: #1ed760; }
+.np__txt { display: grid; min-width: 0; line-height: 1.2; }
+.np__txt small { font-size: 0.68rem; color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np__txt b { font-size: 0.84rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np__eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; flex: none; }
+.np__eq i { width: 3px; height: 100%; border-radius: 2px; background: #1ed760; transform-origin: bottom; animation: np-eq 1s ease-in-out infinite; }
+.np__eq i:nth-child(2) { animation-delay: -0.4s; animation-duration: 0.8s; }
+.np__eq i:nth-child(3) { animation-delay: -0.7s; animation-duration: 1.2s; }
+@keyframes np-eq { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+.np__live { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 0 rgba(94, 230, 181, 0.6); animation: np-ping 2s infinite; flex: none; }
+@keyframes np-ping { 70% { box-shadow: 0 0 0 7px rgba(94, 230, 181, 0); } 100% { box-shadow: 0 0 0 0 rgba(94, 230, 181, 0); } }
+.np__x { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: rgba(12, 18, 34, 0.86); color: var(--fg-3); display: grid; place-items: center; cursor: pointer; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s, color 0.2s; }
+.np:hover .np__x, .np__x:focus-visible { opacity: 1; }
+.np__x:hover { color: var(--fg); }
+@media (hover: none) { .np__x { opacity: 1; } }
+.np__card {
+  position: absolute; left: 0; bottom: calc(100% + 10px); width: min(320px, calc(100vw - 36px));
+  padding: 16px; border-radius: 18px; border: 1px solid var(--line);
+  background: rgba(12, 18, 34, 0.95); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.85);
+  opacity: 0; transform: translateY(8px) scale(0.97); transform-origin: bottom left; transition: opacity 0.25s var(--ease-out), transform 0.3s var(--ease-out);
+}
+.np__card.open { opacity: 1; transform: none; }
+.np__card[hidden] { display: none; }
+.np__head { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.np__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); }
+.np__main { display: flex; gap: 14px; align-items: center; }
+.np__big { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex: none; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.8); }
+.np__big.np__ic { font-size: 1.6rem; }
+.np__meta { display: grid; gap: 2px; min-width: 0; }
+.np__meta b { font-size: 1rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+.np__meta span { font-size: 0.86rem; color: var(--fg-2); overflow-wrap: anywhere; }
+.np__meta .np__muted { color: var(--fg-3); font-size: 0.8rem; }
+.np__bar { height: 4px; border-radius: 4px; background: rgba(142, 162, 255, 0.15); margin-top: 14px; overflow: hidden; }
+.np__bar i { display: block; height: 100%; width: 0; background: #1ed760; border-radius: inherit; transition: width 1s linear; }
+.np__times { display: flex; justify-content: space-between; font: 500 0.74rem var(--font-code); color: var(--fg-3); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.np__link { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.84rem; color: #1ed760; font-weight: 600; }
+.np__link:hover { text-decoration: underline; }
+@media (max-width: 600px) { .np { left: 12px; bottom: 12px; } .np__pill { max-width: calc(100vw - 100px); } }
+@media (prefers-reduced-motion: reduce) { .np__art, .np__eq i, .np__live { animation: none !important; } }
+
+/* =========================================================
+   Command line (js/cli.js)
+   ========================================================= */
+.cli { --font-code: 'JetBrains Mono Inline', 'JetBrains Mono', 'JBM Fallback', ui-monospace, monospace; position: fixed; inset: 0; z-index: 1050; display: grid; place-items: center; padding: 24px; background: rgba(4, 7, 15, 0.72); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s var(--ease-out), background-color 0.35s var(--ease-out), -webkit-backdrop-filter 0.35s, backdrop-filter 0.35s; }
+/* while changing pages from the terminal: window above the transition, backdrop clear so the animation shows around it */
+.cli.cli--nav { z-index: 10003; background-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.cli.cli--nav .cli__win { box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.02) inset, 0 0 120px -20px rgba(var(--signal-rgb), 0.5); }
+.cli.in { opacity: 1; }
+.cli.instant { transition: none; }
+.cli[hidden] { display: none; }
+.cli__win {
+  position: relative; display: flex; flex-direction: column; width: min(1000px, 100%); height: min(720px, calc(100vh - 48px)); height: min(720px, calc(100dvh - 48px));
+  border-radius: 16px; border: 1px solid rgba(var(--signal-rgb), 0.3); overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(142, 162, 255, 0.07), transparent 60%), #060a14;
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.02) inset, 0 0 80px -30px rgba(var(--signal-rgb), 0.35);
+  transform: translateY(14px) scale(0.98); transition: transform 0.35s var(--ease-out);
+}
+.cli.in .cli__win { transform: none; }
+.cli.instant .cli__win { transition: none; }
+/* faint scanlines */
+.cli__win::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px); }
+.cli__bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line-soft); background: rgba(18, 26, 47, 0.7); }
+.cli__dots { display: flex; gap: 6px; }
+.cli__dots i { width: 11px; height: 11px; border-radius: 50%; background: #ff7a90; }
+.cli__dots i:nth-child(2) { background: #ffb86b; } .cli__dots i:nth-child(3) { background: #5ee6b5; }
+.cli__title { flex: 1; text-align: center; font: 400 0.78rem/1.4 var(--font-code); color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cli__close { width: 28px; height: 28px; border-radius: 8px; border: 0; background: none; color: var(--fg-3); cursor: pointer; display: grid; place-items: center; }
+.cli__close:hover { background: rgba(255, 255, 255, 0.06); color: var(--fg); }
+.cli__body { flex: 1; overflow: auto; padding: 16px 18px 10px; font: 400 14px/1.6 var(--font-code); color: #c9d3ff; cursor: text; scrollbar-width: thin; }
+.cli__ln { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cli__ln.new { animation: cli-in 0.18s ease-out; }
+@keyframes cli-in { from { opacity: 0; transform: translateY(3px); } }
+.cli__ln.cmd { color: var(--fg); margin-top: 6px; }
+.cli__ln.err { color: var(--rose); }
+.cli__ln.sys { color: var(--fg-3); font-style: italic; margin-top: 6px; }
+.cli__ln.banner { white-space: pre; overflow-x: auto; line-height: 1.15; margin-bottom: 8px; }
+.cli__ln .u { color: var(--mint); } .cli__ln .p, .cli__ps .p { color: var(--signal); } .cli__ps .u { color: var(--mint); }
+.cli__ln .a { color: var(--amber); } .cli__ln .d { color: var(--signal); } .cli__ln .m { color: var(--fg-3); }
+.cli__ln b { color: #fff; font-weight: 600; }
+.cli__ln a { white-space: nowrap; color: inherit; text-decoration: underline; text-decoration-color: rgba(142, 162, 255, 0.4); text-underline-offset: 3px; }
+.cli__ln a:hover { color: #fff; text-decoration-color: currentColor; }
+.cli__ln .sw { display: inline-block; width: 22px; height: 12px; margin-right: 3px; border-radius: 2px; vertical-align: -1px; }
+.cli__line { position: relative; display: flex; gap: 0.6ch; align-items: baseline; margin-top: 6px; }
+.cli__ps { white-space: nowrap; color: var(--fg); flex: none; }
+.cli__in { flex: 1; min-width: 0; background: none; border: 0; outline: none; padding: 0; font: inherit; color: #fff; caret-color: var(--amber); }
+.cli__ghost { position: absolute; top: 0; color: var(--fg-3); opacity: 0.55; pointer-events: none; white-space: pre; }
+.cli__hint { font-family: var(--font-code); display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 16px; border-top: 1px solid var(--line-soft); font-size: 0.75rem; color: var(--fg-3); background: rgba(12, 18, 34, 0.6); }
+.cli__hint kbd { font-family: var(--font-code); font-size: 0.7rem; padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg-2); }
+html.cli-open { overflow: hidden; }
+html.cli-open .np { opacity: 0; pointer-events: none; }
+.foot-cli { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(142, 162, 255, 0.35); text-underline-offset: 3px; }
+.foot-cli:hover { color: var(--fg); }
+@media (max-width: 640px) {
+  .cli { padding: 0; }
+  .cli__win { border-radius: 0; height: 100vh; height: 100dvh; width: 100%; border: 0; }
+  .cli__body { font-size: 13px; padding: 12px; }
+  .cli__in { font-size: 16px; }
+  .cli__hint { display: none; }
+  .cli__ln.banner { font-size: 8px; }
 }

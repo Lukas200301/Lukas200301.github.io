@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp Converter | Lukas200301</title>
+    <meta name="description" content="Convert Unix timestamps to dates and back, in any time zone, with a live world clock.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Timestamp Converter | Lukas200301">
+    <meta property="og:description" content="Convert Unix timestamps to dates and back, in any time zone, with a live world clock.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Timestamp Converter</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-calendar-days"></i>
+                            Timestamp Converter
+                        </h1>
+                        <p class="tool-description">Convert Unix timestamps (seconds or milliseconds) to readable dates and back, see the same moment in other time zones, and keep a live world clock.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-right-left"></i><span>Both directions</span></div>
+                            <div class="meta-item"><i class="fas fa-earth-europe"></i><span>Any time zone</span></div>
+                            <div class="meta-item"><i class="fas fa-stopwatch"></i><span>Live clock</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel now">
+                        <div>
+                            <span class="label">Current Unix time</span>
+                            <div class="now__big mono" id="nowSec" aria-live="off">0</div>
+                            <span class="hint mono" id="nowMs"></span>
+                        </div>
+                        <div class="panel__actions">
+                            <button class="btn btn--sm btn--ghost" id="copyNow"><i class="far fa-copy"></i>Copy</button>
+                            <button class="btn btn--sm" id="useNow"><i class="fas fa-arrow-down"></i>Use now</button>
+                        </div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-hashtag"></i>Timestamp → date</h2></div>
+                            <div class="row">
+                                <input class="input big grow" id="ts" spellcheck="false" autocomplete="off" aria-label="Unix timestamp">
+                                <div class="seg" id="unit" role="group" aria-label="Unit">
+                                    <button type="button" data-u="auto" aria-pressed="true">Auto</button>
+                                    <button type="button" data-u="s" aria-pressed="false">s</button>
+                                    <button type="button" data-u="ms" aria-pressed="false">ms</button>
+                                </div>
+                            </div>
+                            <p class="hint mt" id="tsHint"></p>
+                            <dl class="kv mt" id="tsOut"></dl>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-calendar"></i>Date → timestamp</h2></div>
+                            <div class="row">
+                                <input class="input grow" type="datetime-local" id="dt" step="1" aria-label="Date and time">
+                                <select class="select" id="dtZone" style="width:auto" aria-label="Time zone of the date"></select>
+                            </div>
+                            <div class="field mt"><span>…or type any date (ISO 8601, RFC 2822, “2026-10-08 14:30”)</span><input class="input mono" id="free" placeholder="2026-10-08T14:30:00Z" spellcheck="false"></div>
+                            <dl class="kv mt" id="dtOut"></dl>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-earth-europe"></i>Same moment around the world</h2>
+                            <div class="row"><select class="select" id="addZone" style="width:auto" aria-label="Add a time zone"></select><button class="btn btn--sm" id="addBtn"><i class="fas fa-plus"></i>Add</button></div>
+                        </div>
+                        <div class="clocks" id="clocks"></div>
+                        <p class="hint mt">Shows the time from the converter above, or the live time if the field is empty. Your list is saved in this browser.</p>
+                    </div>
+                </div>
+                <style>
+                    .now { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+                    .now__big { font-size: clamp(2rem, 1.2rem + 4vw, 3.6rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.1; margin: 4px 0; background: linear-gradient(90deg, #c9d3ff, var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+                    .now__big .tickd { display: inline-block; animation: tick .5s var(--ease-out); color: var(--amber); -webkit-text-fill-color: var(--amber); }
+                    @keyframes tick { from { transform: translateY(-40%); opacity: 0; } }
+                    .clocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+                    .clock { position: relative; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); animation: run-in .4s var(--ease-out) both; }
+                    .clock b { display: block; font-family: var(--font-head); font-size: 1.4rem; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+                    .clock span { color: var(--fg-3); font-size: .82rem; }
+                    .clock .off { color: var(--amber); }
+                    .clock button { position: absolute; top: 8px; right: 8px; opacity: 0; transition: opacity .2s; }
+                    .clock:hover button { opacity: 1; }
+                    .clock.night b { color: #9aa6d9; }
+                    @keyframes run-in { from { opacity: 0; transform: translateY(6px); } }
+                    input[type="datetime-local"] { color-scheme: dark; }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON &amp; YAML Formatter | Lukas200301</title>
+    <meta name="description" content="Format, validate, minify and convert JSON and YAML with line-exact error messages.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="JSON &amp; YAML Formatter | Lukas200301">
+    <meta property="og:description" content="Format, validate, minify and convert JSON and YAML with line-exact error messages.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">JSON &amp; YAML</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-code"></i>
+                            JSON &amp; YAML Formatter
+                        </h1>
+                        <p class="tool-description">Paste JSON or YAML to format it, minify it, check it for errors or convert between the two. Errors point to the exact line and column.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-check"></i><span>Validation</span></div>
+                            <div class="meta-item"><i class="fas fa-right-left"></i><span>JSON ⇄ YAML</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Runs in your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app-2">
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-file-import"></i>Input</h2>
+                            <div class="panel__actions">
+                                <button class="btn btn--sm btn--ghost" id="sample">Load sample</button>
+                                <button class="btn btn--sm btn--ghost btn--danger" id="clear">Clear</button>
+                            </div>
+                        </div>
+                        <textarea class="textarea mono tall" id="src" spellcheck="false" placeholder="Paste JSON or YAML here…" aria-label="Input"></textarea>
+                        <div class="row mt">
+                            <span class="status" id="state">Waiting for input</span>
+                            <span class="hint" id="detected"></span>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-file-export"></i>Output</h2>
+                            <div class="panel__actions">
+                                <button class="btn btn--sm btn--ghost" id="copyOut"><i class="far fa-copy"></i>Copy</button>
+                                <button class="btn btn--sm btn--ghost" id="dlOut"><i class="fas fa-download"></i>Download</button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:12px">
+                            <div class="seg" id="mode" role="group" aria-label="Output format">
+                                <button type="button" data-m="json" aria-pressed="true">Pretty JSON</button>
+                                <button type="button" data-m="min" aria-pressed="false">Minified JSON</button>
+                                <button type="button" data-m="yaml" aria-pressed="false">YAML</button>
+                            </div>
+                            <div class="seg" id="indent" role="group" aria-label="Indent">
+                                <button type="button" data-i="2" aria-pressed="true">2</button>
+                                <button type="button" data-i="4" aria-pressed="false">4</button>
+                                <button type="button" data-i="tab" aria-pressed="false">Tab</button>
+                            </div>
+                            <label class="check"><input type="checkbox" id="sort">Sort keys</label>
+                        </div>
+                        <pre class="output" id="out" data-empty="Formatted output appears here."></pre>
+                        <p class="hint mt" id="stats"></p>
+                    </div>
+                </div>
+                <style>
+                    #out { min-height: 360px; max-height: 620px; white-space: pre; }
+                    .j-key { color: #a9b8ff; } .j-str { color: #8be3b8; } .j-num { color: var(--amber); } .j-bool { color: #ff9ab0; } .j-null { color: var(--fg-3); }
+                    .err-line { background: rgba(255,122,144,.18); display: block; }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder &amp; JWT Decoder | Lukas200301</title>
+    <meta name="description" content="Base64, Base64URL, URL, HTML and hex encode/decode, plus a JWT decoder that shows header, payload and expiry.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Encoder &amp; JWT Decoder | Lukas200301">
+    <meta property="og:description" content="Base64, Base64URL, URL, HTML and hex encode/decode, plus a JWT decoder that shows header, payload and expiry.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Encoder &amp; JWT</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-key"></i>
+                            Encoder &amp; JWT Decoder
+                        </h1>
+                        <p class="tool-description">Encode and decode Base64, URL, HTML entities and hex as you type. Paste a JWT to see its header, payload and when it expires.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-right-left"></i><span>Two-way, live</span></div>
+                            <div class="meta-item"><i class="fas fa-id-card"></i><span>JWT inspector</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Nothing leaves your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="row">
+                        <div class="seg" id="tabs" role="tablist" aria-label="Mode">
+                            <button type="button" data-tab="codec" aria-pressed="true"><i class="fas fa-right-left"></i>&nbsp; Encode / decode</button>
+                            <button type="button" data-tab="jwt" aria-pressed="false"><i class="fas fa-id-card"></i>&nbsp; JWT decoder</button>
+                        </div>
+                    </div>
+
+                    <!-- Encode / decode -->
+                    <div id="tab-codec" class="app">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-shuffle"></i>Format</h2>
+                                <div class="seg" id="codec" role="group" aria-label="Encoding">
+                                    <button type="button" data-c="b64" aria-pressed="true">Base64</button>
+                                    <button type="button" data-c="b64url" aria-pressed="false">Base64URL</button>
+                                    <button type="button" data-c="url" aria-pressed="false">URL</button>
+                                    <button type="button" data-c="html" aria-pressed="false">HTML entities</button>
+                                    <button type="button" data-c="hex" aria-pressed="false">Hex</button>
+                                    <button type="button" data-c="bin" aria-pressed="false">Binary</button>
+                                </div>
+                            </div>
+                            <p class="hint">Type on either side and the other side updates. Text is treated as UTF-8, so emoji and umlauts work.</p>
+                        </div>
+                        <div class="app-2">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-font"></i>Plain text</h2>
+                                    <div class="panel__actions"><button class="btn btn--sm btn--ghost" data-copy-from="plain"><i class="far fa-copy"></i>Copy</button></div></div>
+                                <textarea class="textarea mono" id="plain" spellcheck="false" aria-label="Plain text">Hello, world! Grüße, ünïcödé &amp; emoji 👋</textarea>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-lock"></i>Encoded</h2>
+                                    <div class="panel__actions"><button class="btn btn--sm btn--ghost" data-copy-from="enc"><i class="far fa-copy"></i>Copy</button></div></div>
+                                <textarea class="textarea mono" id="enc" spellcheck="false" aria-label="Encoded text"></textarea>
+                                <p class="hint mt" id="encState"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JWT -->
+                    <div id="tab-jwt" class="app" hidden>
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-ticket"></i>Token</h2>
+                                <div class="panel__actions"><button class="btn btn--sm btn--ghost" id="jwtSample">Load sample</button></div>
+                            </div>
+                            <textarea class="textarea mono" id="jwt" spellcheck="false" placeholder="Paste a JWT (xxxxx.yyyyy.zzzzz)…" aria-label="JWT" style="min-height:120px"></textarea>
+                            <div class="jwt-parts mono mt" id="jwtParts" aria-hidden="true"></div>
+                            <div class="row mt"><span class="status" id="jwtState">Paste a token</span><span class="hint">The signature is shown but not verified; that needs the secret or public key.</span></div>
+                        </div>
+                        <div class="app-2">
+                            <div class="panel"><div class="panel__head"><h2 class="panel__title"><i class="fas fa-heading"></i>Header</h2></div><pre class="output" id="jwtHead" data-empty="—"></pre></div>
+                            <div class="panel"><div class="panel__head"><h2 class="panel__title"><i class="fas fa-box-open"></i>Payload</h2></div><pre class="output" id="jwtBody" data-empty="—"></pre></div>
+                        </div>
+                        <div class="panel"><div class="panel__head"><h2 class="panel__title"><i class="fas fa-clock"></i>Claims</h2></div><dl class="kv" id="claims"></dl></div>
+                    </div>
+                </div>
+                <style>
+                    .jwt-parts { word-break: break-all; font-size: .85rem; line-height: 1.6; padding: 12px; border-radius: 12px; background: #060a14; border: 1px solid var(--line-soft); }
+                    .jwt-parts:empty { display: none; }
+                    .jp-h { color: #ff8fa3; } .jp-p { color: #b39bff; } .jp-s { color: #6fd8ff; } .jp-dot { color: var(--fg); }
+                    #tab-jwt[hidden], #tab-codec[hidden] { display: none; }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

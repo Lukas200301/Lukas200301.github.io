@@ -364,6 +364,8 @@
   <span class="a">projects</span>    things I've shipped
   <span class="a">tools</span>       browser utilities
   <span class="a">games</span>       play something
+  <span class="a">stats</span>       GitHub activity in charts
+  <span class="a">cli</span>         full-screen terminal for the whole site
   <span class="a">open</span> &lt;name&gt; open a project, tool or game
   <span class="a">stack</span>       what I build with
   <span class="a">socials</span>     where to find me
@@ -377,11 +379,14 @@ web tools and games that live on this site.`,
       projects: () => list('Projects') + `\n  <a href="${url('projects/')}">all-projects</a>  <span class="m">every GitHub repo</span>`,
       tools: () => list('Tools'),
       games: () => list('Games'),
-      ls: () => '<span class="d">projects/  tools/  games/</span>  README.md',
+      cli: () => { setTimeout(() => window.CLI && window.CLI.open(), 150); return '<span class="m">opening the full-screen terminal… (works on every page: key left of 1)</span>'; },
+      fullscreen: () => cmds.cli(),
+      stats: () => { setTimeout(() => window.Site ? Site.navigate(url('stats/')) : (location.href = url('stats/')), 350); return '<span class="m">→ stats/</span>'; },
+      ls: () => '<span class="d">projects/  tools/  games/  stats/</span>  README.md',
       'cat': (a) => a[0] && a[0].toLowerCase() === 'readme.md' ? cmds.whoami() : `cat: ${esc(a[0] || '')}: No such file`,
       cd: (a) => {
         const t = (a[0] || '').replace(/\/$/, '');
-        if (['projects', 'tools', 'games'].includes(t)) { setTimeout(() => window.Site ? Site.navigate(url(t + '/')) : (location.href = url(t + '/')), 350); return `<span class="m">→ ${t}/</span>`; }
+        if (['projects', 'tools', 'games', 'stats'].includes(t)) { setTimeout(() => window.Site ? Site.navigate(url(t + '/')) : (location.href = url(t + '/')), 350); return `<span class="m">→ ${t}/</span>`; }
         if (!t || t === '~' || t === '..') return '';
         return `cd: ${esc(t)}: No such directory`;
       },

@@ -547,3 +547,5 @@
   .gauge__txt { top: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .mon::after { animation: none; } }
+
+.gh-links { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; }

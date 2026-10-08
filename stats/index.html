@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats | Lukas200301</title>
+    <meta name="description" content="GitHub statistics for Lukas200301: contributions over time, streaks, activity calendar and the languages behind every repository.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Stats | Lukas200301">
+    <meta property="og:description" content="GitHub statistics for Lukas200301: contributions over time, streaks, activity calendar and the languages behind every repository.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../css/apps.css?v=20261008j">
+    <link rel="stylesheet" href="stats.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main id="main" class="wrap stats-page">
+        <header class="list-hero">
+            <nav class="crumbs" aria-label="Breadcrumb">
+                <a class="breadcrumb-link" href="../"><i class="fas fa-house"></i> Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Stats</span>
+            </nav>
+            <h1 class="page-title"><i class="fas fa-chart-column"></i>Stats</h1>
+            <p class="page-lede">What I've been building, in numbers: contributions over time, streaks, the days I code most and the languages behind every repository. Pulled live from GitHub.</p>
+            <div class="page-meta"><span class="meta-item"><i class="fab fa-github"></i>Live from GitHub</span><span class="meta-item"><i class="fas fa-rotate"></i><span id="updated">Loading…</span></span></div>
+        </header>
+
+        <section class="kpis" id="kpis" aria-label="Key numbers"></section>
+
+        <div class="list-bar stats-bar">
+            <div class="list-bar__inner">
+                <span class="stats-bar__label"><i class="fas fa-calendar-days"></i> Range</span>
+                <div class="filters" id="range" role="group" aria-label="Time range"></div>
+                <span class="stats-bar__sum" id="rangeSum" aria-live="polite"></span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <section class="panel viz span-2" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-chart-column"></i>Contributions per month</h2><p class="viz__sub" id="monthsSub">Commits, pull requests, issues and reviews. The selected range is highlighted.</p></div>
+                    <button class="btn btn--sm btn--ghost viz__toggle" type="button" data-table="months"><i class="fas fa-table"></i>Table</button>
+                </div>
+                <div class="viz__body" id="months"></div>
+            </section>
+
+            <section class="panel viz span-2" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-border-all"></i>Activity calendar</h2><p class="viz__sub" id="calSub"></p></div>
+                    <div class="heat-legend" aria-hidden="true">Less <i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i> More</div>
+                </div>
+                <div class="viz__body" id="calendar"></div>
+            </section>
+
+            <section class="panel viz" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-calendar-week"></i>Average per weekday</h2><p class="viz__sub" id="weekSub"></p></div>
+                    <button class="btn btn--sm btn--ghost viz__toggle" type="button" data-table="weekdays"><i class="fas fa-table"></i>Table</button>
+                </div>
+                <div class="viz__body" id="weekdays"></div>
+            </section>
+
+            <section class="panel viz" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-fire"></i>Busiest days</h2><p class="viz__sub">The five days with the most contributions in the selected range.</p></div>
+                </div>
+                <div class="viz__body" id="topdays"></div>
+            </section>
+
+            <section class="panel viz" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-code"></i>Languages</h2><p class="viz__sub" id="langSub">Share of code across all my repositories.</p></div>
+                    <button class="btn btn--sm btn--ghost viz__toggle" type="button" data-table="langs"><i class="fas fa-table"></i>Table</button>
+                </div>
+                <div class="viz__body" id="langs"></div>
+            </section>
+
+            <section class="panel viz" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-layer-group"></i>New repositories per year</h2><p class="viz__sub">Grouped by each repository's main language.</p></div>
+                    <button class="btn btn--sm btn--ghost viz__toggle" type="button" data-table="years"><i class="fas fa-table"></i>Table</button>
+                </div>
+                <div class="viz__legend" id="yearsLegend"></div>
+                <div class="viz__body" id="years"></div>
+            </section>
+
+            <section class="panel viz span-2" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-timeline"></i>Repository timeline</h2><p class="viz__sub" id="tlSub">Each bar runs from when a repository was created to its last push. Click one to open it on GitHub.</p></div>
+                    <div class="panel__actions">
+                        <div class="seg" id="tlSort" role="group" aria-label="Order">
+                            <button type="button" data-v="created" aria-pressed="true">By start</button>
+                            <button type="button" data-v="pushed" aria-pressed="false">By last push</button>
+                        </div>
+                        <button class="btn btn--sm btn--ghost viz__toggle" type="button" data-table="timeline"><i class="fas fa-table"></i>Table</button>
+                    </div>
+                </div>
+                <div class="viz__legend" id="tlLegend"></div>
+                <div class="viz__body" id="timeline"></div>
+            </section>
+
+            <section class="panel viz span-2" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-box-archive"></i>Repositories</h2><p class="viz__sub">Click a column to sort.</p></div>
+                </div>
+                <div class="table-wrap repo-table" id="repos"></div>
+            </section>
+        </div>
+
+        <p class="hint stats-foot">Data: GitHub REST API and <a class="text-link" href="https://github.com/grubersjoe/github-contributions-api" target="_blank" rel="noopener">github-contributions-api</a>. Cached in your browser so repeat visits stay fast and inside GitHub's rate limit.</p>
+    </main>
+    <div class="viz-tip" id="tip" role="tooltip" hidden></div>
+
+    <script src="../js/script.js?v=20261008j"></script>
+    <script src="stats.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

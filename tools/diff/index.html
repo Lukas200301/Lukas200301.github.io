@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Diff Checker | Lukas200301</title>
+    <meta name="description" content="Compare two texts side by side or inline, with line and word-level highlighting.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Text Diff Checker | Lukas200301">
+    <meta property="og:description" content="Compare two texts side by side or inline, with line and word-level highlighting.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Diff Checker</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-code-compare"></i>
+                            Text Diff Checker
+                        </h1>
+                        <p class="tool-description">Paste two versions of a text or file and see exactly what changed, line by line with word-level highlights.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-table-columns"></i><span>Side by side or inline</span></div>
+                            <div class="meta-item"><i class="fas fa-highlighter"></i><span>Word-level changes</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Runs in your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-file"></i>Original</h2>
+                                <div class="panel__actions"><label class="btn btn--sm btn--ghost"><i class="fas fa-folder-open"></i>Open file<input type="file" data-for="a" hidden></label></div>
+                            </div>
+                            <textarea class="textarea mono tall dz" id="a" spellcheck="false" aria-label="Original text" placeholder="Paste or drop the original text…"></textarea>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-file-pen"></i>Changed</h2>
+                                <div class="panel__actions"><label class="btn btn--sm btn--ghost"><i class="fas fa-folder-open"></i>Open file<input type="file" data-for="b" hidden></label></div>
+                            </div>
+                            <textarea class="textarea mono tall dz" id="b" spellcheck="false" aria-label="Changed text" placeholder="Paste or drop the changed text…"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="panel diff-bar">
+                        <div class="seg" id="mode" role="group" aria-label="View">
+                            <button type="button" data-m="split" aria-pressed="true"><i class="fas fa-table-columns"></i>&nbsp; Side by side</button>
+                            <button type="button" data-m="unified" aria-pressed="false"><i class="fas fa-bars"></i>&nbsp; Inline</button>
+                        </div>
+                        <div class="row">
+                            <label class="check"><input type="checkbox" id="ws">Ignore whitespace</label>
+                            <label class="check"><input type="checkbox" id="ic">Ignore case</label>
+                            <label class="check"><input type="checkbox" id="only">Only changes</label>
+                        </div>
+                        <div class="panel__actions">
+                            <button class="btn btn--sm btn--ghost" id="swap"><i class="fas fa-right-left"></i>Swap</button>
+                            <button class="btn btn--sm btn--ghost" id="sample">Sample</button>
+                            <button class="btn btn--sm btn--ghost" id="copyPatch"><i class="far fa-copy"></i>Copy patch</button>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-code-compare"></i>Differences</h2>
+                            <div class="stats" id="sum"></div>
+                        </div>
+                        <div class="diff-wrap" id="out"></div>
+                    </div>
+                </div>
+                <style>
+                    .diff-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 14px; }
+                    .dz.over { border-color: var(--signal); background: rgba(var(--signal-rgb), .07); }
+                    .diff-wrap { border: 1px solid var(--line-soft); border-radius: 12px; overflow: auto; max-height: 75vh; background: rgba(4,7,15,.55); }
+                    .diff { width: 100%; border-collapse: collapse; font-family: var(--font-code); font-size: .84rem; line-height: 1.55; table-layout: fixed; }
+                    .diff td { padding: 0 10px; vertical-align: top; white-space: pre-wrap; word-break: break-all; }
+                    .diff td.n { width: 52px; text-align: right; color: var(--fg-3); opacity: .7; user-select: none; padding: 0 8px; border-right: 1px solid var(--line-soft); }
+                    .diff td.s { width: 22px; padding: 0 4px; text-align: center; user-select: none; color: var(--fg-3); }
+                    .diff tr.del td.c, .diff td.c.del { background: rgba(255,122,144,.1); }
+                    .diff tr.add td.c, .diff td.c.add { background: rgba(94,230,181,.09); }
+                    .diff tr.del td.s, .diff td.s.del { color: var(--rose); }
+                    .diff tr.add td.s, .diff td.s.add { color: var(--mint); }
+                    .diff td.c.empty { background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255,255,255,.025) 6px 12px); }
+                    .diff del { background: rgba(255,122,144,.35); color: #ffd5dc; text-decoration: none; border-radius: 3px; }
+                    .diff ins { background: rgba(94,230,181,.32); color: #d6fff0; text-decoration: none; border-radius: 3px; }
+                    .diff tr.fold td { text-align: center; color: var(--signal); background: rgba(142,162,255,.06); cursor: pointer; padding: 4px; font-family: var(--font-body); font-size: .82rem; }
+                    .diff tr.fold:hover td { background: rgba(142,162,255,.12); }
+                    .diff tbody tr { animation: diff-in .35s var(--ease-out) both; }
+                    @keyframes diff-in { from { opacity: 0; } }
+                    .diff-empty { padding: 40px 16px; text-align: center; color: var(--fg-3); }
+                    .diff-empty i { font-size: 2rem; color: var(--mint); display: block; margin-bottom: 10px; }
+                    .stat.add b { color: var(--mint); } .stat.del b { color: var(--rose); }
+                    #sum .stat { padding: 6px 12px; }
+                    #sum .stat b { font-size: 1rem; }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

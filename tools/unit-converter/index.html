@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter | Lukas200301</title>
+    <meta name="description" content="Convert data sizes (GB vs GiB), network speeds (Mbit/s vs MB/s), transfer times, time, temperature, length and mass.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Unit Converter | Lukas200301">
+    <meta property="og:description" content="Convert data sizes (GB vs GiB), network speeds (Mbit/s vs MB/s), transfer times, time, temperature, length and mass.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Unit Converter</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-scale-balanced"></i>
+                            Unit Converter
+                        </h1>
+                        <p class="tool-description">GB or GiB, Mbit/s or MB/s, and how long will that download really take? Type in any field and every other unit follows, with notes on why your new drive looks smaller than advertised.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-hard-drive"></i><span>SI vs binary</span></div>
+                            <div class="meta-item"><i class="fas fa-download"></i><span>Transfer times</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Runs in your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="seg cats" id="cats" role="group" aria-label="What to convert"></div>
+
+                    <div class="app-side" id="unitView">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title" id="catTitle"></h2>
+                                <div class="panel__actions" id="presets"></div>
+                            </div>
+                            <div id="groups"></div>
+                            <p class="hint mt">Type in any field and the others follow. Fields accept maths too: <code>4*1024</code>, <code>1.5e9</code>, <code>(500-20)/8</code>. A comma works as the decimal point.</p>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-lightbulb"></i>Good to know</h2></div>
+                            <div class="notes" id="notes"></div>
+                        </div>
+                    </div>
+
+                    <div class="app" id="transferView" hidden>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-download"></i>How long does it take?</h2>
+                                <div class="panel__actions" id="tPresets">
+                                    <button class="btn btn--sm btn--ghost" data-s="4.7" data-su="GB">DVD image</button>
+                                    <button class="btn btn--sm btn--ghost" data-s="100" data-su="GB">Game download</button>
+                                    <button class="btn btn--sm btn--ghost" data-s="2" data-su="TB">2 TB backup</button>
+                                    <button class="btn btn--sm btn--ghost" data-s="6" data-su="GiB">Windows ISO</button>
+                                </div>
+                            </div>
+                            <div class="tgrid">
+                                <div class="field"><span>Size</span><div class="row"><input class="input mono grow" id="tSize" value="50" inputmode="decimal" aria-label="Size"><select class="select" id="tSizeU" aria-label="Size unit"></select></div></div>
+                                <div class="field"><span>Speed</span><div class="row"><input class="input mono grow" id="tSpeed" value="100" inputmode="decimal" aria-label="Speed"><select class="select" id="tSpeedU" aria-label="Speed unit"></select></div></div>
+                                <div class="field"><span>Protocol overhead: <b class="mono" id="tOhL">6 %</b></span><input type="range" id="tOh" min="0" max="50" value="6" aria-label="Protocol overhead in percent"><span class="hint">~6 % for TCP/IP over Ethernet, more over Wi-Fi or VPN.</span></div>
+                            </div>
+                            <div class="tres">
+                                <div class="tres__big" id="tTime">–</div>
+                                <div class="hint" id="tSub"></div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-gauge-high"></i>The same transfer over…</h2><span class="hint">with the overhead above</span></div>
+                            <div class="bars" id="tBars"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .cats { justify-self: start; }
+                    .cats button i { margin-right: 7px; opacity: .8; }
+                    .ugroup + .ugroup { margin-top: 18px; }
+                    .ugroup h3 { font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 8px; }
+                    .ugrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+                    .u { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; align-items: center; gap: 8px; }
+                    .u__name { display: grid; line-height: 1.15; }
+                    .u__name b { font-family: var(--font-code); font-size: .92rem; color: var(--fg); }
+                    .u__name small { font-size: .74rem; color: var(--fg-3); }
+                    .u .input { padding: 9px 11px; }
+                    .u.src .input { border-color: rgba(var(--signal-rgb), .6); box-shadow: 0 0 0 3px rgba(var(--signal-rgb), .12); }
+                    .u .input.uc-flash { animation: u-flash .5s var(--ease-out); }
+                    @keyframes u-flash { from { background-color: rgba(var(--signal-rgb), .14); } }
+                    .u .copy { opacity: .5; }
+                    .u:hover .copy { opacity: 1; }
+                    .notes { display: grid; gap: 14px; font-size: .9rem; color: var(--fg-2); line-height: 1.55; }
+                    .notes b { color: var(--fg); font-weight: 600; }
+                    .notes .big { font-family: var(--font-code); color: var(--amber); }
+                    .notes table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+                    .notes td, .notes th { padding: 6px 4px; border-bottom: 1px solid var(--line-soft); text-align: left; }
+                    .notes th { color: var(--fg-3); font-weight: 600; font-size: .76rem; }
+                    .notes td { font-family: var(--font-code); }
+                    .tgrid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; align-items: start; }
+                    .tgrid .select { width: auto; }
+                    #tOh { width: 100%; accent-color: var(--signal); }
+                    .tres { margin-top: 18px; padding: 18px; border-radius: 14px; border: 1px solid rgba(var(--signal-rgb), .3); background: rgba(var(--signal-rgb), .06); }
+                    .tres__big { font-family: var(--font-head); font-size: clamp(1.5rem, 1.1rem + 2vw, 2.4rem); letter-spacing: -0.04em; color: var(--fg); }
+                    .tres__big.pop { animation: stat-pop .45s var(--ease-spring); }
+                    .bars { display: grid; gap: 8px; }
+                    .bar { display: grid; grid-template-columns: 170px minmax(0, 1fr) 130px; align-items: center; gap: 12px; font-size: .88rem; }
+                    .bar__l { color: var(--fg-2); }
+                    .bar__l small { display: block; color: var(--fg-3); font-family: var(--font-code); font-size: .74rem; }
+                    .bar__t { height: 10px; border-radius: 99px; background: rgba(7,11,22,.6); border: 1px solid var(--line-soft); overflow: hidden; }
+                    .bar__t i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, rgba(var(--signal-rgb), .5), var(--signal)); transition: width .5s var(--ease-out); }
+                    .bar.me .bar__t i { background: linear-gradient(90deg, rgba(var(--amber-rgb), .5), var(--amber)); }
+                    .bar.me .bar__l { color: var(--amber); }
+                    .bar__v { font-family: var(--font-code); text-align: right; color: var(--fg); }
+                    #unitView[hidden], #transferView[hidden] { display: none; }
+                    @media (max-width: 1100px) { .ugrid { grid-template-columns: 1fr; } }
+                    @media (max-width: 800px) { .tgrid { grid-template-columns: 1fr; } .bar { grid-template-columns: 110px minmax(0, 1fr) 96px; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

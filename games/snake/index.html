@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake | Lukas200301</title>
+    <meta name="description" content="Classic Snake on a glowing grid. Eat, grow, and don&#x27;t bite yourself.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Snake | Lukas200301">
+    <meta property="og:description" content="Classic Snake on a glowing grid. Eat, grow, and don&#x27;t bite yourself.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Snake</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-wave-square"></i>
+                            Snake
+                        </h1>
+                        <p class="game-description">Eat the glowing signals, grow longer and don&#x27;t hit yourself. It speeds up as you go.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-keyboard"></i><span>Arrows / WASD · swipe</span></div>
+                            <div class="meta-item"><i class="fas fa-trophy"></i><span>High score saved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side snake-layout">
+                    <div class="panel snake-panel">
+                        <div class="board-wrap snake-wrap" id="wrap">
+                            <canvas id="cv" aria-label="Snake board" role="img"></canvas>
+                            <div class="overlay-msg" id="msg">
+                                <h3 id="msgTitle">Snake</h3>
+                                <p id="msgText">Eat the glowing signals. Don't bite yourself.</p>
+                                <div class="row"><button class="btn" id="startBtn"><i class="fas fa-play"></i>Start</button></div>
+                                <p class="hint">Press <kbd>Space</kbd> or <kbd>Enter</kbd></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="stats">
+                                <div class="stat" id="sScore"><b>0</b><span>Score</span></div>
+                                <div class="stat" id="sBest"><b>0</b><span>Best</span></div>
+                                <div class="stat" id="sLen"><b>3</b><span>Length</span></div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Settings</h2></div>
+                            <div class="field"><span>Speed</span>
+                                <div class="seg" id="speed" role="group" aria-label="Speed">
+                                    <button type="button" data-s="slow" aria-pressed="false">Chill</button>
+                                    <button type="button" data-s="normal" aria-pressed="true">Normal</button>
+                                    <button type="button" data-s="fast" aria-pressed="false">Fast</button>
+                                </div>
+                            </div>
+                            <label class="check"><input type="checkbox" id="walls" checked>Solid walls</label>
+                            <p class="hint mt">With walls off, the snake wraps around the edges.</p>
+                        </div>
+                        <div class="panel kbd-help">
+                            <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> or <kbd>WASD</kbd> move</span>
+                            <span><kbd>Space</kbd> pause</span>
+                            <span><i class="fas fa-hand-pointer"></i> swipe on touch screens</span>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .snake-layout { grid-template-columns: minmax(0, 1fr) 300px; }
+                    @media (max-width: 900px) { .snake-layout { grid-template-columns: 1fr; } }
+                    .snake-panel { padding: 14px; }
+                    .snake-wrap { border-radius: 14px; overflow: hidden; touch-action: none; }
+                    .snake-wrap canvas { display: block; width: 100%; max-width: 640px; aspect-ratio: 1; border-radius: 14px; background: radial-gradient(circle at 50% 40%, rgba(18,26,47,.9), rgba(5,8,17,.95)); border: 1px solid var(--line-soft); }
+                    .snake-wrap.shake { animation: snake-shake .45s; }
+                    @keyframes snake-shake { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); } }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

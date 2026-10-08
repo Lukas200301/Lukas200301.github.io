@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Quiz | Lukas200301</title>
+    <meta name="description" content="Guess the country from its flag. Pick a region, play 10 rounds or go for a streak.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Flag Quiz | Lukas200301">
+    <meta property="og:description" content="Guess the country from its flag. Pick a region, play 10 rounds or go for a streak.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Flag Quiz</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-flag"></i>
+                            Flag Quiz
+                        </h1>
+                        <p class="game-description">Which country does this flag belong to? Play a round of 10, or keep going until you miss one.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-earth-americas"></i><span>250 countries</span></div>
+                            <div class="meta-item"><i class="fas fa-keyboard"></i><span>Keys 1–4</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side fq-layout">
+                    <div class="panel fq-main">
+                        <div class="fq-top">
+                            <div class="fq-progress" id="progress" aria-hidden="true"></div>
+                            <span class="hint" id="roundLbl"></span>
+                        </div>
+                        <div class="board-wrap fq-stage">
+                            <div class="fq-q" id="question"></div>
+                            <div class="fq-opts" id="opts"></div>
+                            <div class="fq-info" id="info" aria-live="polite"></div>
+                            <div class="overlay-msg" id="msg" hidden>
+                                <h3 id="msgTitle"></h3>
+                                <p id="msgText"></p>
+                                <div class="fq-review" id="review"></div>
+                                <div class="row"><button class="btn" id="againBtn"><i class="fas fa-rotate"></i>Play again</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="stats">
+                                <div class="stat" id="sScore"><b>0</b><span>Score</span></div>
+                                <div class="stat" id="sStreak"><b>0</b><span>Streak</span></div>
+                                <div class="stat" id="sBest"><b>0</b><span>Best streak</span></div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Game</h2></div>
+                            <div class="field"><span>Mode</span>
+                                <div class="seg" id="mode" role="group" aria-label="Mode">
+                                    <button type="button" data-v="ten" aria-pressed="true">10 rounds</button>
+                                    <button type="button" data-v="streak" aria-pressed="false">Streak</button>
+                                </div>
+                            </div>
+                            <div class="field"><span>Question</span>
+                                <div class="seg" id="kind" role="group" aria-label="Question type">
+                                    <button type="button" data-v="flag" aria-pressed="true">Flag → country</button>
+                                    <button type="button" data-v="name" aria-pressed="false">Country → flag</button>
+                                </div>
+                            </div>
+                            <div class="field"><span>Region</span>
+                                <select class="select" id="region">
+                                    <option value="all">Whole world</option>
+                                    <option value="Africa">Africa</option>
+                                    <option value="Americas">Americas</option>
+                                    <option value="Asia">Asia</option>
+                                    <option value="Europe">Europe</option>
+                                    <option value="Oceania">Oceania</option>
+                                </select>
+                            </div>
+                            <label class="check"><input type="checkbox" id="terr">Include territories</label>
+                            <button class="btn btn--sm mt" id="restart" style="width:100%;justify-content:center"><i class="fas fa-rotate"></i>Restart</button>
+                        </div>
+                        <div class="panel kbd-help"><span><kbd>1</kbd>–<kbd>4</kbd> answer</span><span><kbd>Enter</kbd> next</span></div>
+                    </div>
+                </div>
+                <style>
+                    .fq-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+                    @media (max-width: 900px) { .fq-layout { grid-template-columns: 1fr; } }
+                    .fq-main { min-height: 560px; display: flex; flex-direction: column; }
+                    .fq-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+                    .fq-progress { display: flex; gap: 6px; flex: 1; }
+                    .fq-progress i { flex: 1; height: 6px; border-radius: 99px; background: rgba(142,162,255,.14); transition: background-color .4s, transform .4s var(--ease-spring); }
+                    .fq-progress i.ok { background: var(--mint); } .fq-progress i.bad { background: var(--rose); }
+                    .fq-progress i.now { background: var(--signal); transform: scaleY(1.6); }
+                    .fq-progress.streak i { display: none; }
+                    .fq-stage { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: 18px; border-radius: 14px; place-items: initial; }
+                    .fq-q { display: grid; place-items: center; min-height: 260px; }
+                    .fq-flag { width: min(420px, 100%); aspect-ratio: 3 / 2; border-radius: 12px; overflow: hidden; display: grid; place-items: center; background: rgba(7,11,22,.6); box-shadow: 0 20px 50px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(142,162,255,.15); animation: fq-in .55s var(--ease-out) both; }
+                    .fq-flag img { width: 100%; height: 100%; object-fit: contain; }
+                    .fq-name { font-family: var(--font-head); font-size: clamp(1.5rem, 1rem + 2.4vw, 2.6rem); letter-spacing: -.04em; text-align: center; animation: fq-in .55s var(--ease-out) both; }
+                    .fq-name small { display: block; font-family: var(--font-body); font-size: .95rem; letter-spacing: 0; color: var(--fg-3); margin-top: 6px; }
+                    @keyframes fq-in { from { opacity: 0; transform: translateY(14px) scale(.96); filter: blur(6px); } }
+                    .fq-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                    .fq-opts.flags { grid-template-columns: repeat(4, 1fr); }
+                    @media (max-width: 640px) { .fq-opts, .fq-opts.flags { grid-template-columns: 1fr 1fr; } }
+                    .fq-opt { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: rgba(7,11,22,.5); color: var(--fg); font: 600 1rem var(--font-body); text-align: left; cursor: pointer; transition: border-color .2s, background-color .2s, transform .25s var(--ease-spring); animation: fq-in .45s var(--ease-out) backwards; }
+                    .fq-opt:hover:not(:disabled) { border-color: var(--signal); transform: translateY(-2px); background: rgba(142,162,255,.08); }
+                    .fq-opt kbd { flex: none; }
+                    .fq-opt img { width: 100%; aspect-ratio: 3/2; object-fit: contain; border-radius: 6px; display: block; }
+                    .fq-opts.flags .fq-opt { flex-direction: column; padding: 10px; }
+                    .fq-opts.flags .fq-opt kbd { position: absolute; top: 6px; left: 6px; z-index: 1; }
+                    .fq-opt.ok { border-color: var(--mint); background: rgba(94,230,181,.12); animation: fq-ok .5s var(--ease-spring); }
+                    .fq-opt.bad { border-color: var(--rose); background: rgba(255,122,144,.12); animation: fq-bad .45s; }
+                    .fq-opt:disabled { cursor: default; }
+                    .fq-opt:disabled:not(.ok):not(.bad) { opacity: .45; }
+                    @keyframes fq-ok { 40% { transform: scale(1.04); } }
+                    @keyframes fq-bad { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+                    .fq-info { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--fg-2); }
+                    .fq-info > span { animation: fq-in .4s var(--ease-out) both; }
+                    .fq-review { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 520px; }
+                    .fq-review span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; border-radius: 99px; background: rgba(255,122,144,.1); border: 1px solid rgba(255,122,144,.3); font-size: .82rem; }
+                    .fq-review img { width: 26px; height: 18px; object-fit: cover; border-radius: 4px; }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="../../js/countries-data.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

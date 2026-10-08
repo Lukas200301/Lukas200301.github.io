@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash &amp; Checksum Generator | Lukas200301</title>
+    <meta name="description" content="MD5, SHA-1, SHA-256, SHA-384, SHA-512 and CRC32 for text or files, with checksum comparison.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Hash &amp; Checksum Generator | Lukas200301">
+    <meta property="og:description" content="MD5, SHA-1, SHA-256, SHA-384, SHA-512 and CRC32 for text or files, with checksum comparison.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Hash &amp; Checksum</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-hashtag"></i>
+                            Hash &amp; Checksum Generator
+                        </h1>
+                        <p class="tool-description">Hash text or drop a file to get MD5, SHA-1, SHA-256, SHA-384, SHA-512 and CRC32. Paste an expected checksum to verify a download.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-file"></i><span>Text or files</span></div>
+                            <div class="meta-item"><i class="fas fa-circle-check"></i><span>Checksum compare</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Files never leave your device</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app-side">
+                    <div class="app">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <div class="seg" id="tabs" role="group" aria-label="Input type">
+                                    <button type="button" data-t="text" aria-pressed="true"><i class="fas fa-font"></i>&nbsp; Text</button>
+                                    <button type="button" data-t="file" aria-pressed="false"><i class="fas fa-file"></i>&nbsp; File</button>
+                                </div>
+                                <label class="check"><input type="checkbox" id="upper">Uppercase</label>
+                            </div>
+                            <div id="pane-text">
+                                <textarea class="textarea mono" id="text" spellcheck="false" aria-label="Text to hash">The quick brown fox jumps over the lazy dog</textarea>
+                            </div>
+                            <div id="pane-file" hidden>
+                                <label class="drop" id="drop" tabindex="0">
+                                    <input type="file" id="file" hidden>
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                    <b>Drop a file here or click to choose</b>
+                                    <span class="hint">It's hashed locally. The file never leaves your device.</span>
+                                    <span class="drop__file mono" id="fileInfo"></span>
+                                </label>
+                            </div>
+                            <p class="hint mt" id="timing"></p>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-hashtag"></i>Hashes</h2></div>
+                            <dl class="kv hashes" id="hashes"></dl>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-check"></i>Verify a checksum</h2></div>
+                        <div class="field"><span>Expected checksum</span><input class="input mono" id="expect" placeholder="Paste the checksum from the download page" spellcheck="false" autocomplete="off"></div>
+                        <div class="verify" id="verify"><i class="fas fa-shield-halved"></i><span>Paste a checksum to compare it with all hashes on the left.</span></div>
+                        <p class="hint mt">Download pages usually publish SHA-256. Spaces and upper/lower case are ignored.</p>
+                    </div>
+                </div>
+                <style>
+                    .drop { display: grid; justify-items: center; gap: 8px; text-align: center; padding: 34px 16px; border-radius: 14px; border: 1.5px dashed var(--line); background: rgba(7,11,22,.45); cursor: pointer; transition: border-color .2s, background-color .2s, transform .3s var(--ease-spring); }
+                    .drop i { font-size: 2rem; color: var(--signal); transition: transform .4s var(--ease-spring); }
+                    .drop:hover, .drop.over { border-color: var(--signal); background: rgba(var(--signal-rgb), .07); }
+                    .drop.over { transform: scale(1.01); }
+                    .drop.over i { transform: translateY(-6px) scale(1.1); }
+                    .drop__file { color: var(--amber); font-size: .88rem; }
+                    #pane-file[hidden], #pane-text[hidden] { display: none; }
+                    .hashes > div { transition: background-color .3s; border-radius: 8px; }
+                    .hashes > div.match { background: rgba(94,230,181,.1); }
+                    .hashes > div.match dt { color: var(--mint); }
+                    .verify { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 12px; border: 1px solid var(--line); color: var(--fg-2); }
+                    .verify i { font-size: 1.4rem; color: var(--fg-3); }
+                    .verify.ok { border-color: rgba(94,230,181,.5); background: rgba(94,230,181,.08); color: var(--fg); }
+                    .verify.ok i { color: var(--mint); }
+                    .verify.bad { border-color: rgba(255,122,144,.5); background: rgba(255,122,144,.08); color: var(--fg); }
+                    .verify.bad i { color: var(--rose); }
+                    .hashes dd.busy { color: var(--fg-3); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper | Lukas200301</title>
+    <meta name="description" content="Minesweeper with three difficulties, safe first click, flags and chording.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Minesweeper | Lukas200301">
+    <meta property="og:description" content="Minesweeper with three difficulties, safe first click, flags and chording.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Minesweeper</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-bomb"></i>
+                            Minesweeper
+                        </h1>
+                        <p class="game-description">Clear the board without hitting a mine. Your first click is always safe; numbers tell you how many mines touch a square.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-computer-mouse"></i><span>Right-click or long-press to flag</span></div>
+                            <div class="meta-item"><i class="fas fa-stopwatch"></i><span>Best times saved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel ms-bar">
+                        <div class="seg" id="level" role="group" aria-label="Difficulty">
+                            <button type="button" data-l="easy" aria-pressed="true">Easy <span class="muted">9×9</span></button>
+                            <button type="button" data-l="medium" aria-pressed="false">Medium <span class="muted">16×16</span></button>
+                            <button type="button" data-l="hard" aria-pressed="false">Hard <span class="muted">30×16</span></button>
+                        </div>
+                        <div class="stats">
+                            <div class="stat" id="sMines"><b>10</b><span><i class="fas fa-flag"></i> left</span></div>
+                            <div class="stat" id="sTime"><b>0</b><span><i class="fas fa-stopwatch"></i> seconds</span></div>
+                            <div class="stat" id="sBest"><b>–</b><span><i class="fas fa-trophy"></i> best</span></div>
+                        </div>
+                        <div class="panel__actions">
+                            <button class="btn btn--sm btn--ghost" id="flagMode" aria-pressed="false" title="Tap to flag instead of reveal"><i class="fas fa-flag"></i>Flag mode</button>
+                            <button class="btn btn--sm" id="newBtn"><i class="fas fa-rotate"></i>New game</button>
+                        </div>
+                    </div>
+                    <div class="panel ms-panel">
+                        <div class="board-wrap ms-scroll">
+                            <div class="ms" id="board" role="grid" aria-label="Minefield"></div>
+                            <div class="overlay-msg" id="msg" hidden>
+                                <h3 id="msgTitle"></h3>
+                                <p id="msgText"></p>
+                                <div class="row"><button class="btn" id="againBtn"><i class="fas fa-rotate"></i>Play again</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kbd-help">
+                        <span><i class="fas fa-computer-mouse"></i> Left-click reveal</span>
+                        <span>Right-click / long-press flag</span>
+                        <span>Click a number with all its flags placed to clear around it</span>
+                        <span><kbd>F</kbd> flag mode · <kbd>N</kbd> new game</span>
+                    </div>
+                </div>
+                <style>
+                    .ms-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 14px; }
+                    .ms-bar .stat { min-width: 84px; padding: 6px 12px; }
+                    .ms-bar .stat b { font-size: 1.1rem; }
+                    #flagMode[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); background: rgba(255,184,107,.1); }
+                    .ms-panel { padding: 16px; }
+                    .ms-scroll { overflow: auto; border-radius: 12px; place-items: start center; }
+                    .ms { --c: 34px; display: grid; gap: 3px; padding: 4px; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+                    .ms button { width: var(--c); height: var(--c); border-radius: 7px; border: 1px solid rgba(142,162,255,.22); background: linear-gradient(180deg, #24305a, #1a2442); font: 700 calc(var(--c) * .46) var(--font-head); color: var(--fg); display: grid; place-items: center; padding: 0; cursor: pointer; transition: transform .15s var(--ease-spring), background-color .2s, border-color .2s; -webkit-tap-highlight-color: transparent; }
+                    .ms button:not(.open):hover { background: linear-gradient(180deg, #2d3b6c, #212d52); border-color: rgba(142,162,255,.5); transform: translateY(-1px); }
+                    .ms button:not(.open):active { transform: scale(.92); }
+                    .ms button.open { background: rgba(7,11,22,.55); border-color: rgba(142,162,255,.07); cursor: default; animation: ms-open .35s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+                    @keyframes ms-open { from { transform: scale(.6); opacity: 0; } }
+                    .ms button.flag i { color: var(--amber); animation: ms-flag .35s var(--ease-spring); font-size: .8em; }
+                    @keyframes ms-flag { from { transform: translateY(-8px) scale(.4); opacity: 0; } }
+                    .ms button.mine { background: rgba(255,122,144,.12); border-color: rgba(255,122,144,.3); }
+                    .ms button.mine i { color: var(--rose); font-size: .8em; }
+                    .ms button.boom { background: var(--rose); border-color: var(--rose); animation: ms-boom .5s var(--ease-out); }
+                    .ms button.boom i { color: #1a0710; }
+                    @keyframes ms-boom { 0% { transform: scale(1.6); box-shadow: 0 0 0 0 rgba(255,122,144,.8); } 100% { box-shadow: 0 0 0 18px rgba(255,122,144,0); } }
+                    .ms button.wrong i { color: var(--fg-3); }
+                    .ms button.hl:not(.open):not(.flag) { background: #2d3b6c; }
+                    .ms .n1 { color: #8ea2ff; } .ms .n2 { color: #5ee6b5; } .ms .n3 { color: #ff7a90; } .ms .n4 { color: #b39bff; }
+                    .ms .n5 { color: #ffb86b; } .ms .n6 { color: #6fd8ff; } .ms .n7 { color: #e8edff; } .ms .n8 { color: #a3aed0; }
+                    .ms.won button.open { border-color: rgba(94,230,181,.25); }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

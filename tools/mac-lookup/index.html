@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC Address Lookup | Lukas200301</title>
+    <meta name="description" content="Look up the vendor of any MAC address, see if it is randomized or multicast, convert notations and bulk-check arp output.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="MAC Address Lookup | Lukas200301">
+    <meta property="og:description" content="Look up the vendor of any MAC address, see if it is randomized or multicast, convert notations and bulk-check arp output.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">MAC Address Lookup</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-ethernet"></i>
+                            MAC Address Lookup
+                        </h1>
+                        <p class="tool-description">Find out who made a network card from its MAC address. See whether an address is randomized, multicast or a protocol address, convert it between notations, or paste a whole <code>arp -a</code> output at once.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-database"></i><span>58,000 IEEE prefixes</span></div>
+                            <div class="meta-item"><i class="fas fa-list"></i><span>Bulk lookup</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Runs in your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-ethernet"></i>MAC address</h2>
+                            <div class="panel__actions" id="presets">
+                                <button class="btn btn--sm btn--ghost" data-v="B8:27:EB:4A:1C:9E">Raspberry Pi</button>
+                                <button class="btn btn--sm btn--ghost" data-v="00-50-56-C0-00-08">VMware</button>
+                                <button class="btn btn--sm btn--ghost" data-v="001b.5479.aa01">Cisco notation</button>
+                                <button class="btn btn--sm btn--ghost" data-v="3A:F1:6C:5C:2E:07">Randomized</button>
+                                <button class="btn btn--sm btn--ghost" data-v="01:00:5E:00:00:FB">Multicast</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="input big grow" id="mac" value="B8:27:EB:4A:1C:9E" spellcheck="false" autocomplete="off" aria-label="MAC address">
+                            <span class="status" id="state"><i class="fas fa-spinner fa-spin"></i>Loading vendor list…</span>
+                        </div>
+                        <p class="hint mt">Any notation works: <code>00:1A:2B:3C:4D:5E</code>, <code>00-1A-2B-3C-4D-5E</code>, <code>001a.2b3c.4d5e</code>, <code>001A2B3C4D5E</code>, or just the first 6 digits.</p>
+                    </div>
+
+                    <div class="panel">
+                        <div class="vend">
+                            <span class="vend__icon" id="vIcon"><i class="fas fa-industry"></i></span>
+                            <div class="vend__txt"><div class="vend__name" id="vName">…</div><div class="hint" id="vSub"></div></div>
+                        </div>
+                        <div class="hexrow" id="hex" aria-hidden="true"></div>
+                        <div class="legend hint"><span><i class="lg-sw lg-sw--net"></i>Vendor prefix</span><span><i class="lg-sw lg-sw--host"></i>Device part (chosen by the vendor)</span></div>
+                        <div class="oct1" id="oct1" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-info"></i>Details</h2></div>
+                            <dl class="kv" id="kvInfo"></dl>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-shuffle"></i>Notations</h2></div>
+                            <dl class="kv" id="kvFmt"></dl>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-list"></i>Bulk lookup</h2>
+                            <div class="panel__actions"><span class="hint" id="bulkInfo"></span><button class="btn btn--sm btn--ghost" id="csv" type="button" disabled><i class="far fa-copy"></i>&nbsp; Copy as CSV</button></div>
+                        </div>
+                        <textarea class="textarea mono" id="bulk" spellcheck="false" placeholder="Paste anything that contains MAC addresses: the output of arp -a, ip neigh, a DHCP lease list, a switch MAC table…" aria-label="Text with MAC addresses"></textarea>
+                        <div class="table-wrap mt" id="bulkWrap" hidden><table class="table"><thead><tr><th>IP</th><th>MAC</th><th>Vendor</th><th>Note</th></tr></thead><tbody id="bulkBody"></tbody></table></div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-magnifying-glass"></i>Find a vendor's prefixes</h2>
+                            <span class="hint" id="findInfo"></span>
+                        </div>
+                        <input class="input" id="find" placeholder="Vendor name, e.g. Raspberry, Ubiquiti, AVM" spellcheck="false" autocomplete="off" aria-label="Vendor name">
+                        <div class="table-wrap mt" id="findWrap" hidden><table class="table"><thead><tr><th>Prefix</th><th>Block</th><th>Vendor</th></tr></thead><tbody id="findBody"></tbody></table></div>
+                    </div>
+                </div>
+
+                <style>
+                    .vend { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+                    .vend__icon { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.35rem; color: var(--signal); background: rgba(var(--signal-rgb), .1); border: 1px solid rgba(var(--signal-rgb), .3); transition: color .3s, background-color .3s, border-color .3s; }
+                    .vend__icon.warn { color: var(--amber); background: rgba(var(--amber-rgb), .1); border-color: rgba(var(--amber-rgb), .35); }
+                    .vend__icon.muted { color: var(--fg-3); background: rgba(7,11,22,.5); border-color: var(--line); }
+                    .vend__txt { min-width: 0; }
+                    .vend__name { font-family: var(--font-head); font-size: clamp(1.1rem, .9rem + 1vw, 1.6rem); letter-spacing: -0.03em; line-height: 1.2; overflow-wrap: anywhere; }
+                    .vend__name.pop { animation: stat-pop .45s var(--ease-spring); }
+                    .hexrow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+                    .hexrow .oc { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+                    .hx { height: clamp(36px, 2.4rem + 0.6vw, 48px); border-radius: 8px; display: grid; place-items: center; font-family: var(--font-code); font-weight: 600; font-size: clamp(.85rem, .6rem + .8vw, 1.25rem); border: 1px solid var(--line); background: rgba(7,11,22,.6); color: var(--fg-3); transition: background-color .35s, border-color .35s, color .35s; transition-delay: calc(var(--i) * 15ms); }
+                    .hx.net { background: rgba(var(--signal-rgb), .16); border-color: rgba(var(--signal-rgb), .5); color: #c9d3ff; }
+                    .hx.host { background: rgba(var(--amber-rgb), .10); border-color: rgba(var(--amber-rgb), .35); color: var(--amber); }
+                    .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; }
+                    .legend span { display: inline-flex; align-items: center; gap: 7px; }
+                    .lg-sw { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+                    .lg-sw--net { background: rgba(var(--signal-rgb), .5); }
+                    .lg-sw--host { background: rgba(var(--amber-rgb), .45); }
+                    .oct1 { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line-soft); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+                    .oct1__bits { display: flex; gap: 4px; }
+                    .ob { position: relative; width: 30px; height: 34px; border-radius: 6px; display: grid; place-items: center; font-family: var(--font-code); font-weight: 600; border: 1px solid var(--line); background: rgba(7,11,22,.6); color: var(--fg-3); }
+                    .ob.flag { border-color: rgba(var(--signal-rgb), .45); color: var(--fg); }
+                    .ob.flag.on { background: rgba(var(--amber-rgb), .14); border-color: rgba(var(--amber-rgb), .55); color: var(--amber); }
+                    .ob b { position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); font-size: .62rem; font-weight: 600; color: var(--fg-3); white-space: nowrap; }
+                    .oct1__txt { flex: 1 1 260px; display: grid; gap: 4px; font-size: .88rem; color: var(--fg-2); padding-bottom: 10px; }
+                    .oct1__txt b { color: var(--fg); font-weight: 600; }
+                    #findBody tr, #bulkBody tr { cursor: pointer; }
+                    #bulkBody td:nth-child(3), #findBody td:nth-child(3) { font-family: inherit; white-space: normal; min-width: 200px; }
+                    #bulkBody td:nth-child(4) { font-family: inherit; color: var(--fg-3); white-space: normal; }
+                    @media (max-width: 700px) { .hexrow { grid-template-columns: repeat(3, minmax(0, 1fr)); } .ob { width: 26px; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

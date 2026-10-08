@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe | Lukas200301</title>
+    <meta name="description" content="Tic Tac Toe against the computer on three difficulty levels, or against a friend.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Tic Tac Toe | Lukas200301">
+    <meta property="og:description" content="Tic Tac Toe against the computer on three difficulty levels, or against a friend.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261008j">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Tic Tac Toe</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-hashtag"></i>
+                            Tic Tac Toe
+                        </h1>
+                        <p class="game-description">Play against the computer on easy, medium or hard (it never loses on hard), or pass the mouse to a friend.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-robot"></i><span>Unbeatable on hard</span></div>
+                            <div class="meta-item"><i class="fas fa-user-group"></i><span>2-player mode</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side ttt-layout">
+                    <div class="panel ttt-panel">
+                        <div class="ttt-turn" id="turn" aria-live="polite"></div>
+                        <div class="board-wrap ttt-wrap">
+                            <div class="ttt" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
+                            <svg class="ttt-line" id="line" viewBox="0 0 300 300" aria-hidden="true"><line id="lineEl" x1="0" y1="0" x2="0" y2="0"/></svg>
+                        </div>
+                        <div class="row ttt-actions"><button class="btn" id="nextBtn"><i class="fas fa-rotate"></i>New round</button></div>
+                    </div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="ttt-score">
+                                <div class="ttt-s x" id="scX"><b>0</b><span id="lblX">You (X)</span></div>
+                                <div class="ttt-s d" id="scD"><b>0</b><span>Draws</span></div>
+                                <div class="ttt-s o" id="scO"><b>0</b><span id="lblO">CPU (O)</span></div>
+                            </div>
+                            <button class="btn btn--sm btn--ghost mt" id="resetScore" style="width:100%;justify-content:center"><i class="fas fa-eraser"></i>Reset score</button>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Opponent</h2></div>
+                            <div class="field"><span>Mode</span>
+                                <div class="seg" id="mode" role="group" aria-label="Mode">
+                                    <button type="button" data-v="cpu" aria-pressed="true"><i class="fas fa-robot"></i>&nbsp; vs CPU</button>
+                                    <button type="button" data-v="pvp" aria-pressed="false"><i class="fas fa-user-group"></i>&nbsp; 2 players</button>
+                                </div>
+                            </div>
+                            <div class="field" id="diffField"><span>Difficulty</span>
+                                <div class="seg" id="diff" role="group" aria-label="Difficulty">
+                                    <button type="button" data-v="easy" aria-pressed="false">Easy</button>
+                                    <button type="button" data-v="medium" aria-pressed="true">Medium</button>
+                                    <button type="button" data-v="hard" aria-pressed="false">Hard</button>
+                                </div>
+                            </div>
+                            <p class="hint" id="diffHint"></p>
+                        </div>
+                        <div class="panel kbd-help"><span><kbd>1</kbd>–<kbd>9</kbd> play a square (like a numpad)</span><span><kbd>N</kbd> new round</span></div>
+                    </div>
+                </div>
+                <style>
+                    .ttt-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+                    @media (max-width: 900px) { .ttt-layout { grid-template-columns: 1fr; } }
+                    .ttt-panel { display: grid; justify-items: center; gap: 18px; padding: clamp(16px, 3vw, 32px); }
+                    .ttt-turn { font-family: var(--font-head); font-size: 1.05rem; letter-spacing: -.03em; min-height: 1.6em; display: flex; align-items: center; gap: 10px; }
+                    .ttt-turn .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; animation: ttt-pulse 1.2s ease-in-out infinite; }
+                    @keyframes ttt-pulse { 50% { transform: scale(.6); opacity: .6; } }
+                    .ttt-turn.x { color: var(--signal); } .ttt-turn.o { color: var(--amber); } .ttt-turn.d { color: var(--fg-2); }
+                    .ttt-turn > span { animation: ttt-fade .35s var(--ease-out); }
+                    @keyframes ttt-fade { from { opacity: 0; transform: translateY(4px); } }
+                    .ttt-wrap { width: min(100%, 420px); aspect-ratio: 1; }
+                    .ttt { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+                    .ttt button { position: relative; border-radius: 16px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(31,42,80,.6), rgba(13,19,37,.8)); cursor: pointer; padding: 14%; transition: border-color .2s, background-color .2s, transform .25s var(--ease-spring); animation: ttt-in .45s var(--ease-out) backwards; }
+                    .ttt button:nth-child(n) { animation-delay: calc(var(--i) * 35ms); }
+                    @keyframes ttt-in { from { opacity: 0; transform: scale(.8); } }
+                    .ttt button:not(:disabled):hover { border-color: var(--signal); transform: translateY(-2px); }
+                    .ttt button:not(:disabled):hover .ghost { opacity: .22; }
+                    .ttt button:disabled { cursor: default; }
+                    .ttt button.win { border-color: currentColor; background: rgba(142,162,255,.1); }
+                    .ttt button.win.o { background: rgba(255,184,107,.1); }
+                    .ttt.over button:not(.win) svg { opacity: .3; transition: opacity .4s; }
+                    .ttt svg { width: 100%; height: 100%; overflow: visible; }
+                    .ttt .ghost { opacity: 0; transition: opacity .2s; }
+                    .ttt path, .ttt circle { fill: none; stroke-width: 11; stroke-linecap: round; }
+                    .ttt .mx path { stroke: var(--signal); filter: drop-shadow(0 0 8px rgba(142,162,255,.6)); stroke-dasharray: 100; stroke-dashoffset: 100; animation: ttt-draw .28s var(--ease-out) forwards; }
+                    .ttt .mx path:nth-child(2) { animation-delay: .16s; }
+                    .ttt .mo circle { stroke: var(--amber); filter: drop-shadow(0 0 8px rgba(255,184,107,.6)); stroke-dasharray: 100; stroke-dashoffset: 100; animation: ttt-draw .45s var(--ease-out) forwards; transform: rotate(-90deg); transform-origin: center; }
+                    @keyframes ttt-draw { to { stroke-dashoffset: 0; } }
+                    .ttt button.win { color: var(--signal); } .ttt button.win.o { color: var(--amber); }
+                    .ttt-line { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 2; }
+                    .ttt-line line { stroke: #fff; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 400; stroke-dashoffset: 400; opacity: 0; filter: drop-shadow(0 0 10px rgba(255,255,255,.7)); }
+                    .ttt-line.show line { opacity: .9; animation: ttt-strike .5s .15s var(--ease-out) forwards; }
+                    @keyframes ttt-strike { to { stroke-dashoffset: 0; } }
+                    .ttt.thinking button:not(:disabled) { cursor: progress; }
+                    .ttt-score { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+                    .ttt-s { padding: 12px 6px; border-radius: 12px; border: 1px solid var(--line); background: rgba(7,11,22,.55); }
+                    .ttt-s b { display: block; font-family: var(--font-head); font-size: 1.6rem; letter-spacing: -.04em; }
+                    .ttt-s span { font-size: .78rem; color: var(--fg-3); }
+                    .ttt-s.x b { color: var(--signal); } .ttt-s.o b { color: var(--amber); }
+                    .ttt-s.pop b { animation: stat-pop .45s var(--ease-spring); }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="app.js?v=20261008j"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>
