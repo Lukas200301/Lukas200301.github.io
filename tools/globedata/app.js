@@ -117,26 +117,8 @@ class InteractiveGlobe {
                 .pointsData(this.countriesData)
                 .pointAltitude(0.02)
                 .pointRadius(0.8)
-                .pointColor(() => '#3b82f6')
-                .pointLabel(d => `
-                    <div style="
-                        background: rgba(15, 23, 42, 0.95);
-                        border: 1px solid rgba(59, 130, 246, 0.3);
-                        border-radius: 8px;
-                        padding: 12px 16px;
-                        font-size: 14px;
-                        font-weight: 500;
-                        color: white;
-                        pointer-events: none;
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-                        backdrop-filter: blur(8px);
-                        max-width: 200px;
-                    ">
-                        <div style="font-weight: 600; margin-bottom: 4px; color: #3b82f6;">${d.name}</div>
-                        <div style="font-size: 12px; opacity: 0.9;">Capital: ${d.capital}</div>
-                        <div style="font-size: 12px; opacity: 0.9;">Population: ${this.formatNumber(d.population)}</div>
-                    </div>
-                `)
+                .pointColor(() => '#8ea2ff')
+                .pointLabel(d => `<div class="globe-label"><b>${this.escape(d.name)}</b><span>Capital: ${this.escape(d.capital)}</span><span>Population: ${this.formatNumber(d.population)}</span></div>`)
                 .onPointClick(this.handleCountryClick.bind(this))
                 .onPointHover(this.handleCountryHover.bind(this));
 
@@ -146,7 +128,7 @@ class InteractiveGlobe {
             // Add atmosphere after globe is created
             setTimeout(() => {
                 if (this.globe) {
-                    this.globe.atmosphereColor('#3b82f6');
+                    this.globe.atmosphereColor('#8ea2ff');
                     this.globe.atmosphereAltitude(0.15);
                 }
             }, 100);
@@ -186,7 +168,7 @@ class InteractiveGlobe {
         
         // Update point colors on hover
         this.globe
-            .pointColor(d => d === country ? '#f59e0b' : '#3b82f6')
+            .pointColor(d => d === country ? '#ffb86b' : '#8ea2ff')
             .pointRadius(d => d === country ? 1.2 : 0.6);
     }
 
@@ -218,6 +200,7 @@ class InteractiveGlobe {
         // Set flag
         const flagImg = document.getElementById('countryFlag');
         if (flagImg) {
+            flagImg.style.display = '';
             flagImg.src = country.flag;
             flagImg.alt = `Flag of ${country.name}`;
             flagImg.onerror = () => {
@@ -225,16 +208,19 @@ class InteractiveGlobe {
             };
         }
 
-        // Show overlay
+        // Show the details panel; on stacked (mobile) layouts bring it into view
         overlay.classList.add('visible');
-        document.body.style.overflow = 'hidden';
+        if (window.matchMedia('(max-width: 900px)').matches) {
+            overlay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
     }
 
     hideCountryOverlay() {
         const overlay = document.getElementById('countryOverlay');
         if (overlay) {
             overlay.classList.remove('visible');
-            document.body.style.overflow = '';
+            const name = document.getElementById('countryName');
+            if (name) name.textContent = 'Country';
         }
     }
 
@@ -256,7 +242,7 @@ class InteractiveGlobe {
         if (autoRotateBtn) {
             autoRotateBtn.addEventListener('click', () => {
                 this.toggleAutoRotate();
-                autoRotateBtn.classList.toggle('active', this.isAutoRotating);
+                autoRotateBtn.setAttribute('aria-pressed', String(this.isAutoRotating));
             });
         }
 
@@ -275,16 +261,6 @@ class InteractiveGlobe {
             }
         };
         document.addEventListener('keydown', this.handleKeydown);
-
-        // Close overlay on backdrop click
-        const overlay = document.getElementById('countryOverlay');
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    this.hideCountryOverlay();
-                }
-            });
-        }
     }
 
     toggleAutoRotate() {
@@ -353,6 +329,10 @@ class InteractiveGlobe {
         }
     }
 
+    escape(str) {
+        return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
     formatNumber(num) {
         if (!num || num === 0) return 'N/A';
         return new Intl.NumberFormat().format(num);
@@ -368,48 +348,7 @@ class InteractiveGlobe {
         // Show error in globe container
         const globeContainer = document.getElementById('globeViz');
         if (globeContainer) {
-            globeContainer.innerHTML = `
-                <div style="
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
-                    height: 100%; 
-                    flex-direction: column; 
-                    color: var(--text-secondary);
-                    padding: 2rem;
-                    text-align: center;
-                ">
-                    <i class="fas fa-exclamation-triangle" style="
-                        font-size: 48px; 
-                        margin-bottom: 16px; 
-                        color: #ef4444;
-                    "></i>
-                    <h3 style="
-                        margin: 0 0 8px 0; 
-                        color: var(--text-primary);
-                        font-size: 1.25rem;
-                    ">Unable to Load Globe</h3>
-                    <p style="
-                        margin: 0 0 16px 0; 
-                        max-width: 400px;
-                        line-height: 1.5;
-                    ">${message}</p>
-                    <button onclick="location.reload()" style="
-                        margin-top: 16px; 
-                        padding: 12px 24px; 
-                        background: var(--primary); 
-                        color: white; 
-                        border: none; 
-                        border-radius: 8px; 
-                        cursor: pointer;
-                        font-weight: 500;
-                        transition: all 0.2s ease;
-                    " onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-                        <i class="fas fa-redo" style="margin-right: 8px;"></i>
-                        Try Again
-                    </button>
-                </div>
-            `;
+            globeContainer.innerHTML = `<div class="globe-error"><i class="fas fa-triangle-exclamation"></i><h3>Unable to load the globe</h3><p>${this.escape(message)}</p><button class="btn btn--sm" type="button" onclick="location.reload()"><i class="fas fa-rotate-right"></i>Try again</button></div>`;
         }
     }
 
@@ -453,14 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (testError) {
                     
                     // Show error
-                    testElement.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: var(--text-secondary); padding: 2rem; text-align: center;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px; color: #ef4444;"></i>
-                            <h3 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 1.25rem;">WebGL Not Supported</h3>
-                            <p style="margin: 0 0 16px 0; max-width: 400px; line-height: 1.5;">Your browser doesn't support WebGL or 3D graphics. Please try a different browser.</p>
-                            <p style="font-size: 12px; opacity: 0.7;">Error: ${testError.message}</p>
-                        </div>
-                    `;
+                    testElement.innerHTML = `<div class="globe-error"><i class="fas fa-triangle-exclamation"></i><h3>WebGL not supported</h3><p>Your browser can't draw 3D graphics. Please try a different browser.</p><p class="hint">Error: ${testError.message}</p></div>`;
                     
                     // Hide loading
                     const loadingScreen = document.getElementById('globeLoading');
@@ -473,47 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show error message
             const globeContainer = document.getElementById('globeViz');
             if (globeContainer) {
-                globeContainer.innerHTML = `
-                    <div style="
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center; 
-                        height: 100%; 
-                        flex-direction: column; 
-                        color: var(--text-secondary);
-                        padding: 2rem;
-                        text-align: center;
-                    ">
-                        <i class="fas fa-exclamation-triangle" style="
-                            font-size: 48px; 
-                            margin-bottom: 16px; 
-                            color: #ef4444;
-                        "></i>
-                        <h3 style="
-                            margin: 0 0 8px 0; 
-                            color: var(--text-primary);
-                            font-size: 1.25rem;
-                        ">Library Loading Error</h3>
-                        <p style="
-                            margin: 0 0 16px 0; 
-                            max-width: 400px;
-                            line-height: 1.5;
-                        ">Globe.gl library failed to load. This might be due to network issues or browser compatibility.</p>
-                        <button onclick="location.reload()" style="
-                            margin-top: 16px; 
-                            padding: 12px 24px; 
-                            background: var(--primary); 
-                            color: white; 
-                            border: none; 
-                            border-radius: 8px; 
-                            cursor: pointer;
-                            font-weight: 500;
-                        ">
-                            <i class="fas fa-redo" style="margin-right: 8px;"></i>
-                            Reload Page
-                        </button>
-                    </div>
-                `;
+                globeContainer.innerHTML = `<div class="globe-error"><i class="fas fa-triangle-exclamation"></i><h3>Library loading error</h3><p>Globe.gl failed to load. This might be a network issue or browser compatibility.</p><button class="btn btn--sm" type="button" onclick="location.reload()"><i class="fas fa-rotate-right"></i>Reload page</button></div>`;
             }
             
             // Hide loading screen

@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="pwgenerator-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="pwgenerator-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -82,138 +83,78 @@
         <!-- Password Generator Section -->
         <section id="generator" class="tool-section">
             <div class="section-container">
-                <div class="generator-container">
-                    <!-- Password Output -->
-                    <div class="password-output-section">
-                        <div class="section-title">
-                            <i class="fas fa-key"></i>
-                            Generated Password
+                <div class="app-side pw">
+                    <div class="app">
+                        <div class="panel pw-out">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-key"></i>Generated password</h2>
+                                <div class="panel__actions">
+                                    <button type="button" id="copyPassword" class="btn btn--sm" title="Copy to clipboard"><i class="fas fa-copy"></i><span>Copy</span></button>
+                                    <button type="button" id="refreshPassword" class="btn btn--primary btn--sm" title="Generate new password"><i class="fas fa-rotate"></i><span>Generate</span></button>
+                                </div>
+                            </div>
+                            <textarea id="passwordOutput" class="textarea mono pw-field" readonly spellcheck="false" aria-label="Generated password" placeholder="Click generate to create a password"></textarea>
+                            <div class="pw-meter" aria-hidden="true"><div class="pw-meter__fill" id="strengthFill"></div></div>
+                            <div class="stats pw-stats">
+                                <div class="stat"><b id="strengthText">-</b><span>Strength</span></div>
+                                <div class="stat"><b id="entropyText">-</b><span>Bits of entropy</span></div>
+                                <div class="stat pw-stat--wide"><b id="crackTimeText">-</b><span title="Average time at 100 billion guesses per second"><i class="fas fa-clock"></i> Time to crack (100 bn guesses/s)</span></div>
+                            </div>
+                            <p class="status err pw-error" id="pwError" hidden><i class="fas fa-triangle-exclamation"></i><span></span></p>
                         </div>
-                        <div class="password-display">
-                            <div class="password-field">
-                                <textarea id="passwordOutput" readonly placeholder="Click generate to create a password"></textarea>
-                                <div class="password-actions">
-                                    <button id="copyPassword" class="action-btn" title="Copy to clipboard">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                    <button id="refreshPassword" class="action-btn" title="Generate new password">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="password-strength">
-                                <div class="strength-bar">
-                                    <div class="strength-fill" id="strengthFill"></div>
-                                </div>
-                                <span class="strength-text" id="strengthText">Click generate to see strength</span>
-                            </div>
-                            
-                            <div class="crack-time">
-                                <div class="crack-time-label">
-                                    <i class="fas fa-clock"></i>
-                                    Time to crack:
-                                </div>
-                                <span class="crack-time-text" id="crackTimeText">Generate password to see estimate</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Configuration Panel -->
-                    <div class="config-panel">
-                        <div class="config-section">
-                            <div class="section-title">
-                                <i class="fas fa-sliders-h"></i>
-                                Password Configuration
-                            </div>
-                            
-                            <!-- Length Configuration -->
-                            <div class="config-group">
-                                <label for="passwordLength">Password Length</label>
-                                <div class="length-control">
-                                    <input type="range" id="passwordLength" min="4" max="128" value="16" class="slider">
-                                    <span class="length-value" id="lengthValue">16</span>
-                                </div>
-                            </div>
-
-                            <!-- Character Sets -->
-                            <div class="config-group">
-                                <label>Character Sets</label>
-                                <div class="charset-options">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeUppercase" checked>
-                                        <label for="includeUppercase">
-                                            <i class="fas fa-font"></i>
-                                            Uppercase Letters (A-Z)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeLowercase" checked>
-                                        <label for="includeLowercase">
-                                            <i class="fas fa-font"></i>
-                                            Lowercase Letters (a-z)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeNumbers" checked>
-                                        <label for="includeNumbers">
-                                            <i class="fas fa-hashtag"></i>
-                                            Numbers (0-9)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeSymbols" checked>
-                                        <label for="includeSymbols">
-                                            <i class="fas fa-asterisk"></i>
-                                            Symbols (!@#$%^&*)
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Advanced Options -->
-                            <div class="config-group">
-                                <label>Advanced Options</label>
-                                <div class="advanced-options">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="excludeSimilar">
-                                        <label for="excludeSimilar">
-                                            <i class="fas fa-eye-slash"></i>
-                                            Exclude Similar Characters (0, O, l, I)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="excludeAmbiguous" checked>
-                                        <label for="excludeAmbiguous">
-                                            <i class="fas fa-question-circle"></i>
-                                            Exclude Ambiguous Characters ({ } [ ] ( ) / \ ' " ` ~ , ; . < >)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="requireEachType">
-                                        <label for="requireEachType">
-                                            <i class="fas fa-check-double"></i>
-                                            Require at least one character from each selected set
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Custom Character Set -->
-                            <div class="config-group">
-                                <label for="customCharset">Custom Character Set (Optional)</label>
-                                <textarea id="customCharset" placeholder="Enter custom characters to use instead of standard sets"></textarea>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-font"></i>Character sets</h2></div>
+                            <div class="pw-sets">
+                                <label class="pw-opt" for="includeUppercase">
+                                    <input type="checkbox" id="includeUppercase" checked>
+                                    <span class="pw-opt__sample mono">ABC</span>
+                                    <span class="pw-opt__text"><b>Uppercase</b><small>A-Z</small></span>
+                                </label>
+                                <label class="pw-opt" for="includeLowercase">
+                                    <input type="checkbox" id="includeLowercase" checked>
+                                    <span class="pw-opt__sample mono">abc</span>
+                                    <span class="pw-opt__text"><b>Lowercase</b><small>a-z</small></span>
+                                </label>
+                                <label class="pw-opt" for="includeNumbers">
+                                    <input type="checkbox" id="includeNumbers" checked>
+                                    <span class="pw-opt__sample mono">123</span>
+                                    <span class="pw-opt__text"><b>Numbers</b><small>0-9</small></span>
+                                </label>
+                                <label class="pw-opt" for="includeSymbols">
+                                    <input type="checkbox" id="includeSymbols" checked>
+                                    <span class="pw-opt__sample mono">#$&amp;</span>
+                                    <span class="pw-opt__text"><b>Symbols</b><small>!@#$%^&amp;*</small></span>
+                                </label>
                             </div>
                         </div>
                     </div>
 
-
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Configuration</h2></div>
+                        <div class="field">
+                            <span class="pw-len"><label for="passwordLength">Length</label><b class="mono" id="lengthValue">16</b></span>
+                            <input type="range" id="passwordLength" min="4" max="128" value="16" class="pw-range">
+                            <span class="pw-ticks mono" aria-hidden="true"><i>4</i><i>128</i></span>
+                        </div>
+                        <div class="field">
+                            <span>Advanced options</span>
+                            <div class="pw-adv">
+                                <label class="check"><input type="checkbox" id="excludeSimilar"><span>Exclude similar characters <code>0 O l I</code></span></label>
+                                <label class="check"><input type="checkbox" id="excludeAmbiguous" checked><span>Exclude ambiguous characters <code>{ } [ ] ( ) / \ ' " ` , ; . &lt; &gt;</code></span></label>
+                                <label class="check"><input type="checkbox" id="requireEachType"><span>Require at least one character from each selected set</span></label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <span><label for="customCharset">Custom character set</label> <span class="muted">(optional)</span></span>
+                            <textarea id="customCharset" class="textarea mono pw-custom" spellcheck="false" placeholder="Characters to use instead of the sets"></textarea>
+                        </div>
+                        <p class="hint">Generated locally with the Web Crypto API. Nothing is sent anywhere.</p>
+                    </div>
                 </div>
             </div>
         </section>
-
-
     </main>
-
     <!-- Section Navigation Dots -->
     <div class="section-nav-dots" id="sectionNavDots">
         <div class="nav-dot active" data-section="overview" title="Overview">
@@ -230,7 +171,7 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
     
     <!-- Visitor Counter -->
     <script>
@@ -253,18 +194,14 @@
                 // Length slider
                 document.getElementById('passwordLength').addEventListener('input', () => {
                     this.updateLengthDisplay();
-                    if (document.getElementById('passwordOutput').value) {
-                        this.generatePassword();
-                    }
+                    this.generatePassword();
                 });
 
                 // Character set checkboxes
                 const checkboxes = ['includeUppercase', 'includeLowercase', 'includeNumbers', 'includeSymbols'];
                 checkboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
-                        if (document.getElementById('passwordOutput').value) {
-                            this.generatePassword();
-                        }
+                        this.generatePassword();
                     });
                 });
 
@@ -272,17 +209,13 @@
                 const advancedOptions = ['excludeSimilar', 'excludeAmbiguous', 'requireEachType'];
                 advancedOptions.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
-                        if (document.getElementById('passwordOutput').value) {
-                            this.generatePassword();
-                        }
+                        this.generatePassword();
                     });
                 });
 
                 // Custom charset
                 document.getElementById('customCharset').addEventListener('input', () => {
-                    if (document.getElementById('passwordOutput').value) {
-                        this.generatePassword();
-                    }
+                    this.generatePassword();
                 });
 
                 // Buttons
@@ -313,7 +246,7 @@
                 if (document.getElementById('includeSymbols').checked) charset += symbols;
 
                 if (!charset) {
-                    alert('Please select at least one character set or provide a custom character set.');
+                    this.showError('Select at least one character set or enter a custom character set.');
                     return '';
                 }
 
@@ -326,7 +259,14 @@
                     charset = charset.replace(/[{}[\]()\/\\'"`,;.<>]/g, '');
                 }
 
+                this.showError('');
                 return charset;
+            }
+
+            showError(msg) {
+                const box = document.getElementById('pwError');
+                box.querySelector('span').textContent = msg;
+                box.hidden = !msg;
             }
 
             generateSecureRandom(max) {
@@ -339,7 +279,11 @@
                 const length = parseInt(document.getElementById('passwordLength').value);
                 const charset = this.getCharacterSet();
                 
-                if (!charset) return;
+                if (!charset) {
+                    document.getElementById('passwordOutput').value = '';
+                    this.resetStats();
+                    return;
+                }
 
                 let password = '';
                 const requireEachType = document.getElementById('requireEachType').checked;
@@ -389,9 +333,23 @@
                     }
                 }
 
-                document.getElementById('passwordOutput').value = password;
+                const out = document.getElementById('passwordOutput');
+                out.value = password;
+                out.classList.remove('is-new');
+                void out.offsetWidth;
+                out.classList.add('is-new');
                 this.updatePasswordStrength(password);
                 this.updateCrackTime(password);
+            }
+
+            resetStats() {
+                const fill = document.getElementById('strengthFill');
+                fill.style.width = '0%';
+                ['strengthText', 'entropyText', 'crackTimeText'].forEach(id => {
+                    const el = document.getElementById(id);
+                    el.textContent = '-';
+                    el.style.color = '';
+                });
             }
 
             shuffleString(str) {
@@ -420,30 +378,31 @@
 
                 if (entropy < 30) {
                     strength = 'Very Weak';
-                    color = '#ef4444';
+                    color = 'var(--rose)';
                     percentage = 20;
                 } else if (entropy < 50) {
                     strength = 'Weak';
-                    color = '#f97316';
+                    color = '#ff9a7a';
                     percentage = 40;
                 } else if (entropy < 70) {
                     strength = 'Fair';
-                    color = '#eab308';
+                    color = 'var(--amber)';
                     percentage = 60;
                 } else if (entropy < 90) {
                     strength = 'Strong';
-                    color = '#22c55e';
+                    color = '#8fe8c4';
                     percentage = 80;
                 } else {
                     strength = 'Very Strong';
-                    color = '#16a34a';
+                    color = 'var(--mint)';
                     percentage = 100;
                 }
 
                 strengthFill.style.width = `${percentage}%`;
                 strengthFill.style.background = color;
-                strengthText.textContent = `${strength} (${Math.round(entropy)} bits of entropy)`;
+                strengthText.textContent = strength;
                 strengthText.style.color = color;
+                document.getElementById('entropyText').textContent = Math.round(entropy);
             }
 
             updateCrackTime(password) {
@@ -462,15 +421,15 @@
                 
                 // Color code based on time to crack
                 if (averageSeconds < 60) { // Less than 1 minute
-                    crackTimeText.style.color = '#ef4444';
+                    crackTimeText.style.color = 'var(--rose)';
                 } else if (averageSeconds < 3600) { // Less than 1 hour
-                    crackTimeText.style.color = '#f97316';
+                    crackTimeText.style.color = '#ff9a7a';
                 } else if (averageSeconds < 86400) { // Less than 1 day
-                    crackTimeText.style.color = '#eab308';
+                    crackTimeText.style.color = 'var(--amber)';
                 } else if (averageSeconds < 31536000) { // Less than 1 year
-                    crackTimeText.style.color = '#22c55e';
+                    crackTimeText.style.color = '#8fe8c4';
                 } else {
-                    crackTimeText.style.color = '#16a34a';
+                    crackTimeText.style.color = 'var(--mint)';
                 }
             }
 
@@ -507,24 +466,25 @@
 
             async copyToClipboard() {
                 const password = document.getElementById('passwordOutput').value;
-                if (!password) {
-                    alert('No password to copy!');
-                    return;
-                }
+                if (!password) return;
+                const button = document.getElementById('copyPassword');
+                const icon = button.querySelector('i');
+                const label = button.querySelector('span');
+                const done = () => {
+                    icon.className = 'fas fa-check';
+                    label.textContent = 'Copied';
+                    button.classList.add('is-done');
+                    clearTimeout(this.copyTimer);
+                    this.copyTimer = setTimeout(() => {
+                        icon.className = 'fas fa-copy';
+                        label.textContent = 'Copy';
+                        button.classList.remove('is-done');
+                    }, 1600);
+                };
 
                 try {
                     await navigator.clipboard.writeText(password);
-                    const button = document.getElementById('copyPassword');
-                    const icon = button.querySelector('i');
-                    
-                    // Visual feedback
-                    icon.className = 'fas fa-check';
-                    button.style.color = 'var(--success-accent)';
-                    
-                    setTimeout(() => {
-                        icon.className = 'fas fa-copy';
-                        button.style.color = '';
-                    }, 2000);
+                    done();
                 } catch (err) {
                     // Fallback for older browsers
                     const textArea = document.createElement('textarea');
@@ -533,8 +493,7 @@
                     textArea.select();
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
-                    
-                    alert('Password copied to clipboard!');
+                    done();
                 }
             }
         }

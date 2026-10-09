@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="color-generator-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="color-generator-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -81,33 +82,22 @@
         <!-- Color Palette Generator Section -->
         <section id="generator" class="tool-section">
             <div class="section-container">
-                <div class="generator-grid">
+                <div class="cg-layout">
                     <!-- Controls Panel -->
-                    <div class="controls-panel">
-                        <div class="panel-header">
-                            <h3>
-                                <i class="fas fa-sliders-h"></i>
-                                Controls
-                            </h3>
-                        </div>
-                        
-                        <div class="control-group">
-                            <label class="control-label">
-                                <i class="fas fa-palette"></i>
-                                Base Color
-                            </label>
-                            <div class="color-picker-wrapper">
-                                <input type="color" id="baseColor" class="color-picker" value="#6366f1">
-                                <input type="text" id="baseColorHex" class="hex-input" value="#6366f1" placeholder="#000000">
+                    <div class="panel cg-controls">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Controls</h2></div>
+
+                        <div class="field">
+                            <span><label for="baseColorHex">Base color</label></span>
+                            <div class="cg-picker">
+                                <input type="color" id="baseColor" class="cg-swatch-input" value="#6366f1" aria-label="Pick base color">
+                                <input type="text" id="baseColorHex" class="input mono" value="#6366f1" placeholder="#000000" spellcheck="false" autocomplete="off">
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label">
-                                <i class="fas fa-cogs"></i>
-                                Palette Type
-                            </label>
-                            <select id="paletteType" class="control-select">
+                        <div class="field">
+                            <span><label for="paletteType">Palette type</label></span>
+                            <select id="paletteType" class="select">
                                 <option value="monochromatic">Monochromatic</option>
                                 <option value="analogous">Analogous</option>
                                 <option value="complementary">Complementary</option>
@@ -118,63 +108,43 @@
                             </select>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label">
-                                <i class="fas fa-list-ol"></i>
-                                Colors: <span id="colorCountValue" class="count-display">5</span>
-                            </label>
-                            <input type="range" id="colorCount" class="control-range" min="3" max="10" value="5">
+                        <div class="field">
+                            <span class="cg-count"><label for="colorCount">Colors</label><b class="mono" id="colorCountValue">5</b></span>
+                            <input type="range" id="colorCount" class="cg-range" min="3" max="10" value="5">
+                            <span class="cg-ticks mono" aria-hidden="true"><i>3</i><i>10</i></span>
                         </div>
 
-                        <div class="control-actions">
-                            <button id="generateBtn" class="btn-primary">
-                                <i class="fas fa-magic"></i>
-                                Generate
-                            </button>
-                            <button id="randomizeBtn" class="btn-secondary">
-                                <i class="fas fa-dice"></i>
-                                Random
-                            </button>
+                        <div class="cg-actions">
+                            <button type="button" id="generateBtn" class="btn btn--primary"><i class="fas fa-wand-magic-sparkles"></i>Generate</button>
+                            <button type="button" id="randomizeBtn" class="btn"><i class="fas fa-dice"></i>Random</button>
                         </div>
+                        <p class="hint mt">Random picks a new base color. Generate re-rolls Random Harmony palettes.</p>
                     </div>
 
                     <!-- Palette Results -->
-                    <div class="palette-results">
-                        <div class="results-header">
-                            <div class="header-info">
-                                <h3>
-                                    <i class="fas fa-swatchbook"></i>
-                                    Generated Palette
-                                </h3>
-                                <div class="palette-meta">
-                                    <span class="meta-tag" id="currentType">Monochromatic</span>
-                                    <span class="meta-count" id="currentCount">5 colors</span>
-                                </div>
+                    <div class="panel cg-results">
+                        <div class="panel__head">
+                            <div class="cg-head">
+                                <h2 class="panel__title"><i class="fas fa-swatchbook"></i>Generated palette</h2>
+                                <span class="chip" id="currentType">Monochromatic</span>
+                                <span class="chip muted" id="currentCount">5 colors</span>
                             </div>
-                            <div class="results-actions">
-                                <button id="copyAllBtn" class="action-btn" title="Copy all hex codes">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                                <button id="exportPngBtn" class="action-btn" title="Export as PNG">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button id="exportJsonBtn" class="action-btn" title="Export as JSON">
-                                    <i class="fas fa-file-code"></i>
-                                </button>
+                            <div class="panel__actions">
+                                <button type="button" id="copyAllBtn" class="btn btn--sm" title="Copy all hex codes"><i class="fas fa-copy"></i>Copy all</button>
+                                <button type="button" id="exportPngBtn" class="btn btn--sm" title="Export as PNG"><i class="fas fa-image"></i>PNG</button>
+                                <button type="button" id="exportJsonBtn" class="btn btn--sm" title="Export as JSON"><i class="fas fa-file-code"></i>JSON</button>
                             </div>
                         </div>
-                        
-                        <div id="paletteDisplay" class="palette-grid">
+
+                        <div id="paletteDisplay" class="cg-palette">
                             <!-- Colors will be generated here -->
                         </div>
+                        <p class="hint mt">Click a swatch to copy its hex code.</p>
                     </div>
                 </div>
             </div>
         </section>
-
-
     </main>
-
     <!-- Section Navigation Dots -->
     <div class="section-nav-dots" id="sectionNavDots">
         <div class="nav-dot active" data-section="overview" title="Overview">
@@ -191,7 +161,7 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
     
     <!-- Visitor Counter -->
     <script>
@@ -236,9 +206,15 @@
                 });
 
                 this.baseColorHex.addEventListener('input', (e) => {
-                    if (this.isValidHex(e.target.value)) {
-                        this.baseColor = e.target.value;
-                        this.baseColorInput.value = e.target.value;
+                    let v = e.target.value.trim();
+                    if (v && v[0] !== '#') v = '#' + v;
+                    const ok = this.isValidHex(v);
+                    e.target.classList.toggle('is-bad', !ok && v.length > 1);
+                    if (ok) {
+                        if (v.length === 4) v = '#' + v.slice(1).split('').map(c => c + c).join('');
+                        v = v.toLowerCase();
+                        this.baseColor = v;
+                        this.baseColorInput.value = v;
                         this.generatePalette();
                     }
                 });
@@ -470,26 +446,37 @@
 
             displayPalette() {
                 this.paletteDisplay.innerHTML = '';
+                const n = this.currentPalette.length;
+                this.paletteDisplay.style.setProperty('--cols', n <= 6 ? n : Math.ceil(n / 2));
                 
                 this.currentPalette.forEach((color, index) => {
                     const colorCard = document.createElement('div');
                     colorCard.className = 'color-item';
-                    
+                    colorCard.style.setProperty('--i', index);
+                    const [ch, cs, cl] = this.hexToHsl(color);
+                    const rgb = [1, 3, 5].map(o => parseInt(color.slice(o, o + 2), 16)).join(',');
+
                     colorCard.innerHTML = `
-                        <div class="color-swatch" style="background-color: ${color}"></div>
+                        <button type="button" class="color-swatch" style="background-color: ${color}; color: ${this.getContrastColor(color)}" data-color="${color}" title="Copy ${color.toUpperCase()}">
+                            <i class="fas fa-copy"></i>
+                        </button>
                         <div class="color-details">
-                            <span class="color-hex">${color.toUpperCase()}</span>
-                            <button class="copy-btn" data-color="${color}" title="Copy ${color}">
-                                <i class="fas fa-copy"></i>
+                            <div class="color-text">
+                                <span class="color-hex">${color.toUpperCase()}</span>
+                                <span class="color-sub">rgb(${rgb})</span>
+                                <span class="color-sub">hsl(${Math.round(ch)},${Math.round(cs)}%,${Math.round(cl)}%)</span>
+                            </div>
+                            <button type="button" class="copy copy-btn" data-color="${color}" title="Copy ${color.toUpperCase()}" aria-label="Copy ${color.toUpperCase()}">
+                                <i class="far fa-copy"></i>
                             </button>
                         </div>
                     `;
-                    
+
                     this.paletteDisplay.appendChild(colorCard);
                 });
 
                 // Bind copy events
-                document.querySelectorAll('.copy-btn').forEach(btn => {
+                this.paletteDisplay.querySelectorAll('.copy-btn, .color-swatch').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         this.copyColor(btn.dataset.color);
@@ -511,24 +498,26 @@
                 this.baseColor = randomColor;
                 this.baseColorInput.value = randomColor;
                 this.baseColorHex.value = randomColor;
+                this.baseColorHex.classList.remove('is-bad');
                 this.generatePalette();
             }
 
-            copyColor(color) {
-                navigator.clipboard.writeText(color).then(() => {
-                    this.showNotification(`Copied ${color} to clipboard!`);
+            copyText(text, msg) {
+                if (window.Site && Site.copy) { Site.copy(text, msg); return; }
+                navigator.clipboard.writeText(text).then(() => {
+                    this.showNotification(msg);
                 }).catch(() => {
-                    this.showNotification('Failed to copy color', 'error');
+                    this.showNotification('Copy failed', 'error');
                 });
+            }
+
+            copyColor(color) {
+                this.copyText(color, `Copied ${color.toUpperCase()}`);
             }
 
             copyAllColors() {
                 const allColors = this.currentPalette.join(', ');
-                navigator.clipboard.writeText(allColors).then(() => {
-                    this.showNotification(`Copied all ${this.currentPalette.length} colors to clipboard!`);
-                }).catch(() => {
-                    this.showNotification('Failed to copy colors', 'error');
-                });
+                this.copyText(allColors, `Copied all ${this.currentPalette.length} colors`);
             }
 
             exportAsPNG() {
@@ -557,7 +546,7 @@
                 link.href = canvas.toDataURL();
                 link.click();
                 
-                this.showNotification('Palette exported as PNG!');
+                this.showNotification('Palette exported as PNG');
             }
 
             exportAsJSON() {
@@ -577,7 +566,7 @@
                 link.href = URL.createObjectURL(dataBlob);
                 link.click();
                 
-                this.showNotification('Palette exported as JSON!');
+                this.showNotification('Palette exported as JSON');
             }
 
             getContrastColor(hexColor) {
@@ -589,7 +578,11 @@
             }
 
             showNotification(message, type = 'success') {
-                // Create notification
+                if (window.Site && Site.toast) {
+                    Site.toast(message, type === 'success' ? 'fas fa-check' : 'fas fa-triangle-exclamation');
+                    return;
+                }
+                // Fallback notification
                 const notification = document.createElement('div');
                 notification.className = `notification ${type}`;
                 notification.innerHTML = `

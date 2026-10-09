@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="globedata-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="globedata-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -30,176 +31,80 @@
     try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
 </head>
 <body>
-
-    <!-- Main Content -->
     <main class="tool-page-no-nav">
-        <!-- Header Section -->
         <section id="overview" class="tool-hero">
             <div class="section-container">
                 <div class="tool-header">
                     <div class="tool-info">
                         <div class="tool-breadcrumb">
-                            <a href="../../index.html" class="breadcrumb-link">
-                                <i class="fas fa-home"></i>
-                                <span>Home</span>
-                            </a>
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <a href="../index.html" class="breadcrumb-link">
-                                <i class="fas fa-tools"></i>
-                                <span>Tools</span>
-                            </a>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
                             <span class="breadcrumb-separator">/</span>
                             <span class="breadcrumb-current">Globedata</span>
                         </div>
-                        
                         <h1 class="tool-title">
                             <i class="fas fa-globe"></i>
                             Globedata
                         </h1>
-                        <p class="tool-description">
-                            Explore the world with an interactive 3D globe visualization. Click on any country to view detailed information including population, capital, flag, and more. Built with Globe.gl, with data for 250 countries and territories bundled into the site.
-                        </p>
+                        <p class="tool-description">Explore the world on an interactive 3D globe. Click any country to see its flag, capital, population, languages and more. Data for 250 countries and territories ships with the site.</p>
                         <div class="tool-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-mouse-pointer"></i>
-                                <span>Click & Explore Countries</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-database"></i>
-                                <span>250 Countries &amp; Territories</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-cube"></i>
-                                <span>3D WebGL Graphics</span>
-                            </div>
+                            <div class="meta-item"><i class="fas fa-arrow-pointer"></i><span>Click &amp; explore</span></div>
+                            <div class="meta-item"><i class="fas fa-database"></i><span>250 countries &amp; territories</span></div>
+                            <div class="meta-item"><i class="fas fa-cube"></i><span>3D WebGL globe</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Globe Section -->
         <section id="globe" class="tool-section">
             <div class="section-container">
-                <div class="globe-container">
-                    <!-- Globe Visualization -->
-                    <div class="globe-output-section">
-                        <div class="globe-header">
-                            <div class="section-title">
-                                <i class="fas fa-globe"></i>
-                                    Globe Visualization
-                            </div>
-                            <div class="globe-actions">
-                                <button class="globe-btn" id="resetView" title="Reset View">
-                                    <i class="fas fa-home"></i>
-                                    <span>Reset View</span>
-                                </button>
-                                <button class="globe-btn" id="autoRotate" title="Auto Rotate">
-                                    <i class="fas fa-sync-alt"></i>
-                                    <span>Auto Rotate</span>
-                                </button>
+                <div class="app-side globe-layout">
+                    <div class="panel globe-panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-earth-europe"></i>Globe</h2>
+                            <div class="panel__actions">
+                                <button class="btn btn--sm" id="resetView" type="button" title="Reset view"><i class="fas fa-house"></i>Reset view</button>
+                                <button class="btn btn--sm btn--ghost" id="autoRotate" type="button" aria-pressed="false" title="Auto rotate"><i class="fas fa-rotate"></i>Auto rotate</button>
                             </div>
                         </div>
-                        <div class="globe-viewport" id="globeViz">
-                            <!-- Globe will be rendered here -->
-                        </div>
-                        <div class="globe-instructions">
-                            <div class="instruction-item">
-                                <i class="fas fa-mouse"></i>
-                                <span>Drag to rotate • Scroll to zoom • Click countries for details</span>
-                            </div>
+                        <div class="globe-viewport" id="globeViz"></div>
+                        <div class="kbd-help mt">
+                            <span><i class="fas fa-hand"></i>&nbsp;Drag to rotate</span>
+                            <span><i class="fas fa-magnifying-glass-plus"></i>&nbsp;Scroll to zoom</span>
+                            <span><i class="fas fa-arrow-pointer"></i>&nbsp;Click a point for details</span>
                         </div>
                     </div>
+
+                    <aside class="panel country-panel" id="countryOverlay" aria-live="polite">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-flag"></i><span id="countryName">Country</span></h2>
+                            <button class="copy" id="closeOverlay" type="button" aria-label="Clear selection" title="Clear selection (Esc)"><i class="fas fa-xmark"></i></button>
+                        </div>
+                        <div class="country-empty">
+                            <span class="country-empty__icon"><i class="fas fa-location-crosshairs"></i></span>
+                            <p>No country selected</p>
+                            <p class="hint">Click one of the points on the globe to see the country's details here.</p>
+                        </div>
+                        <div class="country-body">
+                            <div class="country-flag"><img id="countryFlag" src="data:," alt=""></div>
+                            <dl class="kv country-kv">
+                                <div><dt><i class="fas fa-location-dot"></i>Capital</dt><dd id="countryCapital">-</dd></div>
+                                <div><dt><i class="fas fa-users"></i>Population</dt><dd id="countryPopulation">-</dd></div>
+                                <div><dt><i class="fas fa-earth-americas"></i>Region</dt><dd id="countryRegion">-</dd></div>
+                                <div><dt><i class="fas fa-map"></i>Subregion</dt><dd id="countrySubregion">-</dd></div>
+                                <div><dt><i class="fas fa-ruler-combined"></i>Area</dt><dd id="countryArea">-</dd></div>
+                                <div><dt><i class="fas fa-language"></i>Languages</dt><dd id="countryLanguages">-</dd></div>
+                                <div><dt><i class="fas fa-coins"></i>Currencies</dt><dd id="countryCurrencies">-</dd></div>
+                                <div><dt><i class="fas fa-phone"></i>Calling code</dt><dd id="countryCallingCode">-</dd></div>
+                            </dl>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
     </main>
-
-    <!-- Country Information Overlay -->
-    <div class="country-overlay" id="countryOverlay">
-        <div class="overlay-content">
-            <div class="overlay-header">
-                <h2 id="countryName">Country Name</h2>
-                <button class="close-overlay" id="closeOverlay">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="overlay-body">
-                <div class="country-flag">
-                    <img id="countryFlag" src="" alt="Country Flag">
-                </div>
-                
-                <div class="country-details">
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Capital
-                            </div>
-                            <div class="detail-value" id="countryCapital">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-users"></i>
-                                Population
-                            </div>
-                            <div class="detail-value" id="countryPopulation">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-globe-americas"></i>
-                                Region
-                            </div>
-                            <div class="detail-value" id="countryRegion">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-map"></i>
-                                Subregion
-                            </div>
-                            <div class="detail-value" id="countrySubregion">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-ruler-combined"></i>
-                                Area
-                            </div>
-                            <div class="detail-value" id="countryArea">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-language"></i>
-                                Languages
-                            </div>
-                            <div class="detail-value" id="countryLanguages">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-coins"></i>
-                                Currencies
-                            </div>
-                            <div class="detail-value" id="countryCurrencies">-</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-phone"></i>
-                                Calling Code
-                            </div>
-                            <div class="detail-value" id="countryCallingCode">-</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Section Navigation Dots -->
     <div class="section-nav-dots" id="sectionNavDots">
@@ -211,20 +116,11 @@
         </div>
     </div>
 
-    <!-- Back to Top -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
-    <script src="../../js/countries-data.js?v=20261008j"></script>
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>
-    
-    <!-- Visitor Counter -->
-    <script>
-        fetch('https://lukas200301-counter.vercel.app/api/counter').catch(err => console.log('Counter:', err));
-    </script>
+    <script src="../../js/countries-data.js?v=20261009a"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
 </body>
 </html>

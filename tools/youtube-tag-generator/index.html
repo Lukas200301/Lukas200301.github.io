@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="youtube-tag-generator-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="youtube-tag-generator-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -79,67 +80,35 @@
         </section>
         
         <!-- Generator Section -->
-        <section id="generator" class="section">
+        <section id="generator" class="tool-section">
             <div class="section-container">
-                <div class="generator-container">
+                <div class="app-2 yt">
                     <!-- Input Configuration Panel -->
-                    <div class="config-panel">
-                        <div class="config-section">
-                            <h3 class="section-title">
-                                <i class="fas fa-edit"></i>
-                                Video Information
-                            </h3>
-                            
-                            <!-- Video Title -->
-                            <div class="config-group">
-                                <label for="videoTitle">
-                                    <i class="fas fa-heading"></i>
-                                    Video Title *
-                                </label>
-                                <textarea 
-                                    id="videoTitle" 
-                                    placeholder="Enter your video title here..."
-                                    rows="2"
-                                ></textarea>
-                                <small class="char-count">0 characters</small>
-                            </div>
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-pen-to-square"></i>Video information</h2></div>
 
-                            <!-- Video Description -->
-                            <div class="config-group">
-                                <label for="videoDescription">
-                                    <i class="fas fa-align-left"></i>
-                                    Video Description (Optional)
-                                </label>
-                                <textarea 
-                                    id="videoDescription" 
-                                    placeholder="Briefly describe your video content..."
-                                    rows="3"
-                                    maxlength="500"
-                                ></textarea>
-                                <small class="char-count">0/500 characters</small>
-                            </div>
+                        <div class="field">
+                            <span><label for="videoTitle">Video title</label> <span class="amber">*</span></span>
+                            <textarea id="videoTitle" class="textarea yt-ta" placeholder="Artist - Song Title (Official Video)" rows="2"></textarea>
+                            <small class="yt-count">0 characters</small>
+                        </div>
 
-                            <!-- Target Keywords -->
-                            <div class="config-group">
-                                <label for="targetKeywords">
-                                    <i class="fas fa-key"></i>
-                                    Target Keywords (Optional)
-                                </label>
-                                <textarea 
-                                    id="targetKeywords" 
-                                    placeholder="Enter keywords separated by commas (e.g., gaming, tutorial, review)"
-                                    rows="2"
-                                ></textarea>
-                                <small class="help-text">Separate keywords with commas</small>
-                            </div>
+                        <div class="field">
+                            <span><label for="videoDescription">Description</label> <span class="muted">(optional)</span></span>
+                            <textarea id="videoDescription" class="textarea yt-ta yt-ta--desc" placeholder="Briefly describe your video content..." rows="3" maxlength="500"></textarea>
+                            <small class="yt-count">0/500 characters</small>
+                        </div>
 
-                            <!-- Category Selection -->
-                            <div class="config-group">
-                                <label for="videoCategory">
-                                    <i class="fas fa-folder"></i>
-                                    Video Category
-                                </label>
-                                <select id="videoCategory" class="category-select">
+                        <div class="field">
+                            <span><label for="targetKeywords">Target keywords</label> <span class="muted">(optional)</span></span>
+                            <input id="targetKeywords" class="input" type="text" placeholder="e.g. gaming, tutorial, review" autocomplete="off">
+                            <small class="yt-count">Separate keywords with commas</small>
+                        </div>
+
+                        <div class="yt-row">
+                            <div class="field">
+                                <span><label for="videoCategory">Category</label></span>
+                                <select id="videoCategory" class="select">
                                     <option value="">Select a category...</option>
                                     <option value="gaming">Gaming</option>
                                     <option value="education">Education</option>
@@ -159,98 +128,55 @@
                                     <option value="other">Other</option>
                                 </select>
                             </div>
-
-                            <!-- Tag Options -->
-                            <div class="config-group">
-                                <label>
-                                    <i class="fas fa-sliders-h"></i>
-                                    Tag Generation Options
-                                </label>
-                                <div class="advanced-options">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeVariations" checked>
-                                        <label for="includeVariations">
-                                            <i class="fas fa-random"></i>
-                                            Include keyword variations
-                                        </label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="includeLongTail" checked>
-                                        <label for="includeLongTail">
-                                            <i class="fas fa-search-plus"></i>
-                                            Include long-tail keywords
-                                        </label>
-                                    </div>
+                            <div class="field">
+                                <span>Options</span>
+                                <div class="yt-opts">
+                                    <label class="check"><input type="checkbox" id="includeVariations" checked>Keyword variations</label>
+                                    <label class="check"><input type="checkbox" id="includeLongTail" checked>Long-tail keywords</label>
                                 </div>
                             </div>
-
-                            <!-- Generate Button -->
-                            <button class="generate-btn" id="generateTags" type="button">
-                                <i class="fas fa-magic"></i>
-                                Generate Tags
-                            </button>
                         </div>
+
+                        <button class="btn btn--primary yt-generate" id="generateTags" type="button">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            Generate tags
+                        </button>
                     </div>
 
                     <!-- Tags Output Section -->
-                    <div class="youtube-output-section">
-                        <div class="youtube-display">
-                            <h3 class="section-title">
-                                <i class="fas fa-tags"></i>
-                                Generated Tags
-                            </h3>
-                            
-                            <!-- Generated Tags Display -->
-                            <div class="youtube-field">
-                                <textarea 
-                                    id="generatedTags" 
-                                    placeholder="Your generated tags will appear here..."
-                                    readonly
-                                ></textarea>
-                                <div class="youtube-actions">
-                                    <button class="action-btn" id="copyTags" title="Copy tags to clipboard">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                    <button class="action-btn" id="clearTags" title="Clear tags">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                    <div class="app yt-side">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-tags"></i>Generated tags</h2>
+                                <div class="panel__actions">
+                                    <button type="button" class="btn btn--sm" id="copyTags" title="Copy tags to clipboard"><i class="fas fa-copy"></i>Copy</button>
+                                    <button type="button" class="btn btn--sm btn--danger" id="clearTags" title="Clear tags"><i class="fas fa-trash"></i>Clear</button>
                                 </div>
                             </div>
-
-                            <!-- Tag Statistics -->
-                            <div class="youtube-strength">
-                                <div class="strength-bar">
-                                    <div class="strength-fill" id="tagStrengthFill"></div>
-                                </div>
-                                <div class="strength-text" id="tagStrengthText">No tags generated</div>
+                            <textarea id="generatedTags" class="textarea mono yt-out" placeholder="Your generated tags will appear here..." readonly spellcheck="false" aria-label="Generated tags"></textarea>
+                            <div class="yt-meter" aria-hidden="true"><div class="yt-meter__fill" id="tagStrengthFill"></div></div>
+                            <div class="stats yt-stats">
+                                <div class="stat"><b id="tagStrengthText">-</b><span>Coverage</span></div>
+                                <div class="stat"><b id="tagCount">0</b><span>Tags</span></div>
+                                <div class="stat"><b id="tagChars">0</b><span>of 500 characters</span></div>
                             </div>
+                        </div>
 
-                            <!-- Tag Count Info -->
-                            <div class="crack-time">
-                                <div class="crack-time-label">
-                                    <i class="fas fa-info-circle"></i>
-                                    Tag Count:
-                                </div>
-                                <div class="crack-time-text" id="tagCount">0 tags</div>
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-eye"></i>Tag preview</h2>
+                                <span class="hint">Click <i class="fas fa-xmark"></i> to drop a tag</span>
                             </div>
-
-                            <!-- Individual Tags Preview -->
-                            <div class="config-group" style="margin-top: var(--space-lg);">
-                                <label>
-                                    <i class="fas fa-eye"></i>
-                                    Tag Preview
-                                </label>
-                                <div id="tagPreview" class="tag-preview">
-                                    <p class="no-tags">Generate tags to see preview</p>
-                                </div>
+                            <div id="tagPreview" class="tag-preview">
+                                <p class="no-tags">Generate tags to see preview</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-         
-    </main>    <!-- Section Navigation Dots -->
+    </main>
+    <!-- Section Navigation Dots -->
     <div class="section-nav-dots" id="sectionNavDots">
         <div class="nav-dot active" data-section="overview" title="Overview">
             <span class="dot-label">Overview</span>
@@ -266,8 +192,8 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>
     
     <!-- Visitor Counter -->
     <script>

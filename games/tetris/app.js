@@ -3,62 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const BOARD_WIDTH = 10;
     const BOARD_HEIGHT = 20;
     const TETROMINOS = {
-        'I': {
-            shape: [
-                [0, 0, 0, 0],
-                [1, 1, 1, 1],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]
-            ],
-            color: 'i'
-        },
-        'O': {
-            shape: [
-                [1, 1],
-                [1, 1]
-            ],
-            color: 'o'
-        },
-        'T': {
-            shape: [
-                [0, 1, 0],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
-            color: 't'
-        },
-        'S': {
-            shape: [
-                [0, 1, 1],
-                [1, 1, 0],
-                [0, 0, 0]
-            ],
-            color: 's'
-        },
-        'Z': {
-            shape: [
-                [1, 1, 0],
-                [0, 1, 1],
-                [0, 0, 0]
-            ],
-            color: 'z'
-        },
-        'J': {
-            shape: [
-                [1, 0, 0],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
-            color: 'j'
-        },
-        'L': {
-            shape: [
-                [0, 0, 1],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
-            color: 'l'
-        }
+        'I': { shape: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], color: 'i' },
+        'O': { shape: [[1, 1], [1, 1]], color: 'o' },
+        'T': { shape: [[0, 1, 0], [1, 1, 1], [0, 0, 0]], color: 't' },
+        'S': { shape: [[0, 1, 1], [1, 1, 0], [0, 0, 0]], color: 's' },
+        'Z': { shape: [[1, 1, 0], [0, 1, 1], [0, 0, 0]], color: 'z' },
+        'J': { shape: [[1, 0, 0], [1, 1, 1], [0, 0, 0]], color: 'j' },
+        'L': { shape: [[0, 0, 1], [1, 1, 1], [0, 0, 0]], color: 'l' }
     };
 
     let board = [];
@@ -66,50 +17,68 @@ document.addEventListener('DOMContentLoaded', function() {
     let nextPiece = null;
     let holdPiece = null;
     let canHold = true;
-    let gameOver = false;
+    let state = 'idle';            // idle | running | paused | over
     let score = 0;
     let level = 1;
-    let dropInterval;
+    let lines = 0;
+    let dropInterval = null;
     let dropSpeed = 1000;
     let pieceBag = [];
     let pieceHistory = [];
-    let highScore = localStorage.getItem('tetris-high-score') || 0;
-    let keyStates = {
-        left: false,
-        right: false,
-        down: false
-    };
-    let moveInterval;
-    let moveDelay = 170;
-    let moveRepeat = 50;
-    let initialMoveDone = {
-        left: false,
-        right: false,
-        down: false
-    };
+    let highScore = 0;
+    try { highScore = parseInt(localStorage.getItem('tetris-high-score'), 10) || 0; } catch (e) {}
+    let keyStates = { left: false, right: false, down: false };
+    let moveInterval = null;
+    const moveDelay = 170;
+    const moveRepeat = 50;
+    let initialMoveDone = { left: false, right: false, down: false };
     let showGhost = true;
 
-    const gameBoard = document.getElementById('gameBoard');
-    const nextPieceBoard = document.getElementById('nextPiece');
-    const holdPieceBoard = document.getElementById('holdPiece');
-    const scoreDisplay = document.getElementById('score');
-    const levelDisplay = document.getElementById('level');
-    const newGameBtn = document.getElementById('newGame');
-    const gameOverScreen = document.getElementById('gameOver');
-    const tryAgainBtn = document.getElementById('tryAgain');
-    const ghostToggle = document.getElementById('ghostToggle');
-    const highScoreDisplay = document.getElementById('highScore');
+    const $ = (id) => document.getElementById(id);
+    const gameBoard = $('gameBoard');
+    const wrap = $('wrap');
+    const nextPieceBoard = $('nextPiece');
+    const holdPieceBoard = $('holdPiece');
+    const ghostToggle = $('ghostToggle');
+    const highScoreDisplay = $('highScore');
+    const newGameBtn = $('newGame');
+    const pauseBtn = $('pauseBtn');
+    const msg = $('msg'), msgTitle = $('msgTitle'), msgText = $('msgText'), msgBtn = $('msgBtn');
 
-    highScoreDisplay.textContent = highScore;
+    // ---------- stats ----------
+    function setStat(id, value, pop) {
+        const b = $(id);
+        if (!b || b.textContent === String(value)) return;
+        b.textContent = value;
+        if (pop) {
+            const tile = b.parentElement;
+            tile.classList.remove('pop'); void tile.offsetWidth; tile.classList.add('pop');
+        }
+    }
+    function updateStats(pop) {
+        setStat('score', score, pop);
+        setStat('level', level, pop);
+        setStat('lines', lines, pop);
+        setStat('best', highScore, false);
+        if (highScoreDisplay) highScoreDisplay.textContent = highScore;
+    }
+    function bumpHighScore() {
+        if (score > highScore) {
+            highScore = score;
+            try { localStorage.setItem('tetris-high-score', highScore); } catch (e) {}
+        }
+    }
 
-    ghostToggle.addEventListener('change', () => {
-        showGhost = ghostToggle.checked;
-        updateBoard();
-    });
+    // ---------- overlay ----------
+    function showMsg(title, text, btnIcon, btnText) {
+        msgTitle.textContent = title;
+        msgText.textContent = text;
+        msgBtn.innerHTML = `<i class="fas fa-${btnIcon}"></i>${btnText}`;
+        msg.hidden = false;
+    }
+    function hideMsg() { msg.hidden = true; }
 
-    // Set up initial event listener for new game button
-    newGameBtn.addEventListener('click', startGame);
-
+    // ---------- piece bag ----------
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -120,9 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getNextPieceFromBag() {
         if (pieceBag.length === 0) {
-            const allPieces = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
-            pieceBag = shuffleArray([...allPieces]);
-            
+            pieceBag = shuffleArray(['I', 'O', 'T', 'S', 'Z', 'J', 'L']);
             if (pieceHistory.length > 0) {
                 const lastPiece = pieceHistory[pieceHistory.length - 1];
                 if (pieceBag[0] === lastPiece) {
@@ -133,104 +100,134 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const piece = pieceBag.pop();
         pieceHistory.push(piece);
-        if (pieceHistory.length > 7) {
-            pieceHistory.shift();
-        }
+        if (pieceHistory.length > 7) pieceHistory.shift();
         return piece;
     }
 
-    function handleKeyDown(e) {
-        if (gameOver) return;
-        const now = Date.now();
+    function makePiece(type) {
+        return { shape: TETROMINOS[type].shape, color: TETROMINOS[type].color, x: 0, y: 0 };
+    }
+    function placeAtTop(piece) {
+        return {
+            shape: piece.shape,
+            color: piece.color,
+            x: Math.floor(BOARD_WIDTH / 2) - Math.floor(piece.shape[0].length / 2),
+            y: 0
+        };
+    }
 
-        switch (e.key.toLowerCase()) {
-            case 'a':
-                keyStates.left = true;
-                if (!initialMoveDone.left) {
-                    movePiece(-1, 0);
-                    initialMoveDone.left = true;
-                    setTimeout(() => {
-                        if (keyStates.left) {
-                            moveInterval = setInterval(() => {
-                                if (keyStates.left) movePiece(-1, 0);
-                                if (keyStates.right) movePiece(1, 0);
-                                if (keyStates.down) movePiece(0, 1);
-                            }, moveRepeat);
-                        }
-                    }, moveDelay);
-                }
-                break;
-            case 'd':
-                keyStates.right = true;
-                if (!initialMoveDone.right) {
-                    movePiece(1, 0);
-                    initialMoveDone.right = true;
-                    setTimeout(() => {
-                        if (keyStates.right) {
-                            moveInterval = setInterval(() => {
-                                if (keyStates.left) movePiece(-1, 0);
-                                if (keyStates.right) movePiece(1, 0);
-                                if (keyStates.down) movePiece(0, 1);
-                            }, moveRepeat);
-                        }
-                    }, moveDelay);
-                }
-                break;
-            case 's':
-                keyStates.down = true;
-                if (!initialMoveDone.down) {
-                    movePiece(0, 1);
-                    initialMoveDone.down = true;
-                    setTimeout(() => {
-                        if (keyStates.down) {
-                            moveInterval = setInterval(() => {
-                                if (keyStates.left) movePiece(-1, 0);
-                                if (keyStates.right) movePiece(1, 0);
-                                if (keyStates.down) movePiece(0, 1);
-                            }, moveRepeat);
-                        }
-                    }, moveDelay);
-                }
-                break;
-            case 'w':
-                rotatePiece();
-                break;
-            case 'c':
-                holdCurrentPiece();
-                break;
-            case ' ':
-                hardDrop();
-                break;
+    // ---------- input ----------
+    const KEYMAP = {
+        a: 'left', arrowleft: 'left',
+        d: 'right', arrowright: 'right',
+        s: 'down', arrowdown: 'down',
+        w: 'rotate', arrowup: 'rotate',
+        c: 'hold', ' ': 'drop'
+    };
+    const STEP = { left: [-1, 0], right: [1, 0], down: [0, 1] };
+
+    function repeatTick() {
+        if (state !== 'running') return;
+        if (keyStates.left) movePiece(-1, 0);
+        if (keyStates.right) movePiece(1, 0);
+        if (keyStates.down) movePiece(0, 1);
+    }
+
+    function handleKeyDown(e) {
+        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== 'checkbox') return;
+        if (document.documentElement.classList.contains('cli-open')) return;
+        const key = e.key.toLowerCase();
+
+        if (key === 'p' || key === 'escape') {
+            if (state === 'running' || state === 'paused') { e.preventDefault(); togglePause(); }
+            return;
+        }
+        if (key === 'enter' && state !== 'running') {
+            if (state === 'paused') togglePause(); else startGame();
+            e.preventDefault();
+            return;
+        }
+
+        const action = KEYMAP[key];
+        if (!action) return;
+        if (state === 'running' || key.startsWith('arrow') || key === ' ') {
+            // keep arrows / space from scrolling the page while the game is on screen
+            if (state !== 'idle' && state !== 'over') e.preventDefault();
+        }
+        if (state !== 'running') return;
+
+        if (STEP[action]) {
+            keyStates[action] = true;
+            if (!initialMoveDone[action]) {
+                movePiece(STEP[action][0], STEP[action][1]);
+                initialMoveDone[action] = true;
+                setTimeout(() => {
+                    if (keyStates[action] && !moveInterval) moveInterval = setInterval(repeatTick, moveRepeat);
+                }, moveDelay);
+            }
+        } else if (action === 'rotate') {
+            if (!e.repeat) rotatePiece();
+        } else if (action === 'hold') {
+            holdCurrentPiece();
+        } else if (action === 'drop') {
+            if (!e.repeat) hardDrop();
         }
     }
 
     function handleKeyUp(e) {
-        switch (e.key.toLowerCase()) {
-            case 'a':
-                keyStates.left = false;
-                initialMoveDone.left = false;
-                break;
-            case 'd':
-                keyStates.right = false;
-                initialMoveDone.right = false;
-                break;
-            case 's':
-                keyStates.down = false;
-                initialMoveDone.down = false;
-                break;
+        const action = KEYMAP[e.key.toLowerCase()];
+        if (STEP[action]) {
+            keyStates[action] = false;
+            initialMoveDone[action] = false;
         }
-
-        if (!keyStates.left && !keyStates.right && !keyStates.down) {
-            clearInterval(moveInterval);
-            moveInterval = null;
-        }
+        if (!keyStates.left && !keyStates.right && !keyStates.down) stopRepeat();
     }
 
-    function initBoard() {
+    function stopRepeat() {
+        clearInterval(moveInterval);
+        moveInterval = null;
+    }
+    function resetKeys() {
+        keyStates = { left: false, right: false, down: false };
+        initialMoveDone = { left: false, right: false, down: false };
+        stopRepeat();
+    }
+
+    // ---------- board ----------
+    function buildCells() {
+        gameBoard.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < BOARD_WIDTH * BOARD_HEIGHT; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            frag.appendChild(cell);
+        }
+        gameBoard.appendChild(frag);
+    }
+
+    function renderPreview(target, piece) {
+        target.innerHTML = '';
+        if (!piece) return;
+        // trim empty rows / cols so the preview is centred
+        const rows = piece.shape.map((r, i) => r.some(Boolean) ? i : -1).filter(i => i >= 0);
+        const cols = piece.shape[0].map((_, c) => piece.shape.some(r => r[c]) ? c : -1).filter(c => c >= 0);
+        target.style.gridTemplateColumns = `repeat(${cols.length}, var(--cs))`;
+        target.style.gridTemplateRows = `repeat(${rows.length}, var(--cs))`;
+        rows.forEach(r => cols.forEach(c => {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            if (piece.shape[r][c]) cell.classList.add(piece.color);
+            target.appendChild(cell);
+        }));
+    }
+    function updateNextPiece() { renderPreview(nextPieceBoard, nextPiece); }
+    function updateHoldPiece() { renderPreview(holdPieceBoard, holdPiece); }
+
+    function resetState() {
         board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
-        gameOver = false;
         score = 0;
         level = 1;
+        lines = 0;
         dropSpeed = 1000;
         holdPiece = null;
         canHold = true;
@@ -238,123 +235,41 @@ document.addEventListener('DOMContentLoaded', function() {
         nextPiece = null;
         pieceBag = [];
         pieceHistory = [];
-        keyStates = { left: false, right: false, down: false };
-        initialMoveDone = { left: false, right: false, down: false };
-        showGhost = true;
-        ghostToggle.checked = true;
-        
+        showGhost = ghostToggle.checked;
+        resetKeys();
         clearInterval(dropInterval);
-        clearInterval(moveInterval);
-        moveInterval = null;
-        scoreDisplay.textContent = '0';
-        levelDisplay.textContent = '1';
-        
-        gameBoard.innerHTML = '';
-        gameOverScreen.className = 'game-over';
-        holdPieceBoard.innerHTML = '';
-        nextPieceBoard.innerHTML = '';
-
-        for (let row = 0; row < BOARD_HEIGHT; row++) {
-            for (let col = 0; col < BOARD_WIDTH; col++) {
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                gameBoard.appendChild(cell);
-            }
-        }
-
-        gameBoard.appendChild(gameOverScreen);
-        tryAgainBtn.addEventListener('click', initBoard);
-
-        spawnPiece();
-        updateBoard();
-        
-        // Remove focus from any buttons to prevent spacebar interference
-        const buttonElement = document.getElementById('newGame');
-        if (buttonElement) {
-            buttonElement.blur();
-        }
-        
-        startDrop();
+        gameBoard.classList.remove('is-over');
+        buildCells();
+        updateHoldPiece();
+        updateStats(false);
     }
 
     function spawnPiece() {
-        const pieceType = getNextPieceFromBag();
-        
         if (nextPiece) {
-            currentPiece = {
-                shape: nextPiece.shape,
-                color: nextPiece.color,
-                x: Math.floor(BOARD_WIDTH / 2) - Math.floor(nextPiece.shape[0].length / 2),
-                y: 0
-            };
+            currentPiece = placeAtTop(nextPiece);
         } else {
-            currentPiece = {
-                shape: TETROMINOS[pieceType].shape,
-                color: TETROMINOS[pieceType].color,
-                x: Math.floor(BOARD_WIDTH / 2) - Math.floor(TETROMINOS[pieceType].shape[0].length / 2),
-                y: 0
-            };
+            currentPiece = placeAtTop(makePiece(getNextPieceFromBag()));
         }
-
-        const nextPieceType = getNextPieceFromBag();
-        nextPiece = {
-            shape: TETROMINOS[nextPieceType].shape,
-            color: TETROMINOS[nextPieceType].color,
-            x: 0,
-            y: 0
-        };
-
+        nextPiece = makePiece(getNextPieceFromBag());
         canHold = true;
         updateNextPiece();
     }
 
-    function updateNextPiece() {
-        nextPieceBoard.innerHTML = '';
-        for (let row = 0; row < 4; row++) {
-            for (let col = 0; col < 4; col++) {
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                if (row < nextPiece.shape.length && col < nextPiece.shape[0].length && nextPiece.shape[row][col]) {
-                    cell.classList.add(nextPiece.color);
-                }
-                nextPieceBoard.appendChild(cell);
-            }
-        }
-    }
-
-    function updateHoldPiece() {
-        holdPieceBoard.innerHTML = '';
-        if (holdPiece) {
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    if (row < holdPiece.shape.length && col < holdPiece.shape[0].length && holdPiece.shape[row][col]) {
-                        cell.classList.add(holdPiece.color);
-                    }
-                    holdPieceBoard.appendChild(cell);
-                }
-            }
-        }
-    }
-
     function getGhostPosition() {
         if (!currentPiece) return null;
-        
         let ghostY = currentPiece.y;
-        while (!checkCollisionAt(currentPiece.x, ghostY + 1)) {
-            ghostY++;
-        }
+        while (!checkCollisionAt(currentPiece.x, ghostY + 1)) ghostY++;
         return { x: currentPiece.x, y: ghostY };
     }
 
-    function checkCollisionAt(x, y) {
-        for (let row = 0; row < currentPiece.shape.length; row++) {
-            for (let col = 0; col < currentPiece.shape[0].length; col++) {
-                if (currentPiece.shape[row][col]) {
+    function checkCollisionAt(x, y, shape) {
+        shape = shape || currentPiece.shape;
+        for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[0].length; col++) {
+                if (shape[row][col]) {
                     const boardRow = y + row;
                     const boardCol = x + col;
-                    if (boardRow >= BOARD_HEIGHT || boardCol < 0 || boardCol >= BOARD_WIDTH || 
+                    if (boardRow >= BOARD_HEIGHT || boardCol < 0 || boardCol >= BOARD_WIDTH ||
                         (boardRow >= 0 && board[boardRow][boardCol])) {
                         return true;
                     }
@@ -363,74 +278,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return false;
     }
+    function checkCollision() { return checkCollisionAt(currentPiece.x, currentPiece.y); }
 
     function updateBoard() {
-        const cells = gameBoard.getElementsByClassName('cell');
-        const tempBoard = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(null));
-        
-        // First, mark all placed pieces
-        for (let row = 0; row < BOARD_HEIGHT; row++) {
-            for (let col = 0; col < BOARD_WIDTH; col++) {
-                if (board[row][col]) {
-                    tempBoard[row][col] = board[row][col];
-                }
-            }
-        }
+        const cells = gameBoard.children;
+        const temp = board.map(r => r.slice());
 
-        // Then mark ghost piece positions if enabled
-        if (currentPiece && showGhost) {
+        if (currentPiece && showGhost && state !== 'over') {
             const ghost = getGhostPosition();
-            if (ghost) {
-                for (let row = 0; row < currentPiece.shape.length; row++) {
-                    for (let col = 0; col < currentPiece.shape[0].length; col++) {
-                        if (currentPiece.shape[row][col]) {
-                            const ghostRow = ghost.y + row;
-                            const ghostCol = ghost.x + col;
-                            if (ghostRow >= 0 && ghostRow < BOARD_HEIGHT && ghostCol >= 0 && ghostCol < BOARD_WIDTH) {
-                                if (!tempBoard[ghostRow][ghostCol]) {
-                                    tempBoard[ghostRow][ghostCol] = 'ghost-' + currentPiece.color;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            currentPiece.shape.forEach((r, row) => r.forEach((v, col) => {
+                const gr = ghost.y + row, gc = ghost.x + col;
+                if (v && gr >= 0 && gr < BOARD_HEIGHT && !temp[gr][gc]) temp[gr][gc] = 'ghost-' + currentPiece.color;
+            }));
         }
-
-        // Finally mark current piece positions
         if (currentPiece) {
-            for (let row = 0; row < currentPiece.shape.length; row++) {
-                for (let col = 0; col < currentPiece.shape[0].length; col++) {
-                    if (currentPiece.shape[row][col]) {
-                        const boardRow = currentPiece.y + row;
-                        const boardCol = currentPiece.x + col;
-                        if (boardRow >= 0 && boardRow < BOARD_HEIGHT && boardCol >= 0 && boardCol < BOARD_WIDTH) {
-                            tempBoard[boardRow][boardCol] = currentPiece.color;
-                        }
-                    }
-                }
-            }
+            currentPiece.shape.forEach((r, row) => r.forEach((v, col) => {
+                const br = currentPiece.y + row, bc = currentPiece.x + col;
+                if (v && br >= 0 && br < BOARD_HEIGHT && bc >= 0 && bc < BOARD_WIDTH) temp[br][bc] = currentPiece.color;
+            }));
         }
 
-        // Now render everything in one pass
         for (let row = 0; row < BOARD_HEIGHT; row++) {
             for (let col = 0; col < BOARD_WIDTH; col++) {
+                const content = temp[row][col];
+                let cls = 'cell';
+                if (content) cls += content.startsWith('ghost-') ? ' ghost ' + content.substring(6) : ' ' + content;
                 const cell = cells[row * BOARD_WIDTH + col];
-                cell.className = 'cell';
-                const cellContent = tempBoard[row][col];
-                if (cellContent) {
-                    if (cellContent.startsWith('ghost-')) {
-                        cell.classList.add('ghost', cellContent.substring(6));
-                    } else {
-                        cell.classList.add(cellContent);
-                    }
-                }
+                if (cell.className !== cls) cell.className = cls;
             }
         }
     }
 
     function movePiece(dx, dy) {
-        if (gameOver) return;
+        if (state !== 'running' || !currentPiece) return false;
 
         currentPiece.x += dx;
         currentPiece.y += dy;
@@ -443,10 +323,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearLines();
                 spawnPiece();
                 checkGameOver();
-                keyStates = { left: false, right: false, down: false };
-                initialMoveDone = { left: false, right: false, down: false };
-                clearInterval(moveInterval);
-                moveInterval = null;
+                resetKeys();
+                updateBoard();
             }
             return false;
         }
@@ -456,13 +334,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function rotatePiece() {
-        if (gameOver) return;
-
+        if (state !== 'running' || !currentPiece) return;
         const originalShape = currentPiece.shape;
         const rows = originalShape.length;
         const cols = originalShape[0].length;
         const newShape = Array(cols).fill().map(() => Array(rows).fill(0));
-
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
                 newShape[col][rows - 1 - row] = originalShape[row][col];
@@ -470,62 +346,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         currentPiece.shape = newShape;
-
-        // Try wall kicks
-        const kicks = [
-            { x: 0, y: 0 },  // No kick
-            { x: -1, y: 0 }, // Left kick
-            { x: 1, y: 0 },  // Right kick
-            { x: 0, y: -1 }, // Up kick
-            { x: -2, y: 0 }, // Double left kick
-            { x: 2, y: 0 }   // Double right kick
-        ];
-
-        let success = false;
-        for (const kick of kicks) {
-            currentPiece.x += kick.x;
-            if (!checkCollision()) {
-                success = true;
-                break;
-            }
-            currentPiece.x -= kick.x;
+        // wall kicks
+        const kicks = [0, -1, 1, -2, 2];
+        for (const k of kicks) {
+            currentPiece.x += k;
+            if (!checkCollision()) { updateBoard(); return; }
+            currentPiece.x -= k;
         }
-
-        if (!success) {
-            currentPiece.shape = originalShape;
-        } else {
-            updateBoard();
-        }
-    }
-
-    function checkCollision() {
-        for (let row = 0; row < currentPiece.shape.length; row++) {
-            for (let col = 0; col < currentPiece.shape[0].length; col++) {
-                if (currentPiece.shape[row][col]) {
-                    const boardRow = currentPiece.y + row;
-                    const boardCol = currentPiece.x + col;
-                    if (boardRow >= BOARD_HEIGHT || boardCol < 0 || boardCol >= BOARD_WIDTH || 
-                        (boardRow >= 0 && board[boardRow][boardCol])) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        currentPiece.shape = originalShape;
     }
 
     function lockPiece() {
-        for (let row = 0; row < currentPiece.shape.length; row++) {
-            for (let col = 0; col < currentPiece.shape[0].length; col++) {
-                if (currentPiece.shape[row][col]) {
-                    const boardRow = currentPiece.y + row;
-                    const boardCol = currentPiece.x + col;
-                    if (boardRow >= 0) {
-                        board[boardRow][boardCol] = currentPiece.color;
-                    }
-                }
-            }
-        }
+        currentPiece.shape.forEach((r, row) => r.forEach((v, col) => {
+            const br = currentPiece.y + row;
+            if (v && br >= 0) board[br][currentPiece.x + col] = currentPiece.color;
+        }));
     }
 
     function clearLines() {
@@ -541,211 +376,130 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (linesCleared > 0) {
             score += linesCleared * 100 * level;
-            scoreDisplay.textContent = score;
-
-            if (score > highScore) {
-                highScore = score;
-                highScoreDisplay.textContent = highScore;
-                localStorage.setItem('tetris-high-score', highScore);
-            }
-
+            lines += linesCleared;
+            bumpHighScore();
             if (score >= level * 1000) {
                 level++;
-                levelDisplay.textContent = level;
                 dropSpeed = Math.max(50, Math.floor(1000 * Math.pow(0.8, level - 1)));
                 clearInterval(dropInterval);
                 startDrop();
             }
+            updateStats(true);
+            wrap.classList.remove('flash'); void wrap.offsetWidth; wrap.classList.add('flash');
         }
     }
 
     function startDrop() {
-        dropInterval = setInterval(() => {
-            movePiece(0, 1);
-        }, dropSpeed);
+        clearInterval(dropInterval);
+        dropInterval = setInterval(() => movePiece(0, 1), dropSpeed);
     }
 
     function holdCurrentPiece() {
-        if (!canHold || gameOver) return;
-        
+        if (!canHold || state !== 'running') return;
+        const current = { shape: TETROMINOS[currentPiece.color.toUpperCase()].shape, color: currentPiece.color, x: 0, y: 0 };
         if (holdPiece) {
-            const temp = currentPiece;
-            currentPiece = {
-                shape: holdPiece.shape,
-                color: holdPiece.color,
-                x: Math.floor(BOARD_WIDTH / 2) - Math.floor(holdPiece.shape[0].length / 2),
-                y: 0
-            };
-            holdPiece = {
-                shape: temp.shape,
-                color: temp.color,
-                x: 0,
-                y: 0
-            };
+            currentPiece = placeAtTop(holdPiece);
         } else {
-            holdPiece = {
-                shape: currentPiece.shape,
-                color: currentPiece.color,
-                x: 0,
-                y: 0
-            };
-            currentPiece = {
-                shape: nextPiece.shape,
-                color: nextPiece.color,
-                x: Math.floor(BOARD_WIDTH / 2) - Math.floor(nextPiece.shape[0].length / 2),
-                y: 0
-            };
-            const nextPieceType = getNextPieceFromBag();
-            nextPiece = {
-                shape: TETROMINOS[nextPieceType].shape,
-                color: TETROMINOS[nextPieceType].color,
-                x: 0,
-                y: 0
-            };
+            currentPiece = placeAtTop(nextPiece);
+            nextPiece = makePiece(getNextPieceFromBag());
             updateNextPiece();
         }
-
+        holdPiece = current;
         canHold = false;
         updateHoldPiece();
         updateBoard();
     }
 
     function hardDrop() {
-        if (gameOver) return;
+        if (state !== 'running') return;
         let dropDistance = 0;
-        while (movePiece(0, 1)) {
-            dropDistance++;
-        }
+        while (movePiece(0, 1)) dropDistance++;
         if (dropDistance > 0) {
             score += dropDistance;
-            scoreDisplay.textContent = score;
-            
-            if (score > highScore) {
-                highScore = score;
-                highScoreDisplay.textContent = highScore;
-                localStorage.setItem('tetris-high-score', highScore);
-            }
+            bumpHighScore();
+            updateStats(false);
         }
     }
 
     function checkGameOver() {
         if (checkCollision()) {
-            gameOver = true;
+            state = 'over';
             clearInterval(dropInterval);
-            document.getElementById('finalScore').textContent = score;
-            gameOverScreen.classList.add('show');
+            resetKeys();
+            gameBoard.classList.add('is-over');
+            pauseBtn.disabled = true;
+            const record = score > 0 && score >= highScore;
+            showMsg(record ? 'New high score!' : 'Game over', `Final score ${score} · level ${level} · ${lines} line${lines === 1 ? '' : 's'}`, 'rotate', 'Try again');
+            if (record && score >= 500 && window.Site && Site.party) Site.party(false);
         }
     }
 
-    function getRandomPiece() {
-        const pieces = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
-        const randomPiece = pieces[Math.floor(Math.random() * pieces.length)];
-        return {
-            shape: TETROMINOS[randomPiece].shape,
-            color: TETROMINOS[randomPiece].color,
-            x: 0,
-            y: 0
-        };
-    }
-
-    function renderBoard() {
-        gameBoard.innerHTML = '';
-        for (let row = 0; row < BOARD_HEIGHT; row++) {
-            for (let col = 0; col < BOARD_WIDTH; col++) {
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                gameBoard.appendChild(cell);
-            }
-        }
-        gameBoard.appendChild(gameOverScreen);
-    }
-
-    function renderNext() {
-        nextPieceBoard.innerHTML = '';
-        if (nextPiece) {
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    if (row < nextPiece.shape.length && col < nextPiece.shape[0].length && nextPiece.shape[row][col]) {
-                        cell.classList.add(nextPiece.color);
-                    }
-                    nextPieceBoard.appendChild(cell);
-                }
-            }
-        }
-    }
-
-    function renderHold() {
-        holdPieceBoard.innerHTML = '';
-    }
-
-    function initBoardOnly() {
-        // Initialize board without starting the game
-        board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
-        gameOver = false;
-        score = 0;
-        level = 1;
-        dropSpeed = 1000;
-        holdPiece = null;
-        canHold = true;
-        currentPiece = null;
-        nextPiece = null;
-        pieceBag = [];
-        pieceHistory = [];
-        keyStates = { left: false, right: false, down: false };
-        initialMoveDone = { left: false, right: false, down: false };
-        showGhost = true;
-        
-        // Update displays
-        document.getElementById('score').textContent = score;
-        document.getElementById('level').textContent = level;
-        if (document.getElementById('lines')) {
-            document.getElementById('lines').textContent = 0;
-        }
-        
-        // Generate initial next piece for display
-        nextPiece = getRandomPiece();
-        
-        // Clear displays
-        renderBoard();
-        renderNext();
-        renderHold();
-        
-        // Update button text to "Start Game" - force the change
-        const buttonElement = document.getElementById('newGame');
-        if (buttonElement) {
-            buttonElement.innerHTML = '<i class="fas fa-play"></i><span>Start Game</span>';
-            
-            // Remove any existing event listeners and add start game listener
-            buttonElement.removeEventListener('click', initBoard);
-            buttonElement.addEventListener('click', startGame);
-        } else {
-        }
-    }
-
+    // ---------- game flow ----------
     function startGame() {
-        // Start the actual game
-        initBoard();
-        
-        // Change button back to "New Game"
-        const buttonElement = document.getElementById('newGame');
-        if (buttonElement) {
-            buttonElement.innerHTML = '<i class="fas fa-redo"></i><span>New Game</span>';
-            
-            // Remove focus from button to prevent spacebar from triggering it
-            buttonElement.blur();
-            
-            // Change button behavior back to restart
-            buttonElement.removeEventListener('click', startGame);
-            buttonElement.addEventListener('click', initBoard);
-        }
+        resetState();
+        state = 'running';
+        spawnPiece();
+        updateBoard();
+        hideMsg();
+        pauseBtn.disabled = false;
+        setPauseLabel();
+        startDrop();
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     }
 
-    // Setup initial event listeners
+    function togglePause() {
+        if (state === 'running') {
+            state = 'paused';
+            clearInterval(dropInterval);
+            resetKeys();
+            showMsg('Paused', 'Take a breath.', 'play', 'Resume');
+        } else if (state === 'paused') {
+            state = 'running';
+            hideMsg();
+            startDrop();
+        }
+        setPauseLabel();
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    }
+    function setPauseLabel() {
+        pauseBtn.innerHTML = state === 'paused'
+            ? '<i class="fas fa-play"></i><span>Resume</span>'
+            : '<i class="fas fa-pause"></i><span>Pause</span>';
+    }
+
+    msgBtn.addEventListener('click', () => {
+        if (state === 'paused') togglePause(); else startGame();
+    });
+    newGameBtn.addEventListener('click', startGame);
+    pauseBtn.addEventListener('click', togglePause);
+    ghostToggle.addEventListener('change', () => {
+        showGhost = ghostToggle.checked;
+        if (currentPiece) updateBoard();
+    });
+
+    // touch pad
+    const pad = $('pad');
+    if (pad) {
+        pad.addEventListener('pointerdown', (e) => {
+            const btn = e.target.closest('button[data-a]');
+            if (!btn) return;
+            e.preventDefault();
+            if (state !== 'running') return;
+            const a = btn.dataset.a;
+            if (a === 'left') movePiece(-1, 0);
+            else if (a === 'right') movePiece(1, 0);
+            else if (a === 'down') movePiece(0, 1);
+            else if (a === 'rotate') rotatePiece();
+            else if (a === 'drop') hardDrop();
+            else if (a === 'hold') holdCurrentPiece();
+        });
+    }
+
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('blur', () => { resetKeys(); if (state === 'running') togglePause(); });
 
-    // Initialize empty board but don't start the game
-    initBoardOnly();
+    // empty board + start overlay
+    resetState();
+    updateNextPiece();
 });

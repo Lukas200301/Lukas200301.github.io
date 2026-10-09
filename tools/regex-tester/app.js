@@ -162,7 +162,7 @@ class RegexTester {
                 </div>` : '';
             
             return `
-                <div class="match-item">
+                <div class="match-item" style="--i:${Math.min(index, 12)}">
                     <div class="match-header">
                         <span class="match-index">Match ${index + 1}</span>
                         <span class="match-position">Position: ${matchData.index}-${matchData.index + matchData.match.length}</span>
@@ -184,25 +184,19 @@ class RegexTester {
             return;
         }
         
-        let highlightedText = testText;
-        let offset = 0;
-        
-        // Sort matches by index to process them in order
+        // Build the overlay from escaped text segments so markup in the test string stays literal
         const sortedMatches = [...matches].sort((a, b) => a.index - b.index);
-        
-        sortedMatches.forEach((matchData, matchIndex) => {
-            const start = matchData.index + offset;
-            const end = start + matchData.match.length;
-            const matchText = highlightedText.substring(start, end);
-            
-            const highlightedMatch = `<span class="highlight group-0">${this.escapeHtml(matchText)}</span>`;
-            
-            highlightedText = highlightedText.substring(0, start) + 
-                            highlightedMatch + 
-                            highlightedText.substring(end);
-                            
-            offset += highlightedMatch.length - matchText.length;
+        let highlightedText = '';
+        let pos = 0;
+        sortedMatches.forEach((matchData) => {
+            if (matchData.index < pos) return;
+            const end = matchData.index + matchData.match.length;
+            highlightedText += this.escapeHtml(testText.substring(pos, matchData.index));
+            highlightedText += `<span class="highlight group-0">${this.escapeHtml(testText.substring(matchData.index, end))}</span>`;
+            pos = end;
         });
+        // trailing newline needs a character so the overlay keeps the same height as the textarea
+        highlightedText += this.escapeHtml(testText.substring(pos)) + '\n';
         
         this.testOverlay.innerHTML = highlightedText;
         this.syncOverlayScroll();
@@ -220,6 +214,7 @@ class RegexTester {
     
     updateResultsCount(count) {
         this.resultsCount.textContent = `${count} match${count !== 1 ? 'es' : ''}`;
+        this.resultsCount.classList.toggle('ok', count > 0);
     }
     
     updateInfo() {
@@ -233,11 +228,13 @@ class RegexTester {
     showError(message) {
         this.errorMessage.textContent = message;
         this.regexError.style.display = 'flex';
+        this.regexInput.parentElement.classList.add('is-bad');
     }
     
     clearError() {
         this.regexError.style.display = 'none';
         this.errorMessage.textContent = '';
+        this.regexInput.parentElement.classList.remove('is-bad');
     }
     
     clearTestString() {

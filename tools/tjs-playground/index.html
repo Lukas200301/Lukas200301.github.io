@@ -25,9 +25,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="tjs-playground-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="tjs-playground-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -37,108 +38,68 @@
 </head>
 <body>
 
-    <!-- Main Content -->
     <main class="tool-page-no-nav">
-        <!-- Header Section -->
         <section id="overview" class="tool-hero">
             <div class="section-container">
                 <div class="tool-header">
                     <div class="tool-info">
                         <div class="tool-breadcrumb">
-                            <a href="../../index.html" class="breadcrumb-link">
-                                <i class="fas fa-home"></i>
-                                Home
-                            </a>
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <a href="../index.html" class="breadcrumb-link">
-                                <i class="fas fa-tools"></i>
-                                Tools
-                            </a>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <span class="breadcrumb-current">JavaScript & TypeScript Playground</span>
+                            <span class="breadcrumb-current">JS &amp; TS Playground</span>
                         </div>
                         <h1 class="tool-title">
                             <i class="fab fa-js"></i>
-                            JavaScript & TypeScript Playground
+                            JS &amp; TS Playground
                         </h1>
-                        <p class="tool-description">
-                            A safe and secure environment to test, run, and experiment with JavaScript and TypeScript code. 
-                            Perfect for learning, prototyping, and testing code snippets with real-time execution and console output.
-                        </p>
-                        
-                        <!-- Status Message -->
-                        <div class="status-message" id="statusMessage" style="display: none;"></div>
+                        <p class="tool-description">Write JavaScript or TypeScript-style code, run it in a sandbox and read the console output right next to the editor. Good for quick experiments and snippets.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fab fa-js"></i><span>JavaScript &amp; TypeScript</span></div>
+                            <div class="meta-item"><i class="fas fa-shield-halved"></i><span>Sandboxed run</span></div>
+                            <div class="meta-item"><i class="fas fa-keyboard"></i><span>Ctrl + Enter to run</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Code Editor Section -->
-        <section id="editor" class="playground-section">
+        <section id="editor" class="tool-section">
             <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-edit"></i>
-                        Code Editor
-                    </h2>
-                    <div class="editor-controls">
-                        <button id="loadExample" class="control-btn secondary">
-                            <i class="fas fa-file-import"></i>
-                            Load Example
-                        </button>
-                        <button id="clearCode" class="control-btn secondary">
-                            <i class="fas fa-trash"></i>
-                            Clear Code
-                        </button>
-                        <button id="runButton" class="control-btn primary">
-                            <i class="fas fa-play"></i>
-                            Run Code
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="playground-layout">
-                    <div class="editor-panel">
-                        <div class="editor-header">
-                            <div class="editor-tabs">
-                                <div class="tab active" data-lang="javascript">
-                                    <i class="fab fa-js-square"></i>
-                                    <span>main.js</span>
-                                </div>
-                                <div class="tab" data-lang="typescript">
-                                    <i class="fab fa-js-square"></i>
-                                    <span>main.ts</span>
-                                </div>
-                            </div>
-                            <div class="editor-info">
-                                <span class="editor-mode">
-                                    <i class="fas fa-code"></i>
-                                    <span id="currentLanguage">JavaScript</span>
-                                </span>
-                            </div>
+                <div class="app">
+                    <div class="panel pg-bar">
+                        <div class="seg" role="group" aria-label="Language">
+                            <button type="button" class="tab active" data-lang="javascript" aria-pressed="true"><i class="fab fa-js"></i>&nbsp; main.js</button>
+                            <button type="button" class="tab" data-lang="typescript" aria-pressed="false"><i class="fas fa-code"></i>&nbsp; main.ts</button>
                         </div>
-                        <div class="editor-container">
-                            <textarea id="codeEditor"></textarea>
+                        <span class="status" id="statusMessage" role="status" aria-live="polite" hidden></span>
+                        <div class="panel__actions">
+                            <button type="button" id="loadExample" class="btn btn--sm btn--ghost"><i class="fas fa-file-import"></i>Load example</button>
+                            <button type="button" id="clearCode" class="btn btn--sm btn--ghost btn--danger"><i class="fas fa-trash"></i>Clear code</button>
+                            <button type="button" id="runButton" class="btn btn--sm btn--primary"><i class="fas fa-play"></i>Run code</button>
                         </div>
                     </div>
-                    
-                    <div class="console-panel">
-                        <div class="console-header">
-                            <div class="console-title">
-                                <i class="fas fa-terminal"></i>
-                                <span>Console Output</span>
+
+                    <div class="pg-grid">
+                        <div class="panel pg-pane">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-code"></i>Editor</h2>
+                                <span class="hint"><span id="currentLanguage">JavaScript</span> &middot; <kbd>Ctrl</kbd> <kbd>Enter</kbd> runs</span>
                             </div>
-                            <button id="clearConsole" class="control-btn secondary small">
-                                <i class="fas fa-broom"></i>
-                                Clear
-                            </button>
+                            <div class="pg-editor">
+                                <textarea id="codeEditor" aria-label="Code editor"></textarea>
+                            </div>
                         </div>
-                        <div class="console-container">
-                            <div id="consoleOutput" class="console-output">
+                        <div class="panel pg-pane">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-terminal"></i>Console</h2>
+                                <button type="button" id="clearConsole" class="btn btn--sm btn--ghost"><i class="fas fa-broom"></i>Clear</button>
                             </div>
+                            <div id="consoleOutput" class="pg-console" aria-live="polite"></div>
                         </div>
                     </div>
+                    <p class="hint">Code runs in a restricted sandbox: network, DOM and timer APIs are blocked, and long runs stop after 2 seconds. Use <code>console.log()</code> to print; errors show up in the console in red.</p>
                 </div>
             </div>
         </section>
@@ -172,8 +133,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
 
     <!-- Main Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>    
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>    
     <!-- Visitor Counter -->
     <script>
         fetch('https://lukas200301-counter.vercel.app/api/counter').catch(err => console.log('Counter:', err));

@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="qr-code.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="qr-code.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -31,90 +32,89 @@
 </head>
 <body>
 
-    <!-- Main Content -->
     <main class="tool-page-no-nav">
-        <!-- Header Section -->
         <section id="overview" class="tool-hero">
             <div class="section-container">
                 <div class="tool-header">
                     <div class="tool-info">
                         <div class="tool-breadcrumb">
-                            <a href="../../index.html" class="breadcrumb-link">
-                                <i class="fas fa-home"></i>
-                                <span>Home</span>
-                            </a>
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <a href="../index.html" class="breadcrumb-link">
-                                <i class="fas fa-tools"></i>
-                                <span>Tools</span>
-                            </a>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
                             <span class="breadcrumb-separator">/</span>
                             <span class="breadcrumb-current">QR Code Generator</span>
                         </div>
-                        
                         <h1 class="tool-title">
                             <i class="fas fa-qrcode"></i>
                             QR Code Generator
                         </h1>
-                        <p class="tool-description">
-                            Generate QR codes from text with customizable options.
-                        </p>
+                        <p class="tool-description">Turn any text or URL into a QR code. Pick the colors and size, then download it as a PNG.</p>
                         <div class="tool-meta">
-                            <div class="meta-item">
-                                <i class="fas fa-download"></i>
-                                <span>Downloadable</span>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fas fa-cog"></i>
-                                <span>Customizable</span>
-                            </div>
+                            <div class="meta-item"><i class="fas fa-palette"></i><span>Custom colors</span></div>
+                            <div class="meta-item"><i class="fas fa-up-right-and-down-left-from-center"></i><span>Three sizes</span></div>
+                            <div class="meta-item"><i class="fas fa-download"></i><span>PNG download</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Password Generator Section -->
         <section id="generator" class="tool-section">
             <div class="section-container">
-                <div class="generator-container">
-                    <div class="tool-container">
-                        <div class="input-section">
-                            <div class="input-group">
-                                <label class="input-label">Enter text or URL</label>
-                                <input type="text" class="text-input" id="qrText" placeholder="Enter text or URL to generate QR code">
+                <div class="qr-layout">
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Content &amp; style</h2></div>
+                        <label class="field">
+                            <span>Text or URL</span>
+                            <input type="text" class="input big" id="qrText" placeholder="https://example.com" autocomplete="off" spellcheck="false">
+                        </label>
+                        <div class="qr-colors">
+                            <div class="field">
+                                <span>QR code color</span>
+                                <label class="swatch">
+                                    <input type="color" id="qrColor" value="#000000" aria-label="QR code color">
+                                    <span class="swatch__hex mono" id="qrColorHex">#000000</span>
+                                </label>
                             </div>
-                            <div class="options-group">
-                                <div class="option">
-                                    <label class="input-label">QR Code Color</label>
-                                    <input type="color" class="color-input" id="qrColor" value="#000000">
-                                </div>
-                                <div class="option">
-                                    <label class="input-label">Background Color</label>
-                                    <input type="color" class="color-input" id="bgColor" value="#ffffff">
-                                </div>
-                                <div class="option">
-                                    <label class="input-label">Size</label>
-                                    <select class="size-input" id="qrSize">
-                                        <option value="128">Small (128x128)</option>
-                                        <option value="256" selected>Medium (256x256)</option>
-                                        <option value="512">Large (512x512)</option>
-                                    </select>
-                                </div>
+                            <div class="field">
+                                <span>Background color</span>
+                                <label class="swatch">
+                                    <input type="color" id="bgColor" value="#ffffff" aria-label="Background color">
+                                    <span class="swatch__hex mono" id="bgColorHex">#FFFFFF</span>
+                                </label>
                             </div>
                         </div>
+                        <label class="field">
+                            <span>Size</span>
+                            <select class="select" id="qrSize">
+                                <option value="128">Small (128 × 128)</option>
+                                <option value="256" selected>Medium (256 × 256)</option>
+                                <option value="512">Large (512 × 512)</option>
+                            </select>
+                        </label>
+                        <p class="hint">Keep enough contrast between the two colors (dark code on a light background scans best). Error correction is set to high, so codes still scan when slightly damaged.</p>
+                    </div>
 
-                        <div class="qr-container" id="qrContainer"></div>
-
-                        <button class="download-btn" id="downloadBtn" disabled>
+                    <div class="panel qr-preview">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-qrcode"></i>Preview</h2>
+                            <span class="hint mono" id="qrMeta"></span>
+                        </div>
+                        <div class="qr-stage">
+                            <div class="qr-container" id="qrContainer"></div>
+                            <div class="qr-empty" id="qrEmpty">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Type some text or a URL to generate a QR code.</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn--primary qr-download" id="downloadBtn" disabled>
                             <i class="fas fa-download"></i>
-                            Download QR Code
+                            Download PNG
                         </button>
+                    </div>
                 </div>
             </div>
         </section>
-
-
     </main>
 
     <!-- Section Navigation Dots -->
@@ -133,7 +133,7 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
      const qrText = document.getElementById('qrText');
@@ -144,8 +144,23 @@
         const downloadBtn = document.getElementById('downloadBtn');
         let qrCode = null;
 
+        const qrEmpty = document.getElementById('qrEmpty');
+        const qrMeta = document.getElementById('qrMeta');
+        const qrColorHex = document.getElementById('qrColorHex');
+        const bgColorHex = document.getElementById('bgColorHex');
+
+        function syncHex() {
+            qrColorHex.textContent = qrColor.value.toUpperCase();
+            bgColorHex.textContent = bgColor.value.toUpperCase();
+        }
+
         function generateQR() {
+            syncHex();
             if (!qrText.value) {
+                qrContainer.innerHTML = '';
+                qrCode = null;
+                qrEmpty.hidden = false;
+                qrMeta.textContent = '';
                 downloadBtn.disabled = true;
                 return;
             }
@@ -159,6 +174,9 @@
                 colorLight: bgColor.value,
                 correctLevel: QRCode.CorrectLevel.H
             });
+            qrContainer.removeAttribute('title');
+            qrEmpty.hidden = true;
+            qrMeta.textContent = qrSize.value + ' × ' + qrSize.value + ' px';
 
             downloadBtn.disabled = false;
         }

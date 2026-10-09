@@ -15,6 +15,19 @@ class GlobleGame {
         this.bestScore = localStorage.getItem('globle-best-score') || null;
         this.closestGuess = null; // Track the closest guess
         this.currentGuessTimeout = null; // Track timeout for temporary cards
+        this.statusTimeout = null;
+
+        // Heat colours (globe dots, list and legend share them; see globle-styles.css)
+        this.colors = {
+            'very-close': '#ff4d6d',
+            'close': '#ff8a4c',
+            'medium': '#ffc56b',
+            'far': '#7fd8c0',
+            'very-far': '#8ea2ff',
+            correct: '#5ee6b5',
+            answer: '#ffd166',
+            idle: '#56628a'
+        };
         
         // Game configuration
         this.maxDistance = 20000; // Maximum distance in km for color scaling
@@ -107,8 +120,9 @@ class GlobleGame {
                 .globeImageUrl('https://unpkg.com/three-globe@2.45.3/example/img/earth-blue-marble.jpg')
                 .showGlobe(true)
                 .showAtmosphere(true)
-                .atmosphereColor('#3b82f6')
-                .atmosphereAltitude(0.2)
+                .backgroundColor('rgba(0,0,0,0)')
+                .atmosphereColor('#7d93ff')
+                .atmosphereAltitude(0.18)
                 .enablePointerInteraction(true)
                 .pointOfView({ altitude: 2.5 })
                 .width(globeElement.clientWidth)
@@ -121,23 +135,20 @@ class GlobleGame {
                 .pointAltitude(0.01)
                 .pointRadius(0.6)
                 .pointColor(d => this.getCountryColor(d))
-                .pointLabel(d => `
-                    <div style="background: rgba(0,0,0,0.8); color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px; max-width: 200px;">
-                        <strong>${d.name}</strong><br>
-                        <small>${d.region}</small>
-                    </div>
-                `)
+                .pointLabel(d => `<div class="globe-tip"><strong>${d.name}</strong><small>${d.region}</small></div>`)
                 .onPointClick(this.handleCountryClick.bind(this))
                 .onPointHover(this.handleCountryHover.bind(this));
 
-            // Handle globe resize
-            window.addEventListener('resize', () => {
-                if (this.globe && globeElement) {
+            // Handle globe resize (window and layout changes)
+            const fit = () => {
+                if (this.globe && globeElement.clientWidth) {
                     this.globe
                         .width(globeElement.clientWidth)
                         .height(globeElement.clientHeight);
                 }
-            });
+            };
+            window.addEventListener('resize', fit);
+            if ('ResizeObserver' in window) new ResizeObserver(fit).observe(globeElement);
 
         } catch (error) {
             throw error;
@@ -173,7 +184,10 @@ class GlobleGame {
 
         if (resetViewBtn) resetViewBtn.addEventListener('click', this.resetGlobeView.bind(this));
         if (autoRotateBtn) autoRotateBtn.addEventListener('click', this.toggleAutoRotate.bind(this));
-        if (giveUpGlobeBtn) giveUpGlobeBtn.addEventListener('click', this.giveUp.bind(this));
+        // one handler: "Give Up" while playing, "New Game" once the round is over
+        if (giveUpGlobeBtn) giveUpGlobeBtn.addEventListener('click', () => {
+            if (this.gameState === 'playing') this.giveUp(); else this.startNewRound();
+        });
 
         // Modal controls
         const closeRulesBtn = document.getElementById('closeRules');
@@ -369,7 +383,7 @@ class GlobleGame {
         const input = document.getElementById('countryInput');
         if (input) {
             input.value = '';
-            input.focus();
+            input.focus({ preventScroll: true });
         }
 
         // Update globe colors
@@ -520,31 +534,24 @@ class GlobleGame {
     }
 
     getCountryColor(country) {
+        const C = this.colors;
         if (!this.mysteryCountry || this.gameState === 'waiting') {
-            return '#3b82f6'; // Default blue
+            return C.idle;
         }
 
         // If it's the mystery country and game is won, show it in gold
         if (country.name === this.mysteryCountry.name && this.gameState === 'won') {
-            return '#ffd700'; // Gold
+            return C.answer;
         }
 
         // If it's been guessed, show distance color
         const guess = this.guesses.find(g => g.name === country.name);
         if (guess) {
-            if (guess.isCorrect) return '#22c55e'; // Green for correct
-            
-            switch (guess.distanceCategory) {
-                case 'very-close': return '#dc2626'; // Dark red
-                case 'close': return '#f97316'; // Orange
-                case 'medium': return '#eab308'; // Yellow
-                case 'far': return '#22c55e'; // Green
-                case 'very-far': return '#3b82f6'; // Blue
-                default: return '#6b7280'; // Gray
-            }
+            if (guess.isCorrect) return C.correct;
+            return C[guess.distanceCategory] || C.idle;
         }
 
-        return '#6b7280'; // Gray for unguessed
+        return C.idle; // unguessed
     }
 
     updateGlobeColors() {
@@ -598,6 +605,7 @@ class GlobleGame {
         
         if (btn) {
             btn.classList.toggle('active', this.isAutoRotating);
+            btn.setAttribute('aria-pressed', String(this.isAutoRotating));
         }
     }
 
@@ -625,14 +633,12 @@ class GlobleGame {
             // Game is active - show Give Up
             giveUpBtn.innerHTML = '<i class="fas fa-flag"></i><span>Give Up</span>';
             giveUpBtn.title = 'Give Up';
-            giveUpBtn.className = 'globe-btn danger';
-            giveUpBtn.onclick = this.giveUp.bind(this);
+            giveUpBtn.className = 'btn btn--sm btn--danger';
         } else {
             // Game is not active - show New Game
             giveUpBtn.innerHTML = '<i class="fas fa-play"></i><span>New Game</span>';
             giveUpBtn.title = 'Start New Game';
-            giveUpBtn.className = 'globe-btn primary';
-            giveUpBtn.onclick = this.startNewRound.bind(this);
+            giveUpBtn.className = 'btn btn--sm btn--primary';
         }
     }
 
@@ -649,9 +655,9 @@ class GlobleGame {
         guessItem.className = `guess-item ${guess.isCorrect ? 'correct' : ''}`;
         guessItem.setAttribute('data-distance', guess.distanceCategory);
         
-        const distanceText = guess.isCorrect ? 'Correct!' : `${Math.round(guess.distance)} km away`;
-        const categoryText = guess.isCorrect ? 'FOUND IT!' : 
-            guess.distanceCategory.replace('-', ' ').toUpperCase();
+        const distanceText = guess.isGiveUp ? 'The answer' : guess.isCorrect ? 'Correct!' : `${Math.round(guess.distance).toLocaleString('en-US')} km`;
+        const categoryText = guess.isGiveUp ? 'Revealed' : guess.isCorrect ? 'Found it' :
+            guess.distanceCategory.replace('-', ' ').replace(/^./, c => c.toUpperCase());
 
         guessItem.innerHTML = `
             <div class="guess-number">${guess.guessNumber}</div>
@@ -664,7 +670,7 @@ class GlobleGame {
                 <div class="distance-dot"></div>
                 <span>${categoryText}</span>
             </div>
-            ${guess.isGiveUp ? '<div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">🏳️ Given up</div>' : ''}
+            ${guess.isGiveUp ? '<div class="guess-giveup"><i class="fas fa-flag"></i> Given up</div>' : ''}
         `;
 
         // Add to top of list
@@ -757,11 +763,11 @@ class GlobleGame {
         }
         if (nameElement) nameElement.textContent = guess.name;
         if (distanceElement) {
-            distanceElement.textContent = guess.isCorrect ? 'Correct!' : `${Math.round(guess.distance)} km away`;
+            distanceElement.textContent = guess.isCorrect ? 'Correct!' : `${Math.round(guess.distance).toLocaleString('en-US')} km away`;
         }
         if (categoryElement) {
-            categoryElement.textContent = guess.isCorrect ? 'FOUND IT!' : 
-                guess.distanceCategory.replace('-', ' ').toUpperCase();
+            categoryElement.textContent = guess.isCorrect ? 'Found it' :
+                guess.distanceCategory.replace('-', ' ').replace(/^./, c => c.toUpperCase());
         }
     }
 
@@ -770,14 +776,7 @@ class GlobleGame {
     }
 
     getDistanceColor(category) {
-        const colors = {
-            'very-close': '#dc2626',
-            'close': '#f97316',
-            'medium': '#eab308',
-            'far': '#22c55e',
-            'very-far': '#3b82f6'
-        };
-        return colors[category] || '#6b7280';
+        return this.colors[category] || this.colors.idle;
     }
 
     clearGuessHistory() {
@@ -848,45 +847,21 @@ class GlobleGame {
     }
 
     showError(message) {
-        // Create or update error message
-        let errorElement = document.querySelector('.error-message');
-        
-        if (!errorElement) {
-            errorElement = document.createElement('div');
-            errorElement.className = 'error-message';
-            errorElement.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #ef4444;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                font-size: 14px;
-                z-index: 1001;
-                max-width: 300px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            `;
-            document.body.appendChild(errorElement);
+        // Inline status under the guess input (falls back to an alert-free console note)
+        const status = document.getElementById('guessStatus');
+        const input = document.getElementById('countryInput');
+        if (!status) { console.warn(message); return; }
+        if (!status.dataset.idle) status.dataset.idle = status.textContent;
+        status.textContent = message;
+        status.classList.add('err-text');
+        if (input) {
+            input.classList.add('is-bad');
         }
-        
-        errorElement.textContent = message;
-        
-        // Show error
-        setTimeout(() => {
-            errorElement.style.transform = 'translateX(0)';
-        }, 100);
-        
-        // Hide error after 3 seconds
-        setTimeout(() => {
-            errorElement.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                if (errorElement.parentNode) {
-                    errorElement.parentNode.removeChild(errorElement);
-                }
-            }, 300);
+        clearTimeout(this.statusTimeout);
+        this.statusTimeout = setTimeout(() => {
+            status.textContent = status.dataset.idle;
+            status.classList.remove('err-text');
+            if (input) input.classList.remove('is-bad');
         }, 3000);
     }
 

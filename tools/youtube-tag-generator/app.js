@@ -113,12 +113,12 @@ class YouTubeTagGenerator {
         
         if (titleCounter) {
             titleCounter.textContent = `${titleCount} characters`;
-            titleCounter.style.color = 'var(--tertiary-text)';
+            titleCounter.style.color = titleCount > 100 ? 'var(--amber)' : '';
         }
         
         if (descCounter) {
             descCounter.textContent = `${descCount}/500 characters`;
-            descCounter.style.color = descCount > 400 ? 'var(--warning-color, #f59e0b)' : 'var(--tertiary-text)';
+            descCounter.style.color = descCount > 400 ? 'var(--amber)' : '';
         }
     }
 
@@ -765,8 +765,12 @@ class YouTubeTagGenerator {
         // Update tag count
         if (tagCount) {
             const totalChars = tagsTextarea.value.length;
-            tagCount.textContent = `${tags.length} tags (${totalChars} characters)`;
-            tagCount.style.color = totalChars > 450 ? 'var(--warning-color, #f59e0b)' : 'var(--accent-text)';
+            tagCount.textContent = tags.length;
+            const tagChars = document.getElementById('tagChars');
+            if (tagChars) {
+                tagChars.textContent = totalChars;
+                tagChars.style.color = totalChars > 500 ? 'var(--rose)' : totalChars > 450 ? 'var(--amber)' : '';
+            }
         }
         
         // Update strength indicator
@@ -775,28 +779,29 @@ class YouTubeTagGenerator {
             strengthFill.style.width = `${strength}%`;
             
             let strengthLabel = 'Poor';
-            let color = '#ef4444';
+            let color = 'var(--rose)';
             
             if (strength > 80) {
                 strengthLabel = 'Excellent';
-                color = '#22c55e';
+                color = 'var(--mint)';
             } else if (strength > 60) {
                 strengthLabel = 'Good';
-                color = '#3b82f6';
+                color = 'var(--signal)';
             } else if (strength > 40) {
                 strengthLabel = 'Fair';
-                color = '#f59e0b';
+                color = 'var(--amber)';
             }
             
             strengthFill.style.background = color;
-            strengthText.textContent = `${strengthLabel} (${tags.length} tags)`;
+            strengthText.textContent = strengthLabel;
+            strengthText.style.color = color;
         }
         
         // Update tag preview
         if (tagPreview) {
             if (tags.length > 0) {
                 tagPreview.innerHTML = tags.map((tag, index) => 
-                    `<div class="tag-item" data-index="${index}">
+                    `<div class="tag-item" data-index="${index}" style="--i:${Math.min(index, 30)}">
                         ${this.escapeHtml(tag)}
                         <button class="tag-remove" onclick="window.youtubeGenerator?.removeTag(${index})" title="Remove tag" type="button">
                             <i class="fas fa-times"></i>
@@ -833,13 +838,14 @@ class YouTubeTagGenerator {
             const copyBtn = document.getElementById('copyTags');
             if (copyBtn) {
                 const originalHTML = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-                copyBtn.style.background = 'var(--success-color, #22c55e)';
+                copyBtn.innerHTML = '<i class="fas fa-check"></i>Copied';
+                copyBtn.classList.add('is-done');
                 
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalHTML;
-                    copyBtn.style.background = '';
-                }, 2000);
+                clearTimeout(this.copyTimer);
+                this.copyTimer = setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i>Copy';
+                    copyBtn.classList.remove('is-done');
+                }, 1600);
             }
         }).catch(() => {
             this.showError('Failed to copy tags to clipboard.');
@@ -855,9 +861,11 @@ class YouTubeTagGenerator {
         
         if (tagsTextarea) tagsTextarea.value = '';
         if (tagPreview) tagPreview.innerHTML = '<p class="no-tags">Generate tags to see preview</p>';
-        if (tagCount) tagCount.textContent = '0 tags';
+        if (tagCount) tagCount.textContent = '0';
+        const tagChars = document.getElementById('tagChars');
+        if (tagChars) { tagChars.textContent = '0'; tagChars.style.color = ''; }
         if (strengthFill) strengthFill.style.width = '0%';
-        if (strengthText) strengthText.textContent = 'No tags generated';
+        if (strengthText) { strengthText.textContent = '-'; strengthText.style.color = ''; }
         
         this.showInfo('Tags cleared');
     }
@@ -905,142 +913,52 @@ class YouTubeTagGenerator {
         return div.innerHTML;
     }
 
-    // Comprehensive notification system
+    // Notification system (styled in youtube-tag-generator-styles.css)
     showNotification(message, type = 'info', duration = 5000) {
-        // Create notification container if it doesn't exist
         let notificationContainer = document.getElementById('notification-container');
         if (!notificationContainer) {
             notificationContainer = document.createElement('div');
             notificationContainer.id = 'notification-container';
-            notificationContainer.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 10000;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                max-width: 400px;
-                pointer-events: none;
-            `;
+            notificationContainer.className = 'yt-notes';
+            notificationContainer.setAttribute('role', 'status');
+            notificationContainer.setAttribute('aria-live', 'polite');
             document.body.appendChild(notificationContainer);
         }
 
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            padding: 16px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 1.4;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: translateX(100%);
-            transition: all 0.3s ease;
-            pointer-events: auto;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            word-wrap: break-word;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        `;
-
-        // Set colors and icons based on type
         const typeConfig = {
-            success: { 
-                bg: '#22c55e', 
-                icon: 'fas fa-check-circle',
-                duration: 4000 
-            },
-            error: { 
-                bg: '#ef4444', 
-                icon: 'fas fa-exclamation-circle',
-                duration: 6000 
-            },
-            warning: { 
-                bg: '#f59e0b', 
-                icon: 'fas fa-exclamation-triangle',
-                duration: 5000 
-            },
-            info: { 
-                bg: '#3b82f6', 
-                icon: 'fas fa-info-circle',
-                duration: 4000 
-            },
-            loading: { 
-                bg: '#6366f1', 
-                icon: 'fas fa-spinner fa-spin',
-                duration: 0 // Don't auto-hide loading notifications
-            }
+            success: { icon: 'fas fa-circle-check', duration: 4000 },
+            error: { icon: 'fas fa-circle-exclamation', duration: 6000 },
+            warning: { icon: 'fas fa-triangle-exclamation', duration: 5000 },
+            info: { icon: 'fas fa-circle-info', duration: 4000 },
+            loading: { icon: 'fas fa-spinner fa-spin', duration: 0 }
         };
-
         const config = typeConfig[type] || typeConfig.info;
-        notification.style.background = config.bg;
-        
-        // Use custom duration or type-specific duration
-        const notificationDuration = duration > 0 ? duration : config.duration;
+        const notificationDuration = type === 'loading' ? 0 : (duration > 0 ? duration : config.duration);
 
-        // Add icon and message
+        const notification = document.createElement('div');
+        notification.className = `yt-note yt-note--${typeConfig[type] ? type : 'info'}`;
         notification.innerHTML = `
-            <i class="${config.icon}" style="flex-shrink: 0;"></i>
-            <span style="flex: 1;">${this.escapeHtml(message)}</span>
-            ${type !== 'loading' ? '<i class="fas fa-times" style="flex-shrink: 0; opacity: 0.7; cursor: pointer;" onclick="this.parentElement.remove()"></i>' : ''}
+            <i class="${config.icon} yt-note__icon"></i>
+            <span class="yt-note__msg">${this.escapeHtml(message)}</span>
+            ${type !== 'loading' ? '<button type="button" class="yt-note__close" aria-label="Dismiss"><i class="fas fa-xmark"></i></button>' : ''}
         `;
-
-        // Add progress bar for timed notifications
         if (notificationDuration > 0) {
             const progressBar = document.createElement('div');
-            progressBar.style.cssText = `
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                height: 3px;
-                background: rgba(255, 255, 255, 0.3);
-                width: 100%;
-                transform-origin: left;
-                animation: notificationProgress ${notificationDuration}ms linear;
-            `;
+            progressBar.className = 'yt-note__bar';
+            progressBar.style.animationDuration = `${notificationDuration}ms`;
             notification.appendChild(progressBar);
         }
 
-        // Add to container
         notificationContainer.appendChild(notification);
 
-        // Animate in
-        requestAnimationFrame(() => {
-            notification.style.transform = 'translateX(0)';
-        });
+        const dismiss = () => {
+            if (!notification.parentElement) return;
+            notification.classList.add('out');
+            setTimeout(() => notification.remove(), 250);
+        };
+        if (notificationDuration > 0) setTimeout(dismiss, notificationDuration);
+        notification.querySelector('.yt-note__close')?.addEventListener('click', dismiss);
 
-        // Auto-remove for non-loading notifications
-        if (notificationDuration > 0) {
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.style.transform = 'translateX(100%)';
-                    setTimeout(() => {
-                        if (notification.parentElement) {
-                            notification.remove();
-                        }
-                    }, 300);
-                }
-            }, notificationDuration);
-        }
-
-        // Click to dismiss
-        notification.addEventListener('click', (e) => {
-            if (e.target.classList.contains('fa-times')) {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (notification.parentElement) {
-                        notification.remove();
-                    }
-                }, 300);
-            }
-        });
-
-        // Return notification element for manual control
         return notification;
     }
 

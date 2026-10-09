@@ -2,9 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation dots
     initializeNavigation();
     
-    // Initialize grid layouts
-    initializeGridLayouts();
-    
+    // Copy buttons on the key/value rows
+    document.addEventListener('click', e => {
+        const b = e.target.closest('.fp-kv .copy');
+        if (b && window.Site) Site.copy(b.parentElement.querySelector('dd').textContent, 'Copied');
+    });
+
     // Initialize risk assessment
     updateRiskAssessment();
     
@@ -32,7 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add appropriate classes based on type
             if (type === 'boolean') {
-                element.classList.add('boolean', value.toLowerCase().includes('yes') || value.toLowerCase().includes('available') || value.toLowerCase().includes('supported') ? 'true' : 'false');
+                const v = value.toLowerCase();
+                const positive = /yes|available|supported/.test(v) && !/^(not|no)\b|unable/.test(v);
+                element.classList.add('boolean', positive ? 'true' : 'false');
             } else if (type === 'ip') {
                 element.classList.add('ip-address');
             } else if (type === 'location') {
@@ -235,32 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scoreElement) {
             scoreElement.textContent = `${uniquenessPercentage}%`;
         }
-
-        // Update risk indicators based on findings
-        updateRiskIndicators();
+        const ring = document.getElementById('scoreRing');
+        if (ring) {
+            ring.classList.toggle('is-high', uniquenessPercentage >= 70);
+            requestAnimationFrame(() => ring.style.setProperty('--p', uniquenessPercentage));
+        }
     }
 
-    function updateRiskIndicators() {
-        const indicators = document.querySelectorAll('.risk-indicator');
-        indicators.forEach(indicator => {
-            const text = indicator.querySelector('span').textContent;
-            
-            // Add visual feedback based on what was detected
-            if (text.includes('Canvas') && canvasFingerprint && canvasFingerprint.length > 10) {
-                indicator.style.opacity = '1';
-                indicator.style.transform = 'scale(1.02)';
-            } else if (text.includes('WebGL') && gl) {
-                indicator.style.opacity = '1';
-                indicator.style.transform = 'scale(1.02)';
-            } else if (text.includes('Audio')) {
-                indicator.style.opacity = '1';
-                indicator.style.transform = 'scale(1.02)';
-            } else if (text.includes('Screen')) {
-                indicator.style.opacity = '1';
-                indicator.style.transform = 'scale(1.02)';
-            }
-        });
-    }
 });
 
 // Utility Functions
@@ -402,7 +388,7 @@ function checkWebMSupport() {
 // Navigation functionality
 function initializeNavigation() {
     const navDots = document.querySelectorAll('.nav-dot');
-    const sections = document.querySelectorAll('.fingerprint-section, .tool-hero');
+    const sections = document.querySelectorAll('.fingerprint-section[id], .tool-hero');
     
     // Add click handlers to navigation dots
     navDots.forEach(dot => {
@@ -591,99 +577,6 @@ async function checkWebRTCIPLeak() {
     });
 }
 
-// Grid Layout Management
-function initializeGridLayouts() {
-    // Apply grid layouts to all masonry containers
-    const masonryContainers = document.querySelectorAll('.fingerprint-masonry');
-    
-    masonryContainers.forEach(container => {
-        const cards = container.querySelectorAll('.fingerprint-card');
-        const cardCount = cards.length;
-        
-        // Remove any existing grid classes
-        container.classList.remove('grid-2-cols', 'grid-3-cols', 'center-last-row');
-        
-        if (cardCount === 3) {
-            container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else if (cardCount === 4) {
-            container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        } else if (cardCount === 5) {
-            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
-            container.style.gridTemplateRows = 'auto auto';
-            container.classList.add('center-last-row');
-            
-            // First row: 3 cards
-            cards[0].style.gridColumn = '1 / 2';
-            cards[0].style.gridRow = '1';
-            cards[1].style.gridColumn = '2 / 3';
-            cards[1].style.gridRow = '1';
-            cards[2].style.gridColumn = '3 / 4';
-            cards[2].style.gridRow = '1';
-            
-            // Second row: 2 cards centered
-            cards[3].style.gridColumn = '2 / 3';
-            cards[3].style.gridRow = '2';
-            cards[3].style.justifySelf = 'center';
-            
-            cards[4].style.gridColumn = '3 / 4';
-            cards[4].style.gridRow = '2';
-            cards[4].style.justifySelf = 'center';
-        } else if (cardCount === 6) {
-            container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else if (cardCount >= 7) {
-            container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        } else {
-            container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        }
-    });
-    
-    // Handle responsive design
-    function updateResponsiveGrids() {
-        const isMobile = window.innerWidth <= 768;
-        const isTablet = window.innerWidth <= 1200 && window.innerWidth > 768;
-        
-        masonryContainers.forEach(container => {
-            const cards = container.querySelectorAll('.fingerprint-card');
-            
-            if (isMobile) {
-                container.style.gridTemplateColumns = '1fr';
-                // Reset any centering styles on mobile
-                cards.forEach(card => {
-                    card.style.gridColumn = 'auto';
-                    card.style.gridRow = 'auto';
-                    card.style.justifySelf = 'stretch';
-                    card.style.transform = 'none';
-                    card.style.marginLeft = '0';
-                    card.style.marginRight = '0';
-                });
-                
-                // Reset container grid
-                container.style.gridTemplateRows = 'auto';
-            } else if (isTablet) {
-                container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-                // Reset any centering styles on tablet
-                cards.forEach(card => {
-                    card.style.gridColumn = 'auto';
-                    card.style.gridRow = 'auto';
-                    card.style.justifySelf = 'stretch';
-                    card.style.transform = 'none';
-                    card.style.marginLeft = '0';
-                    card.style.marginRight = '0';
-                });
-                
-                // Reset container grid
-                container.style.gridTemplateRows = 'auto';
-            } else {
-                // Reapply desktop grid layout
-                initializeGridLayouts();
-            }
-        });
-    }
-    
-    // Update grids on window resize
-    window.addEventListener('resize', updateResponsiveGrids);
-}
-
 function updateRiskAssessment() {
     const riskIndicators = document.querySelectorAll('.risk-indicator');
     
@@ -723,40 +616,40 @@ function updateRiskAssessment() {
     
     // MEDIUM RISK (Moderate tracking vectors)
     if (fingerprintData.audioContextSupported) {
-        risks.push({ level: 'medium', name: 'Audio Context Fingerprinting', icon: 'fas fa-warning', severity: 4 });
+        risks.push({ level: 'medium', name: 'Audio Context Fingerprinting', icon: 'fas fa-triangle-exclamation', severity: 4 });
     }
     
     if (fingerprintData.hardwareInfo) {
-        risks.push({ level: 'medium', name: 'Hardware Information Leak', icon: 'fas fa-warning', severity: 5 });
+        risks.push({ level: 'medium', name: 'Hardware Information Leak', icon: 'fas fa-triangle-exclamation', severity: 5 });
     }
     
     if (fingerprintData.screenFingerprint) {
-        risks.push({ level: 'medium', name: 'Screen Resolution Tracking', icon: 'fas fa-warning', severity: 6 });
+        risks.push({ level: 'medium', name: 'Screen Resolution Tracking', icon: 'fas fa-triangle-exclamation', severity: 6 });
     }
     
     if (fingerprintData.pluginsCount > 0) {
-        risks.push({ level: 'medium', name: 'Browser Plugins Detectable', icon: 'fas fa-warning', severity: 7 });
+        risks.push({ level: 'medium', name: 'Browser Plugins Detectable', icon: 'fas fa-triangle-exclamation', severity: 7 });
     }
     
     if (fingerprintData.geolocationAPI) {
-        risks.push({ level: 'medium', name: 'Geolocation API Available', icon: 'fas fa-warning', severity: 8 });
+        risks.push({ level: 'medium', name: 'Geolocation API Available', icon: 'fas fa-triangle-exclamation', severity: 8 });
     }
     
     // LOW RISK (Minor tracking vectors)
     if (fingerprintData.timezoneDetectable) {
-        risks.push({ level: 'low', name: 'Timezone Detection', icon: 'fas fa-info-circle', severity: 9 });
+        risks.push({ level: 'low', name: 'Timezone Detection', icon: 'fas fa-circle-info', severity: 9 });
     }
     
     if (fingerprintData.localStorageAvailable) {
-        risks.push({ level: 'low', name: 'Local Storage Tracking', icon: 'fas fa-info-circle', severity: 10 });
+        risks.push({ level: 'low', name: 'Local Storage Tracking', icon: 'fas fa-circle-info', severity: 10 });
     }
     
     if (!fingerprintData.doNotTrack) {
-        risks.push({ level: 'low', name: 'Do Not Track Disabled', icon: 'fas fa-info-circle', severity: 11 });
+        risks.push({ level: 'low', name: 'Do Not Track Disabled', icon: 'fas fa-circle-info', severity: 11 });
     }
     
     if (fingerprintData.fontsDetectable) {
-        risks.push({ level: 'low', name: 'Font Enumeration Possible', icon: 'fas fa-info-circle', severity: 12 });
+        risks.push({ level: 'low', name: 'Font Enumeration Possible', icon: 'fas fa-circle-info', severity: 12 });
     }
     
     // Sort risks by severity (already ordered by importance)
@@ -767,10 +660,11 @@ function updateRiskAssessment() {
     if (riskContainer) {
         riskContainer.innerHTML = '';
         
-        risks.forEach(risk => {
+        risks.forEach((risk, i) => {
             const riskElement = document.createElement('div');
             riskElement.className = 'risk-indicator';
             riskElement.setAttribute('data-risk', risk.level);
+            riskElement.style.animationDelay = `${i * 40}ms`;
             riskElement.innerHTML = `
                 <i class="${risk.icon}"></i>
                 <span>${risk.name}</span>
@@ -783,21 +677,23 @@ function updateRiskAssessment() {
     const highRisks = risks.filter(r => r.level === 'high').length;
     const mediumRisks = risks.filter(r => r.level === 'medium').length;
     const lowRisks = risks.filter(r => r.level === 'low').length;
-    
+
     let overallRisk = 'Low';
-    let riskColor = '#00f2c3';
-    
     if (highRisks >= 2) {
         overallRisk = 'High';
-        riskColor = '#ff6b6b';
     } else if (highRisks >= 1 || mediumRisks >= 3) {
         overallRisk = 'Medium';
-        riskColor = '#ffc107';
     }
-    
-    // Update assessment header if needed
-    const assessmentHeader = document.querySelector('.assessment-header h3');
-    if (assessmentHeader) {
-        assessmentHeader.innerHTML = `Tracking Risks - Overall: <span style="color: ${riskColor}">${overallRisk}</span>`;
+
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('riskHigh', highRisks);
+    set('riskMed', mediumRisks);
+    set('riskLow', lowRisks);
+    set('riskOverall', overallRisk);
+
+    const overall = document.getElementById('overallRisk');
+    if (overall) {
+        overall.className = 'status ' + overallRisk.toLowerCase();
+        overall.innerHTML = `<i class="fas fa-${overallRisk === 'Low' ? 'circle-check' : 'triangle-exclamation'}"></i>Overall: ${overallRisk}`;
     }
 }

@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="fingerprint-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="fingerprint-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -30,24 +31,15 @@
     try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
 </head>
 <body>
-
-    <!-- Main Content -->
     <main class="tool-page-no-nav">
-        <!-- Header Section -->
         <section id="overview" class="tool-hero">
             <div class="section-container">
                 <div class="tool-header">
                     <div class="tool-info">
                         <div class="tool-breadcrumb">
-                            <a href="../../index.html" class="breadcrumb-link">
-                                <i class="fas fa-home"></i>
-                                Home
-                            </a>
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <a href="../index.html" class="breadcrumb-link">
-                                <i class="fas fa-tools"></i>
-                                Tools
-                            </a>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
                             <span class="breadcrumb-separator">/</span>
                             <span class="breadcrumb-current">Browser Fingerprint</span>
                         </div>
@@ -55,634 +47,213 @@
                             <i class="fas fa-fingerprint"></i>
                             Browser Fingerprint Analyzer
                         </h1>
-                        <p class="tool-description">
-                            Discover what information your browser reveals about you. This tool analyzes various browser characteristics, canvas fingerprinting, WebGL rendering, and audio context to show your unique digital fingerprint.
-                        </p>
-                        <div class="fingerprint-status">
-                            <div class="status-indicator" id="analysisStatus">
-                                <i class="fas fa-hourglass-half"></i>
-                                <span>Analyzing fingerprint...</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Uniqueness Score Overview -->
-                        <div class="overview-score">
-                            <div class="score-container">
-                                <div class="score-circle">
-                                    <span class="score-value">?</span>
-                                    <span class="score-label">Unique</span>
-                                </div>
-                                <div class="score-details">
-                                    <h3>Your Fingerprint Uniqueness</h3>
-                                    <p>This percentage indicates how unique your browser fingerprint is compared to other users. Higher percentages mean you're more easily trackable.</p>
-                                </div>
-                            </div>
+                        <p class="tool-description">Discover what your browser reveals about you: browser and screen details, hardware, storage, canvas, WebGL and audio fingerprints, and how trackable that makes you.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-layer-group"></i><span>40+ signals</span></div>
+                            <div class="meta-item"><i class="fas fa-gauge"></i><span>Uniqueness score</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Nothing is stored</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Browser Information -->
-        <section id="browser-section" class="fingerprint-section">
+        <section id="summary" class="tool-section fingerprint-section">
             <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-globe"></i>
-                        Browser Information
-                    </h2>
-                    <p class="section-description">Basic information about your browser and environment</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-user-agent"></i>
-                            <h3>User Agent</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="userAgent">Analyzing...</div>
-                        </div>
+                <div class="panel fp-summary">
+                    <div class="fp-ring" id="scoreRing" style="--p:0">
+                        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="fp-ring__track" cx="60" cy="60" r="52"/><circle class="fp-ring__bar" cx="60" cy="60" r="52" pathLength="100"/></svg>
+                        <div class="fp-ring__val"><span class="score-value">?</span><span class="score-label">unique</span></div>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-globe"></i>
-                            <h3>Browser</h3>
+                    <div class="fp-summary__body">
+                        <div class="row">
+                            <h2 class="panel__title"><i class="fas fa-gauge"></i>Fingerprint uniqueness</h2>
+                            <span class="status" id="analysisStatus"><i class="fas fa-hourglass-half"></i><span>Analyzing fingerprint...</span></span>
                         </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="browser">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-desktop"></i>
-                            <h3>Operating System</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="os">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-language"></i>
-                            <h3>Language</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="language">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-fingerprint"></i>
-                            <h3>Platform</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="platform">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-clock"></i>
-                            <h3>Timezone</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="timezone">Analyzing...</div>
+                        <p class="hint">How distinguishable your browser is from others, based on the signals below. Higher means you are easier to track across sites without cookies.</p>
+                        <div class="stats">
+                            <div class="stat stat--high"><b id="riskHigh">–</b><span>High risks</span></div>
+                            <div class="stat stat--med"><b id="riskMed">–</b><span>Medium risks</span></div>
+                            <div class="stat stat--low"><b id="riskLow">–</b><span>Low risks</span></div>
+                            <div class="stat"><b id="riskOverall">–</b><span>Overall risk</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Screen & Display -->
-        <section id="screen" class="fingerprint-section">
+        <section id="browser-section" class="tool-section fingerprint-section">
             <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-tv"></i>
-                        Screen & Display
-                    </h2>
-                    <p class="section-description">Information about your display capabilities and settings</p>
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-globe"></i>Browser</h2>
+                        <p class="hint">Basic information about your browser and environment</p>
+                    </div>
+                    <dl class="kv fp-kv">
+                                <div class="wide"><dt><i class="fas fa-id-card"></i>User agent</dt><dd id="userAgent" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy User agent"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-globe"></i>Browser</dt><dd id="browser" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Browser"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-desktop"></i>Operating system</dt><dd id="os" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Operating system"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-language"></i>Language</dt><dd id="language" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Language"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-fingerprint"></i>Platform</dt><dd id="platform" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Platform"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-clock"></i>Timezone</dt><dd id="timezone" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Timezone"><i class="far fa-copy"></i></button></div>
+                    </dl>
                 </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-expand"></i>
-                            <h3>Screen Resolution</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="screenResolution">Analyzing...</div>
-                        </div>
+            </div>
+        </section>
+
+        <section id="screen" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-tv"></i>Screen &amp; display</h2>
+                        <p class="hint">Display capabilities and settings</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                            <h3>Available Screen</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="availableScreen">Analyzing...</div>
-                        </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-expand"></i>Screen resolution</dt><dd id="screenResolution" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Screen resolution"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-up-right-and-down-left-from-center"></i>Available screen</dt><dd id="availableScreen" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Available screen"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-palette"></i>Color depth</dt><dd id="colorDepth" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Color depth"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-sun"></i>Color gamut</dt><dd id="colorGamut" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Color gamut"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-compress"></i>Pixel ratio</dt><dd id="pixelRatio" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Pixel ratio"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-arrows-left-right"></i>Orientation</dt><dd id="screenOrientation" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Orientation"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="network" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-network-wired"></i>Network &amp; location</h2>
+                        <p class="hint">Your connection and what your IP reveals</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-palette"></i>
-                            <h3>Color Depth</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="colorDepth">Analyzing...</div>
-                        </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-wifi"></i>Connection type</dt><dd id="connectionType" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Connection type"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-globe"></i>IPv4 address</dt><dd id="ipv4" class="analyzing">Loading...</dd><button class="copy" type="button" aria-label="Copy IPv4 address"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-earth-americas"></i>IPv6 address</dt><dd id="ipv6" class="analyzing">Loading...</dd><button class="copy" type="button" aria-label="Copy IPv6 address"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-location-dot"></i>Location</dt><dd id="location" class="analyzing">Loading...</dd><button class="copy" type="button" aria-label="Copy Location"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-flag"></i>Country</dt><dd id="country" class="analyzing">Loading...</dd><button class="copy" type="button" aria-label="Copy Country"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-building"></i>ISP</dt><dd id="isp" class="analyzing">Loading...</dd><button class="copy" type="button" aria-label="Copy ISP"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-shield-halved"></i>Privacy &amp; storage</h2>
+                        <p class="hint">Privacy settings and data storage capabilities</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-sun"></i>
-                            <h3>Color Gamut</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="colorGamut">Analyzing...</div>
-                        </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-cookie-bite"></i>Cookies enabled</dt><dd id="cookiesEnabled" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Cookies enabled"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-user-secret"></i>Do Not Track</dt><dd id="doNotTrack" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Do Not Track"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-database"></i>Local storage</dt><dd id="localStorage" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Local storage"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-server"></i>Session storage</dt><dd id="sessionStorage" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Session storage"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-box-archive"></i>IndexedDB</dt><dd id="indexedDB" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy IndexedDB"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-network-wired"></i>WebRTC IP leak</dt><dd id="webrtcIPLeak" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebRTC IP leak"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="hardware" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-microchip"></i>Hardware</h2>
+                        <p class="hint">Details about your device's hardware</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-compress"></i>
-                            <h3>Pixel Ratio</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="pixelRatio">Analyzing...</div>
-                        </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-microchip"></i>CPU cores</dt><dd id="cpuCores" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy CPU cores"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-memory"></i>Device memory</dt><dd id="deviceMemory" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Device memory"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-list-check"></i>Hardware concurrency</dt><dd id="hardwareConcurrency" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Hardware concurrency"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-battery-half"></i>Battery status</dt><dd id="batteryStatus" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Battery status"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="graphics" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-paintbrush"></i>Graphics &amp; rendering</h2>
+                        <p class="hint">Graphics capabilities and fingerprinting vectors</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-arrows-alt-h"></i>
-                            <h3>Orientation</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="screenOrientation">Analyzing...</div>
-                        </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-cube"></i>WebGL vendor</dt><dd id="webglVendor" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebGL vendor"><i class="far fa-copy"></i></button></div>
+                                <div class="wide"><dt><i class="fas fa-gears"></i>WebGL renderer</dt><dd id="webglRenderer" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebGL renderer"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-cube"></i>WebGL version</dt><dd id="webglVersion" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebGL version"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-puzzle-piece"></i>WebGL extensions</dt><dd id="webglExtensions" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebGL extensions"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-image"></i>Canvas hash</dt><dd id="canvasFingerprint" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Canvas hash"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-volume-high"></i>Audio hash</dt><dd id="audioFingerprint" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Audio hash"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="capabilities" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-circle-check"></i>Capabilities</h2>
+                        <p class="hint">Supported features and API availability</p>
+                    </div>
+                    <dl class="kv fp-kv">
+                                <div><dt><i class="fas fa-video"></i>WebRTC</dt><dd id="webrtc" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebRTC"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-file-image"></i>WebP support</dt><dd id="webp" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebP support"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-file-video"></i>WebM support</dt><dd id="webm" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy WebM support"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-file-audio"></i>Audio formats</dt><dd id="audioFormats" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Audio formats"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-gamepad"></i>Gamepad API</dt><dd id="gamepadAPI" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Gamepad API"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-mobile-screen"></i>Touch support</dt><dd id="touchSupport" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Touch support"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-microphone"></i>Speech recognition</dt><dd id="speechRecognition" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Speech recognition"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-map"></i>Geolocation API</dt><dd id="geolocationAPI" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Geolocation API"><i class="far fa-copy"></i></button></div>
+                                <div><dt><i class="fas fa-camera"></i>Media devices</dt><dd id="mediaDevices" class="analyzing">Analyzing...</dd><button class="copy" type="button" aria-label="Copy Media devices"><i class="far fa-copy"></i></button></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section id="assessment" class="tool-section fingerprint-section">
+            <div class="section-container">
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title assessment-header"><i class="fas fa-triangle-exclamation"></i><span>Privacy risk assessment</span></h2>
+                        <span class="status" id="overallRisk">Assessing…</span>
+                    </div>
+                    <div class="risk-indicators">
+                        <div class="risk-indicator" data-risk="low"><i class="fas fa-circle-info"></i><span>Loading assessment...</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Network & Location -->
-        <section id="network" class="fingerprint-section">
+        <section id="protection" class="tool-section fingerprint-section">
             <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-network-wired"></i>
-                        Network & Location
-                    </h2>
-                    <p class="section-description">Your network connection and geographical information</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-wifi"></i>
-                            <h3>Connection Type</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="connectionType">Analyzing...</div>
-                        </div>
+                <div class="panel">
+                    <div class="panel__head">
+                        <h2 class="panel__title"><i class="fas fa-lightbulb"></i>Protection tips</h2>
+                        <p class="hint">Ways to reduce tracking</p>
                     </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-globe"></i>
-                            <h3>IPv4 Address</h3>
+                    <div class="tips">
+                        <div class="tip">
+                            <span class="tip__icon"><i class="fas fa-user-secret"></i></span>
+                            <div><h3>Use a privacy-focused browser</h3><p>Firefox with strict tracking protection, Brave, or Tor Browser for maximum anonymity.</p></div>
+                        </div>
+                        <div class="tip">
+                            <span class="tip__icon"><i class="fas fa-puzzle-piece"></i></span>
+                            <div><h3>Add privacy extensions</h3><p>uBlock Origin, Privacy Badger or CanvasBlocker make fingerprinting harder.</p></div>
+                        </div>
+                        <div class="tip">
+                            <span class="tip__icon"><i class="fas fa-gear"></i></span>
+                            <div><h3>Adjust browser settings</h3><p>Block third-party cookies, disable JavaScript where you can, and use private windows.</p></div>
+                        </div>
+                        <div class="tip">
+                            <span class="tip__icon"><i class="fas fa-globe"></i></span>
+                            <div><h3>Use a VPN</h3><p>A VPN hides your IP address and location, one part of your digital fingerprint.</p></div>
                         </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="ipv4">Loading...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-globe-americas"></i>
-                            <h3>IPv6 Address</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="ipv6">Loading...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <h3>Location</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="location">Loading...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-flag"></i>
-                            <h3>Country</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="country">Loading...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-building"></i>
-                            <h3>ISP</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="isp">Loading...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Privacy & Security -->
-        <section id="privacy" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Privacy & Security
-                    </h2>
-                    <p class="section-description">Privacy settings and data storage capabilities</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-cookie-bite"></i>
-                            <h3>Cookies Enabled</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="cookiesEnabled">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-user-secret"></i>
-                            <h3>Do Not Track</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="doNotTrack">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-database"></i>
-                            <h3>Local Storage</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="localStorage">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-server"></i>
-                            <h3>Session Storage</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="sessionStorage">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-archive"></i>
-                            <h3>IndexedDB</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="indexedDB">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-network-wired"></i>
-                            <h3>WebRTC IP Leak</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webrtcIPLeak">Analyzing...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Hardware Information -->
-        <section id="hardware" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-microchip"></i>
-                        Hardware Information
-                    </h2>
-                    <p class="section-description">Details about your device's hardware capabilities</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-cpu"></i>
-                            <h3>CPU Cores</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="cpuCores">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-memory"></i>
-                            <h3>Device Memory</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="deviceMemory">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-tasks"></i>
-                            <h3>Hardware Concurrency</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="hardwareConcurrency">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-battery-half"></i>
-                            <h3>Battery Status</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="batteryStatus">Analyzing...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Graphics & Rendering -->
-        <section id="graphics" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-paint-brush"></i>
-                        Graphics & Rendering
-                    </h2>
-                    <p class="section-description">Graphics capabilities and fingerprinting vectors</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-cube"></i>
-                            <h3>WebGL Vendor</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webglVendor">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-cogs"></i>
-                            <h3>WebGL Renderer</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webglRenderer">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-cube"></i>
-                            <h3>WebGL Version</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webglVersion">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-puzzle-piece"></i>
-                            <h3>WebGL Extensions</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webglExtensions">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-image"></i>
-                            <h3>Canvas Fingerprint</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value monospace" id="canvasFingerprint">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-volume-up"></i>
-                            <h3>Audio Fingerprint</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value monospace" id="audioFingerprint">Analyzing...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Browser Capabilities -->
-        <section id="capabilities" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-check-circle"></i>
-                        Browser Capabilities
-                    </h2>
-                    <p class="section-description">Supported features and API availability</p>
-                </div>
-                <div class="fingerprint-masonry">
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-video"></i>
-                            <h3>WebRTC</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webrtc">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-file-image"></i>
-                            <h3>WebP Support</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webp">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-file-video"></i>
-                            <h3>WebM Support</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="webm">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-file-audio"></i>
-                            <h3>Audio Formats</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="audioFormats">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-gamepad"></i>
-                            <h3>Gamepad API</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="gamepadAPI">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-mobile-alt"></i>
-                            <h3>Touch Support</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="touchSupport">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-microphone"></i>
-                            <h3>Speech Recognition</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="speechRecognition">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-map"></i>
-                            <h3>Geolocation API</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="geolocationAPI">Analyzing...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="fingerprint-card">
-                        <div class="card-header">
-                            <i class="fas fa-camera"></i>
-                            <h3>Media Devices</h3>
-                        </div>
-                        <div class="card-content">
-                            <div class="fingerprint-value" id="mediaDevices">Analyzing...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Risk Assessment -->
-        <section id="assessment" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Privacy Risk Assessment
-                    </h2>
-                    <p class="section-description">Analysis of tracking risks and fingerprinting vectors</p>
-                </div>
-                
-                <div class="risk-assessment-grid">
-                    <div class="assessment-card">
-                        <div class="assessment-header">
-                            <i class="fas fa-eye"></i>
-                            <h3>Tracking Risks</h3>
-                        </div>
-                        <div class="assessment-content">
-                            <div class="risk-indicators">
-                                <!-- Risk indicators will be populated by JavaScript -->
-                                <div class="risk-indicator" data-risk="high">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                    <span>Loading assessment...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Protection Tips -->
-        <section id="protection" class="fingerprint-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-lightbulb"></i>
-                        Protection Tips
-                    </h2>
-                    <p class="section-description">Recommendations to improve your privacy and reduce tracking</p>
-                </div>
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <div class="tip-icon">
-                            <i class="fas fa-user-secret"></i>
-                        </div>
-                        <h3>Use Privacy-Focused Browsers</h3>
-                        <p>Consider using browsers like Firefox with privacy settings enabled, or Tor Browser for maximum anonymity.</p>
-                    </div>
-                    
-                    <div class="tip-card">
-                        <div class="tip-icon">
-                            <i class="fas fa-puzzle-piece"></i>
-                        </div>
-                        <h3>Browser Extensions</h3>
-                        <p>Install privacy extensions like uBlock Origin, Privacy Badger, or Canvas Blocker to prevent fingerprinting.</p>
-                    </div>
-                    
-                    <div class="tip-card">
-                        <div class="tip-icon">
-                            <i class="fas fa-cog"></i>
-                        </div>
-                        <h3>Adjust Browser Settings</h3>
-                        <p>Disable JavaScript when possible, block third-party cookies, and use private/incognito mode.</p>
-                    </div>
-                    
-                    <div class="tip-card">
-                        <div class="tip-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Use VPN Services</h3>
-                        <p>A VPN can help mask your IP address and location, reducing one aspect of your digital fingerprint.</p>
                     </div>
                 </div>
             </div>
@@ -723,18 +294,9 @@
         </div>
     </div>
 
-    <!-- Back to Top -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
 
-    <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>
-    
-    <!-- Visitor Counter -->
-    <script>
-        fetch('https://lukas200301-counter.vercel.app/api/counter').catch(err => console.log('Counter:', err));
-    </script>
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
 </body>
 </html>

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const codeEditor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
         mode: 'javascript',
-        theme: 'dracula',
+        theme: 'ink',
         lineNumbers: true,
         autoCloseBrackets: true,
         matchBrackets: true,
@@ -45,8 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function switchLanguage(lang) {
         currentLanguage = lang;
-        tabs.forEach(t => t.classList.remove('active'));
-        document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+        tabs.forEach(t => {
+            const on = t.getAttribute('data-lang') === lang;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
         
         if (lang === 'typescript') {
             codeEditor.setOption('mode', 'text/typescript');
@@ -227,12 +230,20 @@ console.log('Average age:', avgAge.toFixed(1));
     const MAX_CONSOLE_LINES = 100;
     let consoleLineCount = 0;
 
+    let statusTimer = null;
     function showStatus(message, type) {
-        statusMessage.textContent = message;
-        statusMessage.className = `status-message ${type}`;
-        statusMessage.style.display = 'block';
-        setTimeout(() => {
-            statusMessage.style.display = 'none';
+        const kind = type === 'error' ? 'err' : type === 'warning' ? 'warn' : 'ok';
+        const icon = kind === 'err' ? 'fa-circle-xmark' : kind === 'warn' ? 'fa-triangle-exclamation' : 'fa-circle-check';
+        statusMessage.innerHTML = `<i class="fas ${icon}"></i>`;
+        statusMessage.appendChild(document.createTextNode(message.trim()));
+        statusMessage.className = `status ${kind}`;
+        statusMessage.hidden = false;
+        // restart the fade-in animation
+        void statusMessage.offsetWidth;
+        statusMessage.classList.add('in');
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => {
+            statusMessage.hidden = true;
         }, 3000);
     }
 

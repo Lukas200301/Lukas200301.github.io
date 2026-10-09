@@ -20,9 +20,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
-    <link rel="stylesheet" href="regex-tester-styles.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
+    <link rel="stylesheet" href="regex-tester-styles.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -32,142 +33,87 @@
 </head>
 <body>
 
-    <!-- Main Content -->
     <main class="tool-page-no-nav">
-        <!-- Header Section -->
         <section id="overview" class="tool-hero">
             <div class="section-container">
                 <div class="tool-header">
                     <div class="tool-info">
                         <div class="tool-breadcrumb">
-                            <a href="../../index.html" class="breadcrumb-link">
-                                <i class="fas fa-home"></i>
-                                <span>Home</span>
-                            </a>
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
                             <span class="breadcrumb-separator">/</span>
-                            <a href="../index.html" class="breadcrumb-link">
-                                <i class="fas fa-tools"></i>
-                                <span>Tools</span>
-                            </a>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
                             <span class="breadcrumb-separator">/</span>
                             <span class="breadcrumb-current">Regex Tester</span>
                         </div>
-                        
                         <h1 class="tool-title">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-magnifying-glass"></i>
                             Regex Tester
                         </h1>
-                        <p class="tool-description">
-                            Test and validate regular expressions with real-time matching and highlighting
-                        </p>
-                                
-                                <div class="tool-meta">
-                                    <div class="meta-item">
-                                        <i class="fas fa-bolt"></i>
-                                        <span>Real-time Testing</span>
-                                    </div>
-                                    <div class="meta-item">
-                                        <i class="fas fa-highlighter"></i>
-                                        <span>Match Highlighting</span>
-                                    </div>
-                                    <div class="meta-item">
-                                        <i class="fas fa-flag"></i>
-                                        <span>Flag Support</span>
-                                    </div>
-                                    <div class="meta-item">
-                                        <i class="fas fa-list"></i>
-                                        <span>Detailed Results</span>
-                                    </div>
-                                </div>
+                        <p class="tool-description">Test JavaScript regular expressions live. Matches are highlighted in your text and listed with their positions and capture groups.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-bolt"></i><span>Real-time testing</span></div>
+                            <div class="meta-item"><i class="fas fa-highlighter"></i><span>Match highlighting</span></div>
+                            <div class="meta-item"><i class="fas fa-flag"></i><span>g / i / m flags</span></div>
+                            <div class="meta-item"><i class="fas fa-list"></i><span>Capture groups</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Regex Tester Section -->
-        <section id="tester" class="regex-section">
+        <section id="tester" class="tool-section">
             <div class="section-container">
-                <div class="regex-container">
-                    <!-- Regex Input Panel -->
-                    <div class="regex-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-code"></i> Regular Expression</h3>
-                        </div>
-                        <div class="panel-content">
-                            <div class="regex-input-container">
-                                <div class="regex-wrapper">
-                                    <span class="regex-delimiter">/</span>
-                                    <input type="text" id="regexInput" class="regex-input" placeholder="Enter your regex pattern..." autocomplete="off" spellcheck="false">
-                                    <span class="regex-delimiter">/</span>
-                                    <div class="regex-flags">
-                                        <label class="flag-toggle">
-                                            <input type="checkbox" id="globalFlag" checked>
-                                            <span class="flag-label">g</span>
-                                        </label>
-                                        <label class="flag-toggle">
-                                            <input type="checkbox" id="ignoreCase">
-                                            <span class="flag-label">i</span>
-                                        </label>
-                                        <label class="flag-toggle">
-                                            <input type="checkbox" id="multiline">
-                                            <span class="flag-label">m</span>
-                                        </label>
-                                    </div>
+                <div class="rx-layout">
+                    <div class="app">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-code"></i>Regular expression</h2>
+                            </div>
+                            <div class="rx-input" id="regexWrap">
+                                <span class="rx-delim">/</span>
+                                <input type="text" id="regexInput" class="rx-pattern" placeholder="Enter your regex pattern…" autocomplete="off" spellcheck="false" aria-label="Regex pattern">
+                                <span class="rx-delim">/</span>
+                                <div class="rx-flags" role="group" aria-label="Flags">
+                                    <label class="rx-flag" title="global: find all matches"><input type="checkbox" id="globalFlag" checked><span>g</span></label>
+                                    <label class="rx-flag" title="ignore case"><input type="checkbox" id="ignoreCase"><span>i</span></label>
+                                    <label class="rx-flag" title="multiline: ^ and $ match at line breaks"><input type="checkbox" id="multiline"><span>m</span></label>
                                 </div>
                             </div>
-                            
-                            <div class="regex-error" id="regexError" style="display: none;">
-                                <i class="fas fa-exclamation-triangle"></i>
+                            <div class="rx-error" id="regexError" role="alert" style="display: none;">
+                                <i class="fas fa-triangle-exclamation"></i>
                                 <span id="errorMessage"></span>
                             </div>
-                            
-                            <div class="regex-info" id="regexInfo">
-                                <div class="info-item">
-                                    <span class="info-label">Pattern:</span>
-                                    <code id="currentPattern">No pattern</code>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Flags:</span>
-                                    <code id="currentFlags">None</code>
+                            <dl class="kv rx-info" id="regexInfo">
+                                <div><dt>Pattern</dt><dd><code id="currentPattern">No pattern</code></dd></div>
+                                <div><dt>Flags</dt><dd><code id="currentFlags">None</code></dd></div>
+                            </dl>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-file-lines"></i>Test string</h2>
+                                <div class="panel__actions">
+                                    <button type="button" class="btn btn--sm btn--ghost" id="pasteTest" title="Paste from clipboard"><i class="fas fa-paste"></i>Paste</button>
+                                    <button type="button" class="btn btn--sm btn--ghost btn--danger" id="clearTest" title="Clear test string (Ctrl+K)"><i class="fas fa-trash"></i>Clear</button>
                                 </div>
                             </div>
+                            <div class="rx-test">
+                                <div class="rx-overlay" id="testOverlay" aria-hidden="true"></div>
+                                <textarea id="testString" class="rx-text" placeholder="Enter your test string here…" rows="10" spellcheck="false" aria-label="Test string"></textarea>
+                            </div>
+                            <p class="hint mt">Highlights update as you type. <kbd>Ctrl</kbd> <kbd>K</kbd> clears the text.</p>
                         </div>
                     </div>
 
-                    <!-- Test String Panel -->
-                    <div class="test-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-file-text"></i> Test String</h3>
-                            <div class="panel-actions">
-                                <button class="action-btn" id="clearTest" title="Clear test string">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                                <button class="action-btn" id="pasteTest" title="Paste from clipboard">
-                                    <i class="fas fa-paste"></i>
-                                </button>
-                            </div>
+                    <div class="panel rx-results">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-list"></i>Matches</h2>
+                            <span class="status" id="resultsCount">0 matches</span>
                         </div>
-                        <div class="panel-content">
-                            <div class="test-input-container">
-                                <textarea id="testString" class="test-input" placeholder="Enter your test string here..." rows="8"></textarea>
-                                <div class="test-overlay" id="testOverlay"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Results Panel -->
-                    <div class="results-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-list"></i> Results</h3>
-                            <div class="results-count" id="resultsCount">0 matches</div>
-                        </div>
-                        <div class="panel-content">
-                            <div class="results-container" id="resultsContainer">
-                                <div class="no-results" id="noResults">
-                                    <i class="fas fa-search"></i>
-                                    <p>Enter a regex pattern and test string to see matches</p>
-                                </div>
-                            </div>
+                        <div class="rx-list" id="resultsContainer"></div>
+                        <div class="rx-empty" id="noResults">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <p>Enter a regex pattern and a test string to see matches.</p>
                         </div>
                     </div>
                 </div>
@@ -191,8 +137,8 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>
     
     <!-- Visitor Counter -->
     <script>

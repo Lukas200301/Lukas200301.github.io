@@ -19,361 +19,101 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../css/styles.css?v=20261008j">
-    <link rel="stylesheet" href="../../css/pages.css?v=20261008j">
+    <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
     
     <style>
-        /* Game-specific styles */
         :root {
-            --tetromino-i: #6fd8ff;
-            --tetromino-o: #ffd166;
-            --tetromino-t: #b39bff;
-            --tetromino-s: #5ee6b5;
-            --tetromino-z: #ff7a90;
-            --tetromino-j: #7d93ff;
-            --tetromino-l: #ffb86b;
-            --game-cell-size: 30px;
+            --tt-i: #6fd8ff;
+            --tt-o: #ffd166;
+            --tt-t: #b39bff;
+            --tt-s: #5ee6b5;
+            --tt-z: #ff7a90;
+            --tt-j: #7d93ff;
+            --tt-l: #ffb86b;
         }
+        .tt-layout { grid-template-columns: minmax(0, 1fr) 300px; }
+        @media (max-width: 900px) { .tt-layout { grid-template-columns: 1fr; } }
+        .tt-panel { padding: 18px; }
+        .tt-stage { display: flex; justify-content: center; align-items: flex-start; gap: 18px; }
 
+        /* hold / next trays beside the board */
+        .tt-tray { display: grid; gap: 8px; justify-items: center; width: 116px; flex: none; }
+        .tt-tray__label { font-family: var(--font-head); font-size: .72rem; letter-spacing: .02em; color: var(--fg-3); text-transform: uppercase; }
+        .tt-tray__box { width: 116px; height: 116px; display: grid; place-items: center; border-radius: 14px; border: 1px solid var(--line-soft); background: rgba(7, 11, 22, .5); }
+        .piece-preview { --cs: 22px; display: grid; grid-template-columns: repeat(4, var(--cs)); grid-template-rows: repeat(4, var(--cs)); gap: 2px; }
+        .piece-preview:empty { display: block; }
+        .piece-preview:empty::before { content: "–"; color: var(--fg-3); font-family: var(--font-code); }
+        .piece-preview .cell { animation: tt-in .3s var(--ease-out); }
+        @keyframes tt-in { from { opacity: 0; transform: scale(.7); } }
+        .piece-preview .cell:not([class*=" "]) { background: transparent; box-shadow: none; }
+        .tt-tray .hint { text-align: center; font-size: .78rem; }
 
-        /* Game Container */
-        .game-container {
-            background: var(--surface-bg);
-            border-radius: var(--radius-2xl);
-            padding: var(--space-2xl);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 0;
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Game Controls Header (different from main game-header) */
-        .game-controls-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-2xl);
-            width: 100%;
-            max-width: 800px;
-            flex-wrap: wrap;
-            gap: var(--space-lg);
-        }
-
-        .game-stats {
-            display: flex;
-            gap: var(--space-xl);
-            flex: 1;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .info-container {
-            background: var(--tertiary-bg);
-            padding: var(--space-lg);
-            border-radius: var(--radius-xl);
-            text-align: center;
-            min-width: 120px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all var(--duration-normal) ease;
-        }
-
-        .info-container:hover {
-            border-color: var(--primary-accent);
-            transform: translateY(-2px);
-        }
-
-        .info-label {
-            color: var(--secondary-text);
-            font-size: var(--text-sm);
-            margin-bottom: var(--space-sm);
-            font-weight: 500;
-        }
-
-        .info-value {
-            color: var(--accent-text);
-            font-size: var(--text-2xl);
-            font-weight: 700;
-            font-family: var(--font-mono);
-        }
-
-        /* Game Controls */
-        .game-controls {
-            display: flex;
-            gap: var(--space-lg);
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .ghost-control {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .ghost-label {
-            color: var(--accent-text);
-            font-size: var(--text-md);
-            font-weight: 500;
-        }
-
-        /* Toggle Switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--tertiary-bg);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all var(--duration-normal) ease;
-            border-radius: 34px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 2px;
-            bottom: 2px;
-            background-color: var(--secondary-text);
-            transition: all var(--duration-normal) ease;
-            border-radius: 50%;
-        }
-
-        .toggle-switch input:checked + .toggle-slider {
-            background-color: var(--primary-accent);
-            border-color: var(--primary-accent);
-        }
-
-        .toggle-switch input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-            background-color: white;
-        }
-
-        /* Game Content Wrapper */
-        .game-content {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 var(--space-l);
-        }
-        .game-layout {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--space-2xl);
-            width: 100%;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 0 auto;
-            max-width: fit-content;
-        }
-
+        /* the board */
+        .tt-wrap { border-radius: 14px; flex: none; }
         .game-board {
-            background: var(--tertiary-bg);
-            border-radius: var(--radius-xl);
-            padding: var(--space-xl);
-            position: relative;
+            --cs: 28px;
             display: grid;
-            gap: 1px;
-            grid-template-columns: repeat(10, var(--game-cell-size));
-            grid-template-rows: repeat(20, var(--game-cell-size));
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow-xl);
+            grid-template-columns: repeat(10, var(--cs));
+            grid-template-rows: repeat(20, var(--cs));
+            gap: 2px;
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid var(--line-soft);
+            background: radial-gradient(circle at 50% 30%, rgba(18, 26, 47, .9), rgba(5, 8, 17, .96));
+            touch-action: none;
         }
-
-        .game-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-xl);
-            min-width: 200px;
-        }
-
-        .sidebar-section {
-            background: var(--surface-bg);
-            border-radius: var(--radius-xl);
-            padding: var(--space-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all var(--duration-normal) ease;
-        }
-
-        .sidebar-section:hover {
-            border-color: var(--primary-accent);
-            transform: translateY(-2px);
-        }
-
-        .sidebar-title {
-            color: var(--accent-text);
-            font-size: var(--text-lg);
-            font-weight: 600;
-            margin-bottom: var(--space-md);
-            text-align: center;
-            font-family: var(--font-display);
-        }
-
-        .piece-preview {
-            display: grid;
-            grid-template-columns: repeat(4, var(--game-cell-size));
-            grid-template-rows: repeat(4, var(--game-cell-size));
-            gap: 1px;
-            justify-content: center;
-        }
-
-        /* Game Cells */
         .cell {
-            width: var(--game-cell-size);
-            height: var(--game-cell-size);
-            background: var(--secondary-bg);
-            border-radius: var(--radius-sm);
-            transition: all 0.1s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            --c: transparent;
+            width: var(--cs);
+            height: var(--cs);
+            border-radius: 5px;
+            background: rgba(142, 162, 255, .035);
+            box-shadow: inset 0 0 0 1px rgba(142, 162, 255, .05);
         }
-
-        .cell.i { background: var(--tetromino-i); border-color: var(--tetromino-i); }
-        .cell.o { background: var(--tetromino-o); border-color: var(--tetromino-o); }
-        .cell.t { background: var(--tetromino-t); border-color: var(--tetromino-t); }
-        .cell.s { background: var(--tetromino-s); border-color: var(--tetromino-s); }
-        .cell.z { background: var(--tetromino-z); border-color: var(--tetromino-z); }
-        .cell.j { background: var(--tetromino-j); border-color: var(--tetromino-j); }
-        .cell.l { background: var(--tetromino-l); border-color: var(--tetromino-l); }
-
-        .cell.ghost { 
-            background: transparent !important;
-            border: 2px solid;
-            opacity: 0.4;
+        .cell.i { --c: var(--tt-i); } .cell.o { --c: var(--tt-o); } .cell.t { --c: var(--tt-t); }
+        .cell.s { --c: var(--tt-s); } .cell.z { --c: var(--tt-z); } .cell.j { --c: var(--tt-j); } .cell.l { --c: var(--tt-l); }
+        .cell.i, .cell.o, .cell.t, .cell.s, .cell.z, .cell.j, .cell.l {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, 0) 55%), var(--c);
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .22), inset 0 0 0 1px rgba(255, 255, 255, .12);
         }
-        .cell.ghost.i { border-color: var(--tetromino-i); }
-        .cell.ghost.o { border-color: var(--tetromino-o); }
-        .cell.ghost.t { border-color: var(--tetromino-t); }
-        .cell.ghost.s { border-color: var(--tetromino-s); }
-        .cell.ghost.z { border-color: var(--tetromino-z); }
-        .cell.ghost.j { border-color: var(--tetromino-j); }
-        .cell.ghost.l { border-color: var(--tetromino-l); }
-
-        /* Game Over Screen */
-        .game-over {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: var(--radius-xl);
-            z-index: 100;
-            backdrop-filter: blur(10px);
+        .cell.ghost {
+            background: color-mix(in srgb, var(--c) 10%, transparent);
+            box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c) 55%, transparent);
         }
+        .game-board.is-over .cell:not(.ghost) { filter: saturate(.35) brightness(.7); transition: filter .6s var(--ease-out); }
+        .tt-wrap.flash .game-board { animation: tt-flash .4s var(--ease-out); }
+        @keyframes tt-flash { 30% { box-shadow: 0 0 0 1px rgba(var(--signal-rgb), .5), 0 0 28px rgba(var(--signal-rgb), .25); } }
 
-        .game-over.show {
-            display: flex;
-        }
+        /* sidebar */
+        .tt-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .tt-stats .stat { min-width: 0; }
+        .tt-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+        .tt-actions .btn { justify-content: center; }
+        .tt-help { display: grid; gap: 10px; }
+        .tt-help > span { width: 100%; gap: 5px; }
+        .tt-help em { font-style: normal; margin-right: auto; }
+        kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
 
-        .game-over-content {
-            text-align: center;
-            padding: var(--space-2xl);
-            background: var(--surface-bg);
-            border-radius: var(--radius-2xl);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow-2xl);
-        }
+        /* touch pad (shown on touch screens) */
+        .tt-pad { display: none; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 14px; }
+        .tt-pad button { height: 52px; border-radius: 12px; border: 1px solid var(--line); background: rgba(7, 11, 22, .6); color: var(--fg); font-size: 1.05rem; display: grid; place-items: center; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: background-color .15s, transform .12s var(--ease-out); }
+        .tt-pad button:active { background: var(--ink-3); transform: scale(.94); }
+        @media (hover: none), (max-width: 700px) { .tt-pad { display: grid; } }
 
-        .game-over-title {
-            font-size: var(--text-4xl);
-            color: var(--accent-text);
-            margin-bottom: var(--space-lg);
-            font-family: var(--font-display);
-            font-weight: 800;
-        }
-
-        .game-over-score {
-            font-size: var(--text-xl);
-            color: var(--secondary-text);
-            margin-bottom: var(--space-xl);
-            font-family: var(--font-mono);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .game-container {
-                padding: var(--space-lg);
-                margin-top: var(--space-2xl);
-            }
-
-            .game-controls-header {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .game-stats {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .game-controls {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .game-layout {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .game-sidebar {
-                flex-direction: row;
-                justify-content: center;
-                width: 100%;
-                min-width: unset;
-            }
-
-            :root {
-                --game-cell-size: 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            :root {
-                --game-cell-size: 20px;
-            }
-
-            .game-stats {
-                flex-direction: column;
-                align-items: center;
-                gap: var(--space-md);
-            }
-
-            .info-container {
-                min-width: 100px;
-            }
+        @media (max-width: 700px) {
+            .tt-panel { padding: 12px; }
+            .tt-stage { flex-wrap: wrap; gap: 10px; }
+            .tt-wrap { order: 3; }
+            .tt-tray { width: calc(50% - 5px); grid-template-columns: auto 1fr; justify-items: start; align-items: center; }
+            .tt-tray__box { width: 76px; height: 76px; }
+            .piece-preview { --cs: 14px; }
+            .tt-tray .hint { display: none; }
+            .game-board { --cs: max(16px, min(28px, calc((100vw - 92px) / 10), calc((100svh - 330px) / 20))); padding: 6px; }
         }
     </style>
     <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
@@ -431,55 +171,62 @@
         <!-- Game Section -->
         <section id="game" class="game-section">
             <div class="section-container">
-                <div class="game-container">
-                    <div class="game-controls-header">
-                        <div class="game-stats">
-                            <div class="info-container">
-                                <div class="info-label">Score</div>
-                                <div class="info-value" id="score">0</div>
+                <div class="app-side tt-layout">
+                    <div class="panel tt-panel">
+                        <div class="tt-stage">
+                            <div class="tt-tray">
+                                <span class="tt-tray__label">Hold</span>
+                                <div class="tt-tray__box"><div class="piece-preview" id="holdPiece"></div></div>
+                                <p class="hint"><kbd>C</kbd> to hold</p>
                             </div>
-                            <div class="info-container">
-                                <div class="info-label">Level</div>
-                                <div class="info-value" id="level">1</div>
+                            <div class="board-wrap tt-wrap" id="wrap">
+                                <div class="game-board" id="gameBoard" role="img" aria-label="Tetris board"></div>
+                                <div class="overlay-msg" id="msg">
+                                    <h3 id="msgTitle">Tetris</h3>
+                                    <p id="msgText">Clear lines, level up, don't top out.</p>
+                                    <div class="row"><button class="btn" id="msgBtn"><i class="fas fa-play"></i>Start</button></div>
+                                    <p class="hint">Press <kbd>Enter</kbd></p>
+                                </div>
+                            </div>
+                            <div class="tt-tray">
+                                <span class="tt-tray__label">Next</span>
+                                <div class="tt-tray__box"><div class="piece-preview" id="nextPiece"></div></div>
                             </div>
                         </div>
-                        <div class="game-controls">
-                            <div class="ghost-control">
-                                <span class="ghost-label">Ghost Piece</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="ghostToggle" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-                            <button class="cta-button primary" id="newGame">
-                                <i class="fas fa-redo"></i>
-                                <span>Start Game</span>
-                            </button>
-                        </div>
-                    </div>
-
-                <div class="game-layout">
-                    <div class="game-board" id="gameBoard">
-                        <div class="game-over" id="gameOver">
-                            <div class="game-over-content">
-                                <div class="game-over-title">Game Over!</div>
-                                <div class="game-over-score">Final Score: <span id="finalScore">0</span></div>
-                                <button class="cta-button primary" id="tryAgain">
-                                    <i class="fas fa-play"></i>
-                                    <span>Try Again</span>
-                                </button>
-                            </div>
+                        <div class="tt-pad" id="pad" aria-label="Touch controls">
+                            <button type="button" data-a="left" aria-label="Move left"><i class="fas fa-arrow-left"></i></button>
+                            <button type="button" data-a="rotate" aria-label="Rotate"><i class="fas fa-rotate-right"></i></button>
+                            <button type="button" data-a="right" aria-label="Move right"><i class="fas fa-arrow-right"></i></button>
+                            <button type="button" data-a="down" aria-label="Soft drop"><i class="fas fa-arrow-down"></i></button>
+                            <button type="button" data-a="drop" aria-label="Hard drop"><i class="fas fa-angles-down"></i></button>
+                            <button type="button" data-a="hold" aria-label="Hold piece"><i class="fas fa-box-archive"></i></button>
                         </div>
                     </div>
-                    
-                    <div class="game-sidebar">
-                        <div class="sidebar-section">
-                            <div class="sidebar-title">Next Piece</div>
-                            <div class="piece-preview" id="nextPiece"></div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="tt-stats">
+                                <div class="stat" id="sScore"><b id="score">0</b><span>Score</span></div>
+                                <div class="stat" id="sLevel"><b id="level">1</b><span>Level</span></div>
+                                <div class="stat" id="sLines"><b id="lines">0</b><span>Lines</span></div>
+                                <div class="stat" id="sBest"><b id="best">0</b><span>Best</span></div>
+                            </div>
                         </div>
-                        <div class="sidebar-section">
-                            <div class="sidebar-title">Hold Piece</div>
-                            <div class="piece-preview" id="holdPiece"></div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Settings</h2></div>
+                            <label class="check"><input type="checkbox" id="ghostToggle" checked>Show ghost piece</label>
+                            <p class="hint mt">The ghost shows where the current piece will land.</p>
+                            <div class="tt-actions">
+                                <button class="btn btn--sm" id="pauseBtn" disabled><i class="fas fa-pause"></i><span>Pause</span></button>
+                                <button class="btn btn--sm" id="newGame"><i class="fas fa-rotate"></i><span>New game</span></button>
+                            </div>
+                        </div>
+                        <div class="panel kbd-help tt-help">
+                            <span><em>Move</em><kbd>A</kbd><kbd>D</kbd> or <kbd>←</kbd><kbd>→</kbd></span>
+                            <span><em>Rotate</em><kbd>W</kbd> or <kbd>↑</kbd></span>
+                            <span><em>Soft drop</em><kbd>S</kbd> or <kbd>↓</kbd></span>
+                            <span><em>Hard drop</em><kbd>Space</kbd></span>
+                            <span><em>Hold</em><kbd>C</kbd></span>
+                            <span><em>Pause</em><kbd>P</kbd> or <kbd>Esc</kbd></span>
                         </div>
                     </div>
                 </div>
@@ -503,8 +250,8 @@
     </button>
 
     <!-- Scripts -->
-    <script src="../../js/script.js?v=20261008j"></script>
-    <script src="app.js?v=20261008j"></script>
+    <script src="../../js/script.js?v=20261009a"></script>
+    <script src="app.js?v=20261009a"></script>
     
     <!-- Visitor Counter -->
     <script>
