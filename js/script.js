@@ -47,7 +47,7 @@
 
     { group: 'Tools', title: 'JS/TS Playground', sub: 'Run JavaScript & TypeScript in the browser', icon: 'fab fa-js', href: 'tools/tjs-playground/', keys: 'javascript typescript editor code' },
     { group: 'Tools', title: 'Globedata', sub: 'Country facts on a 3D globe', icon: 'fas fa-earth-europe', href: 'tools/globedata/', keys: 'globe countries geography' },
-    { group: 'Tools', title: 'Password Generator', sub: 'Secure passwords with entropy check', icon: 'fas fa-key', href: 'tools/pwgenerator/', keys: 'security crypto' },
+    { group: 'Tools', title: 'Password Generator', sub: 'Secure passwords + Have I Been Pwned check', icon: 'fas fa-key', href: 'tools/pwgenerator/', keys: 'security crypto hibp haveibeenpwned pwned breach leak leaked' },
     { group: 'Tools', title: 'Browser Fingerprint', sub: 'See what your browser gives away', icon: 'fas fa-fingerprint', href: 'tools/fingerprint/', keys: 'privacy canvas webgl' },
     { group: 'Tools', title: 'Color Palette Generator', sub: 'Build and export color palettes', icon: 'fas fa-palette', href: 'tools/color-generator/', keys: 'colors design' },
     { group: 'Tools', title: 'QR Code Generator', sub: 'QR codes for links, text and Wi-Fi', icon: 'fas fa-qrcode', href: 'tools/qr-code/', keys: 'qr wifi url' },

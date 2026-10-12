@@ -133,3 +133,99 @@
     .pw .panel__actions { width: 100%; }
     .pw .panel__actions .btn { flex: 1; justify-content: center; }
 }
+
+/* ---------- Leak check (Have I Been Pwned) ---------- */
+.pwn-credit { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--fg-3); transition: color 0.2s; }
+.pwn-credit i { font-size: 0.75em; }
+.pwn-credit:hover { color: var(--signal); }
+.pwn-form { display: flex; gap: 10px; margin-top: 16px; }
+.pwn-field { position: relative; flex: 1; min-width: 0; }
+.pwn-field .input { padding-right: 50px; }
+.pwn-eye {
+    position: absolute;
+    top: 50%; right: 6px;
+    transform: translateY(-50%);
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: grid; place-items: center;
+    color: var(--fg-3);
+    transition: color 0.2s, background-color 0.2s;
+}
+.pwn-eye:hover { color: var(--fg); background: var(--ink-3); }
+.pwn-form .btn { height: auto; min-height: 48px; }
+.pwn-form .btn:disabled { opacity: 0.7; cursor: progress; }
+.pwn-use { margin-top: 10px; }
+
+.pwn-result {
+    --c: var(--fg-3);
+    --c-rgb: 108, 120, 156;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(var(--c-rgb), 0.35);
+    background: rgba(var(--c-rgb), 0.07);
+    transition: border-color 0.3s, background-color 0.3s;
+}
+.pwn-result[data-state="loading"] { --c: var(--signal); --c-rgb: var(--signal-rgb); }
+.pwn-result[data-state="pwned"] { --c: var(--rose); --c-rgb: 255, 122, 144; }
+.pwn-result[data-state="safe"] { --c: var(--mint); --c-rgb: 94, 230, 181; }
+.pwn-result[data-state="error"] { --c: var(--amber); --c-rgb: var(--amber-rgb); }
+.pwn-result__icon {
+    flex: none;
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 1.25rem;
+    color: var(--c);
+    background: rgba(var(--c-rgb), 0.14);
+}
+.pwn-result[data-state="pwned"] .pwn-result__icon, .pwn-result[data-state="safe"] .pwn-result__icon { animation: pwn-pop 0.5s var(--ease-spring); }
+@keyframes pwn-pop { from { transform: scale(0.6); } }
+.pwn-result__text { min-width: 0; }
+.pwn-result__text b { display: block; font-family: var(--font-head); font-size: 1.05rem; font-weight: 600; letter-spacing: -0.03em; color: var(--fg); }
+.pwn-result[data-state="pwned"] .pwn-result__text b, .pwn-result[data-state="safe"] .pwn-result__text b { color: var(--c); }
+.pwn-result__text span { display: block; margin-top: 2px; font-size: 0.88rem; color: var(--fg-2); line-height: 1.5; }
+
+.pwn-steps { list-style: none; display: grid; gap: 16px; counter-reset: pwn; }
+.pwn-steps li { position: relative; padding-left: 38px; display: grid; gap: 2px; }
+.pwn-steps li::before {
+    counter-increment: pwn;
+    content: counter(pwn);
+    position: absolute;
+    left: 0; top: 0;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font: 600 0.78rem/1 var(--font-head);
+    color: var(--signal);
+    background: rgba(var(--signal-rgb), 0.1);
+    border: 1px solid rgba(var(--signal-rgb), 0.3);
+}
+.pwn-steps b { font-size: 0.92rem; font-weight: 600; }
+.pwn-steps span { font-size: 0.84rem; color: var(--fg-3); line-height: 1.45; }
+.pwn-code {
+    display: block;
+    margin-top: 6px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: #060a14;
+    border: 1px solid var(--line-soft);
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    color: var(--fg-2);
+    word-break: break-all;
+    line-height: 1.5;
+}
+.pwn-code mark { background: rgba(var(--signal-rgb), 0.22); color: var(--fg); border-radius: 3px; padding: 0 1px; }
+.pwn-code.is-bad { color: var(--rose); }
+.pwn-code.is-ok { color: var(--mint); }
+
+@media (max-width: 480px) {
+    .pwn-form { flex-direction: column; }
+    .pwn-form .btn { justify-content: center; }
+    .pwn-result { align-items: flex-start; padding: 14px; gap: 12px; }
+    .pwn-result__icon { width: 40px; height: 40px; font-size: 1.05rem; }
+}

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Secure Password Generator - Generate cryptographically secure passwords with customizable options">
-    <meta name="keywords" content="password generator, secure passwords, cryptography, random, security, tools">
+    <meta name="description" content="Generate cryptographically secure passwords and check any password against known data breaches with Have I Been Pwned, without sending it anywhere.">
+    <meta name="keywords" content="password generator, secure passwords, have i been pwned, hibp, password leak check, data breach, cryptography, security, tools">
     <meta name="author" content="Lukas200301">
     <meta property="og:title" content="Secure Password Generator - Lukas200301">
-    <meta property="og:description" content="Generate cryptographically secure passwords with customizable length and character sets">
+    <meta property="og:description" content="Generate secure passwords and check whether a password has appeared in a data breach.">
     <meta property="og:image" content="https://github.com/Lukas200301.png">
     <meta property="og:url" content="https://lukas200301.github.io/tools/pwgenerator">
     <title>Secure Password Generator | Lukas200301</title>
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="../../css/styles.css?v=20261009a">
     <link rel="stylesheet" href="../../css/pages.css?v=20261009a">
     <link rel="stylesheet" href="../../css/apps.css?v=20261009a">
-    <link rel="stylesheet" href="pwgenerator-styles.css?v=20261009a">
+    <link rel="stylesheet" href="pwgenerator-styles.css?v=20261012a">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://github.com/Lukas200301.png">
@@ -59,7 +59,7 @@
                         </h1>
                         <p class="tool-description">
                             Generate cryptographically secure passwords with customizable length, character sets, and patterns. 
-                            Built with Web Crypto API for maximum security and randomness.
+                            Then check any password against known data breaches with Have I Been Pwned, without it ever leaving your browser.
                         </p>
                         <div class="tool-meta">
                             <div class="meta-item">
@@ -74,6 +74,10 @@
                                 <i class="fas fa-cog"></i>
                                 <span>Highly Customizable</span>
                             </div>
+                            <a class="meta-item" href="#leak-check">
+                                <i class="fas fa-user-secret"></i>
+                                <span>Breach check</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -154,6 +158,43 @@
                 </div>
             </div>
         </section>
+
+        <!-- Leak check (Have I Been Pwned, k-anonymity) -->
+        <section id="leak-check" class="tool-section">
+            <div class="section-container">
+                <div class="app-side pwn">
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-user-secret"></i>Has it been leaked?</h2>
+                            <a class="pwn-credit" href="https://haveibeenpwned.com/Passwords" target="_blank" rel="noopener">Have I Been Pwned <i class="fas fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                        <p class="hint">Check any password against the hundreds of millions of real passwords exposed in data breaches. Your password never leaves your browser, only the first five characters of its hash do.</p>
+                        <form class="pwn-form" id="pwnForm" autocomplete="off">
+                            <div class="pwn-field">
+                                <input class="input big" id="pwnInput" type="password" placeholder="Type or paste a password" aria-label="Password to check" autocomplete="off" autocapitalize="off" spellcheck="false">
+                                <button type="button" class="pwn-eye" id="pwnShow" aria-label="Show password" aria-pressed="false" title="Show password"><i class="fas fa-eye"></i></button>
+                            </div>
+                            <button class="btn btn--primary" type="submit" id="pwnGo"><i class="fas fa-magnifying-glass"></i><span>Check</span></button>
+                        </form>
+                        <button type="button" class="btn btn--sm btn--ghost pwn-use" id="pwnUseGen"><i class="fas fa-key"></i>Check the generated password</button>
+                        <div class="pwn-result" id="pwnResult" data-state="idle" aria-live="polite">
+                            <span class="pwn-result__icon"><i class="fas fa-shield-halved"></i></span>
+                            <div class="pwn-result__text"><b>Nothing checked yet</b><span>Enter a password and press Check.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-eye-slash"></i>What gets sent</h2></div>
+                        <ol class="pwn-steps">
+                            <li><b>Hashed in your browser</b><span>The password becomes a SHA-1 hash.</span><code class="pwn-code" id="pwnHash">–</code></li>
+                            <li><b>Five characters sent</b><span>Only the start of the hash goes to the API.</span><code class="pwn-code" id="pwnPrefix">–</code></li>
+                            <li><b>Compared in your browser</b><span>The API returns every leaked hash that starts the same way, and your browser looks for a match.</span><code class="pwn-code" id="pwnMatches">–</code></li>
+                        </ol>
+                        <p class="hint mt">This is the <a class="text-link" href="https://haveibeenpwned.com/API/v3#SearchingPwnedPasswordsByRange" target="_blank" rel="noopener">k-anonymity range API</a>, with padding switched on so even the size of the answer gives nothing away.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <!-- Section Navigation Dots -->
     <div class="section-nav-dots" id="sectionNavDots">
@@ -162,6 +203,9 @@
         </div>
         <div class="nav-dot" data-section="generator" title="Generator">
             <span class="dot-label">Generator</span>
+        </div>
+        <div class="nav-dot" data-section="leak-check" title="Leak check">
+            <span class="dot-label">Leak check</span>
         </div>
     </div>
 
@@ -502,6 +546,88 @@
         document.addEventListener('DOMContentLoaded', () => {
             new SecurePasswordGenerator();
         });
+    </script>
+    <script>
+        // Leak check against Have I Been Pwned's Pwned Passwords range API (k-anonymity):
+        // the password is hashed here and only the first 5 hex characters of its SHA-1 go out.
+        (function () {
+            const $ = (id) => document.getElementById(id);
+            const form = $('pwnForm'), input = $('pwnInput'), result = $('pwnResult');
+            const hashEl = $('pwnHash'), prefixEl = $('pwnPrefix'), matchEl = $('pwnMatches');
+            const ICON = { idle: 'fa-shield-halved', loading: 'fa-circle-notch fa-spin', pwned: 'fa-triangle-exclamation', safe: 'fa-circle-check', error: 'fa-plug-circle-xmark' };
+            let run = 0;
+
+            function show(state, title, text) {
+                result.dataset.state = state;
+                result.querySelector('.pwn-result__icon').innerHTML = `<i class="fas ${ICON[state]}"></i>`;
+                result.querySelector('b').textContent = title;
+                result.querySelector('.pwn-result__text span').textContent = text;
+                $('pwnGo').disabled = state === 'loading';
+            }
+            function resetSteps() {
+                hashEl.textContent = prefixEl.textContent = matchEl.textContent = '–';
+                matchEl.className = 'pwn-code';
+            }
+
+            async function sha1(text) {
+                const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(text));
+                return Array.from(new Uint8Array(buf), b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+            }
+
+            async function check(pw) {
+                const id = ++run;
+                if (!pw) { resetSteps(); show('idle', 'Nothing checked yet', 'Enter a password and press Check.'); return; }
+                if (!window.crypto || !crypto.subtle) { show('error', 'Not available here', 'Your browser only allows hashing on secure (https) pages.'); return; }
+                show('loading', 'Checking…', 'Asking Have I Been Pwned about the first five characters of the hash.');
+                const hash = await sha1(pw);
+                if (id !== run) return;
+                const prefix = hash.slice(0, 5), suffix = hash.slice(5);
+                hashEl.innerHTML = `<mark>${prefix}</mark>${suffix}`;
+                prefixEl.textContent = prefix;
+                matchEl.textContent = '…';
+                try {
+                    const res = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`, { headers: { 'Add-Padding': 'true' } });
+                    if (!res.ok) throw new Error(res.status);
+                    const body = await res.text();
+                    if (id !== run) return;
+                    let seen = 0, returned = 0;
+                    for (const line of body.split('\n')) {
+                        const [s, c] = line.trim().split(':');
+                        const n = parseInt(c, 10);
+                        if (!n) continue;               // padding rows have a count of 0
+                        returned++;
+                        if (s === suffix) seen = n;
+                    }
+                    matchEl.textContent = `${returned.toLocaleString('en')} leaked hashes returned · ${seen ? 'match found' : 'no match'}`;
+                    matchEl.className = 'pwn-code ' + (seen ? 'is-bad' : 'is-ok');
+                    if (seen) show('pwned', `Leaked ${seen.toLocaleString('en')} time${seen === 1 ? '' : 's'}`, "This password is in known data breaches, and attackers try those first. Don't use it anywhere.");
+                    else show('safe', 'Not found in any known breach', "Good sign, but it doesn't make a password strong. Length and randomness still matter.");
+                } catch (e) {
+                    if (id !== run) return;
+                    matchEl.textContent = '–';
+                    show('error', "Couldn't reach Have I Been Pwned", 'Check your connection and try again in a moment.');
+                }
+            }
+
+            form.addEventListener('submit', (e) => { e.preventDefault(); check(input.value); });
+            input.addEventListener('input', () => {
+                run++;
+                resetSteps();
+                show('idle', input.value ? 'Ready to check' : 'Nothing checked yet', input.value ? 'Press Check or Enter. Nothing is sent until you do.' : 'Enter a password and press Check.');
+            });
+            $('pwnShow').addEventListener('click', function () {
+                const on = input.type === 'password';
+                input.type = on ? 'text' : 'password';
+                this.setAttribute('aria-pressed', String(on));
+                this.setAttribute('aria-label', on ? 'Hide password' : 'Show password');
+                this.title = on ? 'Hide password' : 'Show password';
+                this.innerHTML = `<i class="fas fa-eye${on ? '-slash' : ''}"></i>`;
+            });
+            $('pwnUseGen').addEventListener('click', () => {
+                input.value = $('passwordOutput').value;
+                check(input.value);
+            });
+        })();
     </script>
 </body>
 </html>
