@@ -8,18 +8,19 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 
 - **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), live GitHub stats, contribution calendar, recently pushed repos, and the site's `lsh` shell embedded at the bottom (same session as the full-screen command line).
 - **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
-- **Tools**: 19 client-side utilities:
+- **Tools**: 25 client-side utilities:
   - Developer: JS/TS playground, regex tester, JSON & YAML formatter, Base64 / URL / JWT decoder, cron expression helper, text diff checker
-  - Network & security: subnet calculator, DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
-  - Everything else: unit converter (GB vs GiB, Mbit/s vs MB/s, transfer times), timestamp converter with world clock, Markdown live preview, QR codes, color palettes, Globedata, YouTube tags
+  - Network & security: subnet calculator, IPv6 tools (compress/expand, prefixes, EUI-64/SLAAC, ip6.arpa), speed test (Cloudflare), DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
+  - Hardware: screen test (dead pixels, refresh rate, motion), keyboard test (QWERTZ/US, rollover, chatter), mic / webcam / gamepad test
+  - Everything else: image tools (resize/convert, favicon set with .ico, EXIF/GPS viewer and remover), unit converter (GB vs GiB, Mbit/s vs MB/s, transfer times), timestamp converter with world clock, Markdown live preview, QR codes, color palettes, Globedata, YouTube tags
 - **Stats**: GitHub activity in charts: all-time contributions, a repository timeline (created → last push), current and longest streak, contributions per month, an activity calendar for any year, average per weekday, busiest days, share of code per language, new repositories per year and a sortable repository table. Every chart has a table view and hover details.
-- **Games**: Tetris, 2048, Globle, Snake, Minesweeper, Flag Quiz, Code Typing Test, Tech Memory, Tic Tac Toe (unbeatable on hard).
+- **Games**: Tetris, 2048, Globle, Snake, Minesweeper, Flag Quiz, Code Typing Test, Tech Memory, Tic Tac Toe (unbeatable on hard), Connect Four (alpha-beta CPU), Reaction & Aim, Mastermind & Simon, IT Hangman, and Terminal CTF: 8 capture-the-flag levels played in the site's command line (`ctf`).
 
 ### Site-wide features
 
 | Feature | How |
 | --- | --- |
-| Jump anywhere | `Ctrl` / `⌘` + `K` opens the command palette (pages, tools, games, repos, actions) |
+| Jump anywhere | `Ctrl` / `⌘` + `K` opens the command palette (pages, tools, games, repos, actions). It also searches the text *inside* every tool and game ("Found inside", e.g. `SPF`, `dead pixel`, `EUI-64`) |
 | Shortcuts | `?` shows them all · `G` then `H`/`P`/`T`/`G`/`S` navigates · `/` focuses search on list pages |
 | Page transitions | Boot-screen overlay: drifting grid, name letters rising, corner brackets, radar ring, loading bar and a typed `cd ~/page`; the panel then lifts off the next page with a glowing edge (works in every browser, also from disk) |
 | Command line | The key left of `1` (`` ` `` / `^`), the `>_` button or Ctrl+K → *Open command line*. The site is a file system: `ls`, `cd tools/hash`, `open snake`, `tree`, `find`, `cat stats`, `now`, `neofetch`, Tab completion and history. It stays open across page changes (`js/cli.js`) |
@@ -65,6 +66,11 @@ Every page loads `css/styles.css` → `css/pages.css` → its own stylesheet, an
 1. Create `tools/<name>/index.html` (copy an existing tool as a starting point; keep the `tool-hero` header block). The newer tools keep their logic in `tools/<name>/app.js` and use the classes from `css/apps.css`.
 2. Add it to the `TOOLS` (or `GAMES`) array in `tools/index.html` / `games/index.html`.
 3. Add it to `REGISTRY` in `js/script.js` so it shows up in the command palette and terminal.
+4. Run `python3 scripts/build-search-index.py` so the palette can search inside it.
+
+**Site search index**
+The palette's "Found inside" results come from `js/search-index.js`. After adding or changing a tool, game or project page, regenerate it:
+`python3 scripts/build-search-index.py` (standard library only). Extra phrases that aren't written on a page go into `scripts/search-keywords.json`.
 
 **A new project showcase**
 1. Create `projects/<name>/index.html` (copy one of the existing showcases).

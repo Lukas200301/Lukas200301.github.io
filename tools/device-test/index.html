@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mic, Webcam &amp; Gamepad Test | Lukas200301</title>
+    <meta name="description" content="Test your microphone with a live level meter, waveform and recording, check your webcam resolution and frame rate, and see every gamepad button and stick live.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Mic, Webcam &amp; Gamepad Test | Lukas200301">
+    <meta property="og:description" content="Test your microphone with a live level meter, waveform and recording, check your webcam resolution and frame rate, and see every gamepad button and stick live.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Mic, Webcam &amp; Gamepad Test</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-headset"></i>
+                            Mic, Webcam &amp; Gamepad Test
+                        </h1>
+                        <p class="tool-description">Check your microphone with a live level meter, waveform and a quick test recording, see what resolution and frame rate your webcam really delivers, and watch every button and stick of your controller live.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-microphone-lines"></i><span>Level meter &amp; recording</span></div>
+                            <div class="meta-item"><i class="fas fa-video"></i><span>Resolution &amp; fps</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Nothing leaves your device</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="dt-tabs" id="tabs" role="tablist" aria-label="Device">
+                        <button type="button" role="tab" id="tab-mic" data-tab="mic" aria-controls="pane-mic" aria-selected="true"><i class="fas fa-microphone"></i><span>Microphone</span><em class="dot" id="dotMic"></em></button>
+                        <button type="button" role="tab" id="tab-cam" data-tab="cam" aria-controls="pane-cam" aria-selected="false"><i class="fas fa-video"></i><span>Webcam</span><em class="dot" id="dotCam"></em></button>
+                        <button type="button" role="tab" id="tab-pad" data-tab="pad" aria-controls="pane-pad" aria-selected="false"><i class="fas fa-gamepad"></i><span>Gamepad</span><em class="dot" id="dotPad"></em></button>
+                    </div>
+
+                    <!-- ============ Microphone ============ -->
+                    <div class="app-side dt-pane" id="pane-mic" role="tabpanel" aria-labelledby="tab-mic">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-microphone-lines"></i>Microphone</h2>
+                                <span class="status" id="micStatus"><i class="fas fa-circle-info"></i>Not started</span>
+                            </div>
+                            <div class="row">
+                                <select class="select grow" id="micSel" aria-label="Microphone"><option value="">Default microphone</option></select>
+                                <button class="btn btn--primary" type="button" id="micGo"><i class="fas fa-play"></i>&nbsp; Start</button>
+                            </div>
+                            <div class="row mt dt-opts">
+                                <label class="check"><input type="checkbox" id="optEcho">Echo cancellation</label>
+                                <label class="check"><input type="checkbox" id="optNoise">Noise suppression</label>
+                                <label class="check"><input type="checkbox" id="optAgc">Auto gain</label>
+                            </div>
+
+                            <div class="meter mt" id="meter" aria-label="Input level" role="meter" aria-valuemin="-60" aria-valuemax="0" aria-valuenow="-60">
+                                <div class="meter__bar"><i class="meter__fill" id="mFill"></i><i class="meter__peak" id="mPeak"></i></div>
+                                <div class="meter__scale"><span>-60</span><span>-48</span><span>-36</span><span>-24</span><span>-12</span><span>0 dB</span></div>
+                            </div>
+                            <div class="stats mt" id="micStats">
+                                <div class="stat"><b id="sLevel">--</b><span>Level (dBFS)</span></div>
+                                <div class="stat"><b id="sPeak">--</b><span>Peak hold</span></div>
+                                <div class="stat"><b id="sFreq">--</b><span>Loudest frequency</span></div>
+                                <div class="stat clip" id="sClipT"><b id="sClip">no</b><span>Clipping</span></div>
+                            </div>
+
+                            <div class="scope mt">
+                                <div class="scope__head">
+                                    <div class="seg" id="view" role="group" aria-label="Display">
+                                        <button type="button" data-v="wave" aria-pressed="true">Waveform</button>
+                                        <button type="button" data-v="spec" aria-pressed="false">Spectrum</button>
+                                    </div>
+                                </div>
+                                <canvas id="scope" role="img" aria-label="Microphone waveform or spectrum"></canvas>
+                                <div class="scope__empty" id="scopeEmpty"><i class="fas fa-microphone-slash"></i><span>Press <b>Start</b> and allow microphone access.</span></div>
+                            </div>
+                        </div>
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-dot"></i>Test recording</h2></div>
+                                <p class="hint">Record 5 seconds and play it back to hear how you sound to others.</p>
+                                <button class="btn mt rec-btn" type="button" id="recBtn" disabled><i class="fas fa-circle"></i>&nbsp; Record 5 s</button>
+                                <div class="rec-prog" id="recProg" hidden><i id="recBar"></i></div>
+                                <div class="rec-out" id="recOut" hidden>
+                                    <audio id="recAudio" controls preload="metadata"></audio>
+                                    <a class="btn btn--sm btn--ghost" id="recDl" download="mic-test.webm"><i class="fas fa-download"></i>&nbsp; Download</a>
+                                </div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Track</h2></div>
+                                <dl class="kv kv--tight" id="micInfo"><div><dt>Status</dt><dd>not started</dd></div></dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============ Webcam ============ -->
+                    <div class="app-side dt-pane" id="pane-cam" role="tabpanel" aria-labelledby="tab-cam" hidden>
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-video"></i>Webcam</h2>
+                                <span class="status" id="camStatus"><i class="fas fa-circle-info"></i>Not started</span>
+                            </div>
+                            <div class="row">
+                                <select class="select grow" id="camSel" aria-label="Camera"><option value="">Default camera</option></select>
+                                <select class="select cam-res" id="camRes" aria-label="Requested resolution">
+                                    <option value="">Auto resolution</option>
+                                    <option value="640x480">640 × 480</option>
+                                    <option value="1280x720">1280 × 720 (HD)</option>
+                                    <option value="1920x1080">1920 × 1080 (Full HD)</option>
+                                    <option value="2560x1440">2560 × 1440</option>
+                                    <option value="3840x2160">3840 × 2160 (4K)</option>
+                                </select>
+                                <button class="btn btn--primary" type="button" id="camGo"><i class="fas fa-play"></i>&nbsp; Start</button>
+                            </div>
+                            <div class="cam mt" id="camBox">
+                                <video id="video" playsinline muted></video>
+                                <div class="cam__empty" id="camEmpty"><i class="fas fa-video-slash"></i><span>Press <b>Start</b> and allow camera access.</span></div>
+                                <span class="cam__badge" id="camBadge" hidden></span>
+                            </div>
+                            <div class="row mt">
+                                <label class="check"><input type="checkbox" id="mirror" checked>Mirror preview</label>
+                                <span class="grow"></span>
+                                <button class="btn btn--sm" type="button" id="snap" disabled><i class="fas fa-camera"></i>&nbsp; Snapshot</button>
+                            </div>
+                        </div>
+                        <div class="app">
+                            <div class="stats" id="camStats">
+                                <div class="stat"><b id="sRes">--</b><span>Resolution</span></div>
+                                <div class="stat"><b id="sFps">--</b><span>Frames / s</span></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Camera</h2></div>
+                                <dl class="kv kv--tight" id="camInfo"><div><dt>Status</dt><dd>not started</dd></div></dl>
+                            </div>
+                            <div class="panel" id="snapPanel" hidden>
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-images"></i>Snapshots</h2></div>
+                                <div class="snaps" id="snaps"></div>
+                                <p class="hint mt">Click a snapshot to download it as PNG.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============ Gamepad ============ -->
+                    <div class="app-side dt-pane" id="pane-pad" role="tabpanel" aria-labelledby="tab-pad" hidden>
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-gamepad"></i><span id="padTitle">Gamepad</span></h2>
+                                <div class="panel__actions" id="rumble" hidden>
+                                    <button class="btn btn--sm" type="button" data-r="weak"><i class="fas fa-water"></i>&nbsp; Weak</button>
+                                    <button class="btn btn--sm" type="button" data-r="strong"><i class="fas fa-wave-square"></i>&nbsp; Strong</button>
+                                    <button class="btn btn--sm" type="button" data-r="both"><i class="fas fa-burst"></i>&nbsp; Both</button>
+                                </div>
+                            </div>
+                            <div class="pad-empty" id="padEmpty">
+                                <i class="fas fa-gamepad"></i>
+                                <b>No controller found yet</b>
+                                <span class="hint">Connect a gamepad by USB or Bluetooth and <b>press any button</b>; browsers only show a controller after it has been used on this page.</span>
+                            </div>
+                            <div class="pad" id="pad" hidden>
+                                <div class="pad__top">
+                                    <div class="trig" data-b="6"><span>LT</span><i></i><b>0%</b></div>
+                                    <div class="bump" data-b="4">LB</div>
+                                    <span class="grow"></span>
+                                    <div class="bump" data-b="5">RB</div>
+                                    <div class="trig" data-b="7"><span>RT</span><i></i><b>0%</b></div>
+                                </div>
+                                <div class="pad__body">
+                                    <div class="stick" data-s="0" data-b="10"><div class="stick__ring"><i class="stick__dot"></i></div><span class="stick__v">0.00, 0.00</span></div>
+                                    <div class="mid">
+                                        <button tabindex="-1" class="pb small" data-b="8">Back</button>
+                                        <button tabindex="-1" class="pb small home" data-b="16"><i class="fas fa-circle-dot"></i></button>
+                                        <button tabindex="-1" class="pb small" data-b="9">Start</button>
+                                    </div>
+                                    <div class="face">
+                                        <button tabindex="-1" class="pb f-top" data-b="3">Y</button>
+                                        <button tabindex="-1" class="pb f-left" data-b="2">X</button>
+                                        <button tabindex="-1" class="pb f-right" data-b="1">B</button>
+                                        <button tabindex="-1" class="pb f-bot" data-b="0">A</button>
+                                    </div>
+                                    <div class="dpad">
+                                        <button tabindex="-1" class="pb f-top" data-b="12"><i class="fas fa-caret-up"></i></button>
+                                        <button tabindex="-1" class="pb f-left" data-b="14"><i class="fas fa-caret-left"></i></button>
+                                        <button tabindex="-1" class="pb f-right" data-b="15"><i class="fas fa-caret-right"></i></button>
+                                        <button tabindex="-1" class="pb f-bot" data-b="13"><i class="fas fa-caret-down"></i></button>
+                                    </div>
+                                    <div class="stick" data-s="1" data-b="11"><div class="stick__ring"><i class="stick__dot"></i></div><span class="stick__v">0.00, 0.00</span></div>
+                                </div>
+                                <p class="hint pad-nonstd" id="padNonStd" hidden>This controller has no standard mapping, so the picture may not match; the raw values below are always right.</p>
+                                <div class="raw">
+                                    <div><span class="label">Buttons</span><div class="raw__btns" id="rawBtns"></div></div>
+                                    <div><span class="label">Axes</span><div class="raw__axes" id="rawAxes"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-plug"></i>Connected</h2><span class="hint" id="padCount">0</span></div>
+                                <div class="pads" id="pads"><p class="hint">Nothing connected.</p></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-info"></i>Tips</h2></div>
+                                <p class="hint">Resting sticks that read more than ±0.10 suggest drift. Triggers should reach 100% and fall back to 0%. Vibration works in Chromium browsers with most Xbox and PlayStation pads.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .dt-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 5px; border-radius: 16px; border: 1px solid var(--line); background: rgba(7,11,22,.6); }
+                    .dt-tabs button { display: flex; align-items: center; justify-content: center; gap: 10px; height: 46px; border-radius: 11px; color: var(--fg-2); font-weight: 600; font-size: .94rem; transition: background-color .25s, color .25s; position: relative; }
+                    .dt-tabs button i { color: var(--fg-3); transition: color .25s; }
+                    .dt-tabs button:hover { color: var(--fg); background: rgba(var(--signal-rgb), .06); }
+                    .dt-tabs button[aria-selected="true"] { background: rgba(var(--signal-rgb), .16); color: var(--fg); box-shadow: inset 0 0 0 1px rgba(var(--signal-rgb), .45); }
+                    .dt-tabs button[aria-selected="true"] i { color: var(--signal); }
+                    .dt-tabs .dot { width: 7px; height: 7px; border-radius: 50%; background: transparent; transition: background-color .25s; }
+                    .dt-tabs .dot.live { background: var(--mint); box-shadow: 0 0 0 3px rgba(94,230,181,.18); }
+                    .dt-pane { animation: dt-in .35s var(--ease-out); }
+                    .dt-pane[hidden] { display: none; }
+                    @keyframes dt-in { from { opacity: 0; transform: translateY(6px); } }
+                    .status.live { color: var(--mint); border-color: rgba(94,230,181,.35); }
+                    .status.live i { animation: dt-pulse 1.6s ease-in-out infinite; }
+                    @keyframes dt-pulse { 50% { opacity: .35; } }
+                    .dt-opts { gap: 18px; }
+                    .kv--tight > div { grid-template-columns: 104px minmax(0, 1fr); padding: 7px 2px; }
+                    .kv--tight dd { font-size: .82rem; word-break: normal; overflow-wrap: anywhere; }
+
+                    /* level meter */
+                    .meter__bar { position: relative; height: 18px; border-radius: 9px; background: #060a14; border: 1px solid var(--line-soft); overflow: hidden; }
+                    .meter__fill { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--l, 0) * 100%) 0 0); background: linear-gradient(90deg, #3fbf95 0%, var(--mint) 60%, var(--amber) 80%, var(--rose) 95%); transition: clip-path .06s linear; }
+                    .meter__fill::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(10% / 3 - 2px), rgba(6,10,20,.85) calc(10% / 3 - 2px) calc(10% / 3)); }
+                    .meter__peak { position: absolute; top: 2px; bottom: 2px; width: 3px; border-radius: 2px; left: calc(var(--p, 0) * 100% - 3px); background: var(--fg); opacity: 0; transition: left .08s linear, opacity .2s; }
+                    .meter.on .meter__peak { opacity: .9; }
+                    .meter__scale { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-code); font-size: .7rem; color: var(--fg-3); }
+                    #micStats .stat { flex: 1 1 120px; }
+                    #micStats .stat b { font-size: 1.15rem; }
+                    .stat.clip.hit { border-color: rgba(255,122,144,.6); background: rgba(255,122,144,.08); }
+                    .stat.clip.hit b { color: var(--rose); }
+                    .scope { position: relative; border-radius: 12px; border: 1px solid var(--line-soft); background: #060a14; overflow: hidden; }
+                    .scope__head { position: absolute; top: 10px; right: 10px; z-index: 2; }
+                    .scope__head .seg button { height: 28px; font-size: .8rem; padding: 0 10px; }
+                    .scope canvas { display: block; width: 100%; height: 220px; }
+                    .scope__empty, .cam__empty { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px; text-align: center; padding: 16px; color: var(--fg-3); font-size: .9rem; transition: opacity .3s; }
+                    .scope__empty i, .cam__empty i { font-size: 1.6rem; opacity: .6; }
+                    .scope__empty.err, .cam__empty.err { color: var(--rose); }
+                    .scope__empty[hidden], .cam__empty[hidden] { display: none; }
+                    .rec-btn { width: 100%; justify-content: center; }
+                    .rec-btn.rec { color: var(--rose); border-color: rgba(255,122,144,.55); }
+                    .rec-btn.rec i { animation: dt-pulse 1s ease-in-out infinite; }
+                    .rec-prog { height: 4px; margin-top: 10px; border-radius: 99px; background: rgba(var(--signal-rgb), .1); overflow: hidden; }
+                    .rec-prog i { display: block; height: 100%; width: 0; background: var(--rose); border-radius: inherit; }
+                    .rec-prog[hidden], .rec-out[hidden] { display: none; }
+                    .rec-out { display: grid; gap: 10px; margin-top: 14px; }
+                    .rec-out audio { width: 100%; height: 40px; color-scheme: dark; }
+                    .rec-out .btn { justify-self: start; }
+
+                    /* webcam */
+                    .cam-res { flex: 0 1 220px; }
+                    .cam { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; border: 1px solid var(--line-soft); background: #060a14; overflow: hidden; display: grid; place-items: center; }
+                    .cam video { width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity .4s var(--ease-out); }
+                    .cam.live video { opacity: 1; }
+                    .cam.mirror video { transform: scaleX(-1); }
+                    .cam__badge { position: absolute; left: 12px; top: 12px; padding: 3px 9px; border-radius: 999px; background: rgba(7,11,22,.75); border: 1px solid var(--line); color: var(--fg); font-family: var(--font-code); font-size: .74rem; }
+                    .cam__badge[hidden] { display: none; }
+                    .cam.flash::after { content: ""; position: absolute; inset: 0; background: #fff; animation: dt-flash .35s var(--ease-out) forwards; pointer-events: none; }
+                    @keyframes dt-flash { from { opacity: .5; } to { opacity: 0; } }
+                    #camStats .stat { flex: 1 1 0; min-width: 0; }
+                    #camStats .stat b { font-size: 1.15rem; white-space: nowrap; }
+                    #snapPanel[hidden] { display: none; }
+                    .snaps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+                    .snaps a { display: block; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-soft); aspect-ratio: 16 / 9; background: #060a14; animation: dt-in .35s var(--ease-out); transition: border-color .2s; }
+                    .snaps a:hover { border-color: rgba(var(--signal-rgb), .6); }
+                    .snaps img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+                    /* gamepad */
+                    .pad-empty { display: grid; justify-items: center; gap: 10px; text-align: center; padding: 48px 16px; border-radius: 14px; border: 1.5px dashed var(--line); background: rgba(7,11,22,.45); }
+                    .pad-empty > i { font-size: 2.2rem; color: var(--signal); animation: dt-float 3s ease-in-out infinite; }
+                    .pad-empty .hint { max-width: 440px; }
+                    .pad-empty[hidden], .pad[hidden], #rumble[hidden], .pad-nonstd[hidden] { display: none; }
+                    @keyframes dt-float { 50% { transform: translateY(-5px); } }
+                    .pad { display: grid; gap: 16px; }
+                    .pad__top { display: flex; align-items: center; gap: 10px; }
+                    .pad__top .grow { flex: 1; }
+                    .trig { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; width: 34%; min-width: 0; font-family: var(--font-code); font-size: .76rem; color: var(--fg-3); }
+                    .trig i { height: 10px; border-radius: 99px; background: rgba(var(--signal-rgb), .1); position: relative; overflow: hidden; }
+                    .trig i::after { content: ""; position: absolute; inset: 0; width: calc(var(--v, 0) * 100%); background: var(--amber); border-radius: inherit; }
+                    .trig b { font-weight: 500; color: var(--fg-2); min-width: 4ch; text-align: right; }
+                    .trig.on span { color: var(--amber); }
+                    .bump { height: 30px; min-width: 54px; padding: 0 10px; display: grid; place-items: center; border-radius: 9px; border: 1px solid var(--line); background: rgba(7,11,22,.6); font-family: var(--font-code); font-size: .76rem; color: var(--fg-2); transition: background-color .08s, color .08s, border-color .08s; }
+                    .pad__body { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "ls mid face" "dpad mid rs"; gap: 18px 24px; align-items: center; justify-items: center; padding: 18px; border-radius: 22px; border: 1px solid var(--line-soft); background: radial-gradient(70% 90% at 50% 0%, rgba(var(--signal-rgb), .06), transparent 70%), rgba(7,11,22,.5); }
+                    .stick[data-s="0"] { grid-area: ls; } .stick[data-s="1"] { grid-area: rs; }
+                    .mid { grid-area: mid; display: flex; gap: 8px; align-items: center; }
+                    .face { grid-area: face; } .dpad { grid-area: dpad; }
+                    .stick { display: grid; justify-items: center; gap: 8px; }
+                    .stick__ring { position: relative; width: 112px; height: 112px; border-radius: 50%; border: 1px solid var(--line); background: radial-gradient(circle, rgba(var(--signal-rgb), .08) 0 18%, transparent 19%), repeating-radial-gradient(circle, transparent 0 27px, rgba(35,48,86,.5) 27px 28px), #070b16; transition: border-color .1s, box-shadow .1s; }
+                    .stick__ring::before, .stick__ring::after { content: ""; position: absolute; background: rgba(35,48,86,.7); }
+                    .stick__ring::before { left: 50%; top: 6px; bottom: 6px; width: 1px; }
+                    .stick__ring::after { top: 50%; left: 6px; right: 6px; height: 1px; }
+                    .stick__dot { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 14px rgba(var(--signal-rgb), .55); transform: translate(calc(var(--x, 0) * 45px), calc(var(--y, 0) * 45px)); z-index: 1; }
+                    .stick.on .stick__ring { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(var(--amber-rgb), .2); }
+                    .stick.on .stick__dot { background: var(--amber); }
+                    .stick__v { font-family: var(--font-code); font-size: .74rem; color: var(--fg-3); }
+                    .face, .dpad { position: relative; width: 120px; height: 120px; }
+                    .pb { position: absolute; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: rgba(7,11,22,.7); color: var(--fg-2); font-family: var(--font-code); font-weight: 600; font-size: .86rem; cursor: default; transition: background-color .08s, color .08s, border-color .08s, transform .08s; }
+                    .dpad .pb { border-radius: 9px; }
+                    .f-top { left: 40px; top: 0; } .f-bot { left: 40px; bottom: 0; } .f-left { left: 0; top: 40px; } .f-right { right: 0; top: 40px; }
+                    .pb.small { position: static; width: auto; height: 28px; padding: 0 10px; border-radius: 99px; font-size: .72rem; font-weight: 500; }
+                    .pb.home { width: 36px; height: 36px; padding: 0; }
+                    .pb.on, .bump.on { background: var(--signal); border-color: var(--signal); color: #0a0f22; transform: scale(.94); }
+                    .face .pb[data-b="0"].on { background: var(--mint); border-color: var(--mint); }
+                    .face .pb[data-b="1"].on { background: var(--rose); border-color: var(--rose); }
+                    .face .pb[data-b="3"].on { background: var(--amber); border-color: var(--amber); }
+                    .raw { display: grid; gap: 14px; }
+                    .raw .label { display: block; margin-bottom: 8px; }
+                    .raw__btns { display: flex; flex-wrap: wrap; gap: 6px; }
+                    .rb { position: relative; min-width: 38px; height: 30px; padding: 0 8px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--line); background: rgba(7,11,22,.6); font-family: var(--font-code); font-size: .74rem; color: var(--fg-3); overflow: hidden; }
+                    .rb::before { content: ""; position: absolute; inset: auto 0 0 0; height: calc(var(--v, 0) * 100%); background: rgba(var(--signal-rgb), .3); }
+                    .rb span { position: relative; }
+                    .rb.on { color: var(--fg); border-color: var(--signal); }
+                    .raw__axes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px 16px; }
+                    .ax { display: grid; grid-template-columns: 34px 1fr 52px; gap: 8px; align-items: center; font-family: var(--font-code); font-size: .74rem; color: var(--fg-3); }
+                    .ax i { position: relative; height: 8px; border-radius: 99px; background: rgba(var(--signal-rgb), .1); }
+                    .ax i::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line); }
+                    .ax i::after { content: ""; position: absolute; top: 0; bottom: 0; border-radius: inherit; background: var(--signal); left: calc(var(--a, .5) * 100%); width: calc(var(--w, 0) * 100%); }
+                    .ax b { text-align: right; font-weight: 500; color: var(--fg-2); }
+                    .pads { display: grid; gap: 8px; }
+                    .padc { display: grid; gap: 4px; text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(7,11,22,.5); color: var(--fg); transition: border-color .2s, background-color .2s; }
+                    .padc:hover { border-color: rgba(var(--signal-rgb), .5); }
+                    .padc[aria-pressed="true"] { border-color: rgba(var(--signal-rgb), .7); background: rgba(var(--signal-rgb), .08); }
+                    .padc b { font-size: .86rem; font-weight: 600; overflow-wrap: anywhere; }
+                    .padc span { font-family: var(--font-code); font-size: .72rem; color: var(--fg-3); }
+                    @media (prefers-reduced-motion: reduce) { .dt-pane, .pad-empty > i, .status.live i, .rec-btn.rec i, .snaps a, .cam.flash::after { animation: none; } }
+                    @media (max-width: 600px) {
+                        .dt-tabs button { flex-direction: column; gap: 3px; height: 58px; font-size: .78rem; }
+                        .dt-tabs .dot { position: absolute; top: 8px; right: 10px; }
+                        .pad__body { grid-template-columns: 1fr 1fr; grid-template-areas: "mid mid" "ls face" "dpad rs"; padding: 14px 8px; gap: 16px 8px; }
+                        .stick__ring { width: 96px; height: 96px; }
+                        .stick__dot { transform: translate(calc(var(--x, 0) * 37px), calc(var(--y, 0) * 37px)); }
+                        .face, .dpad { width: 108px; height: 108px; } .pb { width: 36px; height: 36px; }
+                        .f-top, .f-bot { left: 36px; } .f-left, .f-right { top: 36px; }
+                        .trig { width: 40%; } .bump { min-width: 40px; }
+                        .cam-res { flex: 1 1 100%; }
+                    }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tools | Lukas200301</title>
+    <meta name="description" content="Resize, compress and convert images to JPEG, WebP or PNG, generate favicons with a multi-size .ico, and view or remove EXIF metadata. Everything runs locally in your browser.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Image Tools | Lukas200301">
+    <meta property="og:description" content="Resize, compress and convert images to JPEG, WebP or PNG, generate favicons with a multi-size .ico, and view or remove EXIF metadata. Everything runs locally in your browser.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Image Tools</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-images"></i>
+                            Image Tools
+                        </h1>
+                        <p class="tool-description">Shrink and convert photos with a live before/after comparison, turn a logo, letter or emoji into a complete favicon set, and check what a photo gives away in its EXIF data before you share it.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Nothing is uploaded</span></div>
+                            <div class="meta-item"><i class="fas fa-file-zipper"></i><span>Batch &amp; ZIP download</span></div>
+                            <div class="meta-item"><i class="fas fa-location-crosshairs"></i><span>GPS privacy check</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="tabbar">
+                    <div class="seg" id="tabs" role="tablist" aria-label="Tool">
+                        <button type="button" role="tab" data-t="resize" aria-pressed="true"><i class="fas fa-up-right-and-down-left-from-center"></i>&nbsp; Resize &amp; convert</button>
+                        <button type="button" role="tab" data-t="favicon" aria-pressed="false"><i class="fas fa-star"></i>&nbsp; Favicon</button>
+                        <button type="button" role="tab" data-t="exif" aria-pressed="false"><i class="fas fa-camera"></i>&nbsp; EXIF &amp; privacy</button>
+                    </div>
+                    <span class="hint"><i class="fas fa-lock"></i>&nbsp; Images are processed on your device and never leave it.</span>
+                </div>
+
+                <!-- ============ Resize & convert ============ -->
+                <div class="pane" id="pane-resize">
+                    <div class="app-side">
+                        <div class="app">
+                            <div class="panel">
+                                <label class="drop" id="rsDrop" tabindex="0">
+                                    <input type="file" id="rsFile" accept="image/*" multiple hidden>
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                    <b>Drop images here or click to choose</b>
+                                    <span class="hint">JPEG, PNG, WebP, AVIF, GIF, BMP … several at once is fine. You can also paste with <kbd>Ctrl</kbd>+<kbd>V</kbd>.</span>
+                                </label>
+                            </div>
+
+                            <div class="stats" id="rsStats">
+                                <div class="stat"><b id="stFiles">0</b><span>Images</span></div>
+                                <div class="stat"><b id="stBefore">–</b><span>Before</span></div>
+                                <div class="stat"><b id="stAfter">–</b><span>After</span></div>
+                                <div class="stat"><b id="stSaved">–</b><span>Saved</span></div>
+                            </div>
+
+                            <div class="panel" id="cmpPanel" hidden>
+                                <div class="panel__head">
+                                    <h2 class="panel__title"><i class="fas fa-left-right"></i>Before / after</h2>
+                                    <div class="row">
+                                        <span class="hint mono" id="cmpName"></span>
+                                        <div class="seg" id="cmpZoom" role="group" aria-label="Zoom">
+                                            <button type="button" data-z="fit" aria-pressed="true">Fit</button>
+                                            <button type="button" data-z="1" aria-pressed="false">100%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cmp-scroll" id="cmpScroll">
+                                    <div class="cmp" id="cmp">
+                                        <img id="cmpBefore" alt="Original image">
+                                        <img id="cmpAfter" alt="Processed image">
+                                        <div class="cmp__line" aria-hidden="true"><span><i class="fas fa-left-right"></i></span></div>
+                                        <span class="cmp__tag cmp__tag--l" id="cmpTagL">Before</span>
+                                        <span class="cmp__tag cmp__tag--r" id="cmpTagR">After</span>
+                                        <input type="range" id="cmpRange" min="0" max="100" value="50" step="0.1" aria-label="Comparison slider">
+                                    </div>
+                                </div>
+                                <p class="hint mt">Drag the slider to compare. Use 100% to judge compression artifacts at the real output size.</p>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel__head">
+                                    <h2 class="panel__title"><i class="fas fa-images"></i>Images</h2>
+                                    <div class="panel__actions">
+                                        <button class="btn btn--sm btn--danger" type="button" id="rsClear" disabled><i class="fas fa-trash-can"></i>&nbsp; Clear</button>
+                                        <button class="btn btn--sm btn--primary" type="button" id="rsZip" disabled><i class="fas fa-file-zipper"></i>&nbsp; Download all (.zip)</button>
+                                    </div>
+                                </div>
+                                <div class="files" id="rsList"><p class="empty-msg"><i class="far fa-image"></i>No images yet. Drop some above to get started.</p></div>
+                            </div>
+                        </div>
+
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Output</h2></div>
+                                <div class="field"><span>Format</span>
+                                    <div class="seg" id="rsFormat" role="group" aria-label="Output format">
+                                        <button type="button" data-f="image/jpeg" aria-pressed="false">JPEG</button>
+                                        <button type="button" data-f="image/webp" aria-pressed="true">WebP</button>
+                                        <button type="button" data-f="image/png" aria-pressed="false">PNG</button>
+                                        <button type="button" data-f="image/avif" aria-pressed="false">AVIF</button>
+                                    </div>
+                                    <span class="hint" id="fmtHint"></span>
+                                </div>
+                                <div class="field" id="qualityField"><span>Quality <b class="mono" id="qLabel">80</b></span><input type="range" id="rsQuality" min="1" max="100" value="80" aria-label="Quality"></div>
+                                <div class="field" id="bgField"><span>Background for transparent areas</span><div class="row"><input type="color" class="swatch" id="rsBg" value="#ffffff" aria-label="Background colour"><span class="hint">JPEG has no transparency.</span></div></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-up-right-and-down-left-from-center"></i>Size</h2></div>
+                                <div class="field">
+                                    <div class="seg" id="rsMode" role="group" aria-label="Resize mode">
+                                        <button type="button" data-m="none" aria-pressed="false">Original</button>
+                                        <button type="button" data-m="max" aria-pressed="true">Max size</button>
+                                        <button type="button" data-m="pct" aria-pressed="false">Percent</button>
+                                    </div>
+                                </div>
+                                <div id="modeMax">
+                                    <div class="row wh">
+                                        <label class="field grow"><span>Max width</span><input class="input mono" id="rsW" type="number" min="1" max="20000" value="1920" placeholder="auto"></label>
+                                        <label class="field grow"><span>Max height</span><input class="input mono" id="rsH" type="number" min="1" max="20000" value="1920" placeholder="auto"></label>
+                                    </div>
+                                    <div class="presets" id="rsPresets">
+                                        <button class="chip" type="button" data-w="3840" data-h="3840">4K</button>
+                                        <button class="chip" type="button" data-w="1920" data-h="1920">1920</button>
+                                        <button class="chip" type="button" data-w="1280" data-h="1280">1280</button>
+                                        <button class="chip" type="button" data-w="800" data-h="800">800</button>
+                                        <button class="chip" type="button" data-w="400" data-h="400">400</button>
+                                    </div>
+                                    <label class="check mt"><input type="checkbox" id="rsKeep" checked>Keep aspect ratio</label>
+                                </div>
+                                <div id="modePct" hidden>
+                                    <div class="field"><span>Scale <b class="mono" id="pctLabel">50%</b></span><input type="range" id="rsPct" min="5" max="200" step="5" value="50" aria-label="Scale in percent"></div>
+                                </div>
+                                <label class="check mt" id="upWrap"><input type="checkbox" id="rsNoUp" checked>Never enlarge small images</label>
+                                <p class="hint mt">Re-encoding through the browser also strips EXIF, GPS and other metadata.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ Favicon ============ -->
+                <div class="pane" id="pane-favicon" hidden>
+                    <div class="app-side">
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head">
+                                    <div class="seg" id="fvSrc" role="group" aria-label="Favicon source">
+                                        <button type="button" data-s="text" aria-pressed="true"><i class="fas fa-font"></i>&nbsp; Letter / emoji</button>
+                                        <button type="button" data-s="image" aria-pressed="false"><i class="far fa-image"></i>&nbsp; Image</button>
+                                    </div>
+                                </div>
+                                <div id="fvText">
+                                    <div class="app-2">
+                                        <label class="field"><span>Text (1–3 characters or an emoji)</span><input class="input big" id="fvChars" value="L" maxlength="8" spellcheck="false" autocomplete="off"></label>
+                                        <label class="field"><span>Font</span>
+                                            <select class="select" id="fvFont">
+                                                <option value="'Martian Mono', monospace">Martian Mono</option>
+                                                <option value="'Instrument Sans', system-ui, sans-serif">Instrument Sans</option>
+                                                <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                                                <option value="Georgia, 'Times New Roman', serif">Serif</option>
+                                                <option value="system-ui, 'Segoe UI', sans-serif">System</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="row colors">
+                                        <label class="check"><input type="color" class="swatch" id="fvFg" value="#0a0f22">Text</label>
+                                        <label class="field grow sl"><span>Text size <b class="mono" id="fvSizeL">62%</b></span><input type="range" id="fvSize" min="30" max="95" value="62"></label>
+                                        <label class="check"><input type="checkbox" id="fvBold" checked>Bold</label>
+                                    </div>
+                                    <div class="emoji-row" id="fvEmoji" aria-label="Quick emoji">
+                                        <button type="button">🚀</button><button type="button">⚡</button><button type="button">🔥</button><button type="button">🌍</button><button type="button">🎮</button><button type="button">📦</button><button type="button">🧪</button><button type="button">💡</button><button type="button">🐙</button><button type="button">☕</button>
+                                    </div>
+                                </div>
+                                <div id="fvImage" hidden>
+                                    <label class="drop drop--sm" id="fvDrop" tabindex="0">
+                                        <input type="file" id="fvFile" accept="image/*" hidden>
+                                        <i class="fas fa-cloud-arrow-up"></i>
+                                        <b>Drop a logo or image (square works best)</b>
+                                        <span class="drop__file mono" id="fvFileInfo"></span>
+                                    </label>
+                                    <div class="row mt">
+                                        <div class="seg" id="fvFit" role="group" aria-label="Fit">
+                                            <button type="button" data-fit="contain" aria-pressed="true">Contain</button>
+                                            <button type="button" data-fit="cover" aria-pressed="false">Cover (crop)</button>
+                                        </div>
+                                        <label class="field grow sl"><span>Padding <b class="mono" id="fvPadL">0%</b></span><input type="range" id="fvPad" min="0" max="30" value="0"></label>
+                                    </div>
+                                </div>
+                                <div class="shape-row mt">
+                                    <label class="check"><input type="checkbox" id="fvBgOn" checked>Background</label>
+                                    <input type="color" class="swatch" id="fvBg" value="#8ea2ff" aria-label="Background colour">
+                                    <div class="seg" id="fvShape" role="group" aria-label="Shape">
+                                        <button type="button" data-sh="square" aria-pressed="false">Square</button>
+                                        <button type="button" data-sh="rounded" aria-pressed="true">Rounded</button>
+                                        <button type="button" data-sh="circle" aria-pressed="false">Circle</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-eye"></i>Preview</h2><span class="hint">Every size is drawn on its own canvas, so small sizes stay crisp</span></div>
+                                <div class="fv-sizes" id="fvSizes"></div>
+                                <div class="mocks mt">
+                                    <div class="tabmock">
+                                        <div class="tabmock__tab"><canvas id="mockTab" width="16" height="16"></canvas><span id="mockTitle">My Website</span><i class="fas fa-xmark"></i></div>
+                                        <div class="tabmock__bar"><i class="fas fa-lock"></i> example.com</div>
+                                    </div>
+                                    <div class="tabmock tabmock--light">
+                                        <div class="tabmock__tab"><canvas id="mockTab2" width="16" height="16"></canvas><span>Light theme</span><i class="fas fa-xmark"></i></div>
+                                        <div class="tabmock__bar"><i class="fas fa-lock"></i> example.com</div>
+                                    </div>
+                                    <div class="homemock"><canvas id="mockHome" width="180" height="180"></canvas><span id="mockHomeName">My Site</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-download"></i>Download</h2></div>
+                                <button class="btn btn--primary wide" type="button" id="fvZip"><i class="fas fa-file-zipper"></i>&nbsp; All files (.zip)</button>
+                                <button class="btn wide mt" type="button" id="fvIco"><i class="fas fa-star"></i>&nbsp; favicon.ico <span class="muted">16 · 32 · 48</span></button>
+                                <div class="fv-files" id="fvFiles"></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-code"></i>HTML</h2><button class="copy" type="button" id="cpHtml" aria-label="Copy HTML"><i class="far fa-copy"></i></button></div>
+                                <div class="app-2 tight">
+                                    <label class="field"><span>Site name</span><input class="input" id="fvName" value="My Site" autocomplete="off"></label>
+                                    <label class="field"><span>Theme colour</span><input type="color" class="swatch wide-sw" id="fvTheme" value="#070b16"></label>
+                                </div>
+                                <pre class="output snippet" id="fvHtml"></pre>
+                                <div class="panel__head mt"><h2 class="panel__title"><i class="fas fa-mobile-screen"></i>site.webmanifest</h2><button class="copy" type="button" id="cpMan" aria-label="Copy manifest"><i class="far fa-copy"></i></button></div>
+                                <pre class="output snippet" id="fvMan"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ EXIF ============ -->
+                <div class="pane" id="pane-exif" hidden>
+                    <div class="app-side">
+                        <div class="app">
+                            <div class="panel">
+                                <label class="drop" id="exDrop" tabindex="0">
+                                    <input type="file" id="exFile" accept="image/jpeg,image/*" hidden>
+                                    <i class="fas fa-magnifying-glass-location"></i>
+                                    <b>Drop a photo to read its metadata</b>
+                                    <span class="hint">EXIF is read from JPEG files (straight from a camera or phone). The file is never uploaded.</span>
+                                </label>
+                            </div>
+                            <div class="panel" id="exResult" hidden>
+                                <div class="ex-top">
+                                    <div class="ex-thumb"><img id="exImg" alt="Photo preview"></div>
+                                    <div class="ex-sum">
+                                        <h3 class="mono" id="exName"></h3>
+                                        <p class="hint" id="exInfo"></p>
+                                        <div class="ex-chips" id="exChips"></div>
+                                    </div>
+                                </div>
+                                <div class="gps-warn" id="exGps" hidden></div>
+                                <div class="panel__head mt"><h2 class="panel__title"><i class="fas fa-camera-retro"></i>Metadata</h2><span class="hint" id="exCount"></span></div>
+                                <dl class="kv" id="exKv"></dl>
+                                <details class="alltags" id="exAllWrap">
+                                    <summary><i class="fas fa-chevron-right"></i><span>All tags (<span id="exAllN">0</span>)</span></summary>
+                                    <div class="table-wrap mt"><table class="table"><thead><tr><th>IFD</th><th>Tag</th><th>Name</th><th>Value</th></tr></thead><tbody id="exAll"></tbody></table></div>
+                                </details>
+                            </div>
+                        </div>
+                        <div class="app">
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-user-shield"></i>Remove metadata</h2></div>
+                                <p class="hint">Redraws the pixels on a canvas and saves a fresh file: EXIF, GPS, XMP, IPTC, comments and the embedded thumbnail are all dropped. The rotation from the EXIF orientation is baked into the pixels so the photo still shows the right way up.</p>
+                                <div class="field mt" id="exQField"><span>JPEG quality <b class="mono" id="exQL">92</b></span><input type="range" id="exQ" min="50" max="100" value="92"></div>
+                                <button class="btn btn--primary wide" type="button" id="exClean" disabled><i class="fas fa-eraser"></i>&nbsp; Save a clean copy</button>
+                                <div class="clean-res" id="exCleanRes" hidden></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-info"></i>What can leak</h2></div>
+                                <ul class="leak">
+                                    <li><i class="fas fa-location-dot"></i><span><b>GPS position</b> down to a few metres: your home, workplace or school.</span></li>
+                                    <li><i class="fas fa-clock"></i><span><b>Date and time</b> the photo was taken, with time zone.</span></li>
+                                    <li><i class="fas fa-mobile-screen"></i><span><b>Device</b> make, model, lens and sometimes its serial number.</span></li>
+                                    <li><i class="fas fa-pen"></i><span><b>Software</b> and editing history, author and copyright fields.</span></li>
+                                </ul>
+                                <p class="hint mt">Most social networks strip EXIF on upload, but messengers sending "as file", e-mail and cloud links usually keep it.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .tabbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+                    .pane { animation: pane-in .35s var(--ease-out); }
+                    .pane[hidden], .pane [hidden] { display: none !important; }
+                    @keyframes pane-in { from { opacity: 0; transform: translateY(6px); } }
+                    .drop { display: grid; justify-items: center; gap: 8px; text-align: center; padding: 34px 16px; border-radius: 14px; border: 1.5px dashed var(--line); background: rgba(7,11,22,.45); cursor: pointer; transition: border-color .2s, background-color .2s, transform .3s var(--ease-spring); }
+                    .drop--sm { padding: 22px 16px; }
+                    .drop i { font-size: 2rem; color: var(--signal); transition: transform .4s var(--ease-spring); }
+                    .drop:hover, .drop.over, .drop:focus-visible { border-color: var(--signal); background: rgba(var(--signal-rgb), .07); outline: none; }
+                    .drop.over { transform: scale(1.01); }
+                    .drop.over i { transform: translateY(-6px) scale(1.1); }
+                    .drop__file { color: var(--amber); font-size: .88rem; }
+                    kbd { font-family: var(--font-code); font-size: .75em; padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); background: var(--ink-2); }
+                    #rsStats .stat { flex: 1 1 120px; }
+                    #stSaved.good { color: var(--mint); } #stSaved.bad { color: var(--rose); }
+                    .wide { width: 100%; justify-content: center; }
+                    .seg button i { font-size: .85em; }
+                    .seg button:disabled { opacity: .4; cursor: not-allowed; }
+                    .wh { gap: 10px; } .wh .field { margin-bottom: 0; flex: 1 1 100px; }
+                    .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+                    .presets .chip { cursor: pointer; font-family: var(--font-code); font-size: .74rem; }
+                    .presets .chip:hover, .presets .chip.on { color: var(--fg); border-color: rgba(var(--signal-rgb), .55); }
+                    input[type=range] { width: 100%; accent-color: var(--signal); }
+                    .swatch { -webkit-appearance: none; appearance: none; width: 42px; height: 34px; padding: 3px; border-radius: 10px; border: 1px solid var(--line); background: rgba(7,11,22,.75); cursor: pointer; flex: none; }
+                    .swatch::-webkit-color-swatch-wrapper { padding: 0; }
+                    .swatch::-webkit-color-swatch { border: 0; border-radius: 7px; }
+                    .swatch::-moz-color-swatch { border: 0; border-radius: 7px; }
+                    .check .swatch { width: 42px; height: 34px; }
+                    .wide-sw { width: 100%; height: 44px; }
+                    .empty-msg { color: var(--fg-3); text-align: center; padding: 26px 10px; font-size: .9rem; }
+                    .empty-msg i { display: block; font-size: 1.5rem; margin-bottom: 8px; opacity: .6; }
+
+                    /* file rows */
+                    .files { display: grid; gap: 8px; }
+                    .file { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px; border-radius: 13px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); cursor: pointer; transition: border-color .2s, background-color .2s; animation: pane-in .35s var(--ease-out) backwards; }
+                    .file:hover { border-color: var(--line); }
+                    .file.sel { border-color: rgba(var(--signal-rgb), .6); background: rgba(var(--signal-rgb), .06); }
+                    .file__img { width: 56px; height: 56px; border-radius: 9px; object-fit: cover; background: repeating-conic-gradient(#1a2440 0 25%, #121a2f 0 50%) 0 0 / 12px 12px; }
+                    .file__name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                    .file__meta { display: flex; gap: 6px 12px; flex-wrap: wrap; font-family: var(--font-code); font-size: .76rem; color: var(--fg-3); margin-top: 3px; }
+                    .file__meta b { color: var(--fg-2); font-weight: 500; }
+                    .file__meta .arr { color: var(--fg-3); }
+                    .sv { padding: 0 7px; border-radius: 999px; font-weight: 600; }
+                    .sv.good { color: var(--mint); background: rgba(94,230,181,.1); }
+                    .sv.bad { color: var(--amber); background: rgba(var(--amber-rgb), .1); }
+                    .file__act { display: flex; gap: 4px; }
+                    .file__bar { grid-column: 2 / -1; height: 3px; border-radius: 9px; background: rgba(var(--signal-rgb), .1); overflow: hidden; }
+                    .file__bar i { display: block; height: 100%; width: 40%; background: var(--signal); border-radius: inherit; animation: busy 1s ease-in-out infinite; }
+                    @keyframes busy { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+                    /* compare */
+                    .cmp-scroll { overflow: auto; max-height: 70vh; border-radius: 12px; border: 1px solid var(--line-soft); background: repeating-conic-gradient(#141c33 0 25%, #0e1528 0 50%) 0 0 / 18px 18px; }
+                    .cmp { position: relative; margin: 0 auto; max-width: 100%; user-select: none; touch-action: none; line-height: 0; }
+                    .cmp.zoom1 { max-width: none; }
+                    .cmp img { display: block; width: 100%; height: auto; }
+                    .cmp #cmpAfter { position: absolute; inset: 0; height: 100%; clip-path: inset(0 0 0 var(--x, 50%)); }
+                    .cmp__line { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px; margin-left: -1px; background: var(--fg); box-shadow: 0 0 0 1px rgba(7,11,22,.4); pointer-events: none; }
+                    .cmp__line span { position: absolute; top: 50%; left: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; display: grid; place-items: center; border-radius: 50%; background: var(--fg); color: #0a0f22; font-size: .8rem; box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+                    .cmp__tag { position: absolute; top: 10px; padding: 4px 9px; border-radius: 8px; font: 600 .74rem/1.3 var(--font-code); background: rgba(7,11,22,.75); color: var(--fg); pointer-events: none; }
+                    .cmp__tag--l { left: 10px; } .cmp__tag--r { right: 10px; color: var(--mint); }
+                    #cmpRange { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+                    #cmpPanel[hidden] { display: none; }
+
+                    /* favicon */
+                    .colors, .shape-row { gap: 14px; align-items: center; }
+                    .shape-row { display: flex; flex-wrap: wrap; }
+                    .sl { margin-bottom: 0; min-width: 160px; }
+                    .emoji-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
+                    .emoji-row button { width: 36px; height: 36px; border-radius: 9px; font-size: 1.15rem; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); transition: border-color .2s, transform .25s var(--ease-spring); }
+                    .emoji-row button:hover { border-color: var(--signal); transform: translateY(-2px); }
+                    .fv-sizes { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
+                    .fvs { display: grid; justify-items: center; gap: 8px; padding: 12px; border-radius: 12px; border: 1px solid var(--line-soft); background: repeating-conic-gradient(#141c33 0 25%, #0e1528 0 50%) 0 0 / 12px 12px; }
+                    .fvs canvas { display: block; image-rendering: pixelated; }
+                    .fvs span { font: .72rem var(--font-code); color: var(--fg-3); }
+                    .mocks { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; }
+                    .tabmock { flex: 1 1 220px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: #1c2133; }
+                    .tabmock__tab { display: flex; align-items: center; gap: 8px; margin: 8px 0 0 10px; width: 200px; max-width: calc(100% - 20px); padding: 8px 10px; border-radius: 9px 9px 0 0; background: #2b3147; color: #e6e9f2; font-size: .8rem; }
+                    .tabmock__tab span { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+                    .tabmock__tab i { font-size: .7rem; opacity: .6; }
+                    .tabmock__tab canvas { width: 16px; height: 16px; flex: none; }
+                    .tabmock__bar { padding: 8px 12px; background: #2b3147; color: #9aa3bd; font-size: .78rem; border-top: 1px solid #353c55; }
+                    .tabmock__bar i { font-size: .7rem; margin-right: 4px; }
+                    .tabmock--light { background: #dfe3eb; }
+                    .tabmock--light .tabmock__tab, .tabmock--light .tabmock__bar { background: #fff; color: #222; }
+                    .tabmock--light .tabmock__bar { color: #666; border-color: #e6e6e6; }
+                    .homemock { flex: 0 0 auto; display: grid; justify-items: center; align-content: center; gap: 6px; padding: 12px 22px; border-radius: 12px; border: 1px solid var(--line); background: radial-gradient(circle at 30% 20%, #3b4c8f, #1a2440 70%); }
+                    .homemock canvas { width: 60px; height: 60px; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+                    .homemock span { font-size: .74rem; color: #fff; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                    .fv-files { display: grid; gap: 4px; margin-top: 12px; }
+                    .fv-files button { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 9px; font: .8rem var(--font-code); color: var(--fg-2); border: 1px solid transparent; text-align: left; transition: background-color .2s, color .2s; }
+                    .fv-files button:hover { color: var(--fg); background: var(--ink-3); }
+                    .fv-files button span { color: var(--fg-3); white-space: nowrap; }
+                    .fv-files button { font-size: .76rem; overflow-wrap: anywhere; }
+                    .fv-files button i { color: var(--signal); margin-left: 6px; }
+                    .snippet { font-size: .74rem; line-height: 1.55; white-space: pre; max-height: 260px; }
+                    .tight .field { margin-bottom: 10px; }
+
+                    /* exif */
+                    .ex-top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+                    .ex-thumb { width: 140px; height: 140px; flex: none; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-soft); background: var(--ink-0); display: grid; place-items: center; }
+                    .ex-thumb img { max-width: 100%; max-height: 100%; }
+                    .ex-sum { flex: 1 1 220px; min-width: 0; }
+                    .ex-sum h3 { font-size: 1rem; font-weight: 600; overflow-wrap: anywhere; }
+                    .ex-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+                    .ex-chips .chip.warn { color: var(--amber); border-color: rgba(var(--amber-rgb), .45); }
+                    .ex-chips .chip.ok { color: var(--mint); border-color: rgba(94,230,181,.4); }
+                    .gps-warn { display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; padding: 14px 16px; border-radius: 13px; border: 1px solid rgba(var(--amber-rgb), .45); background: rgba(var(--amber-rgb), .07); animation: pane-in .4s var(--ease-out); }
+                    .gps-warn[hidden] { display: none; }
+                    .gps-warn > i { color: var(--amber); font-size: 1.3rem; margin-top: 2px; }
+                    .gps-warn b { color: var(--amber); }
+                    .gps-warn p { color: var(--fg-2); font-size: .88rem; margin-top: 3px; }
+                    .gps-warn a { color: var(--signal); }
+                    .kv dd a { color: var(--signal); }
+                    .kv dd small { display: block; font-family: var(--font-body); font-size: .76rem; color: var(--fg-3); margin-top: 2px; }
+                    .alltags { margin-top: 12px; }
+                    .alltags summary { cursor: pointer; list-style: none; font-size: .84rem; color: var(--fg-3); display: inline-flex; gap: 8px; align-items: center; }
+                    .alltags summary::-webkit-details-marker { display: none; }
+                    .alltags summary i { font-size: .65rem; transition: transform .2s; }
+                    .alltags[open] summary i { transform: rotate(90deg); }
+                    .alltags summary:hover { color: var(--fg); }
+                    .alltags td:last-child { white-space: normal; word-break: break-all; min-width: 200px; }
+                    .clean-res { margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(94,230,181,.35); background: rgba(94,230,181,.06); font-size: .86rem; color: var(--fg-2); animation: pane-in .35s var(--ease-out); }
+                    .clean-res b { color: var(--mint); }
+                    .clean-res[hidden] { display: none; }
+                    .leak { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: .88rem; color: var(--fg-2); }
+                    .leak li { display: flex; gap: 10px; }
+                    .leak i { color: var(--signal); width: 16px; text-align: center; margin-top: 3px; }
+                    #exResult[hidden] { display: none; }
+                    @media (max-width: 560px) {
+                        .file { grid-template-columns: 44px minmax(0, 1fr); gap: 10px; }
+                        .file__img { width: 44px; height: 44px; }
+                        .file__act { grid-column: 1 / -1; justify-content: flex-end; }
+                        .ex-thumb { width: 100%; height: 200px; }
+                        .tabbar .seg { width: 100%; }
+                        .tabbar .seg button { flex: 1 1 auto; padding: 0 8px; }
+                    }
+                    @media (prefers-reduced-motion: reduce) { .pane, .file, .gps-warn, .clean-res { animation: none; } .file__bar i { animation-duration: 3s; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

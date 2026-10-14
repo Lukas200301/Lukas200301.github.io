@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test | Lukas200301</title>
+    <meta name="description" content="Measure your internet download and upload speed, latency and jitter against Cloudflare&#x27;s global network, with a live gauge, sample chart and a history of past runs.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Speed Test | Lukas200301">
+    <meta property="og:description" content="Measure your internet download and upload speed, latency and jitter against Cloudflare&#x27;s global network, with a live gauge, sample chart and a history of past runs.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Speed Test</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-gauge-high"></i>
+                            Speed Test
+                        </h1>
+                        <p class="tool-description">How fast is your connection right now? Measures latency, jitter, download and upload against Cloudflare's network nearest to you, the same way Cloudflare's own test does, and tells you what the numbers are good for.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-cloud"></i><span>Cloudflare edge</span></div>
+                            <div class="meta-item"><i class="fas fa-chart-line"></i><span>90th percentile result</span></div>
+                            <div class="meta-item"><i class="fas fa-clock-rotate-left"></i><span>Saved history</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="app-side">
+                        <div class="panel gauge-panel">
+                            <div class="phases" id="phases">
+                                <div class="ph" data-ph="latency"><i class="fas fa-stopwatch"></i><span>Latency</span></div>
+                                <span class="ph__line"></span>
+                                <div class="ph" data-ph="download"><i class="fas fa-arrow-down"></i><span>Download</span></div>
+                                <span class="ph__line"></span>
+                                <div class="ph" data-ph="upload"><i class="fas fa-arrow-up"></i><span>Upload</span></div>
+                            </div>
+                            <div class="gauge" id="gauge" data-mode="idle">
+                                <svg viewBox="-6 -2 332 266" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="gDown" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5b6fd8"/><stop offset="1" stop-color="#b9c6ff"/></linearGradient>
+                                        <linearGradient id="gUp" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#d9893d"/><stop offset="1" stop-color="#ffd3a1"/></linearGradient>
+                                        <linearGradient id="gLat" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2fa883"/><stop offset="1" stop-color="#9df3d3"/></linearGradient>
+                                    </defs>
+                                    <path class="g-track" id="gTrack" d=""/>
+                                    <path class="g-val" id="gVal" d=""/>
+                                    <g id="gTicks"></g>
+                                    <line class="g-needle" id="gNeedle" x1="160" y1="96" x2="160" y2="66"/>
+                                </svg>
+                                <div class="gauge__read">
+                                    <b id="gNum">–</b>
+                                    <span id="gUnit">Mbit/s</span>
+                                </div>
+                            </div>
+                            <p class="gauge__phase" id="phaseText" aria-live="polite">Press start to measure your connection.</p>
+                            <div class="row center">
+                                <button class="btn btn--primary go" type="button" id="go"><i class="fas fa-play"></i>&nbsp; Start test</button>
+                            </div>
+                            <div class="status-row"><span class="status" id="state" hidden></span></div>
+                        </div>
+
+                        <div class="app">
+                            <div class="results" id="results">
+                                <div class="res res--down"><span><i class="fas fa-arrow-down"></i> Download</span><b id="rDown">–</b><em>Mbit/s</em></div>
+                                <div class="res res--up"><span><i class="fas fa-arrow-up"></i> Upload</span><b id="rUp">–</b><em>Mbit/s</em></div>
+                                <div class="res res--lat"><span><i class="fas fa-stopwatch"></i> Latency</span><b id="rLat">–</b><em>ms</em></div>
+                                <div class="res res--jit"><span><i class="fas fa-wave-square"></i> Jitter</span><b id="rJit">–</b><em>ms</em></div>
+                            </div>
+                            <div class="panel">
+                                <div class="panel__head"><h2 class="panel__title"><i class="fas fa-server"></i>Connection</h2></div>
+                                <dl class="kv" id="conn">
+                                    <div><dt>Server</dt><dd id="cServer">–</dd><span></span></div>
+                                    <div><dt>Provider</dt><dd id="cIsp">–</dd><span></span></div>
+                                    <div><dt>Your IP</dt><dd id="cIp">–</dd><span></span></div>
+                                    <div><dt>Data used</dt><dd id="cData">–</dd><span></span></div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-chart-line"></i>Samples</h2>
+                                <div class="legend"><span class="lg-d">Download</span><span class="lg-u">Upload</span></div>
+                            </div>
+                            <div class="chart" id="chart">
+                                <svg id="chartSvg" viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Speed of each measurement"></svg>
+                                <p class="chart__empty" id="chartEmpty">Each transfer shows up here as a point while the test runs.</p>
+                            </div>
+                            <p class="hint mt">Files grow from 100 kB to 25 MB until a transfer takes about a second. The result is the 90th percentile of all transfers, like Cloudflare reports it.</p>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-lightbulb"></i>What this means</h2><span id="verdict"></span></div>
+                            <div class="means" id="means"><p class="hint">Run a test to see what your connection handles well.</p></div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-clock-rotate-left"></i>History</h2>
+                            <button class="btn btn--sm btn--danger" type="button" id="clearHist"><i class="fas fa-trash-can"></i>&nbsp; Clear</button>
+                        </div>
+                        <div class="table-wrap"><table class="table hist"><thead><tr><th>Date</th><th>Download</th><th>Upload</th><th>Latency</th><th>Jitter</th><th>Server</th><th></th></tr></thead><tbody id="hist"></tbody></table></div>
+                        <p class="hint mt">Stored only in this browser. Results depend on Wi-Fi, other devices on your network and the time of day, so compare a few runs.</p>
+                    </div>
+                </div>
+
+                <style>
+                    .gauge-panel { display: grid; justify-items: center; gap: 6px; padding-top: 22px; overflow: hidden; }
+                    .gauge-panel::before { content: ""; position: absolute; inset: auto -20% -40% -20%; height: 70%; background: radial-gradient(closest-side, rgba(var(--g-rgb, var(--signal-rgb)), .12), transparent); pointer-events: none; transition: background .6s; }
+                    .gauge-panel[data-mode="upload"] { --g-rgb: var(--amber-rgb); }
+                    .gauge-panel[data-mode="latency"] { --g-rgb: 94, 230, 181; }
+                    .phases { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 460px; }
+                    .ph { display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--fg-3); white-space: nowrap; transition: color .3s; }
+                    .ph i { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); font-size: .72rem; background: rgba(7,11,22,.6); transition: background-color .3s, border-color .3s, color .3s, box-shadow .3s; }
+                    .ph__line { flex: 1; height: 2px; border-radius: 2px; background: var(--line); position: relative; overflow: hidden; min-width: 12px; }
+                    .ph__line::after { content: ""; position: absolute; inset: 0; background: var(--signal); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-out); }
+                    .ph__line.done::after { transform: scaleX(1); }
+                    .ph.active { color: var(--fg); }
+                    .ph.active i { border-color: var(--signal); color: var(--signal); box-shadow: 0 0 0 4px rgba(var(--signal-rgb), .14); animation: ph-pulse 1.6s ease-in-out infinite; }
+                    .ph.done { color: var(--fg-2); }
+                    .ph.done i { background: var(--signal); border-color: var(--signal); color: #0a0f22; }
+                    .ph[data-ph="upload"].active i { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 0 4px rgba(var(--amber-rgb), .14); }
+                    .ph[data-ph="latency"].active i { border-color: var(--mint); color: var(--mint); box-shadow: 0 0 0 4px rgba(94,230,181,.14); }
+                    @keyframes ph-pulse { 50% { box-shadow: 0 0 0 7px rgba(var(--signal-rgb), .05); } }
+
+                    .gauge { position: relative; width: min(100%, 440px); margin-top: 10px; }
+                    .gauge svg { display: block; width: 100%; height: auto; overflow: visible; }
+                    .g-track { fill: none; stroke: rgba(var(--signal-rgb), .1); stroke-width: 16; stroke-linecap: round; }
+                    .g-val { fill: none; stroke: url(#gDown); stroke-width: 16; stroke-linecap: round; filter: drop-shadow(0 0 8px rgba(var(--signal-rgb), .45)); }
+                    .gauge[data-mode="upload"] .g-val { stroke: url(#gUp); filter: drop-shadow(0 0 8px rgba(var(--amber-rgb), .45)); }
+                    .gauge[data-mode="latency"] .g-val { stroke: url(#gLat); filter: drop-shadow(0 0 8px rgba(94,230,181,.4)); }
+                    .g-tick { stroke: var(--line); stroke-width: 2; stroke-linecap: round; }
+                    .g-tick.on { stroke: rgba(var(--signal-rgb), .7); }
+                    .g-lbl { fill: var(--fg-3); font: 600 10.5px var(--font-code); text-anchor: middle; dominant-baseline: middle; }
+                    .g-needle { stroke: var(--fg); stroke-width: 3; stroke-linecap: round; transition: opacity .3s; }
+                    .gauge__read { position: absolute; left: 0; right: 0; top: 68%; text-align: center; display: grid; justify-items: center; }
+                    .gauge__read b { font-family: var(--font-head); font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.3rem); font-weight: 700; letter-spacing: -.06em; line-height: 1; font-variant-numeric: tabular-nums; }
+                    .gauge__read span { font-size: .82rem; color: var(--fg-3); margin-top: 4px; }
+                    .gauge__phase { color: var(--fg-2); font-size: .92rem; min-height: 1.5em; text-align: center; margin-top: 18px; }
+                    .center { justify-content: center; }
+                    .go { min-width: 180px; justify-content: center; height: 46px; font-size: 1rem; }
+                    .go.stop { background: transparent; color: var(--fg); border-color: var(--line); box-shadow: none; }
+                    .go.stop:hover { color: var(--rose); border-color: rgba(255,122,144,.6); }
+                    .status-row { min-height: 6px; display: flex; justify-content: center; }
+                    .status-row .status { max-width: 100%; text-align: left; }
+                    .status[hidden] { display: none; }
+
+                    .results { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                    .res { --c: var(--signal); --c-rgb: var(--signal-rgb); position: relative; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: radial-gradient(120% 80% at 0% 0%, rgba(var(--c-rgb), .1), transparent 60%), rgba(7,11,22,.55); overflow: hidden; }
+                    .res::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, var(--c), transparent 85%); opacity: .8; }
+                    .res--up { --c: var(--amber); --c-rgb: var(--amber-rgb); }
+                    .res--lat, .res--jit { --c: var(--mint); --c-rgb: 94, 230, 181; }
+                    .res span { display: flex; align-items: center; gap: 7px; font-size: .78rem; color: var(--fg-3); font-weight: 600; }
+                    .res span i { color: var(--c); font-size: .8em; }
+                    .res b { display: block; font-family: var(--font-head); font-size: 1.7rem; letter-spacing: -.05em; margin-top: 6px; font-variant-numeric: tabular-nums; line-height: 1.1; }
+                    .res em { font-style: normal; font-size: .76rem; color: var(--fg-3); }
+                    .res.live b { color: var(--c); }
+                    .res.pop b { animation: stat-pop .45s var(--ease-spring); }
+
+                    .legend { display: flex; gap: 14px; font-size: .78rem; color: var(--fg-3); }
+                    .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+                    .lg-d::before { background: var(--signal); } .lg-u::before { background: var(--amber); }
+                    .chart { position: relative; height: 220px; border-radius: 12px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); }
+                    .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+                    .chart__empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; color: var(--fg-3); font-size: .86rem; }
+                    .chart__empty[hidden] { display: none; }
+                    .c-grid { stroke: var(--line-soft); stroke-width: 1; vector-effect: non-scaling-stroke; }
+                    .c-line { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+                    .c-area { opacity: .14; }
+                    .c-d { stroke: var(--signal); } .c-u { stroke: var(--amber); }
+                    .c-ad { fill: var(--signal); } .c-au { fill: var(--amber); }
+                    .c-axis { position: absolute; left: 8px; font: .68rem var(--font-code); color: var(--fg-3); transform: translateY(-50%); pointer-events: none; }
+
+                    .means { display: grid; gap: 8px; }
+                    .mean { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.45); animation: mean-in .4s var(--ease-out) backwards; animation-delay: calc(var(--i) * 50ms); }
+                    @keyframes mean-in { from { opacity: 0; transform: translateY(5px); } }
+                    .mean > i { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: rgba(var(--signal-rgb), .1); color: var(--signal); font-size: .85rem; }
+                    .mean b { display: block; font-size: .9rem; font-weight: 600; }
+                    .mean small { display: block; font-size: .78rem; color: var(--fg-3); }
+                    .pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: .74rem; font-weight: 600; white-space: nowrap; border: 1px solid var(--line); color: var(--fg-2); background: rgba(7, 11, 22, .4); }
+                    .pill.ok { color: var(--mint); border-color: rgba(94,230,181,.4); background: rgba(94,230,181,.08); }
+                    .pill.warn { color: var(--amber); border-color: rgba(var(--amber-rgb), .45); background: rgba(var(--amber-rgb), .08); }
+                    .pill.bad { color: var(--rose); border-color: rgba(255,122,144,.5); background: rgba(255,122,144,.08); }
+
+                    .hist td:last-child { width: 1px; padding: 2px 6px; }
+                    .hist .d { color: #c9d3ff; } .hist .u { color: var(--amber); }
+                    .hist tr.empty td { text-align: center; color: var(--fg-3); font-family: var(--font-body); padding: 26px; white-space: normal; }
+                    .hist tr.best td:nth-child(2)::after { content: " ★"; color: var(--amber); }
+                    @media (max-width: 560px) {
+                        .phases { gap: 6px; } .ph span { display: none; } .ph.active span { display: inline; }
+                        .res b { font-size: 1.4rem; }
+                        .mean { grid-template-columns: 30px minmax(0, 1fr); } .mean .pill { grid-column: 2; justify-self: start; }
+                    }
+                    @media (prefers-reduced-motion: reduce) { .ph.active i { animation: none; } .mean { animation: none; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

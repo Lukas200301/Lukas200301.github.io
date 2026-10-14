@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Hangman | Lukas200301</title>
+    <meta name="description" content="Hangman with 200+ IT terms from networking, sysadmin, programming, hardware and security, each with a short explanation.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="IT Hangman | Lukas200301">
+    <meta property="og:description" content="Hangman with 200+ IT terms from networking, sysadmin, programming, hardware and security, each with a short explanation.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">IT Hangman</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-spell-check"></i>
+                            IT Hangman
+                        </h1>
+                        <p class="game-description">Guess the IT term letter by letter before the stick figure is complete. Networking, sysadmin, code, hardware and security, each with a one-line explanation.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-book-open"></i><span>200+ terms explained</span></div>
+                            <div class="meta-item"><i class="fas fa-keyboard"></i><span>Keyboard or tap</span></div>
+                            <div class="meta-item"><i class="fas fa-fire"></i><span>Streak saved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side hm-layout">
+                    <div class="panel hm-panel">
+                        <div class="hm-top">
+                            <span class="chip hm-cat" id="cat"><i class="fas fa-network-wired"></i><span>Networking</span></span>
+                            <div class="hm-lives" id="lives" aria-label="Lives left"></div>
+                        </div>
+                        <div class="hm-stage">
+                            <svg class="hm-svg" id="fig" viewBox="0 0 200 220" aria-hidden="true">
+                                <g class="hm-gallows">
+                                    <path d="M18 208 H122"/><path d="M48 208 V18"/><path d="M48 18 H142"/><path d="M48 52 L80 18"/><path class="rope" d="M142 18 V42"/>
+                                </g>
+                                <g class="hm-man">
+                                    <circle class="p" pathLength="100" cx="142" cy="60" r="17"/>
+                                    <path class="p" pathLength="100" d="M142 77 V138"/>
+                                    <path class="p" pathLength="100" d="M142 92 L116 118"/>
+                                    <path class="p" pathLength="100" d="M142 92 L168 118"/>
+                                    <path class="p" pathLength="100" d="M142 138 L120 176"/>
+                                    <path class="p" pathLength="100" d="M142 138 L164 176"/>
+                                    <g class="p face"><path pathLength="100" d="M133 54 l6 6 M139 54 l-6 6 M145 54 l6 6 M151 54 l-6 6"/><path pathLength="100" d="M135 69 q7 -5 14 0"/></g>
+                                </g>
+                            </svg>
+                            <div class="hm-word" id="word" aria-live="polite"></div>
+                        </div>
+                        <div class="hm-bottom">
+                            <div class="hm-kb" id="kb" role="group" aria-label="Letters"></div>
+                            <div class="hm-result" id="result" hidden>
+                                <div class="hm-result__head"><span class="status" id="resStatus"></span><b class="hm-term" id="resTerm"></b></div>
+                                <p class="hm-explain" id="resText"></p>
+                                <div class="row"><button class="btn btn--primary" id="nextBtn"><i class="fas fa-forward"></i>Next word</button><span class="hint">or press <kbd>Enter</kbd></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="stats">
+                                <div class="stat" id="sWins"><b>0</b><span>Wins</span></div>
+                                <div class="stat" id="sStreak"><b>0</b><span>Streak</span></div>
+                                <div class="stat" id="sBest"><b>0</b><span>Best</span></div>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-layer-group"></i>Category</h2></div>
+                            <div class="seg hm-cats" id="cats" role="group" aria-label="Category"></div>
+                            <p class="hint mt" id="catHint"></p>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-life-ring"></i>Stuck?</h2></div>
+                            <div class="row">
+                                <button class="btn" id="hintBtn"><i class="fas fa-lightbulb"></i>Reveal a letter</button>
+                                <button class="btn btn--ghost" id="skipBtn"><i class="fas fa-shuffle"></i>New word</button>
+                            </div>
+                            <p class="hint mt">A hint costs one life. Skipping a word ends your streak.</p>
+                        </div>
+                        <div class="panel kbd-help">
+                            <span><kbd>A</kbd>–<kbd>Z</kbd> guess</span>
+                            <span><kbd>?</kbd> hint</span>
+                            <span><kbd>Enter</kbd> next word</span>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .hm-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+                    @media (max-width: 900px) { .hm-layout { grid-template-columns: 1fr; } }
+                    .hm-panel { display: grid; gap: 18px; padding: clamp(16px, 3vw, 28px); }
+                    .hm-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+                    .hm-cat { animation: hm-fade .35s var(--ease-out); }
+                    .hm-lives { display: flex; gap: 5px; }
+                    .hm-lives i { width: 10px; height: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 10px rgba(var(--signal-rgb), .55); transition: background-color .3s, box-shadow .3s, transform .35s var(--ease-spring); }
+                    .hm-lives i.gone { background: var(--ink-3); box-shadow: none; transform: scale(.7); }
+                    .hm-stage { display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); gap: clamp(16px, 3vw, 36px); align-items: center; padding: clamp(10px, 2vw, 18px); border-radius: 14px; border: 1px solid var(--line-soft); background: radial-gradient(circle at 30% 30%, rgba(18,26,47,.9), rgba(5,8,17,.92)); min-height: 250px; }
+                    .hm-svg { width: 100%; height: auto; overflow: visible; }
+                    .hm-svg path, .hm-svg circle { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                    .hm-gallows path { stroke: var(--line); stroke-width: 5; }
+                    .hm-gallows .rope { stroke: var(--fg-3); stroke-width: 3; }
+                    .hm-man .p, .hm-man .p path { stroke: var(--signal); stroke-width: 5; stroke-dasharray: 100; stroke-dashoffset: 100; opacity: 0; transition: stroke-dashoffset .45s var(--ease-out), opacity .15s, stroke .4s; }
+                    .hm-man .face path { stroke-width: 3; }
+                    .hm-man .p.on, .hm-man .p.on path { stroke-dashoffset: 0; opacity: 1; }
+                    .hm-man .p.on { filter: drop-shadow(0 0 6px rgba(var(--signal-rgb), .45)); }
+                    .hm-svg.lost .hm-man .p, .hm-svg.lost .hm-man .p path { stroke: var(--rose); }
+                    .hm-svg.lost .hm-man .p.on { filter: drop-shadow(0 0 6px rgba(255,122,144,.45)); }
+                    .hm-svg.won .hm-man .p, .hm-svg.won .hm-man .p path { stroke: var(--mint); }
+                    .hm-svg.won .rope { opacity: .25; transition: opacity .4s; }
+                    .hm-word { display: flex; flex-wrap: wrap; gap: 10px 22px; align-content: center; min-width: 0; width: 100%; container-type: inline-size; --n: 8; --g: 6px; }
+                    .hm-w { display: flex; gap: var(--g); flex-wrap: nowrap; }
+                    /* the longest word always fits on one line: slots shrink with its length */
+                    .hm-word .hm-l { width: min(clamp(26px, 3.2vw, 38px), calc((100cqw - (var(--n) - 1) * var(--g)) / var(--n))); font-size: min(clamp(1.1rem, 2.2vw, 1.6rem), calc(100cqw / var(--n) * .75)); }
+                    .hm-l { width: clamp(26px, 3.2vw, 38px); height: clamp(36px, 4.4vw, 50px); display: grid; place-items: center; border-bottom: 3px solid var(--line); font: 700 clamp(1.1rem, 2.2vw, 1.6rem)/1 var(--font-head); color: var(--fg); text-transform: uppercase; transition: border-color .25s; }
+                    .hm-l.sym { border-bottom-color: transparent; color: var(--fg-3); width: auto; min-width: 12px; }
+                    .hm-l span { animation: hm-pop .35s var(--ease-spring); }
+                    .hm-l.shown { border-bottom-color: var(--signal); }
+                    .hm-l.miss { color: var(--rose); border-bottom-color: rgba(255,122,144,.5); }
+                    .hm-l.miss span { animation: hm-fade .4s var(--ease-out); }
+                    .hm-word.won .hm-l { border-bottom-color: var(--mint); color: var(--mint); }
+                    @keyframes hm-pop { from { opacity: 0; transform: translateY(8px) scale(.7); } }
+                    @keyframes hm-fade { from { opacity: 0; transform: translateY(4px); } }
+                    .hm-bottom { min-height: 172px; display: grid; }
+                    .hm-kb { display: grid; gap: 7px; justify-items: center; }
+                    .hm-kb[hidden] { display: none; }
+                    .hm-kb .r { display: flex; gap: 6px; justify-content: center; width: 100%; }
+                    .hm-kb button { flex: 0 1 46px; min-width: 0; height: 48px; border-radius: 10px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(31,42,80,.6), rgba(13,19,37,.8)); color: var(--fg); font: 600 .95rem/1 var(--font-head); cursor: pointer; transition: border-color .2s, background-color .2s, color .2s, transform .25s var(--ease-spring), opacity .3s; }
+                    .hm-kb button:not(:disabled):hover { border-color: var(--signal); transform: translateY(-2px); }
+                    .hm-kb button:not(:disabled):active { transform: translateY(0) scale(.96); }
+                    .hm-kb button.hit { background: rgba(94,230,181,.12); border-color: rgba(94,230,181,.45); color: var(--mint); }
+                    .hm-kb button.miss { background: rgba(7,11,22,.5); border-color: var(--line-soft); color: var(--fg-3); opacity: .55; text-decoration: line-through; text-decoration-color: rgba(255,122,144,.7); }
+                    .hm-kb button:disabled { cursor: default; }
+                    .hm-kb.done button { opacity: .35; }
+                    .hm-result { align-self: center; display: grid; gap: 12px; padding: 18px; border-radius: 14px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); animation: hm-fade .4s var(--ease-out); }
+                    .hm-result[hidden] { display: none; }
+                    .hm-result__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+                    .hm-term { font-family: var(--font-head); font-size: 1.15rem; letter-spacing: -.03em; }
+                    .hm-explain { color: var(--fg-2); line-height: 1.6; }
+                    .hm-cats { display: flex; }
+                    .hm-cats button { display: inline-flex; align-items: center; gap: 6px; }
+                    .hm-wrap.shake { animation: hm-shake .4s; }
+                    .hm-stage.shake { animation: hm-shake .4s; }
+                    @keyframes hm-shake { 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                    @media (max-width: 640px) {
+                        .hm-stage { grid-template-columns: 1fr; justify-items: center; min-height: 0; }
+                        .hm-svg { width: 150px; }
+                        .hm-word { justify-content: center; justify-self: stretch; width: 100%; }
+                        .hm-kb .r { gap: 4px; }
+                        .hm-kb button { height: 44px; font-size: .85rem; border-radius: 8px; }
+                        .hm-l { height: 34px; }
+                        .hm-word { --g: 4px; }
+                    }
+                    @media (prefers-reduced-motion: reduce) {
+                        .hm-man .p, .hm-man .p path, .hm-kb button { transition: none; }
+                        .hm-l span, .hm-result, .hm-cat, .hm-stage.shake { animation: none; }
+                    }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastermind &amp; Simon | Lukas200301</title>
+    <meta name="description" content="Crack the hidden color code in ten tries, or repeat Simon&#x27;s growing sequence of lights and tones.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Mastermind &amp; Simon | Lukas200301">
+    <meta property="og:description" content="Crack the hidden color code in ten tries, or repeat Simon&#x27;s growing sequence of lights and tones.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Mastermind &amp; Simon</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-brain"></i>
+                            Mastermind &amp; Simon
+                        </h1>
+                        <p class="game-description">Two memory and logic classics: crack the hidden four-color code in ten tries, or repeat Simon&#x27;s ever-growing sequence of lights and tones.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-key"></i><span>Code breaking</span></div>
+                            <div class="meta-item"><i class="fas fa-music"></i><span>Simon with sound</span></div>
+                            <div class="meta-item"><i class="fas fa-eye"></i><span>Color-blind symbols</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side mm-layout">
+                    <div class="panel mm-panel">
+                        <div class="panel__head">
+                            <div class="seg" id="mode" role="group" aria-label="Game">
+                                <button type="button" data-v="mastermind" aria-pressed="true"><i class="fas fa-key"></i>&nbsp; Mastermind</button>
+                                <button type="button" data-v="simon" aria-pressed="false"><i class="fas fa-circle-half-stroke"></i>&nbsp; Simon</button>
+                            </div>
+                            <div class="mm-status" id="status" aria-live="polite"></div>
+                        </div>
+
+                        <!-- Mastermind -->
+                        <div class="mm-view" id="mmView">
+                            <div class="mm-board" id="mmBoard"></div>
+                            <div class="mm-picker" id="picker" role="group" aria-label="Colors"></div>
+                            <div class="row mm-actions">
+                                <button class="btn" id="delBtn" aria-label="Remove last peg"><i class="fas fa-delete-left"></i>Remove</button>
+                                <button class="btn btn--primary" id="checkBtn" disabled><i class="fas fa-check"></i>Check</button>
+                            </div>
+                        </div>
+
+                        <!-- Simon -->
+                        <div class="mm-view" id="simonView" hidden>
+                            <div class="simon-wrap">
+                                <div class="simon" id="simon">
+                                    <button type="button" class="pad p0" data-i="0" aria-label="Green pad (circle), key Q or 1"><i class="fas fa-circle"></i><kbd>Q</kbd></button>
+                                    <button type="button" class="pad p1" data-i="1" aria-label="Red pad (triangle), key W or 2"><i class="fas fa-play"></i><kbd>W</kbd></button>
+                                    <button type="button" class="pad p2" data-i="2" aria-label="Yellow pad (square), key A or 3"><i class="fas fa-square"></i><kbd>A</kbd></button>
+                                    <button type="button" class="pad p3" data-i="3" aria-label="Blue pad (star), key S or 4"><i class="fas fa-star"></i><kbd>S</kbd></button>
+                                    <div class="simon-hub">
+                                        <b id="simonRound">–</b>
+                                        <span id="simonLbl">Round</span>
+                                        <button class="btn btn--sm btn--primary" id="simonStart"><i class="fas fa-play"></i>Start</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="app">
+                        <div class="panel">
+                            <div class="stats" id="stats"></div>
+                        </div>
+                        <div class="panel" id="mmSide">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Settings</h2></div>
+                            <div class="field"><span>Colors</span>
+                                <div class="seg" id="colors" role="group" aria-label="Number of colors">
+                                    <button type="button" data-v="6" aria-pressed="true">6 colors</button>
+                                    <button type="button" data-v="8" aria-pressed="false">8 colors</button>
+                                </div>
+                            </div>
+                            <label class="check"><input type="checkbox" id="dups">Allow duplicate colors in the code</label>
+                            <p class="hint mt">Changing a setting starts a new code. Stats are kept per setting.</p>
+                            <button class="btn btn--sm mt" id="newBtn" style="width:100%;justify-content:center"><i class="fas fa-rotate"></i>New code</button>
+                        </div>
+                        <div class="panel" id="mmHelp">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-circle-info"></i>Feedback pegs</h2></div>
+                            <div class="mm-legend">
+                                <div><span class="fb"><i class="k"></i></span>Filled: right color in the right spot</div>
+                                <div><span class="fb"><i class="w"></i></span>Ring: right color, wrong spot</div>
+                                <div><span class="fb"><i></i></span>Empty: that color is not used (again)</div>
+                            </div>
+                            <p class="hint mt">The pegs are not in the same order as your guess.</p>
+                        </div>
+                        <div class="panel" id="simonSide" hidden>
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Settings</h2></div>
+                            <label class="check"><input type="checkbox" id="sound" checked>Play tones</label>
+                            <p class="hint mt">Watch and listen, then repeat the sequence. Every round adds one step and plays a little faster. One wrong pad ends the game.</p>
+                        </div>
+                        <div class="panel kbd-help" id="kbd"></div>
+                    </div>
+                </div>
+                <style>
+                    .mm-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+                    @media (max-width: 900px) { .mm-layout { grid-template-columns: 1fr; } }
+                    .mm-panel { padding: clamp(14px, 2.5vw, 24px); }
+                    .mm-status { font-family: var(--font-head); font-size: .95rem; letter-spacing: -.03em; color: var(--fg-2); display: flex; align-items: center; gap: 8px; min-height: 1.6em; }
+                    .mm-status > * { animation: mm-fade .35s var(--ease-out); }
+                    .mm-status.ok { color: var(--mint); } .mm-status.err { color: var(--rose); } .mm-status.amber { color: var(--amber); }
+                    @keyframes mm-fade { from { opacity: 0; transform: translateY(4px); } }
+                    .mm-view { display: grid; justify-items: center; gap: 16px; }
+                    .mm-view[hidden] { display: none; }
+
+                    /* palette: colour + symbol for every peg */
+                    .c0 { --c: #ff6b81; } .c1 { --c: #ffb86b; } .c2 { --c: #ffe066; } .c3 { --c: #5ee6b5; }
+                    .c4 { --c: #5cc8ff; } .c5 { --c: #8ea2ff; } .c6 { --c: #c38bff; } .c7 { --c: #eef1ff; }
+                    .peg { position: relative; width: var(--peg, 38px); height: var(--peg, 38px); border-radius: 50%; display: grid; place-items: center; flex: none; font-size: calc(var(--peg, 38px) * .38); }
+                    .peg.has { background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 70%, #000)); box-shadow: 0 0 12px color-mix(in srgb, var(--c) 35%, transparent), inset 0 -2px 4px rgba(0,0,0,.25); color: rgba(8,12,26,.72); }
+                    .peg.has.pop { animation: mm-pop .3s var(--ease-spring); }
+                    @keyframes mm-pop { from { transform: scale(.55); } }
+                    .peg.hole { background: radial-gradient(circle at 50% 40%, #060a14 55%, #0b1122); box-shadow: inset 0 2px 5px rgba(0,0,0,.7); }
+                    .peg.hole::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+                    .peg.has::after { content: none; }
+
+                    .mm-board { display: grid; gap: 6px; max-width: 100%; }
+                    .mm-row { --peg: 34px; display: grid; grid-template-columns: 26px auto auto; align-items: center; gap: 18px; padding: 6px 14px; border-radius: 13px; border: 1px solid transparent; transition: border-color .25s, background-color .25s; }
+                    .mm-row .n { font-family: var(--font-code); font-size: .78rem; color: var(--fg-3); text-align: right; }
+                    .mm-row .slots { display: flex; gap: 10px; }
+                    .mm-row.cur { border-color: rgba(var(--signal-rgb), .45); background: rgba(var(--signal-rgb), .06); }
+                    .mm-row.cur .n { color: var(--signal); }
+                    .mm-row.future { opacity: .45; }
+                    .mm-row.cur .peg { cursor: pointer; }
+                    .mm-row.cur .peg.sel { outline: 2px solid var(--fg); outline-offset: 3px; }
+                    .mm-row.secret { border-color: var(--line); background: rgba(7,11,22,.6); margin-bottom: 6px; }
+                    .mm-row.secret .peg.masked { background: repeating-linear-gradient(45deg, var(--ink-3) 0 5px, var(--ink-2) 5px 10px); border: 1px solid var(--line); color: var(--fg-3); font-family: var(--font-head); font-size: .9rem; }
+                    .mm-row.secret .peg.masked::after { content: none; }
+                    .mm-row.secret .peg.reveal { animation: mm-flip .5s var(--ease-out) backwards; }
+                    .mm-row.secret .peg:nth-child(2) { animation-delay: .08s; } .mm-row.secret .peg:nth-child(3) { animation-delay: .16s; } .mm-row.secret .peg:nth-child(4) { animation-delay: .24s; }
+                    @keyframes mm-flip { from { transform: rotateY(90deg); } }
+                    .mm-row.secret .n { color: var(--fg-3); }
+                    .fb { display: grid; grid-template-columns: repeat(2, 12px); gap: 4px; }
+                    .fb i { width: 12px; height: 12px; border-radius: 50%; background: #070b16; box-shadow: inset 0 1px 3px rgba(0,0,0,.8); border: 1px solid var(--line-soft); }
+                    .fb i.k { background: var(--fg); border-color: var(--fg); box-shadow: 0 0 6px rgba(232,237,255,.5); }
+                    .fb i.w { background: transparent; border: 2.5px solid var(--fg-2); box-shadow: none; }
+                    .fb.show i { animation: mm-pop .35s var(--ease-spring) backwards; }
+                    .fb.show i:nth-child(2) { animation-delay: .06s; } .fb.show i:nth-child(3) { animation-delay: .12s; } .fb.show i:nth-child(4) { animation-delay: .18s; }
+
+                    .mm-picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 12px; border-radius: 16px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); max-width: 100%; }
+                    .mm-picker button { --peg: 44px; position: relative; border-radius: 50%; transition: transform .2s var(--ease-spring); }
+                    .mm-picker button:hover:not(:disabled) { transform: translateY(-3px); }
+                    .mm-picker button:active:not(:disabled) { transform: scale(.92); }
+                    .mm-picker button:disabled { opacity: .35; cursor: default; }
+                    .mm-picker button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+                    .mm-picker kbd { position: absolute; right: -6px; bottom: -6px; font-size: .62rem; padding: 0 4px; line-height: 1.4; }
+                    .mm-actions { justify-content: center; }
+                    .mm-legend { display: grid; gap: 10px; font-size: .88rem; color: var(--fg-2); }
+                    .mm-legend > div { display: flex; align-items: center; gap: 12px; }
+                    .mm-legend .fb { grid-template-columns: 12px; }
+                    @media (max-width: 480px) {
+                        .mm-row { --peg: 30px; gap: 8px; padding: 5px 6px; grid-template-columns: 20px auto auto; }
+                        .mm-row .slots { gap: 7px; }
+                        .mm-picker { gap: 8px; padding: 10px; }
+                        .mm-picker button { --peg: 38px; }
+                    }
+
+                    /* Simon */
+                    .simon-wrap { width: min(100%, 430px); padding: 6px 0 10px; }
+                    .simon { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; aspect-ratio: 1; border-radius: 50%; padding: 12px; background: radial-gradient(circle, rgba(18,26,47,.95), rgba(7,11,22,.95)); border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); touch-action: manipulation; }
+                    .simon.shake { animation: simon-shake .45s; }
+                    @keyframes simon-shake { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(2px); } }
+                    .pad { position: relative; display: grid; place-items: center; font-size: clamp(1.2rem, 4vw, 1.8rem); color: rgba(8,12,26,.5); background: color-mix(in srgb, var(--c) 30%, #0a0f1e); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); transition: background-color .12s, box-shadow .12s, filter .12s, transform .12s; -webkit-tap-highlight-color: transparent; }
+                    .pad i { color: color-mix(in srgb, var(--c) 55%, #000); transition: color .12s; }
+                    .pad kbd { position: absolute; font-size: .7rem; opacity: .7; }
+                    .pad.p0 { --c: #5ee6b5; border-radius: 100% 14px 14px 14px; } .pad.p0 kbd { right: 9%; top: 9%; } .pad.p0 i { transform: translate(-12%, -12%); }
+                    .pad.p1 { --c: #ff6b81; border-radius: 14px 100% 14px 14px; } .pad.p1 kbd { left: 9%; top: 9%; } .pad.p1 i { transform: translate(12%, -12%) rotate(-90deg); }
+                    .pad.p2 { --c: #ffd166; border-radius: 14px 14px 14px 100%; } .pad.p2 kbd { right: 9%; bottom: 9%; } .pad.p2 i { transform: translate(-12%, 12%); }
+                    .pad.p3 { --c: #5cc8ff; border-radius: 14px 14px 100% 14px; } .pad.p3 kbd { left: 9%; bottom: 9%; } .pad.p3 i { transform: translate(12%, 12%); }
+                    .pad.lit { background: var(--c); box-shadow: 0 0 40px color-mix(in srgb, var(--c) 70%, transparent), inset 0 0 30px rgba(255,255,255,.35); }
+                    .pad.lit i { color: rgba(8,12,26,.75); }
+                    .simon.input .pad { cursor: pointer; }
+                    .simon.input .pad:hover:not(.lit) { background: color-mix(in srgb, var(--c) 42%, #0a0f1e); }
+                    .simon:not(.input) .pad { cursor: default; }
+                    .simon-hub { position: absolute; left: 50%; top: 50%; width: 36%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 50% 35%, var(--ink-3), var(--ink-0)); border: 1px solid var(--line); box-shadow: 0 0 0 10px rgba(7,11,22,.9); display: grid; place-content: center; justify-items: center; gap: 2px; text-align: center; z-index: 2; }
+                    .simon-hub b { font-family: var(--font-head); font-size: clamp(1.4rem, 5vw, 2.2rem); letter-spacing: -.05em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+                    .simon-hub span { font-size: .72rem; color: var(--fg-3); text-transform: uppercase; letter-spacing: .1em; }
+                    .simon-hub .btn { margin-top: 6px; }
+                    .simon-hub .btn[hidden] { display: none; }
+                    @media (max-width: 420px) { .simon-hub .btn { padding: 0 8px; font-size: .78rem; height: 30px; } .simon { gap: 8px; padding: 8px; } }
+                    #stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                    #stats .stat { min-width: 0; }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

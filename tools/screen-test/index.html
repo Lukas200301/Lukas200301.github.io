@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Test | Lukas200301</title>
+    <meta name="description" content="Find dead or stuck pixels, check gradients for banding, sharpness, backlight bleed and uniformity, measure your refresh rate and test motion blur.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Screen Test | Lukas200301">
+    <meta property="og:description" content="Find dead or stuck pixels, check gradients for banding, sharpness, backlight bleed and uniformity, measure your refresh rate and test motion blur.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Screen Test</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-display"></i>
+                            Screen Test
+                        </h1>
+                        <p class="tool-description">Check a new or used monitor in a few minutes: hunt for dead and stuck pixels, look for banding, blur and backlight bleed, measure the real refresh rate and see how sharp moving objects stay.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-expand"></i><span>Full-screen patterns</span></div>
+                            <div class="meta-item"><i class="fas fa-gauge-high"></i><span>Refresh rate in Hz</span></div>
+                            <div class="meta-item"><i class="fas fa-shuttle-space"></i><span>Motion blur test</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-expand"></i>Full-screen tests</h2>
+                            <span class="hint st-keys">Click, <kbd>Space</kbd> or <kbd>→</kbd> for the next pattern, <kbd>←</kbd> back, <kbd>Esc</kbd> to exit</span>
+                        </div>
+                        <div class="st-tests" id="tests"></div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-gauge-high"></i>Refresh rate</h2>
+                                <div class="panel__actions">
+                                    <div class="seg" id="dur" role="group" aria-label="Measurement length">
+                                        <button type="button" data-d="3" aria-pressed="true">3 s</button>
+                                        <button type="button" data-d="6" aria-pressed="false">6 s</button>
+                                        <button type="button" data-d="12" aria-pressed="false">12 s</button>
+                                    </div>
+                                    <button class="btn btn--primary btn--sm" type="button" id="measure"><i class="fas fa-play"></i>&nbsp; Measure</button>
+                                </div>
+                            </div>
+                            <div class="hz">
+                                <div class="hz__big"><b id="hzVal">--</b><span>Hz</span></div>
+                                <div class="hz__sub"><span class="status" id="hzStatus"><i class="fas fa-circle-info"></i>Not measured yet</span></div>
+                            </div>
+                            <div class="stats mt" id="hzStats">
+                                <div class="stat"><b id="sNear">--</b><span>Nearest</span></div>
+                                <div class="stat"><b id="sFt">--</b><span>Frame time</span></div>
+                                <div class="stat"><b id="sJit">--</b><span>Jitter (σ)</span></div>
+                                <div class="stat"><b id="sDrop">--</b><span>Missed frames</span></div>
+                            </div>
+                            <div class="ft mt"><canvas id="ftGraph" aria-label="Frame time graph" role="img"></canvas></div>
+                            <p class="hint mt">Measured with <code>requestAnimationFrame</code>, which follows the refresh rate of the screen this window is on. Keep the tab in front; battery saver, VRR/G-Sync without a moving game and busy CPUs can lower the number.</p>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel__head">
+                                <h2 class="panel__title"><i class="fas fa-circle-info"></i>This screen</h2>
+                                <button class="btn btn--sm btn--ghost" type="button" id="copyInfo"><i class="fas fa-copy"></i>&nbsp; Copy</button>
+                            </div>
+                            <dl class="kv" id="info"></dl>
+                            <p class="hint mt">The browser reports the resolution in CSS pixels; the physical value is that times the pixel ratio (your Windows/macOS scaling).</p>
+                        </div>
+                    </div>
+
+                    <div class="panel" id="motion">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-shuttle-space"></i>Motion test</h2>
+                            <div class="panel__actions">
+                                <div class="seg" id="speeds" role="group" aria-label="Speed in pixels per second">
+                                    <button type="button" data-s="240" aria-pressed="false">240</button>
+                                    <button type="button" data-s="480" aria-pressed="false">480</button>
+                                    <button type="button" data-s="960" aria-pressed="true">960</button>
+                                    <button type="button" data-s="1920" aria-pressed="false">1920</button>
+                                </div>
+                                <button class="btn btn--sm" type="button" id="motionFull" title="Full screen"><i class="fas fa-expand"></i></button>
+                                <button class="btn btn--primary btn--sm" type="button" id="motionGo"><i class="fas fa-play"></i>&nbsp; Start</button>
+                            </div>
+                        </div>
+                        <div class="ufo-wrap" id="ufoWrap"><canvas id="ufo" aria-label="Moving objects at full, half and quarter frame rate" role="img"></canvas></div>
+                        <p class="hint mt">Each lane moves at the same speed (pixels per second); the lower lanes only update every 2nd and 4th frame. Follow a UFO with your eyes: the sharper and smoother it stays, the better the panel's response time and refresh rate. Smearing behind it is ghosting, a bright halo is overshoot.</p>
+                    </div>
+                </div>
+
+                <div class="st-full" id="full" hidden role="dialog" aria-modal="true" aria-label="Full-screen test pattern">
+                    <canvas id="fullCanvas"></canvas>
+                    <div class="st-hud" id="hud">
+                        <div class="st-hud__name"><b id="hudName"></b><span id="hudPos"></span></div>
+                        <div class="st-hud__tip" id="hudTip"></div>
+                        <div class="st-hud__keys"><span><kbd>Click</kbd> / <kbd>Space</kbd> / <kbd>→</kbd> next</span><span><kbd>←</kbd> back</span><span><kbd>Esc</kbd> exit</span></div>
+                    </div>
+                    <button class="st-close" type="button" id="fullClose" aria-label="Exit full screen"><i class="fas fa-xmark"></i></button>
+                </div>
+
+                <style>
+                    .st-tests { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+                    @media (max-width: 1000px) { .st-tests { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+                    @media (max-width: 520px) { .st-tests { grid-template-columns: 1fr; } }
+                    .st-card { display: flex; flex-direction: column; gap: 10px; text-align: left; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(7,11,22,.5); color: var(--fg); cursor: pointer; transition: border-color .2s, transform .3s var(--ease-out), background-color .2s; animation: st-in .45s var(--ease-out) both; animation-delay: calc(var(--i) * 60ms); }
+                    .st-card:hover, .st-card:focus-visible { border-color: rgba(var(--signal-rgb), .55); background: rgba(var(--signal-rgb), .06); transform: translateY(-2px); }
+                    .st-card:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+                    .st-prev { height: 92px; border-radius: 10px; border: 1px solid var(--line-soft); overflow: hidden; position: relative; }
+                    .st-prev i { position: absolute; right: 10px; bottom: 9px; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: rgba(7,11,22,.75); color: var(--signal); font-size: .85rem; opacity: 0; transform: scale(.8); transition: opacity .2s, transform .3s var(--ease-spring); }
+                    .st-card:hover .st-prev i, .st-card:focus-visible .st-prev i { opacity: 1; transform: none; }
+                    .st-card h3 { font-family: var(--font-head); font-size: .92rem; font-weight: 600; letter-spacing: -.03em; display: flex; align-items: center; gap: 8px; }
+                    .st-card h3 i { color: var(--signal); font-size: .85em; }
+                    .st-card p { color: var(--fg-2); font-size: .84rem; line-height: 1.5; }
+                    .st-card small { color: var(--fg-3); font-size: .76rem; font-family: var(--font-code); margin-top: auto; }
+                    .pv-pixels { background: linear-gradient(90deg, #000 0 14.28%, #fff 0 28.57%, #f00 0 42.85%, #0f0 0 57.14%, #00f 0 71.42%, #0ff 0 85.71%, #f0f 0); }
+                    .pv-grad { background: linear-gradient(90deg, #000, #fff); }
+                    .pv-grad::after { content: ""; position: absolute; inset: 50% 0 0; background: linear-gradient(90deg, #000 0 12.5%, #242424 0 25%, #494949 0 37.5%, #6d6d6d 0 50%, #929292 0 62.5%, #b6b6b6 0 75%, #dbdbdb 0 87.5%, #fff 0); }
+                    .pv-sharp { background: repeating-linear-gradient(90deg, #fff 0 1px, #000 1px 2px); }
+                    .pv-sharp::after { content: "Aa 12"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); padding: 2px 8px; border-radius: 6px; background: #fff; color: #000; font: 600 1.1rem var(--font-body); }
+                    .pv-uni { background: radial-gradient(60% 50% at 0 0, rgba(255,255,255,.08), transparent 60%), radial-gradient(60% 50% at 100% 100%, rgba(255,255,255,.06), transparent 60%), #000; }
+
+                    .hz { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+                    .hz__big { display: flex; align-items: baseline; gap: 8px; }
+                    .hz__big b { font-family: var(--font-head); font-size: 3.4rem; font-weight: 700; letter-spacing: -.06em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--fg); }
+                    .hz__big span { font-family: var(--font-head); color: var(--fg-3); font-size: 1rem; }
+                    .hz.live .hz__big b { color: var(--amber); }
+                    #hzStats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+                    #hzStats .stat { min-width: 0; padding: 10px 12px; }
+                    #hzStats .stat b { font-size: 1.05rem; white-space: nowrap; }
+                    #hzStats .stat span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                    #info dd { word-break: normal; overflow-wrap: anywhere; }
+                    .ft { height: 120px; border-radius: 12px; border: 1px solid var(--line-soft); background: #060a14; overflow: hidden; }
+                    .ft canvas { display: block; width: 100%; height: 100%; }
+                    #info > div { grid-template-columns: minmax(110px, .9fr) minmax(0, 1.3fr) auto; }
+                    #info dd.yes { color: var(--mint); }
+
+                    .ufo-wrap { border-radius: 12px; border: 1px solid var(--line-soft); background: #05080f; overflow: hidden; }
+                    .ufo-wrap canvas { display: block; width: 100%; height: 330px; }
+                    .ufo-wrap:fullscreen { display: grid; place-items: center; border: 0; border-radius: 0; background: #05080f; }
+                    .ufo-wrap:fullscreen canvas { height: min(90vh, 600px); }
+
+                    .st-full { position: fixed; inset: 0; z-index: 10000; background: #000; cursor: none; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+                    .st-full[hidden] { display: none; }
+                    .st-full.show-ui { cursor: default; }
+                    .st-full canvas { display: block; width: 100%; height: 100%; }
+                    .st-hud { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px); display: grid; gap: 6px; justify-items: center; text-align: center; padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); background: rgba(7,11,22,.82); color: var(--fg); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); pointer-events: none; }
+                    .st-full.show-ui .st-hud { opacity: 1; }
+                    .st-hud__name { display: flex; gap: 10px; align-items: baseline; }
+                    .st-hud__name b { font-family: var(--font-head); font-size: .95rem; letter-spacing: -.03em; }
+                    .st-hud__name span { font-family: var(--font-code); font-size: .76rem; color: var(--fg-3); }
+                    .st-hud__tip { color: var(--fg-2); font-size: .82rem; max-width: 560px; }
+                    .st-hud__keys { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; color: var(--fg-3); font-size: .76rem; }
+                    .st-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(7,11,22,.8); border: 1px solid rgba(255,255,255,.16); color: var(--fg); opacity: 0; transition: opacity .6s var(--ease-out); pointer-events: none; }
+                    .st-full.show-ui .st-close { opacity: 1; pointer-events: auto; }
+                    @keyframes st-in { from { opacity: 0; transform: translateY(6px); } }
+                    @media (prefers-reduced-motion: reduce) { .st-card, .st-hud, .st-close { animation: none; transition: none; } }
+                    @media (max-width: 600px) { .st-keys { display: none; } #hzStats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hz__big b { font-size: 2.6rem; } .ufo-wrap canvas { height: 270px; } #info > div { grid-template-columns: minmax(96px, .9fr) minmax(0, 1.3fr) auto; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

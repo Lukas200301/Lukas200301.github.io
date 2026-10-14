@@ -512,6 +512,7 @@ kbd {
   color: var(--fg-3);
   font-weight: 600;
 }
+.palette__group i { font-size: 0.72rem; margin-right: 4px; color: var(--signal); }
 .palette__item {
   display: flex;
   align-items: center;

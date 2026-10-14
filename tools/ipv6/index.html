@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPv6 Tools | Lukas200301</title>
+    <meta name="description" content="Validate, compress and expand IPv6 addresses, detect the address type, calculate prefixes, split subnets, build EUI-64 / SLAAC addresses and ip6.arpa reverse names.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="IPv6 Tools | Lukas200301">
+    <meta property="og:description" content="Validate, compress and expand IPv6 addresses, detect the address type, calculate prefixes, split subnets, build EUI-64 / SLAAC addresses and ip6.arpa reverse names.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="tool-page-no-nav">
+        <section id="overview" class="tool-hero">
+            <div class="section-container">
+                <div class="tool-header">
+                    <div class="tool-info">
+                        <div class="tool-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-screwdriver-wrench"></i><span>Tools</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">IPv6 Tools</span>
+                        </div>
+                        <h1 class="tool-title">
+                            <i class="fas fa-diagram-project"></i>
+                            IPv6 Tools
+                        </h1>
+                        <p class="tool-description">Paste any IPv6 address to validate it, get the RFC 5952 short form and the full form, see what kind of address it is and calculate its prefix. Split networks, build EUI-64 / SLAAC addresses from a MAC and get the ip6.arpa reverse name.</p>
+                        <div class="tool-meta">
+                            <div class="meta-item"><i class="fas fa-compress"></i><span>RFC 5952 compression</span></div>
+                            <div class="meta-item"><i class="fas fa-code-branch"></i><span>Prefixes &amp; subnets</span></div>
+                            <div class="meta-item"><i class="fas fa-lock"></i><span>Runs in your browser</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="tool-section">
+            <div class="section-container">
+                <div class="app">
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-terminal"></i>Address</h2>
+                            <div class="panel__actions" id="presets">
+                                <button class="btn btn--sm btn--ghost" data-v="2001:db8:85a3::8a2e:370:7334/64">2001:db8:85a3::/64</button>
+                                <button class="btn btn--sm btn--ghost" data-v="fe80::1ff:fe23:4567:890a%eth0">fe80::…%eth0</button>
+                                <button class="btn btn--sm btn--ghost" data-v="fd12:3456:789a:1::42/48">ULA</button>
+                                <button class="btn btn--sm btn--ghost" data-v="::ffff:192.0.2.128">IPv4-mapped</button>
+                                <button class="btn btn--sm btn--ghost" data-v="ff02::1:ff00:42">Multicast</button>
+                                <button class="btn btn--sm btn--ghost" data-v="2001:0:4136:e378:8000:63bf:3fff:fdd2">Teredo</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="input big grow" id="ip" value="2001:db8:85a3::8a2e:370:7334/64" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="IPv6 address, optionally with /prefix">
+                            <span class="status" id="state">…</span>
+                        </div>
+                        <div class="field mt">
+                            <span>Prefix length: <b class="mono" id="prefixLabel">/64</b></span>
+                            <input type="range" id="prefix" min="0" max="128" value="64" aria-label="Prefix length">
+                        </div>
+                        <p class="hint">Accepts any notation: <code>2001:0db8:0000::1</code>, <code>::ffff:192.0.2.1</code>, zone ids like <code>fe80::1%eth0</code>, brackets <code>[2001:db8::1]:443</code>, an <code>ip6.arpa</code> name, or a plain address (then the slider sets the prefix).</p>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head"><h2 class="panel__title"><i class="fas fa-microchip"></i>128 bits</h2><span class="hint">Network bits in blue, interface bits in amber</span></div>
+                        <div class="bits6" id="bits" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-fingerprint"></i>Address</h2><span id="typeChip"></span></div>
+                            <dl class="kv" id="kvAddr"></dl>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sitemap"></i>Prefix</h2></div>
+                            <dl class="kv" id="kvNet"></dl>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel__head">
+                            <h2 class="panel__title"><i class="fas fa-code-branch"></i>Split into subnets</h2>
+                            <div class="row">
+                                <span class="label">Split into</span><select class="select" id="split" style="width:auto"></select>
+                                <button class="btn btn--sm" type="button" id="copySplit"><i class="far fa-copy"></i>&nbsp; Copy list</button>
+                            </div>
+                        </div>
+                        <p class="hint" id="splitInfo"></p>
+                        <div class="table-wrap mt"><table class="table splits"><thead><tr><th>#</th><th>Subnet</th><th>First address</th><th>Last address</th><th></th></tr></thead><tbody id="splitBody"></tbody></table></div>
+                    </div>
+
+                    <div class="app-2">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-ethernet"></i>EUI-64 from a MAC</h2></div>
+                            <div class="field"><span>MAC address</span><input class="input mono" id="mac" value="00:1A:2B:3C:4D:5E" spellcheck="false" autocomplete="off" placeholder="00:1A:2B:3C:4D:5E"></div>
+                            <div class="field"><span>/64 prefix for SLAAC</span><input class="input mono" id="slaacPrefix" value="2001:db8:85a3::/64" spellcheck="false" autocomplete="off" placeholder="2001:db8:1:2::/64"></div>
+                            <dl class="kv" id="kvEui"></dl>
+                            <p class="hint mt">EUI-64 puts <code>ff:fe</code> in the middle of the MAC and flips the universal/local bit (7th bit of the first byte). Most systems now use random privacy addresses instead (RFC 4941 / 7217).</p>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-rotate-left"></i>MAC from an address</h2></div>
+                            <div class="field"><span>IPv6 address or interface ID</span><input class="input mono" id="rev" value="fe80::21a:2bff:fe3c:4d5e" spellcheck="false" autocomplete="off" placeholder="fe80::21a:2bff:fe3c:4d5e"></div>
+                            <dl class="kv" id="kvRev"></dl>
+                            <p class="hint mt">Works only if the interface ID was built with EUI-64 (it contains <code>ff:fe</code> in the middle).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .bits6 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 26px; }
+                    .hextet { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; min-width: 0; }
+                    .nib { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; min-width: 0; }
+                    .hextet__val { grid-column: 1 / -1; text-align: center; font-family: var(--font-code); font-size: .82rem; color: var(--fg-2); margin-top: 6px; }
+                    .hextet__val b { color: var(--fg-3); font-weight: 400; font-size: .72rem; margin-right: 6px; }
+                    .bit {
+                        aspect-ratio: 1; border-radius: 5px; display: grid; place-items: center;
+                        font-family: var(--font-code); font-size: clamp(.56rem, .4rem + .35vw, .86rem); font-weight: 600;
+                        border: 1px solid var(--line); background: rgba(7,11,22,.6); color: var(--fg-3);
+                        transition: background-color .35s, border-color .35s, color .35s, transform .35s var(--ease-spring);
+                        transition-delay: calc(var(--b) * 3ms);
+                    }
+                    .bit.net { background: rgba(var(--signal-rgb), .16); border-color: rgba(var(--signal-rgb), .5); color: #c9d3ff; }
+                    .bit.host { background: rgba(var(--amber-rgb), .10); border-color: rgba(var(--amber-rgb), .35); color: var(--amber); }
+                    .bit.on { box-shadow: 0 0 10px rgba(var(--signal-rgb), .3); }
+                    .bit.host.on { box-shadow: 0 0 10px rgba(var(--amber-rgb), .25); }
+                    .bit.flip { transform: scale(1.18); }
+                    @media (max-width: 900px) { .bits6 { gap: 14px 14px; } }
+                    @media (max-width: 560px) {
+                        .bits6 { gap: 10px 8px; }
+                        .hextet { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+                        .bit { aspect-ratio: 1; border-radius: 3px; font-size: .58rem; }
+                    }
+                    #prefix { width: 100%; accent-color: var(--signal); }
+                    @media (max-width: 560px) { #ip { flex-basis: 100%; } }
+                    .tchip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; font-size: .76rem; font-weight: 600; border: 1px solid rgba(var(--signal-rgb), .45); background: rgba(var(--signal-rgb), .1); color: #c9d3ff; white-space: nowrap; }
+                    .tchip.warn { color: var(--amber); border-color: rgba(var(--amber-rgb), .45); background: rgba(var(--amber-rgb), .08); }
+                    .tchip.ok { color: var(--mint); border-color: rgba(94,230,181,.4); background: rgba(94,230,181,.08); }
+                    .kv dd small { display: block; font-family: var(--font-body); font-size: .76rem; color: var(--fg-3); margin-top: 2px; word-break: normal; }
+                    .kv dd a { color: var(--signal); }
+                    .splits td:last-child { width: 1px; padding: 2px 6px; }
+                    .splits .copy { width: 28px; height: 28px; }
+                    .splits tr.fresh td { animation: row-in .4s var(--ease-out) backwards; animation-delay: calc(min(var(--i), 24) * 14ms); }
+                    @keyframes row-in { from { opacity: 0; transform: translateY(4px); } }
+                    @media (prefers-reduced-motion: reduce) { .bit { transition: none; } .splits tr.fresh td { animation: none; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

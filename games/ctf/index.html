@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal CTF | Lukas200301</title>
+    <meta name="description" content="A capture-the-flag puzzle game played inside the site's command line: hidden files, base64, Caesar, logs, hex dumps, git history and permissions.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Terminal CTF | Lukas200301">
+    <meta property="og:description" content="A capture-the-flag puzzle game played inside the site's command line: hidden files, base64, Caesar, logs, hex dumps, git history and permissions.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Terminal CTF</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-flag-checkered"></i>
+                            Terminal CTF
+                        </h1>
+                        <p class="game-description">A capture-the-flag game played inside this site's command line. Eight levels of real sysadmin and security tricks: hidden files, encodings, ciphers, logs, hex dumps, git history and file permissions.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-terminal"></i><span>Played in lsh</span></div>
+                            <div class="meta-item"><i class="fas fa-layer-group"></i><span>8 levels</span></div>
+                            <div class="meta-item"><i class="fas fa-floppy-disk"></i><span>Progress saved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side ctf-layout">
+                    <div class="app">
+                        <div class="panel ctf-start">
+                            <div class="ctf-term" aria-hidden="true">
+                                <div class="ctf-term__bar"><span class="ctf-dots"><i></i><i></i><i></i></span><span>guest@lukas200301: ~/ctf/level1 — lsh</span></div>
+                                <div class="ctf-term__body" id="demo"></div>
+                            </div>
+                            <div class="ctf-cta">
+                                <h2 class="ctf-cta__title" id="ctaTitle">Ready when you are</h2>
+                                <p class="hint" id="ctaText">The command line opens over this page. Type <code>ctf</code> any time to see where you are.</p>
+                                <div class="row">
+                                    <button class="btn btn--primary btn--big" id="playBtn"><i class="fas fa-terminal"></i><span id="playLabel">Open the command line</span></button>
+                                </div>
+                                <p class="hint">Shortcut: the key left of <kbd>1</kbd> opens the terminal on every page of this site.</p>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-book-open"></i>How to play</h2></div>
+                            <ol class="ctf-steps">
+                                <li><b>Open the terminal</b> with the button above and type <code>ctf</code>. It shows the levels and where to go next.</li>
+                                <li><b>Go to a level</b> with <code>cd ~/ctf/level1</code> and read the story with <code>cat README</code>.</li>
+                                <li><b>Dig.</b> Every level hides a flag that looks like <code>flag{...}</code>. Use the shell's tools: <code>ls -a</code>, <code>ls -l</code>, <code>grep</code>, <code>base64 -d</code>, <code>caesar</code>, <code>xxd -r</code>, <code>git log</code>, <code>stat</code>, and pipes like <code>a | b</code>.</li>
+                                <li><b>Hand it in</b> with <code>submit flag{...}</code>. The next level unlocks.</li>
+                                <li><b>Stuck?</b> <code>ctf hint</code> gives a nudge; ask again for a more direct one. <code>ctf reset</code> starts over.</li>
+                            </ol>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-graduation-cap"></i>What you practise</h2></div>
+                            <div class="ctf-skills">
+                                <span class="chip"><i class="fas fa-eye-slash"></i>Hidden dot-files</span>
+                                <span class="chip"><i class="fas fa-code"></i>Base64</span>
+                                <span class="chip"><i class="fas fa-rotate"></i>Caesar / ROT13</span>
+                                <span class="chip"><i class="fas fa-file-lines"></i>SSH auth logs</span>
+                                <span class="chip"><i class="fas fa-memory"></i>Hex dumps</span>
+                                <span class="chip"><i class="fas fa-code-branch"></i>Git history</span>
+                                <span class="chip"><i class="fas fa-user-lock"></i>File permissions</span>
+                                <span class="chip"><i class="fas fa-link"></i>Pipes</span>
+                            </div>
+                            <p class="hint mt">Everything happens in a virtual folder inside the browser. Nothing is downloaded, nothing leaves the page.</p>
+                        </div>
+                    </div>
+
+                    <div class="app">
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-flag-checkered"></i>Progress</h2></div>
+                            <div class="stats">
+                                <div class="stat" id="sFlags"><b>0/8</b><span>Flags</span></div>
+                                <div class="stat" id="sHints"><b>0</b><span>Hints used</span></div>
+                            </div>
+                            <div class="ctf-bar" aria-hidden="true"><i id="bar"></i></div>
+                            <ol class="ctf-levels" id="levels"></ol>
+                            <div class="row mt">
+                                <button class="btn btn--sm btn--ghost ctf-reset" id="resetBtn"><i class="fas fa-rotate-left"></i>Reset progress</button>
+                            </div>
+                        </div>
+                        <div class="panel kbd-help">
+                            <span><kbd>Tab</kbd> complete</span>
+                            <span><kbd>↑</kbd><kbd>↓</kbd> history</span>
+                            <span><kbd>Esc</kbd> close</span>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .ctf-layout { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+                    @media (max-width: 900px) { .ctf-layout { grid-template-columns: 1fr; } }
+                    .ctf-start { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(18px, 3vw, 32px); align-items: center; padding: clamp(16px, 3vw, 28px); }
+                    @media (max-width: 1100px) { .ctf-start { grid-template-columns: 1fr; } }
+                    .ctf-term { border-radius: 14px; border: 1px solid var(--line); background: rgba(5, 8, 17, .9); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.8), 0 0 80px -30px rgba(var(--signal-rgb), .35); min-width: 0; }
+                    .ctf-term__bar { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-bottom: 1px solid var(--line-soft); background: rgba(18,26,47,.7); font: 400 .74rem/1.4 var(--font-code); color: var(--fg-3); white-space: nowrap; overflow: hidden; }
+                    .ctf-term__bar > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+                    .ctf-dots { display: flex; gap: 6px; flex: none; }
+                    .ctf-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--rose); }
+                    .ctf-dots i:nth-child(2) { background: var(--amber); } .ctf-dots i:nth-child(3) { background: var(--mint); }
+                    .ctf-term__body { padding: 14px 16px; min-height: 220px; font: 400 13px/1.65 var(--font-code); color: #c9d3ff; white-space: pre-wrap; overflow-wrap: anywhere; }
+                    .ctf-term__body .u { color: var(--mint); } .ctf-term__body .p { color: var(--signal); } .ctf-term__body .a { color: var(--amber); } .ctf-term__body .m { color: var(--fg-3); } .ctf-term__body .d { color: var(--signal); }
+                    .ctf-term__body .ln { animation: ctf-in .3s var(--ease-out) backwards; }
+                    .ctf-term__body .caret { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--amber); opacity: .8; }
+                    @keyframes ctf-in { from { opacity: 0; transform: translateY(3px); } }
+                    .ctf-cta { display: grid; gap: 14px; }
+                    .ctf-cta__title { font-family: var(--font-head); font-size: clamp(1.2rem, 2.2vw, 1.6rem); letter-spacing: -.04em; }
+                    .btn--big { height: 52px; padding: 0 24px; font-size: 1rem; border-radius: 14px; }
+                    .ctf-steps { display: grid; gap: 12px; padding-left: 0; list-style: none; counter-reset: s; }
+                    .ctf-steps li { position: relative; padding: 12px 14px 12px 52px; border-radius: 12px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); color: var(--fg-2); line-height: 1.6; counter-increment: s; }
+                    .ctf-steps li::before { content: counter(s); position: absolute; left: 14px; top: 12px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 700 .8rem/1 var(--font-head); color: var(--signal); background: rgba(var(--signal-rgb), .12); border: 1px solid rgba(var(--signal-rgb), .3); }
+                    .ctf-steps b { color: var(--fg); }
+                    .ctf-steps code, .ctf-cta code { font-family: var(--font-code); font-size: .85em; padding: 1px 6px; border-radius: 6px; background: var(--ink-3); border: 1px solid var(--line-soft); color: var(--amber); white-space: nowrap; }
+                    .ctf-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+                    .ctf-bar { height: 6px; border-radius: 99px; background: var(--ink-3); overflow: hidden; margin: 14px 0 10px; }
+                    .ctf-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--signal), var(--mint)); transition: width .6s var(--ease-out); }
+                    .ctf-levels { list-style: none; padding: 0; display: grid; gap: 6px; }
+                    .ctf-levels button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line-soft); background: rgba(7,11,22,.5); color: var(--fg-2); text-align: left; font: inherit; font-size: .9rem; cursor: pointer; transition: border-color .2s, color .2s, transform .25s var(--ease-spring); }
+                    .ctf-levels button:hover:not(:disabled) { border-color: var(--signal); color: var(--fg); transform: translateX(2px); }
+                    .ctf-levels button:disabled { cursor: default; opacity: .55; }
+                    .ctf-levels .n { flex: none; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font: 700 .72rem/1 var(--font-head); background: var(--ink-3); color: var(--fg-3); }
+                    .ctf-levels .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                    .ctf-levels .s { flex: none; font-size: .78rem; color: var(--fg-3); }
+                    .ctf-levels .done .n { background: rgba(94,230,181,.14); color: var(--mint); }
+                    .ctf-levels .done .s { color: var(--mint); }
+                    .ctf-levels .cur { border-color: rgba(var(--amber-rgb), .45); color: var(--fg); }
+                    .ctf-levels .cur .n { background: rgba(var(--amber-rgb), .16); color: var(--amber); }
+                    .ctf-levels .cur .s { color: var(--amber); }
+                    .ctf-reset:hover { color: var(--rose); border-color: rgba(255,122,144,.45); }
+                    .stat.pop b { animation: stat-pop .45s var(--ease-spring); }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                    @media (prefers-reduced-motion: reduce) { .ctf-term__body .ln { animation: none; } .ctf-bar i { transition: none; } }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

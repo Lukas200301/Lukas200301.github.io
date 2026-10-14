@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
-    <link rel="stylesheet" href="../css/styles.css?v=20261009a">
-    <link rel="stylesheet" href="../css/pages.css?v=20261009a">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
     <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
     <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
     try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
@@ -51,8 +51,8 @@
         <section class="card-grid" id="grid" aria-label="Games"></section>
     </main>
 
-    <script src="../js/script.js?v=20261009a"></script>
-    <script src="../js/list.js?v=20261009a"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/list.js"></script>
     <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
     <script>
     (function () {
@@ -66,7 +66,12 @@
             { title: 'Flag Quiz', desc: 'Guess the country from its flag, or the flag from the country. 10 rounds or streak mode.', icon: 'fas fa-flag', url: './flag-quiz/', cat: 'Geography', status: 'live', keys: 'Keys 1–4' },
             { title: 'Code Typing Test', desc: 'Type real code snippets in JavaScript, Python, Bash, C# or Go and measure your WPM.', icon: 'fas fa-keyboard', url: './typing-test/', cat: 'Skill', status: 'live', keys: 'Just type' },
             { title: 'Tech Memory', desc: 'Flip cards and match pairs of programming language and tool logos.', icon: 'fas fa-clone', url: './memory/', cat: 'Puzzle', status: 'live', keys: 'Click' },
-            { title: 'Tic Tac Toe', desc: 'Play the computer on easy, medium or hard (unbeatable), or a friend on the same screen.', icon: 'fas fa-hashtag', url: './tic-tac-toe/', cat: 'Strategy', status: 'live', keys: 'Click · keys 1–9' }
+            { title: 'Tic Tac Toe', desc: 'Play the computer on easy, medium or hard (unbeatable), or a friend on the same screen.', icon: 'fas fa-hashtag', url: './tic-tac-toe/', cat: 'Strategy', status: 'live', keys: 'Click · keys 1–9' },
+            { title: 'Connect Four', desc: 'Connect four before the CPU does: three levels up to a deep alpha-beta search, or play a friend on the same screen.', icon: 'fas fa-circle-nodes', url: './connect-four/', cat: 'Strategy', status: 'live', keys: 'Click · keys 1–7' },
+            { title: 'Reaction & Aim', desc: 'Measure your reaction time over five rounds against the typical 250 ms, then train your aim on 30 shrinking targets.', icon: 'fas fa-crosshairs', url: './reaction/', cat: 'Skill', status: 'live', keys: 'Click · Space' },
+            { title: 'Mastermind & Simon', desc: 'Crack the hidden four-color code in ten tries, or repeat Simon\'s growing sequence of lights and tones.', icon: 'fas fa-brain', url: './mastermind/', cat: 'Puzzle', status: 'live', keys: 'Click · keys 1–8' },
+            { title: 'IT Hangman', desc: 'Guess 200+ IT terms from networking, sysadmin, code, hardware and security letter by letter, each explained after the round.', icon: 'fas fa-spell-check', url: './hangman/', cat: 'Puzzle', status: 'live', keys: 'Type letters' },
+            { title: 'Terminal CTF', desc: 'A capture-the-flag puzzle game inside the site\'s command line: hidden files, base64, Caesar, auth logs, hex dumps, git history and permissions.', icon: 'fas fa-flag-checkered', url: './ctf/', cat: 'Security', status: 'live', keys: 'Type commands' }
         ];
         document.getElementById('gameCount').textContent = GAMES.filter(g => g.status === 'live').length;
         List.init({

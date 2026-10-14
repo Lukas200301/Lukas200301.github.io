@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Four | Lukas200301</title>
+    <meta name="description" content="Connect Four against a minimax CPU on three levels, or against a friend on one screen.">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Connect Four | Lukas200301">
+    <meta property="og:description" content="Connect Four against a minimax CPU on three levels, or against a friend on one screen.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/apps.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <main class="game-page-no-nav">
+        <section id="overview" class="game-hero">
+            <div class="section-container">
+                <div class="game-header">
+                    <div class="game-info">
+                        <div class="game-breadcrumb">
+                            <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-house"></i><span>Home</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="../index.html" class="breadcrumb-link"><i class="fas fa-gamepad"></i><span>Games</span></a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Connect Four</span>
+                        </div>
+                        <h1 class="game-title">
+                            <i class="fas fa-circle-nodes"></i>
+                            Connect Four
+                        </h1>
+                        <p class="game-description">Drop discs into the 7&times;6 grid and line up four before your opponent does. Play the CPU on easy, medium or hard (alpha-beta minimax), or a friend on the same screen.</p>
+                        <div class="game-meta">
+                            <div class="meta-item"><i class="fas fa-microchip"></i><span>Minimax CPU</span></div>
+                            <div class="meta-item"><i class="fas fa-user-group"></i><span>2-player mode</span></div>
+                            <div class="meta-item"><i class="fas fa-keyboard"></i><span>Keys 1&ndash;7</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="app" class="game-section">
+            <div class="section-container">
+                <div class="app-side c4-layout">
+                    <div class="panel c4-panel">
+                        <div class="c4-turn" id="turn" aria-live="polite"></div>
+                        <div class="c4-wrap" id="wrap">
+                            <div class="c4-preview" id="preview" aria-hidden="true"></div>
+                            <div class="c4-board" id="board" role="group" aria-label="Connect Four board, 7 columns"></div>
+                            <svg class="c4-line" id="line" aria-hidden="true"><line id="lineEl" x1="0" y1="0" x2="0" y2="0"/></svg>
+                        </div>
+                        <div class="row c4-actions">
+                            <button class="btn" id="newBtn"><i class="fas fa-rotate"></i>New game</button>
+                            <button class="btn btn--ghost" id="undoBtn" hidden><i class="fas fa-rotate-left"></i>Undo</button>
+                        </div>
+                    </div>
+                    <div class="app">
+                        <div class="panel">
+                            <div class="c4-score">
+                                <div class="c4-s p1" id="sc1"><b>0</b><span id="lbl1">You</span></div>
+                                <div class="c4-s d" id="scD"><b>0</b><span>Draws</span></div>
+                                <div class="c4-s p2" id="sc2"><b>0</b><span id="lbl2">CPU</span></div>
+                            </div>
+                            <p class="hint mt" id="scoreHint"></p>
+                            <button class="btn btn--sm btn--ghost mt btn--danger" id="resetScore" style="width:100%;justify-content:center"><i class="fas fa-eraser"></i>Reset score</button>
+                        </div>
+                        <div class="panel">
+                            <div class="panel__head"><h2 class="panel__title"><i class="fas fa-sliders"></i>Opponent</h2></div>
+                            <div class="field"><span>Mode</span>
+                                <div class="seg" id="mode" role="group" aria-label="Mode">
+                                    <button type="button" data-v="cpu" aria-pressed="true"><i class="fas fa-robot"></i>&nbsp; vs CPU</button>
+                                    <button type="button" data-v="pvp" aria-pressed="false"><i class="fas fa-user-group"></i>&nbsp; 2 players</button>
+                                </div>
+                            </div>
+                            <div class="field" id="diffField"><span>Difficulty</span>
+                                <div class="seg" id="diff" role="group" aria-label="Difficulty">
+                                    <button type="button" data-v="easy" aria-pressed="false">Easy</button>
+                                    <button type="button" data-v="medium" aria-pressed="true">Medium</button>
+                                    <button type="button" data-v="hard" aria-pressed="false">Hard</button>
+                                </div>
+                            </div>
+                            <p class="hint" id="diffHint"></p>
+                            <p class="hint mt" id="cpuInfo"></p>
+                        </div>
+                        <div class="panel kbd-help">
+                            <span><kbd>1</kbd>&ndash;<kbd>7</kbd> drop in a column</span>
+                            <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> aim, <kbd>Enter</kbd> drop</span>
+                            <span><kbd>N</kbd> new game</span>
+                            <span id="kbdUndo" hidden><kbd>U</kbd> undo</span>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .c4-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+                    @media (max-width: 900px) { .c4-layout { grid-template-columns: 1fr; } }
+                    .c4-panel { display: grid; justify-items: center; gap: 16px; padding: clamp(14px, 3vw, 30px); }
+                    .c4-turn { font-family: var(--font-head); font-size: 1.05rem; letter-spacing: -.03em; min-height: 1.6em; display: flex; align-items: center; gap: 10px; text-align: center; }
+                    .c4-turn .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; animation: c4-pulse 1.2s ease-in-out infinite; flex: none; }
+                    @keyframes c4-pulse { 50% { transform: scale(.6); opacity: .6; } }
+                    .c4-turn.p1 { color: var(--signal); } .c4-turn.p2 { color: var(--amber); } .c4-turn.d { color: var(--fg-2); }
+                    .c4-turn > span { animation: c4-fade .35s var(--ease-out); }
+                    @keyframes c4-fade { from { opacity: 0; transform: translateY(4px); } }
+
+                    .c4-wrap { --gap: clamp(5px, 1.2vw, 10px); position: relative; width: min(100%, 580px); }
+                    .c4-preview, .c4-board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--gap); padding: 0 var(--gap); }
+                    .c4-preview { margin-bottom: 8px; }
+                    .c4-preview i { display: block; aspect-ratio: 1; }
+                    .c4-board { padding: var(--gap); border-radius: 18px; border: 1px solid var(--line); background: linear-gradient(170deg, rgba(31,42,80,.75), rgba(12,18,34,.95)); box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 18px 40px -20px rgba(0,0,0,.7); touch-action: manipulation; }
+                    .c4-col { display: grid; grid-template-rows: repeat(6, auto); gap: var(--gap); padding: 0; border-radius: 12px; cursor: pointer; position: relative; transition: background-color .2s; }
+                    .c4-col::before { content: ""; position: absolute; inset: calc(var(--gap) * -.5); border-radius: 14px; background: rgba(var(--signal-rgb), .07); opacity: 0; transition: opacity .2s; pointer-events: none; }
+                    .c4-board.turn-2 .c4-col::before { background: rgba(var(--amber-rgb), .07); }
+                    .c4-col.hot::before { opacity: 1; }
+                    .c4-col:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+                    .c4-col:disabled { cursor: default; }
+                    .c4-board.busy .c4-col { cursor: progress; }
+                    .c4-cell { position: relative; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 40%, #060a14 55%, #0b1122); box-shadow: inset 0 3px 6px rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.05); }
+                    .disc { position: absolute; inset: 0; border-radius: 50%; will-change: transform; }
+                    .disc.p1 { background: radial-gradient(circle at 35% 30%, #c9d3ff, #8ea2ff 45%, #5b6fd6); box-shadow: 0 0 14px rgba(142,162,255,.35), inset 0 -3px 6px rgba(20,30,90,.45); }
+                    .disc.p2 { background: radial-gradient(circle at 35% 30%, #ffe0bd, #ffb86b 45%, #d9823a); box-shadow: 0 0 14px rgba(255,184,107,.35), inset 0 -3px 6px rgba(110,50,0,.45); }
+                    /* second cue besides colour: P1 = ring, P2 = diamond */
+                    .disc::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+                    .disc.p1::after { width: 38%; height: 38%; border-radius: 50%; border: 3px solid rgba(17,24,72,.45); }
+                    .disc.p2::after { width: 26%; height: 26%; background: rgba(90,40,0,.4); transform: translate(-50%, -50%) rotate(45deg); border-radius: 3px; }
+                    .disc.ghost { opacity: .28; box-shadow: none; }
+                    .c4-preview .disc { position: relative; inset: auto; width: 100%; height: 100%; transition: opacity .2s; }
+                    .c4-preview i:not(.on) .disc { opacity: 0; }
+                    .c4-preview .disc.ghost { opacity: .9; }
+                    .c4-board.over .disc:not(.win) { opacity: .35; transition: opacity .5s; }
+                    .disc.win { animation: c4-win 1.2s var(--ease-out) .2s 2; }
+                    @keyframes c4-win { 30% { transform: scale(1.1); filter: brightness(1.25); } }
+                    .disc.last { outline: 2px solid rgba(255,255,255,.55); outline-offset: 2px; }
+                    .c4-board.over .disc.last { outline: 0; }
+                    .c4-line { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 3; }
+                    .c4-line line { stroke: #fff; stroke-width: 6; stroke-linecap: round; opacity: 0; filter: drop-shadow(0 0 10px rgba(255,255,255,.7)); }
+                    .c4-line.show line { opacity: .85; animation: c4-strike .5s var(--ease-out) both; }
+                    @keyframes c4-strike { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+                    .c4-actions { justify-content: center; }
+                    .c4-score { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+                    .c4-s { padding: 12px 6px; border-radius: 12px; border: 1px solid var(--line); background: rgba(7,11,22,.55); }
+                    .c4-s b { display: block; font-family: var(--font-head); font-size: 1.6rem; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+                    .c4-s span { font-size: .78rem; color: var(--fg-3); display: inline-flex; align-items: center; gap: 6px; }
+                    .c4-s span::before { content: ""; width: 9px; height: 9px; border-radius: 50%; }
+                    .c4-s.p1 span::before { background: var(--signal); } .c4-s.p2 span::before { background: var(--amber); transform: rotate(45deg) scale(.85); border-radius: 2px; } .c4-s.d span::before { display: none; }
+                    .c4-s.p1 b { color: var(--signal); } .c4-s.p2 b { color: var(--amber); }
+                    .c4-s.pop b { animation: stat-pop .45s var(--ease-spring); }
+                    kbd { font-family: var(--font-code); font-size: .78rem; padding: 2px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--ink-3); color: var(--fg); }
+                </style>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../js/script.js"></script>
+    <script src="app.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>
