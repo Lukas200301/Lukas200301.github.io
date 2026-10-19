@@ -28,75 +28,76 @@
   const SLOTS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)', 'var(--s6)'];
   const OTHER = 'var(--s-other)';
 
-  // ---------- cache ----------
-  const cache = {
-    read(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } },
-    get(k, ttl) { const v = this.read(k); return v && Date.now() - v.t < ttl ? v : null; },
-    set(k, data) { const v = { t: Date.now(), data }; try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} return v; }
-  };
+  // ---------- data loading ----------
+  const S = { days: null, total: null, summary: null, repos: null, langs: null, langsApprox: false, range: null, tables: {}, drawn: {}, sort: { key: 'pushed', dir: -1 }, times: [] };
+  const params = new URLSearchParams(location.search);
+  S.range = params.get('r') || 'last12';
+
   async function getJSON(u) {
     const r = await fetch(u);
     if (!r.ok) { const e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
     return r.json();
   }
-  async function cached(key, ttl, load) {
-    const fresh = cache.get(key, ttl);
-    if (fresh) return fresh;
-    try { return cache.set(key, await load()); }
-    catch (e) { const stale = cache.read(key); if (stale) { stale.stale = true; return stale; } throw e; }
-  }
 
-  // ---------- state ----------
-  const S = { days: null, total: null, repos: null, user: null, langs: null, langsApprox: false, range: null, tables: {}, drawn: {}, sort: { key: 'pushed', dir: -1 }, times: [] };
-  const params = new URLSearchParams(location.search);
-  S.range = params.get('r') || 'last12';
-
-  // ---------- data loading ----------
-  async function loadContrib() {
-    const v = await cached('st-contrib-v1', 3 * 3600e3, async () => {
-      const j = await getJSON(`https://github-contributions-api.jogruber.de/v4/${USER}?y=all`);
-      return { total: j.total || {}, days: (j.contributions || []).map(c => [c.date, c.count]) };
-    });
-    S.times.push(v.t);
-    // the API returns the whole current year (future days included) newest first; keep up to today, oldest first
-    S.days = v.data.days.filter(d => d[0] <= TODAY).sort((a, b) => a[0] < b[0] ? -1 : 1);
-    S.total = v.data.total;
-  }
-  async function loadRepos() {
-    const [r, u] = await Promise.all([
-      cached('st-repos-v1', 30 * 60e3, async () => (await getJSON(`https://api.github.com/users/${USER}/repos?per_page=100&type=owner`)).map(x => ({
-        name: x.name, url: x.html_url, desc: x.description, lang: x.language, created: x.created_at, pushed: x.pushed_at,
-        size: x.size, stars: x.stargazers_count, forks: x.forks_count, fork: x.fork, archived: x.archived
-      }))),
-      cached('st-user-v1', 60 * 60e3, async () => { const x = await getJSON(`https://api.github.com/users/${USER}`); return { followers: x.followers, created: x.created_at, public_repos: x.public_repos }; }).catch(() => null)
-    ]);
-    S.times.push(r.t);
-    S.repos = r.data.filter(x => !x.fork);
-    S.user = u && u.data;
-  }
-  // bytes per language for every repo; only repos pushed since the last fetch are re-requested
-  async function loadLangs() {
-    const store = cache.read('st-langs-v1') || { t: 0, data: {} };
-    const map = store.data || {};
-    const todo = S.repos.filter(r => !map[r.name] || map[r.name].pushed !== r.pushed);
-    let limited = false;
-    const queue = todo.slice();
-    async function worker() {
-      while (queue.length && !limited) {
-        const r = queue.shift();
-        try { map[r.name] = { pushed: r.pushed, langs: await getJSON(`https://api.github.com/repos/${USER}/${encodeURIComponent(r.name)}/languages`) }; }
-        catch (e) { if (e.status === 403 || e.status === 429) limited = true; }
+  async function loadStats() {
+    let data = null, lastErr = null;
+    if (location.protocol === 'file:' && window.STATS_DATA) {
+      data = window.STATS_DATA;
+    } else {
+      const urls = [
+        ...(location.protocol === 'file:' ? [] : ['../.github/scripts/stats-data.json']),
+        `https://raw.githubusercontent.com/${USER}/${USER}.github.io/main/.github/scripts/stats-data.json`
+      ];
+      for (const u of urls) {
+        try { data = await getJSON(u); break; }
+        catch (e) { lastErr = e; }
       }
+      if (!data && window.STATS_DATA) data = window.STATS_DATA;
     }
-    await Promise.all([worker(), worker(), worker()]);
-    if (todo.length) cache.set('st-langs-v1', map);
-    // anything still unknown falls back to the repo's main language weighted by its size
-    S.langsApprox = false;
-    S.langs = S.repos.map(r => {
-      if (map[r.name] && map[r.name].langs) return { repo: r, langs: map[r.name].langs };
-      if (r.lang) { S.langsApprox = true; return { repo: r, langs: { [r.lang]: Math.max(1, r.size) * 1024 } }; }
-      return { repo: r, langs: {} };
+    if (!data) throw lastErr || new Error('Failed to load stats-data.json');
+
+    const updatedMs = data.updated_at ? Date.parse(data.updated_at) : NaN;
+    S.times.push(Number.isFinite(updatedMs) ? updatedMs : Date.now());
+    S.summary = data.summary || null;
+
+    const contrib = data.contributions || {};
+    const calDays = contrib.calendar_days || {};
+    S.days = Object.entries(calDays)
+      .map(([date, info]) => [date, typeof info === 'number' ? info : (info && info.count) || 0])
+      .filter(d => d[0] <= TODAY)
+      .sort((a, b) => a[0] < b[0] ? -1 : 1);
+    S.total = contrib.yearly_totals || {};
+
+    S.repos = (data.repositories || []).map(x => {
+      const langMap = x.languages || {};
+      const codeBytes = Object.values(langMap).reduce((a, b) => a + b, 0);
+      return {
+        name: x.name,
+        url: x.html_url || null,
+        private: Boolean(x.is_private),
+        desc: x.description,
+        lang: x.primary_language,
+        created: x.created_at,
+        pushed: x.pushed_at,
+        bytes: codeBytes,
+        size: codeBytes / 1024,
+        stars: x.stars || 0,
+        forks: x.forks || 0,
+        archived: Boolean(x.archived),
+        languages: langMap
+      };
     });
+
+    S.langsApprox = false;
+    if (S.repos.length) {
+      S.langs = S.repos.map(r => ({ repo: r, langs: r.languages }));
+    } else if (Array.isArray(data.languages)) {
+      const fallback = {};
+      data.languages.forEach(l => { if (l && l.name) fallback[l.name] = l.bytes || 0; });
+      S.langs = [{ repo: null, langs: fallback }];
+    } else {
+      S.langs = [];
+    }
   }
 
   // ---------- derived numbers ----------
@@ -198,9 +199,13 @@
   }
   function kpisRepos() {
     const y = String(new Date().getFullYear());
-    const n = S.repos.length, thisYear = S.repos.filter(r => (r.created || '').startsWith(y)).length;
-    setKpi('repos', n, `${thisYear} created this year${S.user ? ` · ${plural(S.user.followers, 'follower')}` : ''}`);
-    const stars = S.repos.reduce((a, r) => a + r.stars, 0), forks = S.repos.reduce((a, r) => a + r.forks, 0);
+    const n = S.summary && S.summary.total_repositories != null ? S.summary.total_repositories : S.repos.length;
+    const pub = S.summary && S.summary.public_repositories != null ? S.summary.public_repositories : S.repos.filter(r => !r.private).length;
+    const priv = S.summary && S.summary.private_repositories != null ? S.summary.private_repositories : S.repos.filter(r => r.private).length;
+    const thisYear = S.repos.filter(r => (r.created || '').startsWith(y)).length;
+    setKpi('repos', n, `${pub} public · ${priv} private · ${thisYear} new in ${y}`);
+    const stars = S.summary && S.summary.total_stars != null ? S.summary.total_stars : S.repos.reduce((a, r) => a + r.stars, 0);
+    const forks = S.repos.reduce((a, r) => a + r.forks, 0);
     setKpi('stars', stars, `and ${plural(forks, 'fork')} by others`);
   }
   function kpisLangs(agg) {
@@ -426,9 +431,9 @@
     const list = S.repos.slice().sort((a, b) => col[2](a, b) * S.sort.dir);
     const d = (s) => s ? shortDate(s.slice(0, 10)) : '–';
     host.innerHTML = `<table class="table"><thead><tr>${COLS.map(([k, t], i) => `<th class="${i >= 4 ? 'num' : ''}" data-k="${k}"${k === S.sort.key ? ` aria-sort="${S.sort.dir > 0 ? 'ascending' : 'descending'}"` : ''} tabindex="0">${t}</th>`).join('')}</tr></thead><tbody>${list.map(r => `<tr>
-      <td><a href="${esc(r.url)}" target="_blank" rel="noopener" title="${esc(r.desc || '')}">${esc(r.name)}</a>${r.archived ? ' <span class="muted">· archived</span>' : ''}</td>
+      <td>${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" title="${esc(r.desc || '')}">${esc(r.name)}</a>` : `<span class="repo-name" title="${esc(r.desc || '')}">${esc(r.name)}</span>`}${r.private ? ' <span class="muted">· private</span>' : ''}${r.archived ? ' <span class="muted">· archived</span>' : ''}</td>
       <td>${r.lang ? `<span class="dot" style="--c:${colorOf(r.lang)}"></span>${esc(r.lang)}` : '<span class="muted">–</span>'}</td>
-      <td>${d(r.created)}</td><td>${d(r.pushed)}</td><td class="num">${bytes(r.size * 1024)}</td><td class="num">${fmt(r.stars)}</td></tr>`).join('')}</tbody></table>`;
+      <td>${d(r.created)}</td><td>${d(r.pushed)}</td><td class="num">${bytes(r.bytes != null ? r.bytes : r.size * 1024)}</td><td class="num">${fmt(r.stars)}</td></tr>`).join('')}</tbody></table>`;
   }
   $('#repos').addEventListener('click', e => {
     const th = e.target.closest('th[data-k]'); if (!th || !S.repos) return;
@@ -457,7 +462,7 @@
     const used = [...Object.keys(LANG_COLOR), 'Other'].filter(k => repos.some(r => keyOf(r) === k));
     $('#tlLegend').innerHTML = used.map(k => `<span><i style="--c:${k === 'Other' ? OTHER : LANG_COLOR[k]}"></i>${esc(k === 'Other' ? 'Other / none' : k)}</span>`).join('') +
       `<span><i class="tl-dot"></i>Pushed in the last ${ACTIVE_DAYS} days</span>`;
-    $('#tlSub').textContent = `Each bar runs from when a repository was created to its last push. ${active ? `${plural(active, 'repository')} active in the last ${ACTIVE_DAYS} days`.replace('repositorys', 'repositories') + '. ' : ''}Click one to open it on GitHub.`;
+    $('#tlSub').textContent = `Each bar runs from when a repository was created to its last push. ${active ? `${plural(active, 'repository')} active in the last ${ACTIVE_DAYS} days`.replace('repositorys', 'repositories') + '. ' : ''}Click a public repository to open it on GitHub.`;
     if (S.tables.timeline) {
       host.innerHTML = tableHTML(['Repository', 'Started', 'Last push', 'Active for'], repos.map(r => [r.name, shortDate(r.created.slice(0, 10)), shortDate(r.pushed.slice(0, 10)), span(r.created, r.pushed)]));
       return;
@@ -485,13 +490,9 @@
       const x1 = X(a), x2 = Math.max(x1 + 4, X(b)), c = colorOf(r.lang), act = isActive(r);
       const maxC = Math.max(6, Math.floor((L - 16) / 6.7));
       const label = r.name.length > maxC ? r.name.slice(0, maxC - 1) + '…' : r.name;
-      const tip = `<span class="tip__sw" style="--c:${c}"></span><b>${esc(r.name)}</b>${r.lang ? ` · ${esc(r.lang)}` : ''}<br>${shortDate(r.created.slice(0, 10))} → ${shortDate(r.pushed.slice(0, 10))}<br><span class="tip__m">${span(r.created, r.pushed)}${act ? ' · still active' : ''}${r.stars ? ` · ★ ${r.stars}` : ''}</span>`;
-      s += `<a href="${esc(r.url)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} on GitHub"><g class="row" ${tipAttr(tip)}>`;
-      s += `<rect class="hit" x="0" y="${yy}" width="${W}" height="${rowH}"/>`;
-      s += `<text class="lbl" x="${L - 12}" y="${yy + rowH / 2 + 4}" text-anchor="end">${esc(label)}</text>`;
-      s += `<rect class="mark mark--t" style="--i:${i}" x="${x1}" y="${yy + (rowH - bh) / 2}" width="${x2 - x1}" height="${bh}" rx="${Math.min(4, (x2 - x1) / 2)}" fill="${c}"/>`;
-      if (act) s += `<circle class="tl-end" cx="${x2}" cy="${yy + rowH / 2}" r="5"/>`;
-      s += `</g></a>`;
+      const tip = `<span class="tip__sw" style="--c:${c}"></span><b>${esc(r.name)}</b>${r.lang ? ` · ${esc(r.lang)}` : ''}${r.private ? ' · private' : ''}<br>${shortDate(r.created.slice(0, 10))} → ${shortDate(r.pushed.slice(0, 10))}<br><span class="tip__m">${span(r.created, r.pushed)}${act ? ' · still active' : ''}${r.stars ? ` · ★ ${r.stars}` : ''}</span>`;
+      const rowG = `<g class="row" ${tipAttr(tip)}><rect class="hit" x="0" y="${yy}" width="${W}" height="${rowH}"/><text class="lbl" x="${L - 12}" y="${yy + rowH / 2 + 4}" text-anchor="end">${esc(label)}</text><rect class="mark mark--t" style="--i:${i}" x="${x1}" y="${yy + (rowH - bh) / 2}" width="${x2 - x1}" height="${bh}" rx="${Math.min(4, (x2 - x1) / 2)}" fill="${c}"/>${act ? `<circle class="tl-end" cx="${x2}" cy="${yy + rowH / 2}" r="5"/>` : ''}</g>`;
+      s += r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} on GitHub">${rowG}</a>` : rowG;
     });
     host.innerHTML = `<svg class="viz tl${firstDraw('timeline')}" viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="Repository timeline from ${y0} to today">${s}</svg>`;
   }
@@ -549,7 +550,7 @@
   function updated() {
     if (!S.times.length) { $('#updated').textContent = 'Not loaded'; return; }
     const age = (Date.now() - Math.min(...S.times)) / 60000;
-    $('#updated').textContent = age < 1 ? 'Updated just now' : age < 60 ? `Updated ${Math.round(age)} min ago` : `Updated ${Math.round(age / 60)} h ago`;
+    $('#updated').textContent = age < 1 ? 'Updated just now' : age < 60 ? `Updated ${Math.round(age)} min ago` : age < 1440 ? `Updated ${Math.round(age / 60)} h ago` : `Updated ${Math.round(age / 1440)} d ago`;
   }
 
   // the range bar gets its glass background only while it's stuck under the header (same as the list pages)
@@ -569,22 +570,20 @@
   ['#months', '#calendar', '#weekdays', '#topdays', '#langs', '#years', '#timeline'].forEach(s => $(s).classList.add('is-loading'));
   $('#repos').innerHTML = '<p class="viz__empty">Loading repositories…</p>';
 
-  loadContrib().then(() => {
-    if (!S.days.length) throw new Error('empty');
-    computeLevels(); buildRange(); kpisActivity(); renderActivity(); updated();
+  loadStats().then(() => {
+    if (S.days && S.days.length) {
+      computeLevels(); buildRange(); kpisActivity(); renderActivity();
+    } else {
+      ['#k-total', '#k-year', '#k-streak', '#k-longest'].forEach(s => setKpi(s.slice(3), '–', 'unavailable'));
+      ['#months', '#calendar', '#weekdays', '#topdays'].forEach(s => { $(s).classList.remove('is-loading'); $(s).innerHTML = '<p class="viz__empty">Unavailable</p>'; });
+    }
+    kpisRepos();
+    renderRepoParts();
+    updated();
   }).catch(() => {
-    ['#k-total', '#k-year', '#k-streak', '#k-longest'].forEach(s => setKpi(s.slice(3), '–', 'unavailable'));
-    showError('#months', 'Couldn\'t load contributions right now.');
-    ['#calendar', '#weekdays', '#topdays'].forEach(s => { $(s).classList.remove('is-loading'); $(s).innerHTML = '<p class="viz__empty">Unavailable</p>'; });
-  });
-
-  loadRepos().then(() => {
-    kpisRepos(); updated();
-    return loadLangs().then(renderRepoParts);
-  }).catch(() => {
-    ['repos', 'stars', 'langcount'].forEach(id => setKpi(id, '–', 'unavailable'));
-    showError('#langs', 'GitHub didn\'t answer. Its API allows 60 requests per hour per visitor.');
-    ['#years', '#timeline'].forEach(s => { $(s).classList.remove('is-loading'); $(s).innerHTML = '<p class="viz__empty">Unavailable</p>'; });
+    ['total', 'year', 'streak', 'longest', 'repos', 'stars', 'langcount'].forEach(id => setKpi(id, '–', 'unavailable'));
+    showError('#months', 'Couldn\'t load stats-data.json right now.');
+    ['#calendar', '#weekdays', '#topdays', '#langs', '#years', '#timeline'].forEach(s => { $(s).classList.remove('is-loading'); $(s).innerHTML = '<p class="viz__empty">Unavailable</p>'; });
     $('#repos').innerHTML = '<p class="viz__empty">Unavailable</p>';
   });
 
@@ -593,7 +592,7 @@
   window.addEventListener('resize', () => {
     if (innerWidth === lastW) return; lastW = innerWidth;
     clearTimeout(rz); rz = setTimeout(() => {
-      if (S.days) { renderMonths(); renderCalendar(rangeDays()); renderWeekdays(rangeDays()); drawSpark(); }
+      if (S.days && S.days.length) { renderMonths(); renderCalendar(rangeDays()); renderWeekdays(rangeDays()); drawSpark(); }
       if (S.langs) { renderLangs(langAgg()); renderYears(); renderTimeline(); }
     }, 150);
   });

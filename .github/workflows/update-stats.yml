@@ -1,0 +1,42 @@
+name: Update Stats Data
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Fetch Script
+        env:
+          PRIVATE_STATS_TOKEN: ${{ secrets.PRIVATE_STATS_TOKEN }}
+        run: python .github/scripts/fetch_stats.py
+
+      - name: Commit and Push if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/scripts/stats-data.json .github/scripts/stats-data.js
+          
+          if git diff --staged --quiet; then
+            echo "No changes detected, skipping commit."
+          else
+            echo "New data available, creating commit..."
+            git commit -m "chore: update stats-data.json [skip ci]"
+            git push
+          fi

@@ -108,7 +108,7 @@
 .repo-table th[aria-sort]::after { content: ' ↓'; color: var(--signal); }
 .repo-table th[aria-sort="ascending"]::after { content: ' ↑'; }
 .repo-table td.num, .repo-table th.num { text-align: right; }
-.repo-table td a { color: var(--fg); font-family: var(--font-body); font-weight: 600; }
+.repo-table td a, .repo-table td .repo-name { color: var(--fg); font-family: var(--font-body); font-weight: 600; }
 .repo-table td a:hover { color: var(--signal); }
 .repo-table .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c); margin-right: 8px; vertical-align: 0; }
 .repo-table td { font-family: var(--font-body); }
