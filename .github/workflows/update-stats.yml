@@ -2,14 +2,16 @@ name: Update Stats Data
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 6 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -32,7 +34,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .github/scripts/stats-data.json .github/scripts/stats-data.js
-          
+
           if git diff --staged --quiet; then
             echo "No changes detected, skipping commit."
           else
