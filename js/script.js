@@ -30,7 +30,6 @@
 
   const LINKS = {
     github: 'https://github.com/Lukas200301',
-    instagram: 'https://instagram.com/Lukas200103',
     discord: 'iamlukas.'
   };
 
@@ -88,7 +87,6 @@
 
     { group: 'Actions', title: 'Open GitHub profile', sub: 'github.com/Lukas200301', icon: 'fab fa-github', action: () => window.open(LINKS.github, '_blank', 'noopener') },
     { group: 'Actions', title: 'Copy Discord username', sub: LINKS.discord, icon: 'fab fa-discord', action: () => copy(LINKS.discord, 'Discord username copied') },
-    { group: 'Actions', title: 'Open Instagram', sub: '@Lukas200103', icon: 'fab fa-instagram', action: () => window.open(LINKS.instagram, '_blank', 'noopener') },
     { group: 'Actions', title: 'Open a random tool or game', sub: 'Feeling lucky', icon: 'fas fa-dice', action: () => {
       const pool = REGISTRY.filter(r => r.group === 'Tools' || r.group === 'Games');
       go(url(pool[Math.floor(Math.random() * pool.length)].href));

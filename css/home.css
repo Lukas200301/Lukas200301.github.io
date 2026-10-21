@@ -348,14 +348,16 @@
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
-.contact-list { display: grid; gap: 10px; margin-top: 24px; }
+/* Intro column matches the terminal's height; the contact cards share what's left */
+.connect__intro { display: flex; flex-direction: column; }
+.contact-list { display: grid; grid-auto-rows: 1fr; gap: 12px; margin-top: 24px; flex: 1; }
 .contact-row {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 16px;
+  padding: 16px 20px;
   border-radius: 14px;
   border: 1px solid var(--line);
   background: rgba(12, 18, 34, 0.7);
@@ -364,8 +366,21 @@
   transition: border-color 0.2s, transform 0.3s var(--ease-out);
 }
 .contact-row:hover { border-color: rgba(var(--signal-rgb), 0.5); transform: translateX(4px); }
-.contact-row > i:first-child { font-size: 1.3rem; width: 28px; text-align: center; color: var(--signal); }
-.contact-row b { display: block; font-weight: 600; }
+.contact-row > i:first-child {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  font-size: 1.35rem;
+  color: var(--signal);
+  background: rgba(var(--signal-rgb), 0.1);
+  border: 1px solid rgba(var(--signal-rgb), 0.2);
+  transition: background 0.2s;
+}
+.contact-row:hover > i:first-child { background: rgba(var(--signal-rgb), 0.18); }
+.contact-row b { display: block; font-weight: 600; font-size: 1.05rem; margin-bottom: 2px; }
 .contact-row span { font-size: 0.86rem; color: var(--fg-3); }
 .contact-row > i:last-child { margin-left: auto; color: var(--fg-3); font-size: 0.85rem; }
 

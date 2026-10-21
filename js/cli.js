@@ -539,7 +539,7 @@ Real sysadmin tricks, no guessing needed. Your progress is saved in this browser
     np: (a) => { if (!window.Live || !Live.setHidden) return 'np: not available'; if (a[0] === 'off') { Live.setHidden(true); return 'now-playing pill hidden'; } if (a[0] === 'on') { Live.setHidden(false); return 'now-playing pill shown (when something is playing)'; } return CMDS.now(); },
     whoami: () => `lukas200301: IT system integration apprentice who builds the tools he wants to use.
 A Raspberry Pi controller, a network monitor, and ${R.filter(r => r.group === 'Tools').length} tools plus ${R.filter(r => r.group === 'Games').length} games that live on this site.`,
-    socials: () => `github     <a href="${Site.LINKS.github}" target="_blank" rel="noopener">${Site.LINKS.github.replace('https://', '')}</a>\ninstagram  <a href="${Site.LINKS.instagram}" target="_blank" rel="noopener">${Site.LINKS.instagram.replace('https://', '')}</a>\ndiscord    ${esc(Site.LINKS.discord)}  <span class="m">(type <span class="a">discord</span> to copy)</span>`,
+    socials: () => `github     <a href="${Site.LINKS.github}" target="_blank" rel="noopener">${Site.LINKS.github.replace('https://', '')}</a>\ndiscord    ${esc(Site.LINKS.discord)}  <span class="m">(type <span class="a">discord</span> to copy)</span>`,
     github: () => { window.open(Site.LINKS.github, '_blank', 'noopener'); return '<span class="m">opening GitHub in a new tab…</span>'; },
     discord: () => { Site.copy(Site.LINKS.discord, 'Discord username copied'); return `copied <b>${esc(Site.LINKS.discord)}</b> to the clipboard`; },
     neofetch: () => neofetch(),
