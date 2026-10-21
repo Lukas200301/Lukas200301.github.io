@@ -10,7 +10,7 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 - **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
 - **Tools**: 25 client-side utilities:
   - Developer: JS/TS playground, regex tester, JSON & YAML formatter, Base64 / URL / JWT decoder, cron expression helper, text diff checker
-  - Network & security: subnet calculator, IPv6 tools (compress/expand, prefixes, EUI-64/SLAAC, ip6.arpa), speed test (Cloudflare), DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
+  - Network & security: IPv4 tools (subnet calculator, VLSM planner, CIDR merge/exclude, range to CIDR, longest-prefix match), IPv6 tools (compress/expand, prefixes, merge/exclude, longest-prefix match, EUI-64/SLAAC, ULA generator, NAT64, ip6.arpa), speed test (Cloudflare), DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
   - Hardware: screen test (dead pixels, refresh rate, motion), keyboard test (QWERTZ/US, rollover, chatter), mic / webcam / gamepad test
   - Everything else: image tools (resize/convert, favicon set with .ico, EXIF/GPS viewer and remover), unit converter (GB vs GiB, Mbit/s vs MB/s, transfer times), timestamp converter with world clock, Markdown live preview, QR codes, color palettes, Globedata, YouTube tags
 - **Stats**: GitHub activity in charts: all-time contributions, a repository timeline (created → last push), current and longest streak, contributions per month, an activity calendar for any year, average per weekday, busiest days, share of code per language, new repositories per year and a sortable repository table. Every chart has a table view and hover details.
@@ -88,7 +88,6 @@ Colors, type and spacing live at the top of `css/styles.css`. The palette is ink
 - Libraries from jsDelivr, version-pinned: js-yaml (JSON & YAML), marked + DOMPurify (Markdown), jsdiff (Diff)
 - Logos in Tech Memory come from devicon
 - GitHub REST API (unauthenticated, 60 requests/hour per visitor; responses are cached in `localStorage`). The stats page also asks for each repo's languages once and only re-asks for repos pushed since; if the hourly limit is hit it falls back to each repo's main language and says so
-- [github-contributions-api](https://github.com/grubersjoe/github-contributions-api) for the contribution calendar and all stats-page activity charts
 - [Lanyard](https://github.com/Phineas/lanyard) for Discord presence
 - Visitor counter on Vercel
 

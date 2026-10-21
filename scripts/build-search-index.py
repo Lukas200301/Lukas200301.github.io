@@ -95,8 +95,11 @@ def main():
         if not os.path.exists(f):
             continue
         rel = os.path.relpath(os.path.dirname(f), ROOT).replace(os.sep, '/') + '/'
+        html = open(f, encoding='utf-8').read()
+        if re.search(r'<meta\s+http-equiv="refresh"', html, re.I):     # redirect stub for a moved page
+            continue
         g = Grab()
-        g.feed(open(f, encoding='utf-8').read())
+        g.feed(html)
         title = clean(g.title.split('|')[0])
         phrases, seen = [], set()
         for s in [*extra.get(rel, []), *g.out, *re.split(r'(?<=[.!?])\s+', g.desc)]:

@@ -10,7 +10,7 @@
   "name": "lukas200301.github.io",
   "version": 2,
   "private": true,
-  "tools": ["subnet-calculator", "json-yaml", "cron"],
+  "tools": ["ipv4", "json-yaml", "cron"],
   "server": { "host": "raspberrypi.local", "port": 8443, "tls": true },
   "maintainer": null
 }`;
