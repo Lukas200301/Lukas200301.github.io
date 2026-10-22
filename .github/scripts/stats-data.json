@@ -1,11 +1,51 @@
 {
-  "updated_at": "2026-10-22T05:35:31.266248+00:00",
+  "updated_at": "2026-10-22T05:46:13.090327+00:00",
   "summary": {
     "total_repositories": 16,
     "public_repositories": 9,
     "private_repositories": 7,
-    "total_stars": 4
+    "total_stars": 4,
+    "total_forks": 3,
+    "open_issues": 1,
+    "followers": 7,
+    "following": 0
   },
+  "profile": {
+    "followers": 7,
+    "following": 0,
+    "public_repos": 9,
+    "public_gists": 0,
+    "created_at": "2020-08-11T10:39:45Z"
+  },
+  "forks": [
+    {
+      "repo": "RaspberryPi-Control",
+      "full_name": "BinaryAtoms/RaspberryPi-Control",
+      "owner": "BinaryAtoms",
+      "html_url": "https://github.com/BinaryAtoms/RaspberryPi-Control",
+      "created_at": "2026-07-03T08:46:03Z",
+      "pushed_at": "2026-05-07T18:37:44Z",
+      "stars": 0
+    },
+    {
+      "repo": "RaspberryPi-Control",
+      "full_name": "gaoypChina/RaspberryPi-Control",
+      "owner": "gaoypChina",
+      "html_url": "https://github.com/gaoypChina/RaspberryPi-Control",
+      "created_at": "2026-03-06T06:34:22Z",
+      "pushed_at": "2026-02-15T23:09:56Z",
+      "stars": 0
+    },
+    {
+      "repo": "RaspberryPi-Control",
+      "full_name": "yukathe1st/RaspberryPi-Control",
+      "owner": "yukathe1st",
+      "html_url": "https://github.com/yukathe1st/RaspberryPi-Control",
+      "created_at": "2025-01-19T15:45:14Z",
+      "pushed_at": "2025-04-22T17:16:01Z",
+      "stars": 0
+    }
+  ],
   "languages": [
     {
       "name": "Dart",
@@ -24,7 +64,7 @@
     },
     {
       "name": "JavaScript",
-      "bytes": 1113426,
+      "bytes": 1114137,
       "percentage": 9.3
     },
     {
@@ -109,7 +149,7 @@
     }
   ],
   "contributions": {
-    "total_contributions": 745,
+    "total_contributions": 748,
     "active_days": 211,
     "current_streak": 9,
     "yearly_totals": {
@@ -119,14 +159,14 @@
       "2023": 114,
       "2024": 26,
       "2025": 166,
-      "2026": 359
+      "2026": 362
     },
     "weekday_averages": {
       "0": 0.21,
       "1": 0.4,
       "2": 0.23,
       "3": 0.37,
-      "4": 0.31,
+      "4": 0.32,
       "5": 0.28,
       "6": 0.24
     },
@@ -10076,7 +10116,7 @@
         "weekday": 3
       },
       "2026-10-22": {
-        "count": 2,
+        "count": 5,
         "weekday": 4
       },
       "2026-10-23": {
@@ -10371,6 +10411,8 @@
       "pushed_at": "2026-10-22T04:27:09Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Python",
       "languages": {
         "Python": 22025
@@ -10387,6 +10429,8 @@
       "pushed_at": "2024-06-26T09:53:05Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Python",
       "languages": {
         "Python": 12610
@@ -10403,6 +10447,8 @@
       "pushed_at": "2023-10-26T11:42:20Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Java",
       "languages": {
         "Java": 18324
@@ -10419,6 +10465,8 @@
       "pushed_at": "2025-11-26T20:04:55Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": null,
       "languages": {},
       "archived": false,
@@ -10430,12 +10478,14 @@
       "html_url": "https://github.com/Lukas200301/Lukas200301.github.io",
       "is_private": false,
       "created_at": "2024-11-26T19:10:14Z",
-      "pushed_at": "2026-10-22T05:34:08Z",
+      "pushed_at": "2026-10-22T05:45:46Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "JavaScript",
       "languages": {
-        "JavaScript": 938838,
+        "JavaScript": 939549,
         "HTML": 819566,
         "CSS": 197477,
         "Python": 5300
@@ -10452,6 +10502,8 @@
       "pushed_at": "2026-02-10T07:06:47Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "TypeScript",
       "languages": {
         "TypeScript": 124652
@@ -10468,6 +10520,8 @@
       "pushed_at": "2026-10-12T16:45:32Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "C#",
       "languages": {
         "C#": 249959,
@@ -10486,6 +10540,8 @@
       "pushed_at": "2026-10-15T15:33:08Z",
       "stars": 4,
       "forks": 3,
+      "open_issues": 1,
+      "topics": [],
       "primary_language": "Dart",
       "languages": {
         "Dart": 1647463,
@@ -10512,6 +10568,8 @@
       "pushed_at": "2026-10-16T23:05:37Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "PowerShell",
       "languages": {
         "PowerShell": 14562
@@ -10528,6 +10586,8 @@
       "pushed_at": "2025-01-03T18:44:58Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "JavaScript",
       "languages": {
         "JavaScript": 151274
@@ -10544,6 +10604,8 @@
       "pushed_at": "2026-02-21T17:59:41Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "C#",
       "languages": {
         "C#": 33191,
@@ -10562,6 +10624,8 @@
       "pushed_at": "2026-03-26T18:24:10Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Vue",
       "languages": {
         "Vue": 648841,
@@ -10583,6 +10647,8 @@
       "pushed_at": "2026-10-20T05:58:41Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "TypeScript",
       "languages": {
         "TypeScript": 471969,
@@ -10603,6 +10669,8 @@
       "pushed_at": "2026-10-19T15:22:16Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "TypeScript",
       "languages": {
         "TypeScript": 982974,
@@ -10625,6 +10693,8 @@
       "pushed_at": "2026-10-01T18:49:11Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Dart",
       "languages": {
         "Dart": 1963730,
@@ -10643,6 +10713,8 @@
       "pushed_at": "2026-09-28T17:17:01Z",
       "stars": 0,
       "forks": 0,
+      "open_issues": 0,
+      "topics": [],
       "primary_language": "Dart",
       "languages": {
         "Dart": 998469,
