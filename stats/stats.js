@@ -444,7 +444,13 @@
   function renderForks() {
     const host = $('#forks'), sub = $('#forksSub');
     if (!host) return;
-    if (!S.forkList) { host.innerHTML = '<p class="viz__empty">Not in this data yet; it appears after the next daily update.</p>'; return; }
+    if (!S.forkList) {   // older data file without the fork list: fall back to each repository's fork count
+      const counted = S.repos.filter(r => r.forks > 0).sort((a, b) => b.forks - a.forks);
+      if (!counted.length) { host.innerHTML = '<p class="viz__empty">Nobody has forked a public repository yet.</p>'; sub.textContent = ''; return; }
+      sub.textContent = `${plural(counted.reduce((a, r) => a + r.forks, 0), 'fork')} in total. Who made them shows up after the next nightly update.`;
+      host.innerHTML = `<table class="table"><thead><tr><th>Repository</th><th class="num">Forks</th></tr></thead><tbody>${counted.map(r => `<tr><td>${r.url ? `<a href="${esc(r.url)}/forks" target="_blank" rel="noopener">${esc(r.name)}</a>` : esc(r.name)}</td><td class="num">${fmt(r.forks)}</td></tr>`).join('')}</tbody></table>`;
+      return;
+    }
     if (!S.forkList.length) { host.innerHTML = '<p class="viz__empty">Nobody has forked a public repository yet.</p>'; sub.textContent = ''; return; }
     const people = new Set(S.forkList.map(f => f.owner)).size;
     sub.textContent = `${plural(S.forkList.length, 'fork')} by ${people === 1 ? 'one person' : fmt(people) + ' people'}, newest first.`;
