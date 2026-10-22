@@ -158,6 +158,8 @@ def main():
                 "pushed_at": repo["pushed_at"],
                 "stars": repo.get("stargazers_count", 0),
                 "forks": repo.get("forks_count", 0),
+                "open_issues": repo.get("open_issues_count", 0),
+                "topics": repo.get("topics", []),
                 "primary_language": repo["language"],
                 "languages": langs,
                 "archived": repo.get("archived", False),
@@ -180,11 +182,52 @@ def main():
                 "pushed_at": repo["pushed_at"],
                 "stars": repo.get("stargazers_count", 0),
                 "forks": repo.get("forks_count", 0),
+                "open_issues": repo.get("open_issues_count", 0),
+                "topics": repo.get("topics", []),
                 "primary_language": repo["language"],
                 "languages": langs,
                 "archived": repo.get("archived", False),
                 "description": repo.get("description", "")
             })
+
+    # 3. Profile: followers, following and account age
+    print("Fetching profile...")
+    user = fetch_rest(f"https://api.github.com/users/{GITHUB_USERNAME}") or {}
+    profile = {
+        "followers": user.get("followers"),
+        "following": user.get("following"),
+        "public_repos": user.get("public_repos"),
+        "public_gists": user.get("public_gists"),
+        "created_at": user.get("created_at"),
+    }
+
+    # 4. Forks other people made of my public repositories (forks of private repos stay private)
+    print("Fetching forks...")
+    forks_list = []
+    for r in repos_data:
+        if r["is_private"] or not r["forks"]:
+            continue
+        page = 1
+        while True:
+            batch = fetch_rest(f"https://api.github.com/repos/{r['full_name']}/forks?per_page=100&page={page}&sort=newest")
+            if not batch:
+                break
+            for f in batch:
+                forks_list.append({
+                    "repo": r["name"],
+                    "full_name": f["full_name"],
+                    "owner": f["owner"]["login"],
+                    "html_url": f["html_url"],
+                    "created_at": f["created_at"],
+                    "pushed_at": f["pushed_at"],
+                    "stars": f.get("stargazers_count", 0),
+                })
+            page += 1
+    forks_list.sort(key=lambda f: f["created_at"], reverse=True)
+
+    # never overwrite good data with an empty result when the API is down or rate-limited
+    if not repos_data or profile["followers"] is None:
+        raise SystemExit("Error: GitHub API returned no repositories or no profile, keeping the old stats-data files.")
 
     # Calculate overall language distribution across all repos
     language_bytes = {}
@@ -204,6 +247,8 @@ def main():
 
     print("Fetching contribution metrics via GraphQL...")
     contributions = get_contribution_calendar()
+    if not contributions["calendar_days"]:
+        raise SystemExit("Error: GraphQL returned no contribution calendar, keeping the old stats-data files.")
 
     output_data = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
@@ -212,7 +257,13 @@ def main():
             "public_repositories": sum(1 for r in repos_data if not r["is_private"]),
             "private_repositories": sum(1 for r in repos_data if r["is_private"]),
             "total_stars": sum(r["stars"] for r in repos_data),
+            "total_forks": sum(r["forks"] for r in repos_data),
+            "open_issues": sum(r["open_issues"] for r in repos_data),
+            "followers": profile["followers"],
+            "following": profile["following"],
         },
+        "profile": profile,
+        "forks": forks_list,
         "languages": languages_breakdown,
         "contributions": contributions,
         "repositories": repos_data
