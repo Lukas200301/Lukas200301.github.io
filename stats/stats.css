@@ -113,6 +113,9 @@
 .repo-table .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c); margin-right: 8px; vertical-align: 0; }
 .repo-table td { font-family: var(--font-body); }
 .repo-table td.muted { color: var(--fg-3); }
+.fork-table { max-height: 420px; }
+.fork-table th { cursor: default; }
+.fork-table th:hover { color: var(--fg-3); }
 .viz__body .table-wrap { max-height: 380px; }
 
 /* ---------- tooltip ---------- */

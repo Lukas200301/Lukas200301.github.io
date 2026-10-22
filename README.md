@@ -6,14 +6,14 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 
 ## What's on it
 
-- **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), live GitHub stats, contribution calendar, recently pushed repos, and the site's `lsh` shell embedded at the bottom (same session as the full-screen command line).
+- **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), GitHub stats, contribution calendar and recently pushed repos from the nightly stats data, and the site's `lsh` shell embedded at the bottom (same session as the full-screen command line).
 - **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
 - **Tools**: 25 client-side utilities:
   - Developer: JS/TS playground, regex tester, JSON & YAML formatter, Base64 / URL / JWT decoder, cron expression helper, text diff checker
   - Network & security: IPv4 tools (subnet calculator, VLSM planner, CIDR merge/exclude, range to CIDR, longest-prefix match), IPv6 tools (compress/expand, prefixes, merge/exclude, longest-prefix match, EUI-64/SLAAC, ULA generator, NAT64, ip6.arpa), speed test (Cloudflare), DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
   - Hardware: screen test (dead pixels, refresh rate, motion), keyboard test (QWERTZ/US, rollover, chatter), mic / webcam / gamepad test
   - Everything else: image tools (resize/convert, favicon set with .ico, EXIF/GPS viewer and remover), unit converter (GB vs GiB, Mbit/s vs MB/s, transfer times), timestamp converter with world clock, Markdown live preview, QR codes, color palettes, Globedata, YouTube tags
-- **Stats**: GitHub activity in charts: all-time contributions, a repository timeline (created → last push), current and longest streak, contributions per month, an activity calendar for any year, average per weekday, busiest days, share of code per language, new repositories per year and a sortable repository table. Every chart has a table view and hover details.
+- **Stats**: GitHub activity in charts: all-time contributions, a repository timeline (created → last push), current and longest streak, contributions per month, an activity calendar for any year, average per weekday, busiest days, share of code per language, new repositories per year, a sortable repository table and the forks others made. Private repositories are included. Every chart has a table view and hover details.
 - **Games**: Tetris, 2048, Globle, Snake, Minesweeper, Flag Quiz, Code Typing Test, Tech Memory, Tic Tac Toe (unbeatable on hard), Connect Four (alpha-beta CPU), Reaction & Aim, Mastermind & Simon, IT Hangman, and Terminal CTF: 8 capture-the-flag levels played in the site's command line (`ctf`).
 
 ### Site-wide features
@@ -47,7 +47,7 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 ├── js/
 │   ├── script.js         Site shell: header, command palette, shortcuts, reveal, toasts
 │   ├── list.js           Search / filter / sort for the three list pages
-│   ├── home.js           Particle name, GitHub + Discord data, terminal
+│   ├── home.js           Particle name, GitHub stats (from stats-data.json) + Discord data, terminal
 │   ├── cli.js            Site-wide command line (loaded by script.js)
 │   ├── live.js           Now-playing pill (loaded by script.js)
 │   ├── terminal-font.js  JetBrains Mono for the command line, registered from bytes so it's ready on the first frame
@@ -87,7 +87,8 @@ Colors, type and spacing live at the top of `css/styles.css`. The palette is ink
 - MAC vendors are bundled in `tools/mac-lookup/oui.js` (IEEE registries via Wireshark's `manuf` file). Refresh it with `node tools/mac-lookup/build-oui.js manuf.txt` (instructions at the top of the script).
 - Libraries from jsDelivr, version-pinned: js-yaml (JSON & YAML), marked + DOMPurify (Markdown), jsdiff (Diff)
 - Logos in Tech Memory come from devicon
-- GitHub REST API (unauthenticated, 60 requests/hour per visitor; responses are cached in `localStorage`). The stats page also asks for each repo's languages once and only re-asks for repos pushed since; if the hourly limit is hit it falls back to each repo's main language and says so
+- GitHub stats: `.github/workflows/update-stats.yml` runs `.github/scripts/fetch_stats.py` every night at 00:07 UTC (and on demand). It reads the GitHub REST and GraphQL APIs with the `PRIVATE_STATS_TOKEN` secret (public and listed private repositories, languages, stars, forks, open issues, followers, the forks others made and the contribution calendar since 2020) and commits `.github/scripts/stats-data.json` plus `stats-data.js` (the same data for `file://`). The home and stats pages only read these files, so visitors never hit the API rate limit. If the API returns nothing, the script stops and the old data stays
+- Projects page and showcase pages: GitHub REST API (unauthenticated, 60 requests/hour per visitor; responses are cached in `localStorage`)
 - [Lanyard](https://github.com/Phineas/lanyard) for Discord presence
 - Visitor counter on Vercel
 

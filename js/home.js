@@ -1,5 +1,5 @@
 /**
- * Home page: particle name, role ticker, live GitHub data,
+ * Home page: particle name, role ticker, daily GitHub data,
  * contribution grid, Discord presence and the terminal.
  */
 (function () {
@@ -10,15 +10,6 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const USER = 'Lukas200301';
   const DISCORD_ID = '364118506460938250';
-
-  const cache = {
-    get(k, ttl) {
-      try { const v = JSON.parse(localStorage.getItem(k) || 'null'); if (v && Date.now() - v.t < ttl) return v.data; } catch (e) {}
-      return null;
-    },
-    stale(k) { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v ? v.data : null; } catch (e) { return null; } },
-    set(k, data) { try { localStorage.setItem(k, JSON.stringify({ t: Date.now(), data })); } catch (e) {} }
-  };
 
   /* =======================================================
      1. Particle name
@@ -203,24 +194,34 @@
 
   async function getJSON(u) { const r = await fetch(u); if (!r.ok) throw new Error(r.status); return r.json(); }
 
+  // .github/scripts/stats-data.json is rebuilt every night by .github/workflows/update-stats.yml
+  // (fetch_stats.py: repositories incl. private ones, stars, forks, followers and the contribution calendar)
+  let statsData = null;
+  function loadStatsData() {
+    if (statsData) return statsData;
+    statsData = (async () => {
+      if (location.protocol !== 'file:') { try { return await getJSON('.github/scripts/stats-data.json'); } catch (e) {} }
+      // file:// (or a failed fetch): the same data as a script
+      return window.STATS_DATA || new Promise(res => {
+        const s = document.createElement('script');
+        s.src = '.github/scripts/stats-data.js';
+        s.onload = () => res(window.STATS_DATA || null); s.onerror = () => res(null);
+        document.head.appendChild(s);
+      });
+    })();
+    return statsData;
+  }
+
   async function github() {
     const statsEl = $('#ghStats');
     if (!statsEl && !$('#repoList')) return;
-    let repos = cache.get('gh-repos-v2', 10 * 60e3), user = cache.get('gh-user-v2', 10 * 60e3);
-    try {
-      if (!repos) { repos = (await getJSON(`https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`)).filter(r => !r.fork); cache.set('gh-repos-v2', repos.map(slim)); }
-      if (!user) { user = await getJSON(`https://api.github.com/users/${USER}`); cache.set('gh-user-v2', { public_repos: user.public_repos, followers: user.followers, created_at: user.created_at }); }
-    } catch (e) {
-      repos = repos || cache.stale('gh-repos-v2');
-      user = user || cache.stale('gh-user-v2');
-    }
-    function slim(r) { return { name: r.name, description: r.description, html_url: r.html_url, language: r.language, stargazers_count: r.stargazers_count, forks_count: r.forks_count, pushed_at: r.pushed_at, topics: r.topics || [], archived: r.archived }; }
-
-    const stars = repos ? repos.reduce((a, r) => a + (r.stargazers_count || 0), 0) : null;
+    const data = await loadStatsData();
+    const sum = (data && data.summary) || {}, prof = (data && data.profile) || {};
+    const repos = data && Array.isArray(data.repositories) ? data.repositories.filter(r => !r.is_private) : null;
     const vals = {
-      repos: repos ? repos.length : null,
-      stars,
-      followers: user ? user.followers : null
+      repos: sum.public_repositories ?? (repos ? repos.length : null),
+      stars: sum.total_stars ?? null,
+      followers: prof.followers ?? sum.followers ?? null
     };
     whenVisible(statsEl, () => {
       for (const k in vals) {
@@ -229,11 +230,13 @@
         if (vals[k] == null) el.textContent = '—'; else countUp(el, vals[k]);
       }
     });
+    const upd = $('#ghUpdated');
+    if (upd && data && data.updated_at) upd.textContent = ` Last update ${ago(data.updated_at)}.`;
 
     const list = $('#repoList');
     if (!list) return;
     if (!repos || !repos.length) {
-      list.innerHTML = `<p style="color:var(--fg-3)">GitHub didn't answer just now (rate limit). <a class="text-link" href="https://github.com/${USER}?tab=repositories" target="_blank" rel="noopener">See repositories on GitHub</a></p>`;
+      list.innerHTML = `<p style="color:var(--fg-3)">The repository list didn't load just now. <a class="text-link" href="https://github.com/${USER}?tab=repositories" target="_blank" rel="noopener">See repositories on GitHub</a></p>`;
       return;
     }
     const recent = repos.slice().sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)).slice(0, 6);
@@ -241,8 +244,8 @@
       <a class="repo" href="${esc(r.html_url)}" target="_blank" rel="noopener">
         <span class="repo__name">${esc(r.name)}</span>
         <span class="repo__meta">
-          ${r.language ? `<span><i class="lang-dot" style="background:${LANG[r.language] || '#8ea2ff'}"></i>${esc(r.language)}</span>` : ''}
-          ${r.stargazers_count ? `<span><i class="fas fa-star"></i> ${r.stargazers_count}</span>` : ''}
+          ${r.primary_language ? `<span><i class="lang-dot" style="background:${LANG[r.primary_language] || '#8ea2ff'}"></i>${esc(r.primary_language)}</span>` : ''}
+          ${r.stars ? `<span><i class="fas fa-star"></i> ${r.stars}</span>` : ''}
           <span>${ago(r.pushed_at)}</span>
         </span>
         <span class="repo__desc">${esc(r.description || 'No description')}</span>
@@ -262,18 +265,29 @@
     } catch (e) { el.textContent = '—'; }
   }
 
+  // the last 365 days of the nightly contribution calendar, with GitHub-style levels 0–4 (quartiles of the active days)
+  function lastYear(data) {
+    const cal = data && data.contributions && data.contributions.calendar_days;
+    if (!cal) return null;
+    const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const days = [];
+    for (let i = 364; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const k = ymd(d), v = cal[k];
+      days.push([k, typeof v === 'number' ? v : (v && v.count) || 0]);
+    }
+    const on = days.map(d => d[1]).filter(Boolean).sort((a, b) => a - b);
+    const q = (p) => on[Math.min(on.length - 1, Math.floor(on.length * p))];
+    const cuts = on.length ? [q(0.25), q(0.5), q(0.75)] : [];
+    days.forEach(d => { d[2] = !d[1] ? 0 : d[1] <= cuts[0] ? 1 : d[1] <= cuts[1] ? 2 : d[1] <= cuts[2] ? 3 : 4; });
+    return { total: days.reduce((a, d) => a + d[1], 0), days };
+  }
+
   /* Contribution grid, drawn in the site's own colours */
   async function contributions() {
     const box = $('#contrib');
     if (!box) return;
-    let data = cache.get('gh-contrib-v1', 6 * 3600e3);
-    try {
-      if (!data) {
-        const j = await getJSON(`https://github-contributions-api.jogruber.de/v4/${USER}?y=last`);
-        data = { total: j.total && (j.total.lastYear ?? Object.values(j.total)[0]), days: j.contributions.map(d => [d.date, d.count, d.level]) };
-        cache.set('gh-contrib-v1', data);
-      }
-    } catch (e) { data = cache.stale('gh-contrib-v1'); }
+    const data = lastYear(await loadStatsData());
     if (!data || !data.days || !data.days.length) {
       box.closest('.gh-panel').querySelector('h3 span').textContent = '';
       box.innerHTML = `<img src="https://ghchart.rshah.org/8ea2ff/${USER}" alt="GitHub contribution chart" loading="lazy" style="filter:invert(.92) hue-rotate(180deg)">`;

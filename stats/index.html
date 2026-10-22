@@ -35,8 +35,8 @@
                 <span class="breadcrumb-current">Stats</span>
             </nav>
             <h1 class="page-title"><i class="fas fa-chart-column"></i>Stats</h1>
-            <p class="page-lede">What I've been building, in numbers: contributions over time, streaks, the days I code most and the languages behind every repository. Pulled live from GitHub.</p>
-            <div class="page-meta"><span class="meta-item"><i class="fab fa-github"></i>Live from GitHub</span><span class="meta-item"><i class="fas fa-rotate"></i><span id="updated">Loading…</span></span></div>
+            <p class="page-lede">What I've been building, in numbers: contributions over time, streaks, the days I code most and the languages behind every repository, private ones included. A GitHub Action collects the numbers from the GitHub API every night.</p>
+            <div class="page-meta"><span class="meta-item"><i class="fab fa-github"></i>Updated daily by GitHub Actions</span><span class="meta-item"><i class="fas fa-rotate"></i><span id="updated">Loading…</span></span></div>
         </header>
 
         <section class="kpis" id="kpis" aria-label="Key numbers"></section>
@@ -118,6 +118,13 @@
                     <div><h2 class="panel__title"><i class="fas fa-box-archive"></i>Repositories</h2><p class="viz__sub">Click a column to sort.</p></div>
                 </div>
                 <div class="table-wrap repo-table" id="repos"></div>
+            </section>
+
+            <section class="panel viz span-2" data-reveal>
+                <div class="panel__head">
+                    <div><h2 class="panel__title"><i class="fas fa-code-fork"></i>Forks by others</h2><p class="viz__sub" id="forksSub">Copies other people made of my public repositories.</p></div>
+                </div>
+                <div class="table-wrap repo-table fork-table" id="forks"></div>
             </section>
         </div>
 

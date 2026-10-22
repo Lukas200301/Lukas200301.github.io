@@ -59,6 +59,8 @@
     const updatedMs = data.updated_at ? Date.parse(data.updated_at) : NaN;
     S.times.push(Number.isFinite(updatedMs) ? updatedMs : Date.now());
     S.summary = data.summary || null;
+    S.profile = data.profile || null;
+    S.forkList = Array.isArray(data.forks) ? data.forks : null;
 
     const contrib = data.contributions || {};
     const calDays = contrib.calendar_days || {};
@@ -205,8 +207,9 @@
     const thisYear = S.repos.filter(r => (r.created || '').startsWith(y)).length;
     setKpi('repos', n, `${pub} public · ${priv} private · ${thisYear} new in ${y}`);
     const stars = S.summary && S.summary.total_stars != null ? S.summary.total_stars : S.repos.reduce((a, r) => a + r.stars, 0);
-    const forks = S.repos.reduce((a, r) => a + r.forks, 0);
-    setKpi('stars', stars, `and ${plural(forks, 'fork')} by others`);
+    const forks = S.summary && S.summary.total_forks != null ? S.summary.total_forks : S.repos.reduce((a, r) => a + r.forks, 0);
+    const followers = S.profile && S.profile.followers != null ? S.profile.followers : null;
+    setKpi('stars', stars, `and ${plural(forks, 'fork')} by others${followers != null ? ` · ${plural(followers, 'follower')}` : ''}`);
   }
   function kpisLangs(agg) {
     const total = agg.reduce((a, l) => a + l.bytes, 0);
@@ -423,7 +426,8 @@
     ['created', 'Created', (a, b) => a.created < b.created ? -1 : 1],
     ['pushed', 'Last push', (a, b) => a.pushed < b.pushed ? -1 : 1],
     ['size', 'Size', (a, b) => a.size - b.size],
-    ['stars', 'Stars', (a, b) => a.stars - b.stars]
+    ['stars', 'Stars', (a, b) => a.stars - b.stars],
+    ['forks', 'Forks', (a, b) => a.forks - b.forks]
   ];
   function renderRepos() {
     const host = $('#repos');
@@ -433,7 +437,20 @@
     host.innerHTML = `<table class="table"><thead><tr>${COLS.map(([k, t], i) => `<th class="${i >= 4 ? 'num' : ''}" data-k="${k}"${k === S.sort.key ? ` aria-sort="${S.sort.dir > 0 ? 'ascending' : 'descending'}"` : ''} tabindex="0">${t}</th>`).join('')}</tr></thead><tbody>${list.map(r => `<tr>
       <td>${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener" title="${esc(r.desc || '')}">${esc(r.name)}</a>` : `<span class="repo-name" title="${esc(r.desc || '')}">${esc(r.name)}</span>`}${r.private ? ' <span class="muted">· private</span>' : ''}${r.archived ? ' <span class="muted">· archived</span>' : ''}</td>
       <td>${r.lang ? `<span class="dot" style="--c:${colorOf(r.lang)}"></span>${esc(r.lang)}` : '<span class="muted">–</span>'}</td>
-      <td>${d(r.created)}</td><td>${d(r.pushed)}</td><td class="num">${bytes(r.bytes != null ? r.bytes : r.size * 1024)}</td><td class="num">${fmt(r.stars)}</td></tr>`).join('')}</tbody></table>`;
+      <td>${d(r.created)}</td><td>${d(r.pushed)}</td><td class="num">${bytes(r.bytes != null ? r.bytes : r.size * 1024)}</td><td class="num">${fmt(r.stars)}</td><td class="num">${fmt(r.forks)}</td></tr>`).join('')}</tbody></table>`;
+    renderForks();
+  }
+  // ---------- forks other people made of my public repositories ----------
+  function renderForks() {
+    const host = $('#forks'), sub = $('#forksSub');
+    if (!host) return;
+    if (!S.forkList) { host.innerHTML = '<p class="viz__empty">Not in this data yet; it appears after the next daily update.</p>'; return; }
+    if (!S.forkList.length) { host.innerHTML = '<p class="viz__empty">Nobody has forked a public repository yet.</p>'; sub.textContent = ''; return; }
+    const people = new Set(S.forkList.map(f => f.owner)).size;
+    sub.textContent = `${plural(S.forkList.length, 'fork')} by ${people === 1 ? 'one person' : fmt(people) + ' people'}, newest first.`;
+    const d = (s) => s ? shortDate(s.slice(0, 10)) : '–';
+    host.innerHTML = `<table class="table"><thead><tr><th>Fork</th><th>Of</th><th>Forked</th><th>Last push</th><th class="num">Stars</th></tr></thead><tbody>${S.forkList.map(f => `<tr>
+      <td><a href="${esc(f.html_url)}" target="_blank" rel="noopener">${esc(f.full_name)}</a></td><td>${esc(f.repo)}</td><td>${d(f.created_at)}</td>${f.pushed_at && f.pushed_at > f.created_at ? `<td>${d(f.pushed_at)}</td>` : '<td class="muted">no own commits</td>'}<td class="num">${fmt(f.stars || 0)}</td></tr>`).join('')}</tbody></table>`;
   }
   $('#repos').addEventListener('click', e => {
     const th = e.target.closest('th[data-k]'); if (!th || !S.repos) return;
