@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T05:46:13.090327+00:00",
+  "updated_at": "2026-10-23T04:39:23.735291+00:00",
   "summary": {
     "total_repositories": 16,
     "public_repositories": 9,
@@ -49,18 +49,18 @@
   "languages": [
     {
       "name": "Dart",
-      "bytes": 4609662,
-      "percentage": 38.6
+      "bytes": 4654137,
+      "percentage": 38.8
     },
     {
       "name": "TypeScript",
-      "bytes": 1922830,
-      "percentage": 16.1
+      "bytes": 1948340,
+      "percentage": 16.2
     },
     {
       "name": "Vue",
-      "bytes": 1790375,
-      "percentage": 15.0
+      "bytes": 1791043,
+      "percentage": 14.9
     },
     {
       "name": "JavaScript",
@@ -70,12 +70,12 @@
     {
       "name": "HTML",
       "bytes": 820802,
-      "percentage": 6.9
+      "percentage": 6.8
     },
     {
       "name": "C++",
       "bytes": 377624,
-      "percentage": 3.2
+      "percentage": 3.1
     },
     {
       "name": "C#",
@@ -90,7 +90,7 @@
     {
       "name": "Kotlin",
       "bytes": 233812,
-      "percentage": 2.0
+      "percentage": 1.9
     },
     {
       "name": "Go",
@@ -104,7 +104,7 @@
     },
     {
       "name": "Shell",
-      "bytes": 60571,
+      "bytes": 66020,
       "percentage": 0.5
     },
     {
@@ -149,7 +149,7 @@
     }
   ],
   "contributions": {
-    "total_contributions": 748,
+    "total_contributions": 754,
     "active_days": 211,
     "current_streak": 9,
     "yearly_totals": {
@@ -159,14 +159,14 @@
       "2023": 114,
       "2024": 26,
       "2025": 166,
-      "2026": 362
+      "2026": 368
     },
     "weekday_averages": {
       "0": 0.21,
       "1": 0.4,
       "2": 0.23,
       "3": 0.37,
-      "4": 0.32,
+      "4": 0.34,
       "5": 0.28,
       "6": 0.24
     },
@@ -10116,7 +10116,7 @@
         "weekday": 3
       },
       "2026-10-22": {
-        "count": 5,
+        "count": 11,
         "weekday": 4
       },
       "2026-10-23": {
@@ -10408,7 +10408,7 @@
       "html_url": "https://github.com/Lukas200301/github-stats",
       "is_private": false,
       "created_at": "2025-11-26T19:47:41Z",
-      "pushed_at": "2026-10-22T04:27:09Z",
+      "pushed_at": "2026-10-23T04:32:33Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10478,7 +10478,7 @@
       "html_url": "https://github.com/Lukas200301/Lukas200301.github.io",
       "is_private": false,
       "created_at": "2024-11-26T19:10:14Z",
-      "pushed_at": "2026-10-22T05:45:46Z",
+      "pushed_at": "2026-10-22T05:46:13Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10537,19 +10537,20 @@
       "html_url": "https://github.com/Lukas200301/RaspberryPi-Control",
       "is_private": false,
       "created_at": "2025-01-18T15:07:04Z",
-      "pushed_at": "2026-10-15T15:33:08Z",
+      "pushed_at": "2026-10-22T06:53:20Z",
       "stars": 4,
       "forks": 3,
       "open_issues": 1,
       "topics": [],
       "primary_language": "Dart",
       "languages": {
-        "Dart": 1647463,
+        "Dart": 1691938,
         "Go": 177264,
         "C++": 26608,
         "CMake": 19988,
         "PowerShell": 9552,
         "Kotlin": 8158,
+        "Shell": 5449,
         "Swift": 2804,
         "Inno Setup": 2223,
         "C": 1488,
@@ -10666,15 +10667,15 @@
       "html_url": null,
       "is_private": true,
       "created_at": "2026-05-14T09:37:35Z",
-      "pushed_at": "2026-10-19T15:22:16Z",
+      "pushed_at": "2026-10-22T13:35:38Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
       "topics": [],
       "primary_language": "TypeScript",
       "languages": {
-        "TypeScript": 982974,
-        "Vue": 880172,
+        "TypeScript": 1008484,
+        "Vue": 880840,
         "PowerShell": 30006,
         "Shell": 21562,
         "CSS": 19911,
