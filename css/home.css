@@ -231,6 +231,7 @@
 }
 .feature-row__icon.is-pi { color: #ff6b9d; }
 .feature-row__icon.is-net { color: var(--amber); }
+.feature-row__icon.is-luko { color: #b49bff; }
 .feature-row h3 { font-size: 1.05rem; font-weight: 600; }
 .feature-row p { font-size: 0.9rem; color: var(--fg-2); line-height: 1.5; margin-top: 2px; }
 .feature-row__stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }

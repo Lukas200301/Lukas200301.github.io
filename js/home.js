@@ -194,17 +194,17 @@
 
   async function getJSON(u) { const r = await fetch(u); if (!r.ok) throw new Error(r.status); return r.json(); }
 
-  // .github/scripts/stats-data.json is rebuilt every night by .github/workflows/update-stats.yml
+  // data/stats-data.json is rebuilt every night by .github/workflows/update-stats.yml
   // (fetch_stats.py: repositories incl. private ones, stars, forks, followers and the contribution calendar)
   let statsData = null;
   function loadStatsData() {
     if (statsData) return statsData;
     statsData = (async () => {
-      if (location.protocol !== 'file:') { try { return await getJSON('.github/scripts/stats-data.json'); } catch (e) {} }
+      if (location.protocol !== 'file:') { try { return await getJSON('data/stats-data.json'); } catch (e) {} }
       // file:// (or a failed fetch): the same data as a script
       return window.STATS_DATA || new Promise(res => {
         const s = document.createElement('script');
-        s.src = '.github/scripts/stats-data.js';
+        s.src = 'data/stats-data.js';
         s.onload = () => res(window.STATS_DATA || null); s.onerror = () => res(null);
         document.head.appendChild(s);
       });

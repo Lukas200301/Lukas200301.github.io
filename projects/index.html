@@ -33,7 +33,7 @@
                 <span class="breadcrumb-current">Projects</span>
             </nav>
             <h1 class="page-title"><i class="fas fa-code"></i>Projects</h1>
-            <p class="page-lede">Every public repository on my GitHub, live from the API. The two with a showcase page have screenshots, setup guides and docs.</p>
+            <p class="page-lede">Every public repository on my GitHub, live from the API. The ones with a showcase page have demos, setup guides and docs.</p>
             <div class="page-meta"><a class="meta-item" href="https://github.com/Lukas200301?tab=repositories" target="_blank" rel="noopener"><i class="fab fa-github"></i><span id="repoCount">…</span> repositories</a><span class="meta-item"><i class="fas fa-star"></i><span id="totalStars">…</span> stars</span><span class="meta-item"><i class="fas fa-code-branch"></i><span id="totalForks">…</span> forks</span></div>
         </header>
         <div class="list-bar">
@@ -64,11 +64,13 @@
         const esc = List.esc;
         const SHOWCASES = {
             'RaspberryPi-Control': { url: 'raspberrypicontrol/', title: 'Raspberry Pi Control' },
-            'NetW1re': { url: 'netw1re/', title: 'NetW1re' }
+            'NetW1re': { url: 'netw1re/', title: 'NetW1re' },
+            'Luko': { url: 'luko/', title: 'Luko' }
         };
         const FALLBACK = [
             { name: 'RaspberryPi-Control', html_url: 'https://github.com/Lukas200301/RaspberryPi-Control', description: 'Monitor and control your Raspberry Pi from Android and Windows: live system stats, Docker management, system updates over secure gRPC.', stargazers_count: 0, forks_count: 0, language: 'Dart', topics: ['raspberry-pi', 'flutter', 'grpc'], pushed_at: null },
-            { name: 'NetW1re', html_url: 'https://github.com/Lukas200301/NetW1re', description: 'Network monitoring and control tool: see devices on your LAN, analyze and limit their traffic.', stargazers_count: 0, forks_count: 0, language: 'C#', topics: ['network-monitoring', 'avalonia-ui'], pushed_at: null }
+            { name: 'NetW1re', html_url: 'https://github.com/Lukas200301/NetW1re', description: 'Network monitoring and control tool: see devices on your LAN, analyze and limit their traffic.', stargazers_count: 0, forks_count: 0, language: 'C#', topics: ['network-monitoring', 'avalonia-ui'], pushed_at: null },
+            { name: 'Luko', html_url: 'https://github.com/Lukas200301/Luko', description: 'Self-hosted Discord bot for music and community, with a web admin panel built in.', stargazers_count: 0, forks_count: 0, language: 'TypeScript', topics: ['discord-bot', 'lavalink'], pushed_at: null }
         ];
         const ICON = { JavaScript: 'devicon-javascript-plain', TypeScript: 'devicon-typescript-plain', Python: 'devicon-python-plain', Java: 'devicon-java-plain', 'C#': 'devicon-csharp-plain', 'C++': 'devicon-cplusplus-plain', Go: 'devicon-go-plain', Dart: 'devicon-dart-plain', HTML: 'devicon-html5-plain', CSS: 'devicon-css3-plain', Vue: 'devicon-vuejs-plain', Shell: 'devicon-bash-plain', PowerShell: 'devicon-powershell-plain', Kotlin: 'devicon-kotlin-plain', Rust: 'devicon-rust-plain', PHP: 'devicon-php-plain' };
         const COLOR = { JavaScript: '#f1e05a', TypeScript: '#3178c6', Python: '#3572A5', Java: '#b07219', 'C#': '#178600', 'C++': '#f34b7d', Go: '#00ADD8', Dart: '#00B4AB', HTML: '#e34c26', CSS: '#663399', Vue: '#41b883', Shell: '#89e051', Kotlin: '#A97BFF' };

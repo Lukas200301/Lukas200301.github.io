@@ -7,7 +7,7 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 ## What's on it
 
 - **Home**: particle-rendered name you can push around and click, live Discord presence (Lanyard), GitHub stats, contribution calendar and recently pushed repos from the nightly stats data, and the site's `lsh` shell embedded at the bottom (same session as the full-screen command line).
-- **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control and NetW1re have full showcase pages.
+- **Projects**: every public repo from the GitHub API, with search, language filters and sorting. Raspberry Pi Control, NetW1re and Luko have full showcase pages. Luko's page (`projects/luko/luko.js`) reads the bot's repository as it loads (README, package.json, .env.example and every slash command in `src/commands`), so it never needs editing when the bot changes.
 - **Tools**: 25 client-side utilities:
   - Developer: JS/TS playground, regex tester, JSON & YAML formatter, Base64 / URL / JWT decoder, cron expression helper, text diff checker
   - Network & security: IPv4 tools (subnet calculator, VLSM planner, CIDR merge/exclude, range to CIDR, longest-prefix match), IPv6 tools (compress/expand, prefixes, merge/exclude, longest-prefix match, EUI-64/SLAAC, ULA generator, NAT64, ip6.arpa), speed test (Cloudflare), DNS lookup (DNS-over-HTTPS, SPF/DMARC check), MAC address vendor lookup, hash & checksum generator, password generator, browser fingerprint analyzer
@@ -55,6 +55,7 @@ Personal site: projects, browser tools and games. Plain HTML, CSS and JavaScript
 ├── projects/             List page + showcase pages (own CSS each)
 ├── tools/                List page + one folder per tool
 ├── games/                List page + one folder per game
+├── data/                 stats-data.json / .js, rebuilt nightly by .github/workflows/update-stats.yml
 └── stats/                GitHub statistics page (stats.js draws the SVG charts)
 ```
 
@@ -87,7 +88,7 @@ Colors, type and spacing live at the top of `css/styles.css`. The palette is ink
 - MAC vendors are bundled in `tools/mac-lookup/oui.js` (IEEE registries via Wireshark's `manuf` file). Refresh it with `node tools/mac-lookup/build-oui.js manuf.txt` (instructions at the top of the script).
 - Libraries from jsDelivr, version-pinned: js-yaml (JSON & YAML), marked + DOMPurify (Markdown), jsdiff (Diff)
 - Logos in Tech Memory come from devicon
-- GitHub stats: `.github/workflows/update-stats.yml` runs `.github/scripts/fetch_stats.py` every night at 00:07 UTC (and on demand). It reads the GitHub REST and GraphQL APIs with the `PRIVATE_STATS_TOKEN` secret (public and listed private repositories, languages, stars, forks, open issues, followers, the forks others made and the contribution calendar since 2020) and commits `.github/scripts/stats-data.json` plus `stats-data.js` (the same data for `file://`). The home and stats pages only read these files, so visitors never hit the API rate limit. If the API returns nothing, the script stops and the old data stays
+- GitHub stats: `.github/workflows/update-stats.yml` runs `.github/scripts/fetch_stats.py` every night at 00:07 UTC (and on demand). It reads the GitHub REST and GraphQL APIs with the `PRIVATE_STATS_TOKEN` secret (public and listed private repositories, languages, stars, forks, open issues, followers, the forks others made and the contribution calendar since 2020) and commits `data/stats-data.json` plus `stats-data.js` (the same data for `file://`). The home and stats pages only read these files, so visitors never hit the API rate limit. If the API returns nothing, the script stops and the old data stays
 - Projects page and showcase pages: GitHub REST API (unauthenticated, 60 requests/hour per visitor; responses are cached in `localStorage`)
 - [Lanyard](https://github.com/Phineas/lanyard) for Discord presence
 - Visitor counter on Vercel

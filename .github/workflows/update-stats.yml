@@ -33,7 +33,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/scripts/stats-data.json .github/scripts/stats-data.js
+          git add data/stats-data.json data/stats-data.js
 
           if git diff --staged --quiet; then
             echo "No changes detected, skipping commit."

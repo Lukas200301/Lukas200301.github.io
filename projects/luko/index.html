@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luko | Lukas200301</title>
+    <meta name="description" content="Luko: a self-hosted Discord bot for music and community, with a web admin panel built into the bot. Commands, panel pages, setup and stack, read live from its GitHub repository.">
+    <meta name="keywords" content="discord bot, music bot, lavalink, discord.js, typescript, admin panel, self-hosted, playlists, polls, reminders, pinboard">
+    <meta name="author" content="Lukas200301">
+    <meta name="theme-color" content="#070b16">
+    <meta property="og:title" content="Luko | Lukas200301">
+    <meta property="og:description" content="A self-hosted Discord bot for music and community, with a web admin panel built into the bot.">
+    <meta property="og:image" content="https://github.com/Lukas200301.png">
+    <meta property="og:url" content="https://lukas200301.github.io/projects/luko/">
+    <link rel="icon" href="https://github.com/Lukas200301.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Martian+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    <link rel="stylesheet" href="../../css/project.css">
+    <script>/* command line open: load its font before the first paint (js/terminal-font.js) */try{if(JSON.parse(sessionStorage.getItem('cli-state')||'{}').open){var l=document.querySelector('link[href*="css/styles.css"]');if(l)document.write('<script src="'+l.href.replace(/css\/styles\.css/,'js/terminal-font.js')+'"><\/script>')}}catch(e){}</script>
+    <script>/* page transition: if we arrived via a site link, draw the finished cover before the first paint (js/script.js then lifts it); an open command line is drawn too, above it */
+    try{var d=sessionStorage.getItem('pt');if(d){sessionStorage.removeItem('pt');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('pt-enter');d=(d==='1'?'cd ~':d).replace(/[^\w~\/ .-]/g,'');r.setAttribute('data-pt-dest',d);var n='Lukas200301',l='';for(var k=0;k<n.length;k++)l+='<span class="pl" style="--k:'+k+'">'+n[k]+'</span>';document.write('<div class="pt-ov pt-ov--enter" aria-hidden="true"><div class="pt-ov__panel"><div class="pt-ov__grid"></div></div><div class="pt-ov__edge"></div><div class="pt-ov__hud"><div class="pt-ov__frame"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i><span class="pt-ov__ring"></span><span class="pt-ov__ring r2"></span><div class="pt-ov__name">'+l+'</div><div class="pt-ov__bar"><b></b></div><div class="pt-ov__dest"><span style="--n:'+d.length+'">'+d+'</span><i class="pt-ov__caret"></i></div></div></div></div>')}}}catch(e){}try{var c=JSON.parse(sessionStorage.getItem('cli-state')||'{}');if(c.open){var L='';(c.lines||[]).forEach(function(x){L+='<div class="cli__ln '+x[0]+'">'+x[1]+'</div>'});var nv=sessionStorage.getItem('cli-nav')==='1'&&document.documentElement.classList.contains('pt-enter');document.documentElement.classList.add('cli-open');document.write('<div class="cli in instant'+(nv?' cli--nav':'')+'" data-pre role="dialog" aria-modal="true" aria-label="Command line"><div class="cli__win"><div class="cli__bar"><span class="cli__dots"><i></i><i></i><i></i></span><span class="cli__title">'+(c.title||'')+'</span><button class="cli__close" type="button" aria-label="Close command line"><i class="fas fa-xmark"></i></button></div><div class="cli__body" tabindex="-1"><div class="cli__out" aria-live="polite">'+L+'</div><form class="cli__line" autocomplete="off"><label class="cli__ps">'+(c.ps||'')+'</label><input class="cli__in" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Command" autofocus><span class="cli__ghost" aria-hidden="true"></span></form></div><div class="cli__hint"><span><kbd>Tab</kbd> complete</span><span><kbd>↑</kbd><kbd>↓</kbd> history</span><span><kbd>Ctrl</kbd><kbd>L</kbd> clear</span><span><kbd>Esc</kbd> close</span></div></div></div>');var b=document.querySelector('.cli[data-pre] .cli__body');if(b)b.scrollTop=b.scrollHeight}}catch(e){}</script>
+</head>
+<body>
+    <!-- Everything below the hero is filled in by luko.js from the bot's repository (README.md, package.json,
+         .env.example, src/commands). Only the wording around it lives here, so the page never needs editing
+         when the bot changes. -->
+    <main id="main" class="wrap pj pj--luko" data-repo="Lukas200301/Luko">
+        <!-- Hero -->
+        <header class="pj-hero" id="overview">
+            <div>
+                <nav class="crumbs" aria-label="Breadcrumb">
+                    <a class="breadcrumb-link" href="../../"><i class="fas fa-house"></i> Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <a class="breadcrumb-link" href="../"><i class="fas fa-code"></i> Projects</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Luko</span>
+                </nav>
+                <h1 class="page-title"><i class="fab fa-discord"></i>Luko</h1>
+                <p class="page-lede">A self-hosted Discord bot for music and community, with a full web admin panel built into the bot. This page reads the bot's own repository as it loads, so it always shows what the current version can do.</p>
+                <div class="page-meta">
+                    <span class="meta-item"><i class="fab fa-discord"></i>Discord bot</span>
+                    <span class="meta-item"><i class="devicon-typescript-plain"></i><span>TypeScript · <span data-lk="djs">discord.js</span></span></span>
+                    <span class="meta-item" data-lk-show="node" hidden><i class="devicon-nodejs-plain"></i><span>Node <span data-lk="node"></span></span></span>
+                    <span class="meta-item" data-lk-show="license" hidden><i class="fas fa-scale-balanced"></i><span data-lk="license"></span></span>
+                    <a class="meta-item" href="https://github.com/Lukas200301/Luko/stargazers" target="_blank" rel="noopener" data-gh-show="stars" hidden><i class="fas fa-star"></i><span data-gh="stars">0</span> stars</a>
+                    <a class="meta-item" href="https://github.com/Lukas200301/Luko/blob/HEAD/package.json" target="_blank" rel="noopener" data-lk-show="version" hidden><i class="fas fa-tag"></i><span>v<span data-lk="version"></span></span></a>
+                    <span class="meta-item" data-gh-show="repo" hidden><i class="fas fa-code-commit"></i><span>Updated <span data-gh="pushed"></span></span></span>
+                </div>
+                <div class="pj-actions">
+                    <a class="btn btn--primary" href="#start"><i class="fas fa-server"></i> Host it yourself</a>
+                    <a class="btn" href="#commands"><i class="fas fa-terminal"></i> Browse commands</a>
+                    <a class="btn btn--ghost" href="https://github.com/Lukas200301/Luko" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source code</a>
+                </div>
+            </div>
+
+            <div class="demo dc" id="lukoDemo" data-reveal="scale" style="--i:2">
+                <div class="demo__bar">
+                    <span class="cli__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                    <span class="demo__title"><i class="fas fa-hashtag"></i> music</span>
+                    <span class="demo__tag">Preview</span>
+                </div>
+                <div class="dc-chat" aria-live="polite">
+                    <div class="dc-msg">
+                        <span class="dc-av" aria-hidden="true"><i class="fas fa-user"></i></span>
+                        <div><span class="dc-who">you</span><p><span class="dc-cmd">/play</span> <span class="dc-opt">midnight drive</span></p></div>
+                    </div>
+                    <div class="dc-msg dc-msg--bot">
+                        <span class="dc-av dc-av--bot" aria-hidden="true">L</span>
+                        <div>
+                            <span class="dc-who">Luko <em>BOT</em></span>
+                            <div class="dc-embed">
+                                <span class="dc-embed__k"><i class="fas fa-compact-disc"></i> Now playing</span>
+                                <b class="dc-embed__t" data-t>Midnight Drive</b>
+                                <span class="dc-embed__a" data-a>Neon Coast</span>
+                                <div class="dc-prog"><span data-pos>0:00</span><i><b></b></i><span data-dur>0:00</span></div>
+                                <div class="dc-btns">
+                                    <button type="button" data-act="prev" aria-label="Previous"><i class="fas fa-backward-step"></i></button>
+                                    <button type="button" data-act="pause" aria-label="Pause"><i class="fas fa-pause"></i></button>
+                                    <button type="button" data-act="skip" aria-label="Skip"><i class="fas fa-forward-step"></i></button>
+                                    <button type="button" data-act="loop" aria-label="Loop" aria-pressed="false"><i class="fas fa-repeat"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="dc-compose" autocomplete="off">
+                    <div class="dc-menu" id="lkMenu" role="listbox" aria-label="Commands" hidden></div>
+                    <i class="fas fa-circle-plus" aria-hidden="true"></i>
+                    <input type="text" spellcheck="false" placeholder="Type / to browse Luko's commands" aria-label="Try a command" role="combobox" aria-controls="lkMenu" aria-expanded="false">
+                    <button type="submit" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <p class="demo__note"><i class="fas fa-circle-info"></i>Simulated channel. The command list is the real one, read from GitHub.</p>
+            </div>
+        </header>
+
+        <!-- Key numbers -->
+        <section class="pj-facts" id="lkFacts" aria-label="Key numbers" data-reveal>
+            <div class="pj-fact"><b>…<small>commands</small></b><span>reading the source</span></div>
+            <div class="pj-fact"><b>…<small>panel pages</small></b><span>reading the README</span></div>
+            <div class="pj-fact"><b>…<small>sources</small></b><span>reading the source</span></div>
+            <div class="pj-fact"><b>…<small>modules</small></b><span>reading the source</span></div>
+        </section>
+
+        <div class="notice lk-notice" id="lkNotice" hidden>
+            <i class="fas fa-clock"></i>
+            <span>GitHub isn't answering right now, so this page may be showing an older copy of the repository.</span>
+            <button type="button" id="lkRetry">Try again</button>
+        </div>
+
+        <!-- Features (README → Features) -->
+        <section class="block" id="features">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">What it does</h2>
+                    <p class="block__lede">Music from almost anywhere, the small things a server needs, and a panel to run it all from the browser.</p>
+                </div>
+            </div>
+            <div class="pj-feats lk-feats" id="lkFeatures" data-lk-dynamic>
+                <div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div>
+            </div>
+            <p class="lk-src"><i class="fab fa-github"></i>From the <a href="https://github.com/Lukas200301/Luko#features" target="_blank" rel="noopener">README</a></p>
+        </section>
+
+        <!-- Commands (src/commands) -->
+        <section class="block" id="commands">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Commands</h2>
+                    <p class="block__lede">Every slash command, with its options and subcommands, read straight from the bot's source. Search by name or by what you want to do.</p>
+                </div>
+            </div>
+            <div class="lk-bar">
+                <label class="list-search">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="search" id="lkCmdSearch" data-list-search placeholder="Search commands, e.g. queue or reminder" aria-label="Search commands" autocomplete="off">
+                    <kbd>/</kbd>
+                </label>
+                <div class="filters" id="lkCmdFilters" role="group" aria-label="Category"></div>
+            </div>
+            <p class="list-count" id="lkCmdCount" aria-live="polite"></p>
+            <div class="lk-cmds" id="lkCmds" data-lk-dynamic>
+                <div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div>
+            </div>
+            <p class="lk-empty" id="lkCmdEmpty" hidden><i class="fas fa-magnifying-glass"></i>No command matches that search.</p>
+            <p class="lk-src"><i class="fab fa-github"></i>From <a href="https://github.com/Lukas200301/Luko/tree/HEAD/src/commands" target="_blank" rel="noopener">src/commands</a>, read <span data-lk="synced">just now</span></p>
+        </section>
+
+        <!-- Admin panel (README → Admin Panel) -->
+        <section class="block" id="panel">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Admin panel</h2>
+                    <p class="block__lede" id="lkPanelIntro">A web panel that runs inside the bot. Everything you can do with commands, and a lot you can't.</p>
+                </div>
+            </div>
+            <div class="lk-pages" id="lkPanel" data-lk-dynamic>
+                <div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div><div class="skeleton lk-skel"></div>
+            </div>
+            <div class="pj-faq lk-guides" id="lkGuides" data-reveal></div>
+            <p class="lk-src"><i class="fab fa-github"></i>From the <a href="https://github.com/Lukas200301/Luko#admin-panel" target="_blank" rel="noopener">README</a></p>
+        </section>
+
+        <!-- Get started (README → Setup, .env.example, package.json) -->
+        <section class="block" id="start">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Host it yourself</h2>
+                    <p class="block__lede">Luko runs on your own machine or server, a Raspberry Pi is plenty. You need a Discord application, Node.js and a Lavalink server for audio.</p>
+                </div>
+            </div>
+            <div class="pj-start lk-start">
+                <div class="pj-panel" data-reveal="scale" style="--i:0">
+                    <h3 class="pj-panel__title"><i class="fas fa-list-check"></i>Install</h3>
+                    <p class="pj-panel__sub">The setup steps from the README.</p>
+                    <div class="lk-md" id="lkSetup" data-lk-dynamic><div class="skeleton lk-skel"></div></div>
+                    <details class="pj-more" id="lkUpgrade" hidden>
+                        <summary><i class="fas fa-arrow-up-right-dots"></i><span>Upgrading</span></summary>
+                        <div class="lk-md lk-more-body"></div>
+                    </details>
+                </div>
+
+                <div class="lk-side">
+                    <div class="pj-panel" data-reveal="scale" style="--i:1">
+                        <h3 class="pj-panel__title"><i class="fas fa-key"></i>Configuration</h3>
+                        <p class="pj-panel__sub">What goes into <code>.env</code>, from <a href="https://github.com/Lukas200301/Luko/blob/HEAD/.env.example" target="_blank" rel="noopener">.env.example</a>. Everything else is set in the admin panel.</p>
+                        <div id="lkEnv" data-lk-dynamic><div class="skeleton lk-skel"></div></div>
+                    </div>
+                    <div class="pj-panel" data-reveal="scale" style="--i:2">
+                        <h3 class="pj-panel__title"><i class="fas fa-terminal"></i>Scripts &amp; requirements</h3>
+                        <p class="pj-panel__sub">From <a href="https://github.com/Lukas200301/Luko/blob/HEAD/package.json" target="_blank" rel="noopener">package.json</a>.</p>
+                        <dl class="pj-kv" id="lkKv"></dl>
+                        <div class="lk-scripts">
+                            <h4>npm scripts</h4>
+                            <ul class="lk-scripts__list" id="lkScripts"></ul>
+                        </div>
+                        <div class="lk-perms">
+                            <h4>Permissions the bot needs</h4>
+                            <ul class="pj-req" id="lkPerms"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack (package.json, languages) -->
+        <section class="block" id="stack">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Built with</h2>
+                    <p class="block__lede">TypeScript from end to end: discord.js and Lavalink for the bot, a Fastify server inside the same process, and a React app for the panel.</p>
+                </div>
+            </div>
+            <div class="lk-langs" id="lkLangs" hidden></div>
+            <div class="pj-stack lk-stack" id="lkStack" data-reveal></div>
+            <div class="pj-strip lk-modules" id="lkModules" hidden></div>
+        </section>
+
+        <!-- Recent changes (commits) -->
+        <section class="block" id="changes">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Recent changes</h2>
+                    <p class="block__lede">The latest commits. The panel can install these with one click.</p>
+                </div>
+                <a class="btn btn--ghost" href="https://github.com/Lukas200301/Luko/commits" target="_blank" rel="noopener"><i class="fas fa-clock-rotate-left"></i> Full history</a>
+            </div>
+            <ol class="lk-log" id="lkLog">
+                <li class="skeleton lk-skel lk-skel--row"></li><li class="skeleton lk-skel lk-skel--row"></li><li class="skeleton lk-skel lk-skel--row"></li>
+            </ol>
+        </section>
+
+        <!-- Troubleshooting (README → Troubleshooting) -->
+        <section class="block" id="help">
+            <div class="block__head">
+                <div>
+                    <h2 class="block__title">Troubleshooting</h2>
+                    <p class="block__lede">The usual suspects, and what to try first.</p>
+                </div>
+            </div>
+            <div class="pj-faq" id="lkHelp" data-reveal data-lk-dynamic></div>
+        </section>
+
+        <!-- Call to action -->
+        <section class="project-cta">
+            <div class="cta-content" data-reveal="scale">
+                <h2>Want Luko on your server?</h2>
+                <p>Free and open source. Bug reports, ideas and pull requests are welcome on GitHub.</p>
+                <div class="pj-actions">
+                    <a class="btn btn--primary" href="#start"><i class="fas fa-server"></i> Host it yourself</a>
+                    <a class="btn" href="https://github.com/Lukas200301/Luko/issues" target="_blank" rel="noopener"><i class="fas fa-bug"></i> Report an issue</a>
+                    <a class="btn btn--ghost" href="https://github.com/Lukas200301/Luko" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source code</a>
+                </div>
+                <div class="pj-cta__meta">
+                    <span data-lk-show="license" hidden><i class="fas fa-scale-balanced"></i><span data-lk="license"></span> license</span>
+                    <span data-gh-show="repo" hidden><i class="fas fa-code-commit"></i>Last push <span data-gh="pushed"></span></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- On this page -->
+    <div class="section-nav-dots" aria-label="On this page">
+        <div class="nav-dot active" data-section="overview"><span class="dot-label">Overview</span></div>
+        <div class="nav-dot" data-section="features"><span class="dot-label">What it does</span></div>
+        <div class="nav-dot" data-section="commands"><span class="dot-label">Commands</span></div>
+        <div class="nav-dot" data-section="panel"><span class="dot-label">Admin panel</span></div>
+        <div class="nav-dot" data-section="start"><span class="dot-label">Host it yourself</span></div>
+        <div class="nav-dot" data-section="stack"><span class="dot-label">Built with</span></div>
+        <div class="nav-dot" data-section="changes"><span class="dot-label">Recent changes</span></div>
+        <div class="nav-dot" data-section="help"><span class="dot-label">Troubleshooting</span></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script src="../../js/project.js"></script>
+    <script src="luko.js"></script>
+    <script>fetch('https://lukas200301-counter.vercel.app/api/counter').catch(() => {});</script>
+</body>
+</html>

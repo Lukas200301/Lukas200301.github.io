@@ -41,5 +41,6 @@
   "games/ctf/": ["capture the flag", "CTF", "terminal game", "command line puzzle", "hidden dot files", "ls -a", "base64 decode", "Caesar cipher", "ROT13", "auth.log", "SSH brute force", "xxd hex dump", "git log leaked secret", "file permissions", "chmod 777", "world-writable", "hacking challenge"],
   "stats/": ["GitHub stats", "contributions", "commit streak", "longest streak", "activity calendar", "languages used", "repository timeline", "most active weekday"],
   "projects/raspberrypicontrol/": ["Raspberry Pi app", "Flutter", "gRPC", "Docker manager", "SSH terminal", "system monitor", "Android app", "Pi dashboard"],
-  "projects/netw1re/": ["network monitor", "traffic control", "Avalonia", "C# desktop app", "packet capture", "bandwidth per app", "firewall"]
+  "projects/netw1re/": ["network monitor", "traffic control", "Avalonia", "C# desktop app", "packet capture", "bandwidth per app", "firewall"],
+  "projects/luko/": ["Discord bot", "music bot", "Lavalink", "discord.js", "slash commands", "admin panel", "playlists", "polls", "reminders", "birthdays", "pinboard", "starboard", "self-hosted"]
 }

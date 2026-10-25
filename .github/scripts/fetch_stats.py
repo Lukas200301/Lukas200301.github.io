@@ -269,12 +269,14 @@ def main():
         "repositories": repos_data
     }
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(script_dir, "stats-data.json")
+    # data/ at the repository root: GitHub Pages builds with Jekyll, which never publishes dot-folders like .github/
+    data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")
+    os.makedirs(data_dir, exist_ok=True)
+    output_path = os.path.join(data_dir, "stats-data.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-    js_output_path = os.path.join(script_dir, "stats-data.js")
+    js_output_path = os.path.join(data_dir, "stats-data.js")
     with open(js_output_path, "w", encoding="utf-8") as f:
         f.write("window.STATS_DATA = ")
         json.dump(output_data, f, separators=(",", ":"), ensure_ascii=False)

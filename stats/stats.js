@@ -45,8 +45,8 @@
       data = window.STATS_DATA;
     } else {
       const urls = [
-        ...(location.protocol === 'file:' ? [] : ['../.github/scripts/stats-data.json']),
-        `https://raw.githubusercontent.com/${USER}/${USER}.github.io/main/.github/scripts/stats-data.json`
+        ...(location.protocol === 'file:' ? [] : ['../data/stats-data.json']),
+        `https://raw.githubusercontent.com/${USER}/${USER}.github.io/main/data/stats-data.json`
       ];
       for (const u of urls) {
         try { data = await getJSON(u); break; }

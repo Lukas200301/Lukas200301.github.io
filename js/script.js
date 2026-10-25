@@ -43,6 +43,7 @@
 
     { group: 'Projects', title: 'Raspberry Pi Control', sub: 'Monitor and control a Pi from Android & Windows', icon: 'fab fa-raspberry-pi', href: 'projects/raspberrypicontrol/', keys: 'rpi grpc go flutter docker' },
     { group: 'Projects', title: 'NetW1re', sub: 'Network monitoring and traffic control', icon: 'fas fa-network-wired', href: 'projects/netw1re/', keys: 'network c# avalonia packets' },
+    { group: 'Projects', title: 'Luko', sub: 'Discord bot for music and community', icon: 'fab fa-discord', href: 'projects/luko/', keys: 'discord bot music lavalink typescript admin panel' },
 
     { group: 'Tools', title: 'JS/TS Playground', sub: 'Run JavaScript & TypeScript in the browser', icon: 'fab fa-js', href: 'tools/tjs-playground/', keys: 'javascript typescript editor code' },
     { group: 'Tools', title: 'Globedata', sub: 'Country facts on a 3D globe', icon: 'fas fa-earth-europe', href: 'tools/globedata/', keys: 'globe countries geography' },
