@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import requests
 
 GITHUB_USERNAME = "Lukas200301"
+SITE_REPO = f"{GITHUB_USERNAME}.github.io"
 TOKEN = os.environ.get("PRIVATE_STATS_TOKEN")
 
 # List your private repositories to include in your stats:
@@ -48,6 +49,16 @@ def fetch_graphql(query, variables):
         return res.get("data")
     print(f"GraphQL Request failed -> Status {r.status_code}")
     return None
+
+def without_volatile_fields(data):
+    """Copy of the stats without the fields that change on every run: the timestamp and the
+    site repo's own pushed_at, which the nightly commit itself bumps."""
+    data = json.loads(json.dumps(data))  # round trip so int keys compare equal to the loaded file
+    data.pop("updated_at", None)
+    for repo in data.get("repositories", []):
+        if repo.get("name") == SITE_REPO:
+            repo.pop("pushed_at", None)
+    return data
 
 def get_contribution_calendar():
     """Fetches the full contribution calendar history using the GitHub GraphQL API."""
@@ -273,6 +284,18 @@ def main():
     data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")
     os.makedirs(data_dir, exist_ok=True)
     output_path = os.path.join(data_dir, "stats-data.json")
+
+    # keep the old files when nothing but the volatile fields changed, so the workflow skips the commit
+    # (otherwise every nightly commit bumps this repo's pushed_at and causes the next one)
+    try:
+        with open(output_path, encoding="utf-8") as f:
+            previous = json.load(f)
+    except (OSError, ValueError):
+        previous = None
+    if previous is not None and without_volatile_fields(previous) == without_volatile_fields(output_data):
+        print("Stats unchanged apart from timestamps, keeping the old stats-data files.")
+        return
+
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
