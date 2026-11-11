@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-11-10T07:07:57.004444+00:00",
+  "updated_at": "2026-11-11T06:00:04.860421+00:00",
   "summary": {
     "total_repositories": 16,
     "public_repositories": 9,
     "private_repositories": 7,
     "total_stars": 4,
     "total_forks": 3,
-    "open_issues": 3,
+    "open_issues": 1,
     "followers": 7,
     "following": 0
   },
@@ -50,27 +50,27 @@
     {
       "name": "Dart",
       "bytes": 4656242,
-      "percentage": 36.1
+      "percentage": 36.0
     },
     {
       "name": "TypeScript",
-      "bytes": 2651456,
-      "percentage": 20.6
+      "bytes": 2675480,
+      "percentage": 20.7
     },
     {
       "name": "Vue",
-      "bytes": 1804637,
+      "bytes": 1817592,
       "percentage": 14.0
     },
     {
       "name": "JavaScript",
-      "bytes": 1169827,
-      "percentage": 9.1
+      "bytes": 1186249,
+      "percentage": 9.2
     },
     {
       "name": "HTML",
       "bytes": 844298,
-      "percentage": 6.6
+      "percentage": 6.5
     },
     {
       "name": "C++",
@@ -90,7 +90,7 @@
     {
       "name": "Kotlin",
       "bytes": 238812,
-      "percentage": 1.9
+      "percentage": 1.8
     },
     {
       "name": "Go",
@@ -149,9 +149,9 @@
     }
   ],
   "contributions": {
-    "total_contributions": 784,
-    "active_days": 219,
-    "current_streak": 0,
+    "total_contributions": 791,
+    "active_days": 220,
+    "current_streak": 1,
     "yearly_totals": {
       "2020": 28,
       "2021": 31,
@@ -159,12 +159,12 @@
       "2023": 114,
       "2024": 26,
       "2025": 166,
-      "2026": 398
+      "2026": 405
     },
     "weekday_averages": {
       "0": 0.24,
       "1": 0.42,
-      "2": 0.24,
+      "2": 0.26,
       "3": 0.37,
       "4": 0.34,
       "5": 0.28,
@@ -10192,7 +10192,7 @@
         "weekday": 1
       },
       "2026-11-10": {
-        "count": 0,
+        "count": 7,
         "weekday": 2
       },
       "2026-11-11": {
@@ -10408,7 +10408,7 @@
       "html_url": "https://github.com/Lukas200301/github-stats",
       "is_private": false,
       "created_at": "2025-11-26T19:47:41Z",
-      "pushed_at": "2026-11-10T07:01:53Z",
+      "pushed_at": "2026-11-11T05:55:09Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10478,7 +10478,7 @@
       "html_url": "https://github.com/Lukas200301/Lukas200301.github.io",
       "is_private": false,
       "created_at": "2024-11-26T19:10:14Z",
-      "pushed_at": "2026-11-09T06:10:07Z",
+      "pushed_at": "2026-11-10T07:07:58Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10672,20 +10672,20 @@
       "html_url": null,
       "is_private": true,
       "created_at": "2026-05-14T09:37:35Z",
-      "pushed_at": "2026-11-04T18:53:05Z",
+      "pushed_at": "2026-11-10T19:43:59Z",
       "stars": 0,
       "forks": 0,
-      "open_issues": 2,
+      "open_issues": 0,
       "topics": [],
       "primary_language": "TypeScript",
       "languages": {
-        "TypeScript": 1036143,
-        "Vue": 890733,
+        "TypeScript": 1060167,
+        "Vue": 903688,
         "PowerShell": 30006,
+        "JavaScript": 22644,
         "Shell": 21562,
         "CSS": 19911,
-        "Batchfile": 6271,
-        "JavaScript": 6222
+        "Batchfile": 6271
       },
       "archived": false,
       "description": null
