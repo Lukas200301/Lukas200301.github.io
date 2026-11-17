@@ -16,6 +16,7 @@ PRIVATE_REPOS = [
     "mmm-events",
     "Velio",
     "SpectraTune",
+    "specter",
 ]
 
 HEADERS = {
