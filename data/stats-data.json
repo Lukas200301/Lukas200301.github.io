@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-17T07:46:48.200917+00:00",
+  "updated_at": "2026-11-18T07:14:50.807116+00:00",
   "summary": {
-    "total_repositories": 16,
+    "total_repositories": 17,
     "public_repositories": 9,
-    "private_repositories": 7,
+    "private_repositories": 8,
     "total_stars": 4,
     "total_forks": 3,
     "open_issues": 2,
@@ -49,57 +49,57 @@
   "languages": [
     {
       "name": "Dart",
-      "bytes": 4656242,
-      "percentage": 35.6
+      "bytes": 5584012,
+      "percentage": 39.5
     },
     {
       "name": "TypeScript",
       "bytes": 2824559,
-      "percentage": 21.6
+      "percentage": 20.0
     },
     {
       "name": "Vue",
       "bytes": 1817206,
-      "percentage": 13.9
+      "percentage": 12.9
     },
     {
       "name": "JavaScript",
       "bytes": 1186679,
-      "percentage": 9.1
+      "percentage": 8.4
     },
     {
       "name": "HTML",
       "bytes": 844298,
-      "percentage": 6.5
+      "percentage": 6.0
     },
     {
       "name": "C++",
-      "bytes": 377624,
-      "percentage": 2.9
+      "bytes": 448881,
+      "percentage": 3.2
     },
     {
       "name": "C#",
       "bytes": 283150,
-      "percentage": 2.2
+      "percentage": 2.0
     },
     {
       "name": "CSS",
       "bytes": 267944,
-      "percentage": 2.0
+      "percentage": 1.9
     },
     {
       "name": "Kotlin",
       "bytes": 238812,
-      "percentage": 1.8
+      "percentage": 1.7
     },
     {
       "name": "Go",
       "bytes": 177264,
-      "percentage": 1.4
+      "percentage": 1.3
     },
     {
       "name": "PowerShell",
-      "bytes": 157493,
+      "bytes": 175973,
       "percentage": 1.2
     },
     {
@@ -114,12 +114,12 @@
     },
     {
       "name": "CMake",
-      "bytes": 39070,
-      "percentage": 0.3
+      "bytes": 51487,
+      "percentage": 0.4
     },
     {
       "name": "C",
-      "bytes": 30141,
+      "bytes": 30875,
       "percentage": 0.2
     },
     {
@@ -128,13 +128,13 @@
       "percentage": 0.1
     },
     {
-      "name": "Batchfile",
-      "bytes": 10973,
+      "name": "Inno Setup",
+      "bytes": 11758,
       "percentage": 0.1
     },
     {
-      "name": "Inno Setup",
-      "bytes": 9714,
+      "name": "Batchfile",
+      "bytes": 10973,
       "percentage": 0.1
     },
     {
@@ -149,9 +149,9 @@
     }
   ],
   "contributions": {
-    "total_contributions": 799,
-    "active_days": 223,
-    "current_streak": 0,
+    "total_contributions": 808,
+    "active_days": 225,
+    "current_streak": 1,
     "yearly_totals": {
       "2020": 28,
       "2021": 31,
@@ -159,12 +159,12 @@
       "2023": 114,
       "2024": 26,
       "2025": 166,
-      "2026": 413
+      "2026": 422
     },
     "weekday_averages": {
       "0": 0.24,
       "1": 0.42,
-      "2": 0.26,
+      "2": 0.28,
       "3": 0.38,
       "4": 0.35,
       "5": 0.28,
@@ -9832,7 +9832,7 @@
         "weekday": 2
       },
       "2026-08-12": {
-        "count": 0,
+        "count": 1,
         "weekday": 3
       },
       "2026-08-13": {
@@ -10220,7 +10220,7 @@
         "weekday": 1
       },
       "2026-11-17": {
-        "count": 0,
+        "count": 8,
         "weekday": 2
       },
       "2026-11-18": {
@@ -10408,7 +10408,7 @@
       "html_url": "https://github.com/Lukas200301/github-stats",
       "is_private": false,
       "created_at": "2025-11-26T19:47:41Z",
-      "pushed_at": "2026-11-17T07:43:12Z",
+      "pushed_at": "2026-11-18T07:07:16Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10478,7 +10478,7 @@
       "html_url": "https://github.com/Lukas200301/Lukas200301.github.io",
       "is_private": false,
       "created_at": "2024-11-26T19:10:14Z",
-      "pushed_at": "2026-11-16T06:15:20Z",
+      "pushed_at": "2026-11-17T19:14:54Z",
       "stars": 0,
       "forks": 0,
       "open_issues": 0,
@@ -10731,6 +10731,29 @@
         "Python": 8663,
         "Kotlin": 8304,
         "Inno Setup": 2514
+      },
+      "archived": false,
+      "description": null
+    },
+    {
+      "name": "specter",
+      "full_name": "Lukas200301/specter",
+      "html_url": null,
+      "is_private": true,
+      "created_at": "2026-11-17T18:55:23Z",
+      "pushed_at": "2026-11-17T19:12:25Z",
+      "stars": 0,
+      "forks": 0,
+      "open_issues": 0,
+      "topics": [],
+      "primary_language": "Dart",
+      "languages": {
+        "Dart": 927770,
+        "C++": 71257,
+        "PowerShell": 18480,
+        "CMake": 12417,
+        "Inno Setup": 2044,
+        "C": 734
       },
       "archived": false,
       "description": null
